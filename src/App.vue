@@ -25,8 +25,12 @@ export default {
     SidebarAdmin,
     BreadcrumbAdmin,
   },
-
-  methods: {
-  }
 }
 </script>
+
+<style>
+@import "../src/assets/css/bootstrap.min.css";
+@import "../src/assets/css/bootstrap-extended.css";
+@import "../src/assets/css/style.css";
+@import "../src/assets/css/icons.css";
+</style>
