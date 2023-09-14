@@ -1,0 +1,101 @@
+.car-list-wrapper-column {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 10px;
+  border: 1px solid #ccc;
+
+  &__edits {
+    display: flex;
+    align-items: baseline;
+    flex-direction: column;
+  }
+
+  &__link {
+    border: 1px solid;
+    color: #1C7ED6;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+
+    &:hover {
+      background-color: #1C7ED6;
+      color: #ffffff;
+    }
+  }
+
+  &__remove {
+    border: 1px solid;
+    color: red;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    display: block;
+    margin-top:5px;
+
+    &:hover {
+      background-color: red;
+      color: #ffffff;
+    }
+  }
+}
+
+.car-list-wrapper-column-images {
+  display: flex;
+  flex-wrap: wrap;
+  width: min-content;
+
+  &__item {
+    padding: 2px;
+
+    &:first-child {
+      width: 100%;
+      padding-bottom: 0;
+
+      img {
+        max-width: 200px;
+      }
+    }
+
+    &:not(:first-child) img {
+      max-width: 50px;
+    }
+  }
+}
+
+.car-list-wrapper-column-edit {
+  background-color: unset;
+  border: 1px solid;
+  color: #1C7ED6;
+  cursor: pointer;
+
+  svg path {
+    stroke: #1C7ED6;
+  }
+
+  &:hover {
+    background-color: #1C7ED6;
+    color: #ffffff;
+
+    svg path {
+      stroke: #ffffff;
+      fill: #ffffff;
+    }
+  }
+}
+
+.car-list-wrapper-column-edits {
+  &__button {
+    margin-top: 2px;
+  }
+
+  &__input {
+    height: 30px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid #b9b9b9;
+  }
+}

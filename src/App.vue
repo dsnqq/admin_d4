@@ -6,7 +6,7 @@
 
       <main class="page-content">
         <BreadcrumbAdmin />
-        <component :is="getContent()" />
+        <router-view></router-view>
       </main>
     </div>
   </div>
@@ -24,14 +24,9 @@ export default {
     HeaderAdmin,
     SidebarAdmin,
     BreadcrumbAdmin,
-    AutoPartsAdmin : () => import("./components/autoParts/AutoPartsAdmin.vue"),
-    DashboardAdmin : () => import("./components/dashboardAdmin/DashboardAdmin.vue"),
   },
 
   methods: {
-    getContent() {
-      return "DashboardAdmin";
-    }
   }
 }
 </script>

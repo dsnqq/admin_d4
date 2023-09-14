@@ -1,0 +1,16 @@
+.car-list-head {
+  display: table-row;
+  font-weight: bold;
+  background: #000000;
+  box-shadow: 0px 0px 10px rgb(0,0,0,0.18);
+  color: #ffffff;
+}
+
+.car-list-head {
+  &__column {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+}

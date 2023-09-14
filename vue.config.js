@@ -1,4 +1,12 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
-  transpileDependencies: true
+  transpileDependencies: true,
+  devServer: {
+    proxy: 'https://d4.by/',
+    port: 8081,
+  },
+  lintOnSave: true,
+  publicPath: process.env.NODE_ENV === 'production'
+      ? '/admin/applications/car/'
+      : '/'
 })

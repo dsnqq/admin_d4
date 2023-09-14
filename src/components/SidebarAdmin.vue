@@ -10,54 +10,54 @@
     </div>
     <ul class="metismenu" id="menu">
       <li>
-        <a href="">
+        <router-link :to="{name: 'dashboardAdmin'}">
           <div class="parent-icon"><i class="bi bi-house-fill"></i>
           </div>
           <div class="menu-title">Главная панель</div>
-        </a>
+        </router-link>
       </li>
       <li>
-        <a href="">
+        <router-link :to="{name: 'autoParts'}">
           <div class="parent-icon"><i class="bi bi-basket2-fill"></i>
           </div>
           <div class="menu-title">Мои запчасти</div>
-        </a>
+        </router-link>
       </li>
       <li>
-        <a href="">
+        <router-link :to="{name: 'historyUsers'}">
           <div class="parent-icon"><i class="bi bi-journal-text"></i>
           </div>
           <div class="menu-title">История пользователей</div>
-        </a>
+        </router-link>
       </li>
       <li>
-        <a href="">
+        <router-link :to="{name: 'carsAdmin'}">
           <div class="parent-icon"><i class="bi bi-wrench"></i>
           </div>
           <div class="menu-title">Авто в разборе</div>
-        </a>
+        </router-link>
       </li>
       <li>
-        <a href="">
+        <router-link :to="{name: 'tireStatistics'}">
           <div class="parent-icon"><i class="bi bi-info-square-fill"></i>
           </div>
           <div class="menu-title">Статистика шин</div>
-        </a>
+        </router-link>
       </li>
       <li>
-        <a href="">
+        <router-link :to="{name: 'sparePartsStatistics'}">
           <div class="parent-icon"><i class="bi bi-info-square-fill"></i>
           </div>
           <div class="menu-title">Статистика З/Ч</div>
-        </a>
+        </router-link>
       </li>
-      /*
+      <!--
         Добавить запчасть
         Архив Запчастей
         Архив Шин
         Добавить шину
         Мои шины
-      */
+      -->
     </ul>
   </aside>
 </template>

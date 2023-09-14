@@ -1,0 +1,29 @@
+.car {
+  padding: 10px;
+}
+
+.car-list {
+  display: table;
+  border-collapse: collapse;
+  width: 100%;
+
+  &__totals {
+    font-size: 14px;
+  }
+
+  &__link {
+    display: block;
+    margin-top: 5px;
+  }
+}
+
+.car-list-wrapper {
+  display: table-row;
+}
+
+.car-content-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
