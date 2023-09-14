@@ -34,7 +34,7 @@ const routes = [
         component: CarsAdmin,
     },
     {
-        path: '/create-car',
+        path: '/car/create',
         name: 'carCreate',
         component: CarsAdmin,
     },
