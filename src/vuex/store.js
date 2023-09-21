@@ -11,9 +11,13 @@ const store = new Vuex.Store({
         car: {},
         marka: [],
         model: [],
-        totals: 0
+        totals: 0,
+        sparePartsStatistics: {}
     },
     mutations: {
+        SET_SPARE_PARTS_STATISTICS_TO_STATE: (state, sparePartsStatistics) => {
+            state.sparePartsStatistics = sparePartsStatistics;
+        },
         SET_CARS_TO_STATE: (state, cars) => {
             state.car = {};
             state.cars = cars;
@@ -56,6 +60,24 @@ const store = new Vuex.Store({
         }
     },
     actions: {
+        GET_SPARE_PARTS_STATISTICS({commit}, param) {
+            return axios.post(
+                '/index.php?route=api/spare_parts_statistics/index',
+                {
+                    key: KEYS,
+                    page: param,
+                }
+            )
+                .then((response) => {
+                    commit('SET_SPARE_PARTS_STATISTICS_TO_STATE', response.data.sparePartsStatistics);
+                    return response.data.sparePartsStatistics;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    return error;
+                });
+        },
+
         GET_CARS_FROM_API({commit}, param) {
             return axios.post(
                 '/index.php?route=api/auto/cars',
@@ -211,6 +233,9 @@ const store = new Vuex.Store({
     getters: {
         CARS(state) {
             return state.cars;
+        },
+        SPARE_PARTS_STATISTICS(state) {
+            return state.sparePartsStatistics;
         },
         CAR(state) {
             return state.car;
