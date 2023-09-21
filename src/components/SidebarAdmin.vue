@@ -9,55 +9,17 @@
       </div>
     </div>
     <ul class="metismenu" id="menu">
-      <li>
-        <router-link :to="{name: 'dashboardAdmin'}">
-          <div class="parent-icon"><i class="bi bi-house-fill"></i>
+      <li v-for="link in links" :key="link.index">
+        <router-link :to="{name: link.component}">
+          <div class="parent-icon">
+            <i
+                class="bi"
+                :class="link.icon"
+            ></i>
           </div>
-          <div class="menu-title">Главная панель</div>
+          <div class="menu-title">{{ link.title }}</div>
         </router-link>
       </li>
-      <li>
-        <router-link :to="{name: 'autoParts'}">
-          <div class="parent-icon"><i class="bi bi-basket2-fill"></i>
-          </div>
-          <div class="menu-title">Мои запчасти</div>
-        </router-link>
-      </li>
-      <li>
-        <router-link :to="{name: 'historyUsers'}">
-          <div class="parent-icon"><i class="bi bi-journal-text"></i>
-          </div>
-          <div class="menu-title">История пользователей</div>
-        </router-link>
-      </li>
-      <li>
-        <router-link :to="{name: 'carsAdmin'}">
-          <div class="parent-icon"><i class="bi bi-wrench"></i>
-          </div>
-          <div class="menu-title">Авто в разборе</div>
-        </router-link>
-      </li>
-      <li>
-        <router-link :to="{name: 'tireStatistics'}">
-          <div class="parent-icon"><i class="bi bi-info-square-fill"></i>
-          </div>
-          <div class="menu-title">Статистика шин</div>
-        </router-link>
-      </li>
-      <li>
-        <router-link :to="{name: 'sparePartsStatistics'}">
-          <div class="parent-icon"><i class="bi bi-info-square-fill"></i>
-          </div>
-          <div class="menu-title">Статистика З/Ч</div>
-        </router-link>
-      </li>
-      <!--
-        Добавить запчасть
-        Архив Запчастей
-        Архив Шин
-        Добавить шину
-        Мои шины
-      -->
     </ul>
   </aside>
 </template>
@@ -65,5 +27,23 @@
 <script>
   export default {
     name: "SidebarAdmin",
+
+    data() {
+      return {
+        links: [
+          {title: 'Главная панель', component: 'dashboardAdmin', icon: 'bi-house-fill'},
+          {title: 'Мои запчасти', component: 'autoParts', icon: 'bi-basket2-fill'},
+          {title: 'Архив Запчастей', component: '', icon: 'bi-archive'},
+          {title: 'Добавить запчасть', component: '', icon: 'bi-plus-square'},
+          {title: 'История пользователей', component: 'historyUsers', icon: 'bi-journal-text'},
+          {title: 'Авто в разборе', component: 'carsAdmin', icon: 'bi-wrench'},
+          {title: 'Мои шины', component: '', icon: 'bi-vinyl'},
+          {title: 'Архив Шин', component: '', icon: 'bi-archive'},
+          {title: 'Добавить шину', component: '', icon: 'bi-plus-square'},
+          {title: 'Статистика шин', component: 'tireStatistics', icon: 'bi-info-square-fill'},
+          {title: 'Статистика З/Ч', component: 'sparePartsStatistics', icon: 'bi-info-square-fill'},
+        ]
+      }
+    }
   }
 </script>
