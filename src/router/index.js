@@ -1,9 +1,4 @@
-import DashboardAdmin from "../components/dashboardAdmin/DashboardAdmin.vue";
-import AutoPartsAdmin from "../components/autoParts/AutoPartsAdmin.vue";
-import HistoryUsers from "../components/historyUsers/HistoryUsers.vue";
 import CarsAdmin from "../components/carsAdmin/CarsAdmin.vue";
-import TireStatistics from "../components/tireStatistics/TireStatistics.vue";
-import SparePartsStatistics from "../components/sparePartsStatistics/SparePartsStatistics.vue";
 
 import VueRouter from "vue-router";
 
@@ -11,17 +6,17 @@ const routes = [
     {
         path: '/',
         name: 'dashboardAdmin',
-        component: DashboardAdmin,
+        component: () => import('../components/dashboardAdmin/DashboardAdmin.vue'),
     },
     {
         path: '/auto-parts',
         name: 'autoParts',
-        component: AutoPartsAdmin,
+        component: () => import('../components/autoParts/AutoPartsAdmin.vue'),
     },
     {
         path: '/history-users',
         name: 'historyUsers',
-        component: HistoryUsers,
+        component: () => import('../components/historyUsers/HistoryUsers.vue'),
     },
     {
         path: '/cars',
@@ -41,12 +36,12 @@ const routes = [
     {
         path: '/tire-statistics',
         name: 'tireStatistics',
-        component: TireStatistics,
+        component: () => import('../components/tireStatistics/TireStatistics.vue'),
     },
     {
         path: '/spare-parts-statistics',
         name: 'sparePartsStatistics',
-        component: SparePartsStatistics,
+        component: () => import('../components/sparePartsStatistics/SparePartsStatistics.vue'),
     },
 ];
 
