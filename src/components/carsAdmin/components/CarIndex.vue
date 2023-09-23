@@ -68,7 +68,8 @@
               </template>
             </div>
             <button
-                v-on:click.prevent="modalCarPhotoFade"
+
+
                 class="car-index-field-wrap__btn btn btn-primary"
             >Добавить фото</button>
           </div>

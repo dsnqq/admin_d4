@@ -13,6 +13,7 @@ const store = new Vuex.Store({
         model: [],
         totals: 0,
         sparePartsStatistics: {},
+        sparePartsStatisticsDay: {},
         totalsSparePartsStatistics: 0,
         lockingPool: 0 // Global Preloader
     },
@@ -28,6 +29,9 @@ const store = new Vuex.Store({
         },
         SET_TOTALS_SPARE_PARTS_STATISTICS: (state, totalsSparePartsStatistics) => {
           state.totalsSparePartsStatistics = totalsSparePartsStatistics;
+        },
+        SET_DAY_SPARE_PARTS_STATISTICS: (state, sparePartsStatisticsDay) => {
+          state.sparePartsStatisticsDay = sparePartsStatisticsDay;
         },
         SET_CARS_TO_STATE: (state, cars) => {
             state.car = {};
@@ -101,6 +105,25 @@ const store = new Vuex.Store({
                 .then((response) => {
                     commit('SET_TOTALS_SPARE_PARTS_STATISTICS', response.data.totalsSparePartsStatistics);
                     return response.data.totalsSparePartsStatistics;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    return error;
+                });
+        },
+
+        GET_SPARE_PARTS_STATISTICS_DAY({commit}) {
+            commit('LOCK_UI');
+            return  axios.post(
+                '/index.php?route=api/spare_parts_statistics/index/day',
+                {
+                    key: KEYS,
+                }
+            )
+                .then((response) => {
+                    commit('UN_LOCK_UI');
+                    commit('SET_DAY_SPARE_PARTS_STATISTICS', response.data.sparePartsStatisticsDay);
+                    return response.data.sparePartsStatisticsDay;
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -278,6 +301,9 @@ const store = new Vuex.Store({
         },
         TOTALS_SPARE_PARTS_STATISTICS(state) {
             return state.totalsSparePartsStatistics;
+        },
+        SPARE_PARTS_STATISTICS_DAY(state) {
+            return state.sparePartsStatisticsDay;
         },
         MARKA(state) {
             return state.marka;
