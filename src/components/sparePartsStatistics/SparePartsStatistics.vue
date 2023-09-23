@@ -3,10 +3,9 @@
     <div class="card">
       <div class="card-body">
         <div class="row">
-          <table class="table mb-0">
+          <table class="table table-border-1 mb-0">
             <thead>
             <tr>
-              <th scope="col">#</th>
               <th scope="col">Дата</th>
               <th scope="col">Название</th>
               <th scope="col">Артикул</th>
@@ -20,9 +19,6 @@
                 v-for="(sparePartsStatisticsItem, i) in SPARE_PARTS_STATISTICS"
                 :key="i"
             >
-              <th scope="row">
-                {{ sparePartsStatisticsItem.num }}
-              </th>
               <td>
                 {{ sparePartsStatisticsItem.date }}
               </td>
@@ -58,22 +54,32 @@
             </tbody>
           </table>
         </div>
-        <div class="row">
+        <div
+            class="row"
+            v-if="TOTALS_SPARE_PARTS_STATISTICS > 10"
+        >
           <div class="col-sm-12 col-md-5">
-            <div class="dataTables_info" id="example_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div>
+            <div class="dataTables_paginate paging_simple_numbers">
+              <ul class="pagination">
+                <li
+                    class="paginate_button page-item"
+                    v-for="(total, index) in allPage"
+                    :key="index"
+                    :class="{'active': total == pageNum}"
+                >
+                  <a
+                      class="page-link"
+                      v-on:click.prevent="setPageByTotal(total)"
+                  >
+                    {{total}}
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="col-sm-12 col-md-7">
-            <div class="dataTables_paginate paging_simple_numbers" id="example_paginate">
-              <ul class="pagination">
-                <li class="paginate_button page-item previous disabled" id="example_previous"><a href="#" aria-controls="example" data-dt-idx="0" tabindex="0" class="page-link">Prev</a></li>
-                <li class="paginate_button page-item active"><a href="#" aria-controls="example" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-                <li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-                <li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
-                <li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="4" tabindex="0" class="page-link">4</a></li>
-                <li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="5" tabindex="0" class="page-link">5</a></li>
-                <li class="paginate_button page-item "><a href="#" aria-controls="example" data-dt-idx="6" tabindex="0" class="page-link">6</a></li>
-                <li class="paginate_button page-item next" id="example_next"><a href="#" aria-controls="example" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
-              </ul>
+            <div class="dataTables_info">
+              Показано с 1 по 10 (всего {{TOTALS_SPARE_PARTS_STATISTICS}} записей)
             </div>
           </div>
         </div>
@@ -86,16 +92,16 @@
         <div class="row">
           <table class="table mb-0">
             <thead>
-            <tr>
-              <th scope="col">Дата</th>
-              <th scope="col">Количество просмотров</th>
-            </tr>
+              <tr>
+                <th scope="col">Дата</th>
+                <th scope="col">Количество просмотров</th>
+              </tr>
             </thead>
             <tbody>
-            <tr>
-              <th>29.04.2023</th>
-              <th>1085 шт.</th>
-            </tr>
+              <tr>
+                <td>29.04.2023</td>
+                <td>1085 шт.</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -112,29 +118,72 @@ export default {
   name: "SparePartsStatistics",
 
   mounted() {
-    this.GET_SPARE_PARTS_STATISTICS();
+    this.GET_SPARE_PARTS_STATISTICS(this.pageNum);
+    this.GET_SPARE_PARTS_STATISTICS_TOTALS();
   },
 
   computed: {
     ...mapGetters([
-      'SPARE_PARTS_STATISTICS'
+      'SPARE_PARTS_STATISTICS',
+      'TOTALS_SPARE_PARTS_STATISTICS',
+      'IS_UI_LOCKED'
     ])
   },
 
   methods: {
     ...mapActions([
-      'GET_SPARE_PARTS_STATISTICS'
+      'GET_SPARE_PARTS_STATISTICS',
+      'GET_SPARE_PARTS_STATISTICS_TOTALS'
     ]),
+
+    getPaginationPagesList: function (){
+      let addPage = 1;
+
+      if(this.pageNum != this.allPage[0] && this.pageNum != this.allPage[1]) {
+        let lastElement = this.allPage.at(-1);
+        this.allPage = this.allPage.slice(1);
+
+        while (addPage) {
+          lastElement++;
+          this.allPage.push(lastElement);
+          addPage--;
+        }
+      } else if(this.pageNum == this.allPage[0]) {
+        let firstElement = this.allPage.at(0);
+
+        if(firstElement >= 2) {
+          this.allPage.pop();
+
+          while (addPage) {
+            firstElement--;
+            this.allPage.unshift(firstElement);
+            addPage--;
+          }
+        }
+      }
+    },
+
+    setPageByTotal: function(page) {
+      this.pageNum = page;
+      this.getPaginationPagesList();
+      this.GET_SPARE_PARTS_STATISTICS(this.pageNum);
+    },
 
     setStatusByApi(status) {
       return (status == 1) ? 'Активно' : 'Неактивно';
-    }
+    },
   },
 
   data() {
     return {
-      domain: DOMAIN
+      domain: DOMAIN,
+      pageNum: 1,
+      allPage: [1,2,3,4,5,6],
     };
   }
 }
 </script>
+
+<style lang="scss" scoped>
+@import "./src/components/sparePartsStatistics/style/spare-parts-statistics";
+</style>

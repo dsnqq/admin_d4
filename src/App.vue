@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <PreloaderAdmin />
     <div class="wrapper">
       <HeaderAdmin />
       <SidebarAdmin />
@@ -16,6 +17,7 @@
 import HeaderAdmin from "./components/HeaderAdmin.vue";
 import SidebarAdmin from "./components/SidebarAdmin.vue";
 import BreadcrumbAdmin from "./components/BreadcrumbAdmin.vue";
+import PreloaderAdmin from "./components/UI/PreloaderAdmin.vue";
 
 export default {
   name: 'App',
@@ -24,6 +26,7 @@ export default {
     HeaderAdmin,
     SidebarAdmin,
     BreadcrumbAdmin,
+    PreloaderAdmin,
   },
 }
 </script>
