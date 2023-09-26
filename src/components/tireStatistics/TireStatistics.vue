@@ -1,5 +1,6 @@
 <template>
   <div>
+    <hr>
     <ul class="nav nav-pills">
       <li
           v-for="(tab, i) in tabComponents"

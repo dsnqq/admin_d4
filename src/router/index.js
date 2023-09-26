@@ -28,6 +28,14 @@ const routes = [
         component: () => import('../components/historyUsers/HistoryUsers.vue'),
     },
     {
+        path: '/history-users/:id',
+        name: 'historyUsersIndex',
+        meta: {
+            title: 'История пользователя',
+        },
+        component: () => import('../components/historyUsers/components/HistoryUsersIndex.vue'),
+    },
+    {
         path: '/cars',
         name: 'carsAdmin',
         meta: {
