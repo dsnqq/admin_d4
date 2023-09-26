@@ -75,6 +75,11 @@ const routes = [
         },
         component: () => import('../components/sparePartsStatistics/SparePartsStatistics.vue'),
     },
+    {
+        path: '/admin',
+        name: 'authAdmin',
+        component: () => import('../components/authAdmin/AuthAdmin.vue'),
+    },
 ];
 
 export default new VueRouter({
