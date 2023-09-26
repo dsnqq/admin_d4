@@ -1,22 +1,23 @@
 <template>
   <div
       class="preloader"
-      v-if="IS_UI_LOCKED == 1"
+      v-if="isUiLocked"
   >
     <img src="../../assets/images/loader.gif">
   </div>
 </template>
 
 <script>
-  import {mapGetters} from "vuex";
+  import tireStatistics from "@/vuex/modules/tireStatistics/tireStatistics";
+  import sparePartsStatistics from "@/vuex/modules/sparePartsStatistics/sparePartsStatistics";
 
   export default {
     name: 'PreloaderAdmin',
 
     computed: {
-      ...mapGetters('sparePartsStatistics', [
-        'IS_UI_LOCKED'
-      ])
+      isUiLocked: function (){
+        return sparePartsStatistics.state.lockingPool == 1 || tireStatistics.state.lockingPool == 1;
+      }
     },
   }
 </script>
