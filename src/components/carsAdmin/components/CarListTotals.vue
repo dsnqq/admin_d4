@@ -21,7 +21,7 @@ export default {
   name: "CarListTotals",
 
   computed: {
-    ...mapGetters([
+    ...mapGetters('carAdmin', [
         'TOTALS'
     ]),
   },

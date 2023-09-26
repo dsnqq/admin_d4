@@ -14,7 +14,7 @@
     name: 'PreloaderAdmin',
 
     computed: {
-      ...mapGetters([
+      ...mapGetters('sparePartsStatistics', [
         'IS_UI_LOCKED'
       ])
     },

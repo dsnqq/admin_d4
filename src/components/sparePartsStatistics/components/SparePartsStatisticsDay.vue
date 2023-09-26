@@ -43,13 +43,13 @@ export default {
   },
 
   computed: {
-    ...mapGetters([
+    ...mapGetters('sparePartsStatistics', [
       'SPARE_PARTS_STATISTICS_DAY'
     ])
   },
 
   methods: {
-    ...mapActions([
+    ...mapActions('sparePartsStatistics', [
       'GET_SPARE_PARTS_STATISTICS_DAY'
     ]),
   },

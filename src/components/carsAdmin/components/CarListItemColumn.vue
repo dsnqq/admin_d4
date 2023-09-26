@@ -87,7 +87,7 @@ export default {
   name: "CarListItemColumn",
 
   computed: {
-    ...mapGetters([
+    ...mapGetters('carAdmin', [
         'CARS'
     ]),
 
@@ -97,7 +97,7 @@ export default {
   },
 
   methods: {
-    ...mapActions([
+    ...mapActions('carAdmin', [
         'SET_EDIT_COLUMN_ON_LIST',
         'DELET_CAR_BY_API'
     ]),

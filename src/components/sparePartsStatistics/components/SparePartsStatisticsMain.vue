@@ -103,7 +103,7 @@
     },
 
     computed: {
-      ...mapGetters([
+      ...mapGetters('sparePartsStatistics', [
         'SPARE_PARTS_STATISTICS',
         'TOTALS_SPARE_PARTS_STATISTICS',
         'IS_UI_LOCKED',
@@ -112,7 +112,7 @@
 
 
     methods: {
-      ...mapActions([
+      ...mapActions('sparePartsStatistics', [
         'GET_SPARE_PARTS_STATISTICS',
         'GET_SPARE_PARTS_STATISTICS_TOTALS'
       ]),

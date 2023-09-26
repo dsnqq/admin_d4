@@ -1,136 +1,33 @@
-import Vue from 'vue';
-import Vuex from "vuex";
 import axios from "axios";
 import {KEYS} from '/src/constants/constants';
 
-Vue.use(Vuex);
-
-const store = new Vuex.Store({
+export default {
+    namespaced: true,
     state: {
         cars: [],
         car: {},
         marka: [],
         model: [],
         totals: 0,
-        sparePartsStatistics: {},
-        sparePartsStatisticsDay: {},
-        totalsSparePartsStatistics: 0,
-        lockingPool: 0 // Global Preloader
     },
-    mutations: {
-        LOCK_UI: (state) => {
-            state.lockingPool++;
+    getters: {
+        CARS(state) {
+            return state.cars;
         },
-        UN_LOCK_UI: (state) => {
-            state.lockingPool--
+        CAR(state) {
+            return state.car;
         },
-        SET_SPARE_PARTS_STATISTICS_TO_STATE: (state, sparePartsStatistics) => {
-            state.sparePartsStatistics = sparePartsStatistics;
+        TOTALS(state) {
+            return state.totals;
         },
-        SET_TOTALS_SPARE_PARTS_STATISTICS: (state, totalsSparePartsStatistics) => {
-          state.totalsSparePartsStatistics = totalsSparePartsStatistics;
+        MARKA(state) {
+            return state.marka;
         },
-        SET_DAY_SPARE_PARTS_STATISTICS: (state, sparePartsStatisticsDay) => {
-          state.sparePartsStatisticsDay = sparePartsStatisticsDay;
-        },
-        SET_CARS_TO_STATE: (state, cars) => {
-            state.car = {};
-            state.cars = cars;
-        },
-        SET_TOTALS_TO_STATE: (state, totals) => {
-            state.totals = totals;
-        },
-        SET_MARKA_TO_STATE: (state, marka) => {
-            state.marka = marka;
-        },
-        SET_MODEL_TO_STATE: (state, model) => {
-            state.model = model;
-        },
-        SET_CAR_TO_STATE: (state, car) => {
-            state.car = {};
-            state.car = car;
-        },
-        EDIT_CAR_ON_STATE: () => {
-            alert("изменения сохранены!");
-        },
-        ADD_CAR_TO_STATE: (state) => {
-            state.totals = state.totals + 1;
-            state.car = {};
-        },
-        ADD_CAR_IMAGE: (state, file) => {
-            if(!state.car.images) {state.car.images = []}
-            if(!state.car.imagesServer) {state.car.imagesServer = []}
-
-            state.car.images.push(file.dataURL);
-            state.car.imagesServer.push(file.upload.filename);
-        },
-        SET_EDIT_COLUMN_PARAM: (state, param) => {
-            state.cars[param.car][param.name] = param.edits;
-            alert("Изменения сохранены!");
-        },
-        DELETE_THIS_CAR: (state, carId) => {
-            state.totals = state.totals - 1;
-            state.cars.splice(carId, 1);
-            alert("Авто удалено!");
+        MODEL(state) {
+            return state.model;
         }
     },
     actions: {
-        async GET_SPARE_PARTS_STATISTICS({commit}, param) {
-            commit('LOCK_UI');
-            return axios.post(
-                '/index.php?route=api/spare_parts_statistics/index',
-                {
-                    key: KEYS,
-                    page: param,
-                }
-            )
-                .then((response) => {
-                    commit('UN_LOCK_UI');
-                    commit('SET_SPARE_PARTS_STATISTICS_TO_STATE', response.data.sparePartsStatistics);
-                    return response.data.sparePartsStatistics;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    return error;
-                });
-        },
-
-        GET_SPARE_PARTS_STATISTICS_TOTALS({commit}) {
-            return  axios.post(
-                '/index.php?route=api/spare_parts_statistics/index/totals',
-                {
-                    key: KEYS,
-                }
-            )
-                .then((response) => {
-                    commit('SET_TOTALS_SPARE_PARTS_STATISTICS', response.data.totalsSparePartsStatistics);
-                    return response.data.totalsSparePartsStatistics;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    return error;
-                });
-        },
-
-        GET_SPARE_PARTS_STATISTICS_DAY({commit}) {
-            commit('LOCK_UI');
-            return  axios.post(
-                '/index.php?route=api/spare_parts_statistics/index/day',
-                {
-                    key: KEYS,
-                }
-            )
-                .then((response) => {
-                    commit('UN_LOCK_UI');
-                    commit('SET_DAY_SPARE_PARTS_STATISTICS', response.data.sparePartsStatisticsDay);
-                    return response.data.sparePartsStatisticsDay;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    return error;
-                });
-        },
-
         GET_CARS_FROM_API({commit}, param) {
             return axios.post(
                 '/index.php?route=api/auto/cars',
@@ -283,35 +180,46 @@ const store = new Vuex.Store({
                 });
         }
     },
-    getters: {
-        IS_UI_LOCKED(state) {
-            return state.lockingPool > 0
+    mutations: {
+        SET_CARS_TO_STATE: (state, cars) => {
+            state.car = {};
+            state.cars = cars;
         },
-        CARS(state) {
-            return state.cars;
+        SET_TOTALS_TO_STATE: (state, totals) => {
+            state.totals = totals;
         },
-        SPARE_PARTS_STATISTICS(state) {
-            return state.sparePartsStatistics;
+        SET_MARKA_TO_STATE: (state, marka) => {
+            state.marka = marka;
         },
-        CAR(state) {
-            return state.car;
+        SET_MODEL_TO_STATE: (state, model) => {
+            state.model = model;
         },
-        TOTALS(state) {
-            return state.totals;
+        SET_CAR_TO_STATE: (state, car) => {
+            state.car = {};
+            state.car = car;
         },
-        TOTALS_SPARE_PARTS_STATISTICS(state) {
-            return state.totalsSparePartsStatistics;
+        EDIT_CAR_ON_STATE: () => {
+            alert("изменения сохранены!");
         },
-        SPARE_PARTS_STATISTICS_DAY(state) {
-            return state.sparePartsStatisticsDay;
+        ADD_CAR_TO_STATE: (state) => {
+            state.totals = state.totals + 1;
+            state.car = {};
         },
-        MARKA(state) {
-            return state.marka;
+        ADD_CAR_IMAGE: (state, file) => {
+            if(!state.car.images) {state.car.images = []}
+            if(!state.car.imagesServer) {state.car.imagesServer = []}
+
+            state.car.images.push(file.dataURL);
+            state.car.imagesServer.push(file.upload.filename);
         },
-        MODEL(state) {
-            return state.model;
+        SET_EDIT_COLUMN_PARAM: (state, param) => {
+            state.cars[param.car][param.name] = param.edits;
+            alert("Изменения сохранены!");
+        },
+        DELETE_THIS_CAR: (state, carId) => {
+            state.totals = state.totals - 1;
+            state.cars.splice(carId, 1);
+            alert("Авто удалено!");
         }
     }
-});
-
-export default store;
+}

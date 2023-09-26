@@ -47,7 +47,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters([
+    ...mapGetters('carAdmin', [
         'CARS',
         'TOTALS'
     ])
@@ -59,7 +59,7 @@ export default {
       this.GET_CARS_FROM_API(this.pageNum);
     },
 
-    ...mapActions([
+    ...mapActions('carAdmin', [
       'GET_CARS_FROM_API',
       'GET_CARS_TOTALS_FROM_API'
     ]),

@@ -139,7 +139,7 @@
     },
 
     computed: {
-      ...mapGetters([
+      ...mapGetters('carAdmin', [
         'CAR',
         'MARKA',
         'MODEL'
@@ -155,7 +155,7 @@
     },
 
     methods: {
-      ...mapActions([
+      ...mapActions('carAdmin', [
           'GET_CAR_FROM_API',
           'SET_CAR_FROM_API',
           'SET_CAR_IMAGE_FROM_USER',

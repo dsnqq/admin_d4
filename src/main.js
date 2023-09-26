@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import store from './vuex/store';
+import store from './vuex/index';
 import VueRouter from "vue-router";
 import router from './router/index';
 import Multiselect from 'vue-multiselect';
