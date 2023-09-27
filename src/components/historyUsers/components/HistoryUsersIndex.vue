@@ -68,6 +68,15 @@
             </tbody>
           </table>
         </div>
+        <div class="row">
+          <pagination
+              v-model="pageNum"
+              :records="userHistoryTotal"
+              :per-page="30"
+              @paginate="setPageByTotal"
+              :options="paginationOptions"
+          ></pagination>
+        </div>
       </div>
     </div>
   </div>
@@ -85,25 +94,70 @@
     },
 
     mounted() {
-      this.GET_USER_HISTORY(this.id);
+      this.GET_USER_HISTORY(this.param);
+      this.GET_USER_HISTORY_TOTAL(this.id);
     },
 
     computed: {
       ...mapGetters('historyUsers', [
-        'USER_HISTORY'
-      ])
+        'USER_HISTORY',
+        'USER_HISTORY_TOTAL'
+      ]),
+
+      userHistoryTotal: function () {
+        return parseInt(this.USER_HISTORY_TOTAL);
+      },
     },
 
     methods: {
       ...mapActions('historyUsers', [
-        'GET_USER_HISTORY'
+        'GET_USER_HISTORY',
+        'GET_USER_HISTORY_TOTAL'
       ]),
+
+      setPageByTotal: function(page) {
+        this.pageNum = page;
+        this.param.page = page;
+        this.GET_USER_HISTORY(this.param);
+      },
     },
 
     data() {
       return {
         id: this.$route.params.id,
+        pageNum: 1,
+        paginationOptions: {
+          chunk: 6,
+          texts: {
+            count: 'Отображается с {from} по {to} (всего {count} шт.)|{count}',
+          }
+        },
+        param: {
+          user_id: this.$route.params.id,
+          page: 1,
+        }
       };
     }
   }
 </script>
+
+<style lang="scss">
+.VuePagination {
+  margin-top: 15px;
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+</style>
+
+<style lang="scss" scoped>
+@import "./src/components/historyUsers/components/style/history-users-index.scss"
+</style>

@@ -5,7 +5,9 @@ export default {
     namespaced: true,
     state: {
         userHistoryList: {},
-        userHistory: {}
+        userHistory: {},
+        userHistoryTotal: 0,
+        lockingPool: 0
     },
     getters: {
         USER_HISTORY_LIST(state) {
@@ -14,9 +16,16 @@ export default {
         USER_HISTORY(state) {
             return state.userHistory;
         },
+        USER_HISTORY_TOTAL(state) {
+            return state.userHistoryTotal;
+        },
+        IS_UI_LOCKED(state) {
+            return state.lockingPool > 0
+        },
     },
     actions: {
         GET_USER_HISTORY_LIST({commit}, param) {
+            commit('LOCK_UI');
             return axios.post(
                 '/index.php?route=api/history_users/index',
                 {
@@ -25,6 +34,7 @@ export default {
                 }
             )
                 .then((response) => {
+                    commit('UN_LOCK_UI');
                     commit('SET_USER_HISTORY_LIST', response.data.userHistoryList);
                     return response.data.userHistoryList;
                 })
@@ -33,16 +43,35 @@ export default {
                     return error;
                 });
         },
-        GET_USER_HISTORY({commit}, user_id) {
+        GET_USER_HISTORY({commit}, param) {
+            commit('LOCK_UI');
             return axios.post(
-                '/index.php?route=api/history_users/index/' + user_id,
+                '/index.php?route=api/history_users/index/' + param.user_id,
+                {
+                    page: param.page,
+                    key: KEYS,
+                }
+            )
+                .then((response) => {
+                    commit('UN_LOCK_UI');
+                    commit('SET_USER_HISTORY', response.data.userHistory);
+                    return response.data.userHistory;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    return error;
+                });
+        },
+        GET_USER_HISTORY_TOTAL({commit}, user_id) {
+            return axios.post(
+                '/index.php?route=api/history_users/index/' + user_id + '/total',
                 {
                     key: KEYS,
                 }
             )
                 .then((response) => {
-                    commit('SET_USER_HISTORY', response.data.userHistory);
-                    return response.data.userHistory;
+                    commit('SET_USER_HISTORY_TOTAL', response.data.userHistoryTotal);
+                    return response.data.userHistoryTotal;
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -56,6 +85,15 @@ export default {
         },
         SET_USER_HISTORY: (state, userHistory) => {
             state.userHistory = userHistory;
+        },
+        SET_USER_HISTORY_TOTAL: (state, userHistoryTotal) => {
+            state.userHistoryTotal = userHistoryTotal;
+        },
+        LOCK_UI: (state) => {
+            state.lockingPool++;
+        },
+        UN_LOCK_UI: (state) => {
+            state.lockingPool--;
         },
     },
 }

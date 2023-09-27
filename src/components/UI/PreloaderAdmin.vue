@@ -10,13 +10,14 @@
 <script>
   import tireStatistics from "@/vuex/modules/tireStatistics/tireStatistics";
   import sparePartsStatistics from "@/vuex/modules/sparePartsStatistics/sparePartsStatistics";
+  import historyUsers from "@/vuex/modules/historyUsers/historyUsers";
 
   export default {
     name: 'PreloaderAdmin',
 
     computed: {
       isUiLocked: function (){
-        return sparePartsStatistics.state.lockingPool == 1 || tireStatistics.state.lockingPool == 1;
+        return sparePartsStatistics.state.lockingPool == 1 || tireStatistics.state.lockingPool == 1  || historyUsers.state.lockingPool == 1;
       }
     },
   }

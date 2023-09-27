@@ -31,7 +31,7 @@ export default {
     PreloaderAdmin,
   },
 
-  mounted() {
+  updated() {
     if(this.$route.name == 'historyUsersIndex'){
       this.Breadcrumb = false;
     }
