@@ -39,7 +39,11 @@
                       </div>
                       <div class="col-12">
                         <div class="d-grid">
-                          <button type="submit" class="btn btn-primary radius-30">Войти</button>
+                          <button
+                              type="submit"
+                              class="btn btn-primary radius-30"
+                              v-on:click.prevent="loginEnter"
+                          >Войти</button>
                         </div>
                       </div>
                       <div class="col-12">
@@ -60,5 +64,11 @@
 <script>
   export default {
     name: "AuthAdmin",
+
+    methods: {
+      loginEnter: function () {
+        this.$emit('setLoginTrue');
+      }
+    }
   }
 </script>

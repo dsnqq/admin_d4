@@ -4,6 +4,7 @@
       v-if="login"
     />
     <AuthAdmin
+        @setLoginTrue="setLoginTrue"
         v-else
     />
   </div>
@@ -21,9 +22,22 @@ export default {
     AuthAdmin,
   },
 
+  mounted() {
+    if(localStorage.login) {
+      this.login = true;
+    }
+  },
+
   computed: {
     isUserLogin: function () {
       return false;
+    }
+  },
+
+  methods: {
+    setLoginTrue: function () {
+      this.login = true;
+      localStorage.login = this.login;
     }
   },
 
