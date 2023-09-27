@@ -13,6 +13,11 @@
         </ol>
       </nav>
     </div>
+    <div class="ms-auto">
+      <div class="btn-group">
+        <slot name="buttons"></slot>
+      </div>
+    </div>
     <!---
     Место под кнопки на всех страницах
     <div class="ms-auto">

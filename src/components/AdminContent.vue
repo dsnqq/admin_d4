@@ -6,7 +6,9 @@
       <SidebarAdmin />
 
       <main class="page-content">
-        <BreadcrumbAdmin />
+        <BreadcrumbAdmin
+            v-if="Breadcrumb"
+        />
         <router-view></router-view>
       </main>
     </div>
@@ -28,5 +30,17 @@ export default {
     BreadcrumbAdmin,
     PreloaderAdmin,
   },
+
+  mounted() {
+    if(this.$route.name == 'historyUsersIndex'){
+      this.Breadcrumb = false;
+    }
+  },
+
+  data() {
+    return {
+      Breadcrumb: true,
+    }
+  }
 }
 </script>

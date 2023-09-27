@@ -1,3 +1,8 @@
 .table-border-1 td {
   border-width: 1px;
 }
+
+.table-center-td td {
+  vertical-align: middle;
+  text-align: center;
+}
