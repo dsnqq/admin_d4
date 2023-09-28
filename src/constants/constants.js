@@ -59,8 +59,6 @@ export const LIST_ITEM_COLUMN = [
 
 // SET column for Edit on List
 export const LIST_COLUMN_EDIT = [
-    "marka",
-    "model",
     "vin",
     "country"
 ];

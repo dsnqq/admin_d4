@@ -36,7 +36,8 @@ export default {
       let noBreadcrumbAdmin = [
           'historyUsersIndex',
           'carsAdmin',
-          'carDetail'
+          'carDetail',
+          'carCreate'
       ];
 
       return (noBreadcrumbAdmin.includes(this.$route.name)) ? false : true;
