@@ -141,23 +141,6 @@
   }
 </script>
 
-<style lang="scss">
-.VuePagination {
-  margin-top: 15px;
-
-  nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0;
-  }
-
-  p {
-    margin: 0;
-  }
-}
-</style>
-
 <style lang="scss" scoped>
-@import "./src/components/historyUsers/components/style/history-users-index.scss"
+@import "./src/components/historyUsers/components/style/history-users-index.scss";
 </style>

@@ -54,5 +54,8 @@ export default {
 @import "../src/assets/css/bootstrap-extended.css";
 @import "../src/assets/css/style.css";
 @import "../src/assets/css/icons.css";
+</style>
+
+<style lang="scss">
 @import "../src/assets/scss/style.scss";
 </style>

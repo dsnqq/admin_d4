@@ -56,34 +56,14 @@
             </tbody>
           </table>
         </div>
-        <div
-            class="row"
-            v-if="TOTALS_SPARE_PARTS_STATISTICS > 10"
-        >
-          <div class="col-sm-12 col-md-5">
-            <div class="dataTables_paginate paging_simple_numbers">
-              <ul class="pagination">
-                <li
-                    class="paginate_button page-item"
-                    v-for="(total, index) in allPage"
-                    :key="index"
-                    :class="{'active': total == pageNum}"
-                >
-                  <a
-                      class="page-link"
-                      v-on:click.prevent="setPageByTotal(total)"
-                  >
-                    {{total}}
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-12 col-md-7">
-            <div class="dataTables_info">
-              Показано с 1 по 10 (всего {{TOTALS_SPARE_PARTS_STATISTICS}} записей)
-            </div>
-          </div>
+        <div class="row">
+          <pagination
+              v-model="pageNum"
+              :records="sparePartsStatisticsTotal"
+              :per-page="100"
+              @paginate="setPageByTotal"
+              :options="paginationOptions"
+          ></pagination>
         </div>
       </div>
     </div>
@@ -107,7 +87,11 @@
         'SPARE_PARTS_STATISTICS',
         'TOTALS_SPARE_PARTS_STATISTICS',
         'IS_UI_LOCKED',
-      ])
+      ]),
+
+      sparePartsStatisticsTotal: function () {
+        return parseInt(this.TOTALS_SPARE_PARTS_STATISTICS);
+      },
     },
 
 
@@ -117,36 +101,8 @@
         'GET_SPARE_PARTS_STATISTICS_TOTALS'
       ]),
 
-      getPaginationPagesList: function (){
-        let addPage = 1;
-
-        if(this.pageNum != this.allPage[0] && this.pageNum != this.allPage[1]) {
-          let lastElement = this.allPage.at(-1);
-          this.allPage = this.allPage.slice(1);
-
-          while (addPage) {
-            lastElement++;
-            this.allPage.push(lastElement);
-            addPage--;
-          }
-        } else if(this.pageNum == this.allPage[0]) {
-          let firstElement = this.allPage.at(0);
-
-          if(firstElement >= 2) {
-            this.allPage.pop();
-
-            while (addPage) {
-              firstElement--;
-              this.allPage.unshift(firstElement);
-              addPage--;
-            }
-          }
-        }
-      },
-
       setPageByTotal: function(page) {
         this.pageNum = page;
-        this.getPaginationPagesList();
         this.GET_SPARE_PARTS_STATISTICS(this.pageNum);
       },
 
@@ -159,7 +115,12 @@
       return {
         domain: DOMAIN,
         pageNum: 1,
-        allPage: [1,2,3,4,5,6],
+        paginationOptions: {
+          chunk: 6,
+          texts: {
+            count: 'Отображается с {from} по {to} (всего {count} шт.)|{count}',
+          }
+        },
       };
     }
   }
