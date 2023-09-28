@@ -1,0 +1,32 @@
+.product-box-image-flex {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 170px;
+}
+
+.product-box-image {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  cursor: pointer;
+  overflow: hidden;
+  max-width: 170px;
+
+  &--small {
+    max-width: 50px;
+    margin:3px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  img {
+    width: 100%;
+  }
+}
