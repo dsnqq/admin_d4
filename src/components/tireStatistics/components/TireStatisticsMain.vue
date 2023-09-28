@@ -57,13 +57,13 @@
           </table>
         </div>
         <div class="row">
-          <pagination
+          <v-pagination
               v-model="pageNum"
               :records="tireStatisticsTotal"
               :per-page="100"
               @paginate="setPageByTotal"
               :options="paginationOptions"
-          ></pagination>
+          ></v-pagination>
         </div>
       </div>
     </div>

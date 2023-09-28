@@ -9,7 +9,7 @@ import Pagination from 'vue-pagination-2';
 
 Vue.config.productionTip = false
 Vue.use(VueRouter);
-Vue.component('pagination', Pagination);
+Vue.component('v-pagination', Pagination);
 Vue.component('v-multiselect', Multiselect);
 
 new Vue({

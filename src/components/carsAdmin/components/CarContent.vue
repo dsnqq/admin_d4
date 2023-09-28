@@ -25,13 +25,13 @@
             v-if="this.TOTALS > 10"
             class="row"
         >
-          <pagination
+          <v-pagination
               v-model="pageNum"
               :records="getCarsTotals"
               :per-page="10"
               @paginate="setPageByTotal"
               :options="paginationOptions"
-          ></pagination>
+          ></v-pagination>
         </div>
       </div>
     </div>
