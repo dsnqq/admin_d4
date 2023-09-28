@@ -80,6 +80,14 @@ const routes = [
         name: 'authAdmin',
         component: () => import('../components/authAdmin/AuthAdmin.vue'),
     },
+    {
+        path: '*',
+        name: 'notFound',
+        meta: {
+            title: 'Здесь ничего нет',
+        },
+        component: () => import('../components/NotFound.vue'),
+    },
 ];
 
 export default new VueRouter({
