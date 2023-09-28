@@ -36,17 +36,17 @@
               <td>
                 {{ tireStatisticsItem.views }}
               </td>
-              <td>
+              <td class="fs-6">
                 <a
                     target="_blank"
-                    class="p-2 theme-icons"
+                    class="p-2 theme-icons text-primary"
                     :href="domain + tireStatisticsItem.linkSite"
                 >
                   <i class="bx bx-show"></i>
                 </a>
                 <a
                     target="_blank"
-                    class="p-2 theme-icons"
+                    class="p-2 theme-icons text-warning"
                     :href="domain + tireStatisticsItem.linkEdit"
                 >
                   <i class="bx bx-pencil"></i>
@@ -89,7 +89,7 @@
         'IS_UI_LOCKED',
       ]),
 
-      tireStatisticsTotal: function () {
+      tireStatisticsTotal() {
         return parseInt(this.TOTALS_TIRE_STATISTICS);
       },
     },
@@ -101,7 +101,7 @@
         'GET_TIRE_STATISTICS_TOTALS'
       ]),
 
-      setPageByTotal: function(page) {
+      setPageByTotal(page) {
         this.pageNum = page;
         this.GET_TIRE_STATISTICS(this.pageNum);
       },

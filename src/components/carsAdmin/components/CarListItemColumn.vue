@@ -1,5 +1,5 @@
 <template>
-  <div class="car-list-wrapper-column">
+  <td class="car-list-wrapper-column">
     <template v-if="this.name === 'images'">
       <div
           v-if="store[this.name]"
@@ -20,14 +20,20 @@
       </div>
     </template>
     <template v-else-if="this.name === 'action'">
-      <router-link
-          :to="`/car/${store.product_id}`"
-          class="btn car-list-wrapper-column__link"
-      >Редактировать</router-link>
-      <span
-          v-on:click="removeCar(store.product_id)"
-          class="btn car-list-wrapper-column__remove"
-      >Удалить</span>
+      <div class="table-actions d-flex align-items-center gap-2 fs-6">
+        <router-link
+            :to="`/car/${store.product_id}`"
+            class="p-2 text-warning"
+        >
+          <i class="bx bx-pencil"></i>
+        </router-link>
+        <a
+            v-on:click.prevent="removeCar(store.product_id)"
+            class="p-2 text-danger"
+        >
+          <i class="bi bi-trash-fill"></i>
+        </a>
+      </div>
     </template>
     <template v-else>
       <template v-if="!columnEdit && store[this.name] !== 'undefined'">
@@ -74,7 +80,7 @@
           </button>
       </span>
     </template>
-  </div>
+  </td>
 </template>
 
 <script>
@@ -91,7 +97,7 @@ export default {
         'CARS'
     ]),
 
-    editThisColumnOnList: function () {
+    editThisColumnOnList() {
       return LIST_COLUMN_EDIT.includes(this.name);
     }
   },
@@ -102,7 +108,7 @@ export default {
         'DELET_CAR_BY_API'
     ]),
 
-    setEditThisColumnOnList: function () {
+    setEditThisColumnOnList() {
       if(this.columnEdit && this.edits !== null && this.edits !== "" && this.edits !== this.store[this.name]) {
         let xForm = new FormData();
         let id = this.store.product_id;
@@ -123,7 +129,7 @@ export default {
       this.columnEdit = !this.columnEdit;
     },
 
-    removeCar: function(carId) {
+    removeCar(carId) {
       if(confirm("Вы действительно хотите удалить данное авто ?")) {
         let param = {
           carId: carId,

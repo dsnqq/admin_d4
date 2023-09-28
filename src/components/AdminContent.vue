@@ -32,8 +32,14 @@ export default {
   },
 
   computed: {
-    getBreadcrumbBool: function () {
-      return (this.$route.name == 'historyUsersIndex') ? false : true;
+    getBreadcrumbBool() {
+      let noBreadcrumbAdmin = [
+          'historyUsersIndex',
+          'carsAdmin',
+          'carDetail'
+      ];
+
+      return (noBreadcrumbAdmin.includes(this.$route.name)) ? false : true;
     }
   }
 }

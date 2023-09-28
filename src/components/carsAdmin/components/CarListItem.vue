@@ -1,15 +1,13 @@
 <template>
-  <div>
+  <tr>
     <CarListItemColumn
         v-for="(itemColumn, index) in LIST_ITEM_COLUMN"
         :key="index"
         :name="itemColumn"
         :store="store"
         :number="number"
-        :class="{'car-list-wrapper-column--is-images': isColumnImage(itemColumn)}"
-        class="car-list-wrapper__column"
     />
-  </div>
+  </tr>
 </template>
 
 <script>
@@ -21,12 +19,6 @@
 
     components: {
       CarListItemColumn
-    },
-
-    methods: {
-      isColumnImage: function(column) {
-        return column === "images";
-      }
     },
 
     data() {

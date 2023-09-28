@@ -1,125 +1,137 @@
 <template>
-  <div class="car-index">
-    <form>
-      <div class="car-index__wrapp car-index-wrapp">
-        <div class="car-index-wrapp__field car-index-field">
-          <router-link :to="{name: 'carsAdmin'}" class="car-index-field__back">Вернуться назад</router-link>
-        </div>
-        <div
-            v-for="fieldItem in TABLE_HEADS"
-            v-bind:key="fieldItem.id"
-            :class="{'car-index-wrapp__field car-index-field': fieldItem.index}"
+  <div>
+    <BreadcrumbAdmin>
+      <template v-slot:buttons>
+        <router-link
+            :to="{name: 'carsAdmin'}"
+            class="btn btn-primary"
         >
-          <template v-if="fieldItem.index">
-            <label for="car" class="car-index-field__label">{{fieldItem.name}}</label>
-            <div class="car-index-field__wrap">
-              <template v-if="fieldItem.type === 'input'">
-                <input
-                    type="text"
-                    :id="fieldItem.login"
-                    :placeholder="fieldItem.name"
-                    class="car-index-field__input"
-                    v-model="CAR[fieldItem.login]"
-                />
-              </template>
-              <template v-else-if="fieldItem.type === 'select'">
-                <v-multiselect
-                    v-if="fieldItem.options"
-                    v-model="CAR[fieldItem.login]"
-                    :options="fieldItem.options"
-                    class="car-index-field__select"
-                ></v-multiselect>
-                <v-multiselect
-                    v-else-if="fieldItem.optionsMarka"
-                    v-model="CAR[fieldItem.login]"
-                    :options="MARKA"
-                    @input="getModelByMarkaApi"
-                    class="car-index-field__select"
-                ></v-multiselect>
-                <v-multiselect
-                    v-else-if="fieldItem.optionsModel"
-                    v-model="CAR[fieldItem.login]"
-                    :options="MODEL"
-                    class="car-index-field__select"
-                ></v-multiselect>
-              </template>
-            </div>
-          </template>
-        </div>
-        <div class="car-index-wrapp__field car-index-field">
-          <label for="color" class="car-index-field__label">Фото</label>
-          <div class="car-index-field__wrap car-index-field-wrap">
-            <div class="car-index-field-wrap__photos car-index-photo-list">
-              <template v-if="CAR.images">
-                <div
-                    v-for="(image, index) in CAR.images"
-                    v-bind:key="index"
-                    class="car-index-photo-list__item car-index-photo-item"
-                >
-                  <img
-                      :src="isImageUrlLocalOrServer(image)"
-                      class="car-index-photo-item__image"
-                  />
-                  <div
-                      v-on:click="removeImgDop(index)"
-                      class="car-index-photo-item__del"
-                  >Удалить</div>
+          Вернуться назад
+        </router-link>
+      </template>
+    </BreadcrumbAdmin>
+    <div class="card">
+      <div class="card-body">
+        <form>
+          <div class="car-index__wrapp car-index-wrapp">
+            <div
+                v-for="fieldItem in TABLE_HEADS"
+                v-bind:key="fieldItem.id"
+                :class="{'car-index-wrapp__field car-index-field': fieldItem.index}"
+            >
+              <template v-if="fieldItem.index">
+                <label for="car" class="car-index-field__label">{{fieldItem.name}}</label>
+                <div class="car-index-field__wrap">
+                  <template v-if="fieldItem.type === 'input'">
+                    <input
+                        type="text"
+                        :id="fieldItem.login"
+                        :placeholder="fieldItem.name"
+                        class="car-index-field__input"
+                        v-model="CAR[fieldItem.login]"
+                    />
+                  </template>
+                  <template v-else-if="fieldItem.type === 'select'">
+                    <v-multiselect
+                        v-if="fieldItem.options"
+                        v-model="CAR[fieldItem.login]"
+                        :options="fieldItem.options"
+                        class="car-index-field__select"
+                    ></v-multiselect>
+                    <v-multiselect
+                        v-else-if="fieldItem.optionsMarka"
+                        v-model="CAR[fieldItem.login]"
+                        :options="MARKA"
+                        @input="getModelByMarkaApi"
+                        class="car-index-field__select"
+                    ></v-multiselect>
+                    <v-multiselect
+                        v-else-if="fieldItem.optionsModel"
+                        v-model="CAR[fieldItem.login]"
+                        :options="MODEL"
+                        class="car-index-field__select"
+                    ></v-multiselect>
+                  </template>
                 </div>
               </template>
             </div>
-            <button
+            <div class="car-index-wrapp__field car-index-field">
+              <label for="color" class="car-index-field__label">Фото</label>
+              <div class="car-index-field__wrap car-index-field-wrap">
+                <div class="car-index-field-wrap__photos car-index-photo-list">
+                  <template v-if="CAR.images">
+                    <div
+                        v-for="(image, index) in CAR.images"
+                        v-bind:key="index"
+                        class="car-index-photo-list__item car-index-photo-item"
+                    >
+                      <img
+                          :src="isImageUrlLocalOrServer(image)"
+                          class="car-index-photo-item__image"
+                      />
+                      <div
+                          v-on:click="removeImgDop(index)"
+                          class="car-index-photo-item__del"
+                      >Удалить</div>
+                    </div>
+                  </template>
+                </div>
+                <button
 
 
-                class="car-index-field-wrap__btn btn btn-primary"
-            >Добавить фото</button>
-          </div>
-        </div>
-        <div class="car-index-wrapp__field car-index-field car-index-field--is-btn">
-          <button
-              v-if="isCreatedPage"
-              v-on:click.prevent="setCarFromApi"
-              class="btn btn-primary"
-          >Добавить объявление</button>
-          <button
-              v-if="isEditPage"
-              v-on:click.prevent="editCar"
-              class="btn btn-success"
-          >Сохранить и продолжить редактирование</button>
-          <router-link :to="{name: 'carsAdmin'}">
-            <button class="btn btn-info">Выйти без сохранения</button>
-          </router-link>
-        </div>
-      </div>
-      <div
-          class="modal-mask"
-           v-show="showModal"
-      >
-        <div class="modal-wrapper">
-          <div class="modal-container">
-            <div class="modal-body">
-              <button class="modal-default-button" v-on:click.prevent="modalCarPhotoFade">
-                X
-              </button>
-              <vue-dropzone
-                  v-on:vdropzone-sending="sendingEvent"
-                  :options="dropzoneOptions"
-                  ref="myVueDropzone"
-                  id="dropzone"
-              ></vue-dropzone>
+                    class="car-index-field-wrap__btn btn btn-primary"
+                >Добавить фото</button>
+              </div>
+            </div>
+            <div class="car-index-wrapp__field car-index-field car-index-field--is-btn">
               <button
-                  v-on:click.prevent="sendingDropzonePhoto"
-                  class="btn btn-info"
-                  id="submit-all"
-              >Загрузить изображения</button>
+                  v-if="isCreatedPage"
+                  v-on:click.prevent="setCarFromApi"
+                  class="btn btn-primary"
+              >Добавить объявление</button>
+              <button
+                  v-if="isEditPage"
+                  v-on:click.prevent="editCar"
+                  class="btn btn-success"
+              >Сохранить и продолжить редактирование</button>
+              <router-link :to="{name: 'carsAdmin'}">
+                <button class="btn btn-info">Выйти без сохранения</button>
+              </router-link>
             </div>
           </div>
-        </div>
+          <div
+              class="modal-mask"
+               v-show="showModal"
+          >
+            <div class="modal-wrapper">
+              <div class="modal-container">
+                <div class="modal-body">
+                  <button class="modal-default-button" v-on:click.prevent="modalCarPhotoFade">
+                    X
+                  </button>
+                  <vue-dropzone
+                      v-on:vdropzone-sending="sendingEvent"
+                      :options="dropzoneOptions"
+                      ref="myVueDropzone"
+                      id="dropzone"
+                  ></vue-dropzone>
+                  <button
+                      v-on:click.prevent="sendingDropzonePhoto"
+                      class="btn btn-info"
+                      id="submit-all"
+                  >Загрузить изображения</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 
 <script>
+  import BreadcrumbAdmin from "@/components/BreadcrumbAdmin.vue";
   import {mapActions, mapGetters} from "vuex";
   import {DOMAIN, TABLE_HEADS} from "../../../constants/constants";
   import vue2Dropzone from 'vue2-dropzone'
@@ -128,7 +140,8 @@
     name: "CarIndex",
 
     components: {
-      vueDropzone: vue2Dropzone
+      vueDropzone: vue2Dropzone,
+      BreadcrumbAdmin
     },
 
     mounted() {
@@ -145,11 +158,11 @@
         'MODEL'
       ]),
 
-      isCreatedPage: function() {
+      isCreatedPage() {
         return this.$route.name === "carCreate";
       },
 
-      isEditPage: function() {
+      isEditPage() {
         return this.$route.name === "carDetail";
       },
     },
@@ -164,11 +177,11 @@
           'GET_MODEL_FROM_API'
       ]),
 
-      getModelByMarkaApi: function () {
+      getModelByMarkaApi() {
         this.GET_MODEL_FROM_API(this.CAR.marka);
       },
 
-      isImageUrlLocalOrServer: function (image) {
+      isImageUrlLocalOrServer(image) {
         if(image.substr(0, 4) === "data") {
           return image;
         }
@@ -176,12 +189,12 @@
         return this.domain + `/image/` + image;
       },
 
-      removeImgDop: function(index) {
+      removeImgDop(index) {
         this.CAR.images.splice(index, 1);
         this.CAR.imagesServer.splice(index, 1);
       },
 
-      getFormDataAboutCar: function() {
+      getFormDataAboutCar() {
         let xForm = new FormData();
 
         if(this.CAR.name !== undefined){
@@ -227,13 +240,13 @@
         return xForm;
       },
 
-      setCarFromApi: function() {
+      setCarFromApi() {
         let postCarInformation = this.getFormDataAboutCar();
         this.SET_CAR_FROM_API(postCarInformation);
         this.$refs.myVueDropzone.removeAllFiles();
       },
 
-      editCar: function() {
+      editCar() {
         let postCarInformation = {
           car: this.getFormDataAboutCar(),
           id: this.id
@@ -242,16 +255,16 @@
         this.EDIT_CAR_FROM_API(postCarInformation);
       },
 
-      modalCarPhotoFade: function() {
+      modalCarPhotoFade() {
         this.showModal = !this.showModal;
       },
 
-      sendingEvent: function(file) {
+      sendingEvent(file) {
         this.showModal = false;
         this.SET_CAR_IMAGE_FROM_USER(file);
       },
 
-      sendingDropzonePhoto: function() {
+      sendingDropzonePhoto() {
         this.$refs.myVueDropzone.processQueue();
       },
     },

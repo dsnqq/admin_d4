@@ -20,7 +20,7 @@
                 Статус
               </th>
               <th
-                  class="text-end"
+                  class="text-center"
                   scope="col"
               >
                 Действие
@@ -41,12 +41,12 @@
                 <td class="text-center">
                   {{ getStatusUser(userItem.status) }}
                 </td>
-                <td class="text-end">
+                <td class="text-center">
                   <router-link
                       :to="`/history-users/${userItem.user_id}`"
-                      class="btn btn-info"
+                      class="text-primary"
                   >
-                    Смотреть
+                    <i class="bi bi-eye-fill"></i>
                   </router-link>
                 </td>
               </tr>
@@ -79,7 +79,7 @@ export default {
       'GET_USER_HISTORY_LIST',
     ]),
 
-    getStatusUser: function (status) {
+    getStatusUser(status) {
       return (status == 1) ? 'Активно' : 'Неактивно';
     }
   }

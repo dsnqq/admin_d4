@@ -4,7 +4,7 @@
       <template v-slot:buttons>
         <router-link
             :to="{name: 'historyUsers'}"
-            class="btn btn-dark"
+            class="btn btn-primary"
         >
           Вернуться назад
         </router-link>
@@ -104,7 +104,7 @@
         'USER_HISTORY_TOTAL'
       ]),
 
-      userHistoryTotal: function () {
+      userHistoryTotal() {
         return parseInt(this.USER_HISTORY_TOTAL);
       },
     },
@@ -115,7 +115,7 @@
         'GET_USER_HISTORY_TOTAL'
       ]),
 
-      setPageByTotal: function(page) {
+      setPageByTotal(page) {
         this.pageNum = page;
         this.param.page = page;
         this.GET_USER_HISTORY(this.param);

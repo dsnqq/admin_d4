@@ -1,13 +1,12 @@
 <template>
-  <div class="car-list-head">
-    <div
-        class="car-list-head__column"
+  <tr>
+    <th
         v-for="tableHeadItem in TABLE_HEADS"
         :key="tableHeadItem.id"
     >
       {{tableHeadItem.name}}
-    </div>
-  </div>
+    </th>
+  </tr>
 </template>
 
 <script>
