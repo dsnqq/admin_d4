@@ -7,7 +7,7 @@
 
       <main class="page-content">
         <BreadcrumbAdmin
-            v-if="Breadcrumb"
+            v-if="getBreadcrumbBool"
         />
         <router-view></router-view>
       </main>
@@ -31,15 +31,9 @@ export default {
     PreloaderAdmin,
   },
 
-  updated() {
-    if(this.$route.name == 'historyUsersIndex'){
-      this.Breadcrumb = false;
-    }
-  },
-
-  data() {
-    return {
-      Breadcrumb: true,
+  computed: {
+    getBreadcrumbBool: function () {
+      return (this.$route.name == 'historyUsersIndex') ? false : true;
     }
   }
 }
