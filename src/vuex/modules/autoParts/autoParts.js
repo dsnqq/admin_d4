@@ -51,6 +51,10 @@ export default {
                     return error;
                 });
         },
+
+        SET_SHOW_ALL_IMAGE({commit}, id){
+            commit('SHOW_ALL_IMAGE_BY_ID', id);
+        },
     },
     mutations: {
         SET_AUTO_PARTS_TO_STATE: (state, autoParts) => {
@@ -59,6 +63,13 @@ export default {
         },
         SET_AUTO_PARTS_TOTALS_STATE: (state, autoPartsTotals) => {
             state.autoPartsTotals = autoPartsTotals;
+        },
+        SHOW_ALL_IMAGE_BY_ID: (state, id) => {
+            state.autoParts[id].imagesShowAllImage = true;
+
+            for(let i = 0; i < state.autoParts[id].images.length; i++){
+                state.autoParts[id].images[i].imageShow = true;
+            }
         },
     }
 }
