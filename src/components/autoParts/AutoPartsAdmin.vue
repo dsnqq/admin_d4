@@ -1,22 +1,26 @@
 <template>
   <div class="card">
-    <div class="card-header py-3">
-      <!-- Тут фильтра и прочая история -->
-    </div>
-    <div class="card-body">
-      <AutoPartsList />
-    </div>
+    <component :is="autoPartsAdmin()"></component>
   </div>
 </template>
 
 <script>
-  import AutoPartsList from "@/components/autoParts/components/AutoPartsList.vue";
-
   export default {
     name: "AutoPartsAdmin",
 
     components: {
-      AutoPartsList
-    }
+      AutoPartsIndex: () => import("./components/AutoPartsIndex.vue"),
+      AutoPartsList: () => import("./components/AutoPartsList.vue"),
+    },
+
+    methods: {
+      autoPartsAdmin() {
+        if(this.$route.name === "autoPartsDetail"){
+          return 'AutoPartsIndex';
+        }
+
+        return 'AutoPartsList';
+      }
+    },
   }
 </script>

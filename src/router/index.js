@@ -20,6 +20,14 @@ const routes = [
         component: () => import('../components/autoParts/AutoPartsAdmin.vue'),
     },
     {
+        path: '/auto/:id',
+        name: 'autoPartsDetail',
+        meta: {
+            title: 'Автозапчасть',
+        },
+        component: () => import('../components/autoParts/AutoPartsAdmin.vue'),
+    },
+    {
         path: '/history-users',
         name: 'historyUsers',
         meta: {
