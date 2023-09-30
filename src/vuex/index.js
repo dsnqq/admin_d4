@@ -5,6 +5,7 @@ import sparePartsStatistics from './modules/sparePartsStatistics/sparePartsStati
 import tireStatistics from './modules/tireStatistics/tireStatistics';
 import historyUsers from './modules/historyUsers/historyUsers';
 import autoParts from './modules/autoParts/autoParts';
+import orderSale from './modules/orderSale/orderSale';
 
 Vue.use(Vuex);
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
         tireStatistics,
         historyUsers,
         autoParts,
+        orderSale,
     },
     strict: process.env.NODE_ENV === 'development'
 })

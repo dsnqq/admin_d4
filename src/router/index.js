@@ -89,6 +89,14 @@ const routes = [
         component: () => import('../components/authAdmin/AuthAdmin.vue'),
     },
     {
+        path: '/order-sale',
+        name: 'orderSale',
+        meta: {
+            title: 'Заказы',
+        },
+        component: () => import('../components/orderSale/OrderSale.vue'),
+    },
+    {
         path: '*',
         name: 'notFound',
         meta: {

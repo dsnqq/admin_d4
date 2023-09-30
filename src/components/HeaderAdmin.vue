@@ -26,12 +26,15 @@
             </a>
           </li>
           <li class="nav-item dropdown dropdown-large">
-            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret">
+            <router-link
+                :to="{name: 'orderSale'}"
+                class="nav-link dropdown-toggle dropdown-toggle-nocaret"
+            >
               <div class="notifications">
                 <span class="notify-badge">8</span>
                 <i class="bi bi-bell-fill"></i>
               </div>
-            </a>
+            </router-link>
           </li>
           <li class="nav-item dropdown dropdown-large">
             <a class="nav-link dropdown-toggle dropdown-toggle-nocaret">
