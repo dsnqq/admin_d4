@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import {TABLE_HEADS} from '../../../constants/constants';
+import {TABLE_HEADS} from '../constants/constants';
 export default {
   name: "CarListItemHead",
 

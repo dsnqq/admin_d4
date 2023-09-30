@@ -77,8 +77,7 @@
                   </template>
                 </div>
                 <button
-
-
+                    v-on:click.prevent="modalCarPhotoFade"
                     class="car-index-field-wrap__btn btn btn-primary"
                 >Добавить фото</button>
               </div>
@@ -133,7 +132,8 @@
 <script>
   import BreadcrumbAdmin from "@/components/BreadcrumbAdmin.vue";
   import {mapActions, mapGetters} from "vuex";
-  import {DOMAIN, TABLE_HEADS} from "../../../constants/constants";
+  import {DOMAIN} from "../../../constants/constants";
+  import {TABLE_HEADS} from "../constants/constants";
   import vue2Dropzone from 'vue2-dropzone'
 
   export default {

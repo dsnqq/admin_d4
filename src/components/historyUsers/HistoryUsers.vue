@@ -86,7 +86,3 @@ export default {
 
 }
 </script>
-
-<style lang="scss" scoped>
-@import "./src/components/historyUsers/style/history-users";
-</style>

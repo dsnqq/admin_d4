@@ -1,11 +1,11 @@
 <template>
   <div class="admin-content">
-    <PreloaderAdmin />
     <div class="wrapper">
       <HeaderAdmin />
       <SidebarAdmin />
 
       <main class="page-content">
+        <PreloaderAdmin />
         <BreadcrumbAdmin
             v-if="getBreadcrumbBool"
         />
@@ -37,7 +37,8 @@ export default {
           'historyUsersIndex',
           'carsAdmin',
           'carDetail',
-          'carCreate'
+          'carCreate',
+          'autoPartsDetail'
       ];
 
       return (noBreadcrumbAdmin.includes(this.$route.name)) ? false : true;

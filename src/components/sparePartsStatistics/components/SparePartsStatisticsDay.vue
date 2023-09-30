@@ -55,7 +55,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-@import "./src/components/sparePartsStatistics/components/style/spare-parts-statistics-day";
-</style>

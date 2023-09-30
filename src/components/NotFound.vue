@@ -6,11 +6,17 @@
           <div class="row g-0">
             <div class="col col-xl-5">
               <div class="card-body p-4">
-                <h1 class="display-1"><span class="text-danger">4</span><span class="text-primary">0</span><span class="text-success">4</span></h1>
+                <h1 class="display-1">
+                  <span class="text-danger">4</span>
+                  <span class="text-primary">0</span>
+                  <span class="text-success">4</span>
+                </h1>
                 <h2 class="font-weight-bold display-4">Здесь ничего нет</h2>
-                <p>Вы достигли края вселенной.
+                <p>
+                  Вы достигли края вселенной.
                   <br>Страница, которую вы ищете, не найдена.
-                  <br>Не волнуйтесь и вернитесь на предыдущую страницу.</p>
+                  <br>Не волнуйтесь и вернитесь на предыдущую страницу.
+                </p>
                 <div class="mt-5">
                   <router-link
                       :to="{name: 'dashboardAdmin'}"
@@ -25,7 +31,6 @@
               <img src="/assets/images/404-error.png" class="img-fluid" alt="">
             </div>
           </div>
-          <!--end row-->
         </div>
       </div>
     </div>

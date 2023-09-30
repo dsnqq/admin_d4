@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="card">
     <div class="card-header py-3">
       фильтра
     </div>
@@ -86,7 +86,12 @@
                 <div class="d-flex align-items-center gap-2 fs-6">
                   <a class="text-primary"><i class="bi bi-archive"></i></a>
                   <a class="text-primary"><i class="bi bi-eye-fill"></i></a>
-                  <a class="text-warning"><i class="bi bi-pencil-fill"></i></a>
+                  <router-link
+                      :to="`/auto/${auto.product_id}`"
+                      class="text-warning"
+                  >
+                  <i class="bi bi-pencil-fill"></i>
+                  </router-link>
                   <a class="text-primary"><i class="bi bi-camera"></i></a>
                   <a class="text-danger"><i class="bi bi-trash-fill"></i></a>
                 </div>

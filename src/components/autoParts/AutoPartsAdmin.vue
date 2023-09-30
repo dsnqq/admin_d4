@@ -1,7 +1,5 @@
 <template>
-  <div class="card">
     <component :is="autoPartsAdmin()"></component>
-  </div>
 </template>
 
 <script>

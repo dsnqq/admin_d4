@@ -25,7 +25,7 @@ const routes = [
         meta: {
             title: 'Автозапчасть',
         },
-        component: () => import('../components/autoParts/AutoPartsAdmin.vue'),
+        component: () => import('../components/autoParts/components/AutoPartsIndex.vue'),
     },
     {
         path: '/history-users',

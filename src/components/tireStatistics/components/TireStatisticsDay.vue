@@ -7,23 +7,23 @@
         <div class="row">
           <table class="table mb-0 table-border-1">
             <thead>
-            <tr>
-              <th scope="col">Дата</th>
-              <th scope="col">Количество просмотров</th>
-            </tr>
+              <tr>
+                <th scope="col">Дата</th>
+                <th scope="col">Количество просмотров</th>
+              </tr>
             </thead>
             <tbody>
-            <tr
-                v-for="(tireStatisticsDay, i) in TIRE_STATISTICS_DAY"
-                :key="i"
-            >
-              <td>
-                {{tireStatisticsDay.date}}
-              </td>
-              <td>
-                {{tireStatisticsDay.count}} шт.
-              </td>
-            </tr>
+              <tr
+                  v-for="(tireStatisticsDay, i) in TIRE_STATISTICS_DAY"
+                  :key="i"
+              >
+                <td>
+                  {{tireStatisticsDay.date}}
+                </td>
+                <td>
+                  {{tireStatisticsDay.count}} шт.
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -55,7 +55,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-@import "./src/components/tireStatistics/components/style/tire-statistics-day";
-</style>

@@ -6,6 +6,7 @@ export default {
 
     state: {
         autoParts: {},
+        autoPartsIndex: {},
         autoPartsTotals: 0
     },
     getters: {
@@ -14,6 +15,9 @@ export default {
         },
         AUTO_PARTS_TOTALS(state) {
             return state.autoPartsTotals;
+        },
+        AUTO_PARTS_INDEX(state) {
+            return state.autoPartsIndex;
         },
     },
     actions: {
@@ -52,6 +56,24 @@ export default {
                 });
         },
 
+        GET_AUTO_PARTS_INDEX({commit}, param) {
+            return  axios.post(
+                '/index.php?route=api/auto_parts/auto/index/' + param.id,
+                {
+                    key: KEYS,
+                    param: param
+                }
+            )
+                .then((response) => {
+                    commit('SET_AUTO_PARTS_INDEX_STATE', response.data.autoPartsIndex);
+                    return response.data.autoPartsIndex;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    return error;
+                });
+        },
+
         SET_SHOW_ALL_IMAGE({commit}, id){
             commit('SHOW_ALL_IMAGE_BY_ID', id);
         },
@@ -63,6 +85,9 @@ export default {
         },
         SET_AUTO_PARTS_TOTALS_STATE: (state, autoPartsTotals) => {
             state.autoPartsTotals = autoPartsTotals;
+        },
+        SET_AUTO_PARTS_INDEX_STATE: (state, autoPartsIndex) => {
+            state.autoPartsIndex = autoPartsIndex;
         },
         SHOW_ALL_IMAGE_BY_ID: (state, id) => {
             state.autoParts[id].imagesShowAllImage = true;

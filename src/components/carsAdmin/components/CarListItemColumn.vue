@@ -71,7 +71,8 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
-import {LIST_COLUMN_EDIT, DOMAIN} from '../../../constants/constants';
+import {DOMAIN} from "../../../constants/constants";
+import {LIST_COLUMN_EDIT} from "../constants/constants";
 import Jquery from 'jquery'; // eslint-disable-line no-unused-vars
 import lightbox from 'lightbox2'; // eslint-disable-line no-unused-vars
 

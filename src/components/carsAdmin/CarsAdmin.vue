@@ -31,5 +31,4 @@ export default {
 
 <style lang="sass">
 @import "../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css"
-@import "./src/components/carsAdmin/style/main.scss"
 </style>
