@@ -24,26 +24,20 @@ export default {
 
   mounted() {
     if(localStorage.login) {
-      this.login = true;
-    }
-  },
-
-  computed: {
-    isUserLogin: function () {
-      return false;
+      this.login = localStorage.login;
     }
   },
 
   methods: {
-    setLoginTrue: function () {
+    setLoginTrue() {
       this.login = true;
       localStorage.login = this.login;
-    }
+    },
   },
 
   data() {
     return {
-      login: false
+      login: localStorage.login
     }
   }
 }

@@ -66,7 +66,7 @@
     name: "AuthAdmin",
 
     methods: {
-      loginEnter: function () {
+      loginEnter() {
         this.$emit('setLoginTrue');
       }
     }

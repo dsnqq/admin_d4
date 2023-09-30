@@ -1,7 +1,7 @@
 <template>
   <div class="admin-content">
     <div class="wrapper">
-      <HeaderAdmin />
+      <HeaderAdmin/>
       <SidebarAdmin />
 
       <main class="page-content">

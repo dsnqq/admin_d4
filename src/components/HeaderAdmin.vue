@@ -37,19 +37,25 @@
             </router-link>
           </li>
           <li class="nav-item dropdown dropdown-large">
-            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret">
-              <div class="d-flex align-items-center">
-                <div class="ms-3">
-                  <span>
-                    На главную
-                    <i class="bi bi-house-fill"></i>
-                  </span>
+              <router-link
+                  :to="{name: 'dashboardAdmin'}"
+                  class="nav-link dropdown-toggle dropdown-toggle-nocaret"
+              >
+                <div class="d-flex align-items-center">
+                  <div class="ms-3">
+                    <span>
+                      На главную
+                      <i class="bi bi-house-fill"></i>
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </a>
+              </router-link>
           </li>
           <li class="nav-item dropdown dropdown-large">
-            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret">
+            <a
+                v-on:click.prevent="logout"
+                class="nav-link dropdown-toggle dropdown-toggle-nocaret"
+            >
               <div class="d-flex align-items-center">
                 <div class="ms-3">
                   <span>
@@ -69,5 +75,11 @@
 <script>
   export default {
     name: "HeaderAdmin",
+
+    methods: {
+      logout() {
+        localStorage.login = false;
+      }
+    }
   }
 </script>
