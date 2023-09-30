@@ -42,6 +42,13 @@
 
 .btn {
   color: hsl(0, 0%, 100%);
+
+  &.btn-info,
+  &.btn-warning {
+    &:hover {
+      color: hsl(0, 0%, 100%);
+    }
+  }
 }
 
 .admin-content {
