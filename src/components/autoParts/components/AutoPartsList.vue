@@ -37,7 +37,7 @@
                     class="product-box-image"
                 >
                   <img
-                      :src="auto.images[0].imageMini"
+                      :src="auto.images[i].imageMini"
                       :alt="auto.autoParts.name"
                   />
                 </a>
@@ -105,8 +105,15 @@
                   >
                     <i class="bi bi-pencil-fill"></i>
                   </router-link>
-                  <a class="text-primary"><i class="bi bi-camera"></i></a>
-                  <a class="text-danger"><i class="bi bi-trash-fill"></i></a>
+                  <a class="text-primary cursor-pointer">
+                    <i class="bi bi-camera"></i>
+                  </a>
+                  <a
+                      v-on:click.prevent="autoPartsRemove(auto.product_id, i)"
+                      class="text-danger"
+                  >
+                    <i class="bi bi-trash-fill"></i>
+                  </a>
                 </div>
                 <div class="td-viewed">
                   Просмотров: {{auto.view}}
@@ -162,7 +169,8 @@
         'GET_AUTO_PARTS_FROM_API',
         'GET_AUTO_PARTS_TOTALS',
         'SET_SHOW_ALL_IMAGE',
-        'GET_AUTO_PARTS_HISTORY'
+        'GET_AUTO_PARTS_HISTORY',
+        'DELET_AUTO_PARTS_BY_API'
       ]),
 
       setPageByTotal(page) {
@@ -181,7 +189,18 @@
 
       showImageAll(id) {
         this.SET_SHOW_ALL_IMAGE(id);
-      }
+      },
+
+      autoPartsRemove(id, index) {
+        if(confirm("Вы действительно хотите удалить данную запчасть ?")) {
+          let param = {
+            autoPartsId: id,
+            autoPartsNumber: index
+          };
+
+          this.DELET_AUTO_PARTS_BY_API(param);
+        }
+      },
     },
 
     data() {

@@ -103,6 +103,21 @@ export default {
                 });
         },
 
+        DELET_AUTO_PARTS_BY_API({commit}, param) {
+            return axios.post(
+                '/index.php?route=api/auto_parts/auto/delete/' + param.autoPartsId,
+                {
+                    key: KEYS,
+                }
+            )
+                .then(() => {
+                    commit('DELETE_THIS_AUTO_PARTS', param.autoPartsNumber);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+
         SET_SHOW_ALL_IMAGE({commit}, id){
             commit('SHOW_ALL_IMAGE_BY_ID', id);
         },
@@ -127,6 +142,11 @@ export default {
         },
         SET_AUTO_PARTS_HISTORY_STATE: (state, autoPartsHistory) => {
             state.autoPartsHistory = autoPartsHistory;
+        },
+        DELETE_THIS_AUTO_PARTS: (state, id) => {
+            state.autoPartsTotals = state.autoPartsTotals - 1;
+            state.autoParts.splice(id, 1);
+            alert("Запчасть удалена удалено!");
         },
         LOCK_UI: (state) => {
             state.lockingPool++;
