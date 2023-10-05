@@ -1,0 +1,39 @@
+<template>
+  <div class="modal-mask">
+    <div class="modal-wrapper">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h4 class="modal-title">История запчасти</h4>
+          <button
+              type="button"
+              class="modal-header__close close"
+              data-dismiss="modal"
+              aria-hidden="true"
+              v-on:click.prevent="closeModalAdmin"
+          >
+            ×
+          </button>
+        </div>
+        <div class="modal-body">
+          <slot></slot>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: "ModalAdmin",
+
+    methods: {
+      closeModalAdmin() {
+        this.$emit('closeModalAdmin');
+      },
+    }
+  }
+</script>
+
+<style lang="scss" scoped>
+@import "./src/components/UI/style/modal-admin";
+</style>

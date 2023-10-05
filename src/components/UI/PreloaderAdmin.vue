@@ -11,13 +11,21 @@
   import tireStatistics from "@/vuex/modules/tireStatistics/tireStatistics";
   import sparePartsStatistics from "@/vuex/modules/sparePartsStatistics/sparePartsStatistics";
   import historyUsers from "@/vuex/modules/historyUsers/historyUsers";
+  import autoParts from "@/vuex/modules/autoParts/autoParts";
 
   export default {
     name: 'PreloaderAdmin',
 
     computed: {
       isUiLocked: function (){
-        return sparePartsStatistics.state.lockingPool == 1 || tireStatistics.state.lockingPool == 1  || historyUsers.state.lockingPool == 1;
+        if(sparePartsStatistics.state.lockingPool == 1 ||
+            tireStatistics.state.lockingPool == 1  ||
+            historyUsers.state.lockingPool == 1  ||
+            autoParts.state.lockingPool == 1) {
+          return true;
+        }
+
+        return false;
       }
     },
   }

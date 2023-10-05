@@ -7,7 +7,9 @@ export default {
     state: {
         autoParts: {},
         autoPartsIndex: {},
-        autoPartsTotals: 0
+        autoPartsTotals: 0,
+        lockingPool: 0,
+        autoPartsHistory: {}
     },
     getters: {
         AUTO_PARTS(state) {
@@ -19,9 +21,16 @@ export default {
         AUTO_PARTS_INDEX(state) {
             return state.autoPartsIndex;
         },
+        AUTO_PARTS_HISTORY(state) {
+            return state.autoPartsHistory;
+        },
+        IS_UI_LOCKED(state) {
+            return state.lockingPool > 0
+        },
     },
     actions: {
         GET_AUTO_PARTS_FROM_API({commit}, param) {
+            commit('LOCK_UI');
             return axios.post(
                 '/index.php?route=api/auto_parts/auto',
                 {
@@ -30,6 +39,7 @@ export default {
                 }
             )
                 .then((response) => {
+                    commit('UN_LOCK_UI');
                     commit('SET_AUTO_PARTS_TO_STATE', response.data.autoParts);
                     return response.data.autoParts;
                 })
@@ -49,6 +59,25 @@ export default {
                 .then((response) => {
                     commit('SET_AUTO_PARTS_TOTALS_STATE', response.data.autoPartsTotals);
                     return response.data.autoPartsTotals;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    return error;
+                });
+        },
+
+        GET_AUTO_PARTS_HISTORY({commit}, id) {
+            commit('LOCK_UI');
+            return  axios.post(
+                '/index.php?route=api/auto_parts/auto/history/' + id,
+                {
+                    key: KEYS,
+                }
+            )
+                .then((response) => {
+                    commit('UN_LOCK_UI');
+                    commit('SET_AUTO_PARTS_HISTORY_STATE', response.data.autoPartsHistory);
+                    return response.data.autoPartsHistory;
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -95,6 +124,15 @@ export default {
             for(let i = 0; i < state.autoParts[id].images.length; i++){
                 state.autoParts[id].images[i].imageShow = true;
             }
+        },
+        SET_AUTO_PARTS_HISTORY_STATE: (state, autoPartsHistory) => {
+            state.autoPartsHistory = autoPartsHistory;
+        },
+        LOCK_UI: (state) => {
+            state.lockingPool++;
+        },
+        UN_LOCK_UI: (state) => {
+            state.lockingPool--;
         },
     }
 }

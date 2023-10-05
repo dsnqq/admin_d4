@@ -84,13 +84,26 @@
               </td>
               <td class="text-center">
                 <div class="d-flex align-items-center gap-2 fs-6">
-                  <a class="text-primary"><i class="bi bi-archive"></i></a>
-                  <a class="text-primary"><i class="bi bi-eye-fill"></i></a>
+                  <a
+                      v-on:click="getHistoryAuto(auto.product_id)"
+                      class="text-primary cursor-pointer"
+                  >
+                    <i class="bi bi-archive"></i>
+                  </a>
+                  <a
+                      :href="domain + auto.linkToSite"
+                      target="_blank"
+                      class="text-primary"
+                      title="Открыть на сайте"
+                  >
+                    <i class="bi bi-eye-fill"></i>
+                  </a>
                   <router-link
                       :to="`/auto/${auto.product_id}`"
                       class="text-warning"
+                      title="Редактировать"
                   >
-                  <i class="bi bi-pencil-fill"></i>
+                    <i class="bi bi-pencil-fill"></i>
                   </router-link>
                   <a class="text-primary"><i class="bi bi-camera"></i></a>
                   <a class="text-danger"><i class="bi bi-trash-fill"></i></a>
@@ -148,12 +161,18 @@
       ...mapActions('autoParts', [
         'GET_AUTO_PARTS_FROM_API',
         'GET_AUTO_PARTS_TOTALS',
-        'SET_SHOW_ALL_IMAGE'
+        'SET_SHOW_ALL_IMAGE',
+        'GET_AUTO_PARTS_HISTORY'
       ]),
 
       setPageByTotal(page) {
         this.param.pageNum = page;
         this.GET_AUTO_PARTS_FROM_API(this.param.pageNum);
+      },
+
+      getHistoryAuto(id) {
+        this.$emit('getHistoryAuto');
+        this.GET_AUTO_PARTS_HISTORY(id);
       },
 
       getStatus(status) {
