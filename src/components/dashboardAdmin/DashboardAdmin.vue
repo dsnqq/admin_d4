@@ -7,7 +7,7 @@
                 <div class="d-flex align-items-stretch justify-content-between overflow-hidden">
                   <div class="w-50">
                     <p>Запчасти (Активные/Неактив)</p>
-                    <h4 class="">77301/1078 шт.</h4>
+                    <h4 class="">{{DASHBOARD_INFORMATION.autoPartsCount[0]}}/{{DASHBOARD_INFORMATION.autoPartsCount[1]}} шт.</h4>
                   </div>
                   <div class="w-50">
                     <p class="mb-3 float-end text-success">+ 16% <i class="bi bi-arrow-up"></i></p>
@@ -23,7 +23,7 @@
                 <div class="d-flex align-items-stretch justify-content-between overflow-hidden">
                   <div class="w-50">
                     <p>Шины (Активные/Неактив)</p>
-                    <h4 class="">14/1 шт.</h4>
+                    <h4 class="">{{DASHBOARD_INFORMATION.tireCount[0]}}/{{DASHBOARD_INFORMATION.tireCount[1]}} шт.</h4>
                   </div>
                   <div class="w-50">
                     <p class="mb-3 float-end text-danger">- 3.4% <i class="bi bi-arrow-down"></i></p>
@@ -39,7 +39,7 @@
                 <div class="d-flex align-items-stretch justify-content-between overflow-hidden">
                   <div class="w-50">
                     <p>Сумма всех запчастей</p>
-                    <h4 class="">80000$</h4>
+                    <h4 class="">{{DASHBOARD_INFORMATION.autoPartsPriceAll}}$</h4>
                   </div>
                   <div class="w-50">
                     <p class="mb-3 float-end text-success">+ 24% <i class="bi bi-arrow-up"></i></p>
@@ -55,7 +55,7 @@
                 <div class="d-flex align-items-stretch justify-content-between overflow-hidden">
                   <div class="w-50">
                     <p>Сумма всех шин</p>
-                    <h4 class="">3000$</h4>
+                    <h4 class="">{{DASHBOARD_INFORMATION.tirePriceAll}}$</h4>
                   </div>
                   <div class="w-50">
                     <p class="mb-3 float-end text-success">+ 8.2% <i class="bi bi-arrow-up"></i></p>
@@ -73,7 +73,7 @@
                 <div class="d-flex align-items-stretch justify-content-between overflow-hidden">
                   <div class="w-50">
                     <p>Просмотры З/Ч за этот месяц</p>
-                    <h4 class="">5600 шт.</h4>
+                    <h4 class="">{{DASHBOARD_INFORMATION.autoPartsViewMouth}} шт.</h4>
                   </div>
                   <div class="w-50">
                     <p class="mb-3 float-end text-success">+ 8.2% <i class="bi bi-arrow-up"></i></p>
@@ -90,7 +90,7 @@
                 <div class="d-flex align-items-stretch justify-content-between overflow-hidden">
                   <div class="w-50">
                     <p>Кол-во пользователей</p>
-                    <h4 class="">14 чел.</h4>
+                    <h4 class="">{{DASHBOARD_INFORMATION.usersCount}} чел.</h4>
                   </div>
                   <div class="w-50">
                     <p class="mb-3 float-end text-success">+ 8.2% <i class="bi bi-arrow-up"></i></p>
@@ -108,7 +108,7 @@
                 <div class="d-flex align-items-center">
                   <div class="">
                     <p class="mb-1">Свежие запчасти</p>
-                    <h4 class="mb-0 text-primary">1145 шт.</h4>
+                    <h4 class="mb-0 text-primary">{{DASHBOARD_INFORMATION.newAutoPartsMouth}} шт.</h4>
                   </div>
                   <div class="ms-auto fs-2 text-primary">
                     <i class="bi bi-bell"></i>
@@ -125,7 +125,7 @@
                 <div class="d-flex align-items-center">
                   <div class="">
                     <p class="mb-1">Проданные запчасти</p>
-                    <h4 class="mb-0 text-danger">249 шт.</h4>
+                    <h4 class="mb-0 text-danger">{{DASHBOARD_INFORMATION.saleAutoPartsMouth}} шт.</h4>
                   </div>
                   <div class="ms-auto fs-2 text-danger">
                     <i class="bi bi-pencil"></i>
@@ -142,7 +142,7 @@
                 <div class="d-flex align-items-center">
                   <div class="">
                     <p class="mb-1">Заказы</p>
-                    <h4 class="mb-0 text-success">1845 шт.</h4>
+                    <h4 class="mb-0 text-success">{{DASHBOARD_INFORMATION.totalOrders}} шт.</h4>
                   </div>
                   <div class="ms-auto fs-2 text-success">
                     <i class="bi bi-envelope"></i>
@@ -159,7 +159,7 @@
                 <div class="d-flex align-items-center">
                   <div class="">
                     <p class="mb-1">В архиве</p>
-                    <h4 class="mb-0 text-orange">645 шт.</h4>
+                    <h4 class="mb-0 text-orange">{{DASHBOARD_INFORMATION.arhiveAutoParts}} шт.</h4>
                   </div>
                   <div class="ms-auto fs-2 text-orange">
                     <i class="bi bi-book"></i>
@@ -178,7 +178,7 @@
                 <div class="widget-icon mx-auto mb-3 bg-light-success text-success">
                   <i class="bi bi-currency-dollar"></i>
                 </div>
-                <h3>3.4 <i class="bi bi-pencil"></i></h3>
+                <h3>{{DASHBOARD_INFORMATION.currency.USD}} <i class="bi bi-pencil"></i></h3>
                 <p class="mb-0">Доллар США (USD)</p>
               </div>
             </div>
@@ -189,7 +189,7 @@
                 <div class="widget-icon mx-auto mb-3 bg-light-primary text-primary">
                   <i class="bi bi-cash"></i>
                 </div>
-                <h3>107 <i class="bi bi-pencil"></i></h3>
+                <h3>{{DASHBOARD_INFORMATION.currency.RUB}} <i class="bi bi-pencil"></i></h3>
                 <p class="mb-0">Рос. рубль (RUB)</p>
               </div>
             </div>
@@ -200,7 +200,7 @@
                 <div class="widget-icon mx-auto mb-3 bg-light-orange text-orange">
                   <i class="bi bi-currency-euro"></i>
                 </div>
-                <h3>3.5 <i class="bi bi-pencil"></i></h3>
+                <h3>{{DASHBOARD_INFORMATION.currency.EUR}} <i class="bi bi-pencil"></i></h3>
                 <p class="mb-0">Евро (EUR)</p>
               </div>
             </div>
@@ -210,7 +210,25 @@
 </template>
 
 <script>
+  import {mapActions, mapGetters} from "vuex";
+
   export default {
-    name: "DashboardAdmin"
+    name: "DashboardAdmin",
+
+    mounted() {
+      this.GET_DASHBOARD_INFORMATION();
+    },
+
+    computed: {
+      ...mapGetters('dashboardAdmin', [
+        'DASHBOARD_INFORMATION'
+      ])
+    },
+
+    methods: {
+      ...mapActions('dashboardAdmin', [
+        'GET_DASHBOARD_INFORMATION'
+      ]),
+    },
   }
 </script>
