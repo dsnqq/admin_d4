@@ -5,6 +5,7 @@ import sparePartsStatistics from './modules/sparePartsStatistics/sparePartsStati
 import tireStatistics from './modules/tireStatistics/tireStatistics';
 import historyUsers from './modules/historyUsers/historyUsers';
 import autoParts from './modules/autoParts/autoParts';
+import autoPartsArchive from './modules/autoPartsArchive/autoPartsArchive';
 import orderSale from './modules/orderSale/orderSale';
 import dashboardAdmin from './modules/dashboardAdmin/dashboardAdmin';
 
@@ -18,7 +19,8 @@ export default new Vuex.Store({
         historyUsers,
         autoParts,
         orderSale,
-        dashboardAdmin
+        dashboardAdmin,
+        autoPartsArchive
     },
     strict: process.env.NODE_ENV === 'development'
 })

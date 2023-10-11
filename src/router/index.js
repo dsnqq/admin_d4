@@ -28,6 +28,14 @@ const routes = [
         component: () => import('../components/autoParts/components/AutoPartsIndex.vue'),
     },
     {
+        path: '/auto-parts-archive',
+        name: 'autoPartsArchive',
+        meta: {
+            title: 'Архив автозапчастей',
+        },
+        component: () => import('../components/autoPartsArchive/AutoPartsArchive.vue'),
+    },
+    {
         path: '/history-users',
         name: 'historyUsers',
         meta: {
