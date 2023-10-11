@@ -62,7 +62,7 @@
                   >Ещё фото</span>
                 </div>
               </td>
-              <td>{{ autoPartsArchive.name.marka + ' ' + autoPartsArchive.name.model}}</td>
+              <td>{{autoPartsArchive.name.marka + ' ' + autoPartsArchive.name.model}}</td>
               <td>{{autoPartsArchive.year}}</td>
               <td>{{autoPartsArchive.value}}</td>
               <td>{{autoPartsArchive.fuel + " " + autoPartsArchive.typeEngines}}</td>

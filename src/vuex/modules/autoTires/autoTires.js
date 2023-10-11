@@ -32,7 +32,7 @@ export default {
         GET_AUTO_TIRES_FROM_API({commit}, param) {
             commit('LOCK_UI');
             return axios.post(
-                '/index.php?route=api/auto_tires/tire',
+                '/index.php?route=api/auto_tires/tires',
                 {
                     key: KEYS,
                     page: param,
@@ -51,7 +51,7 @@ export default {
 
         GET_AUTO_TIRES_TOTALS({commit}) {
             return  axios.post(
-                '/index.php?route=api/auto_tires/tire/totals',
+                '/index.php?route=api/auto_tires/tires/totals',
                 {
                     key: KEYS,
                 }
@@ -69,7 +69,7 @@ export default {
         GET_AUTO_TIRES_HISTORY({commit}, id) {
             commit('LOCK_UI');
             return  axios.post(
-                '/index.php?route=api/auto_tires/tire/history/' + id,
+                '/index.php?route=api/auto_tires/tires/history/' + id,
                 {
                     key: KEYS,
                 }
@@ -87,7 +87,7 @@ export default {
 
         GET_AUTO_TIRES_INDEX({commit}, param) {
             return  axios.post(
-                '/index.php?route=api/auto_tires/tire/index/' + param.id,
+                '/index.php?route=api/auto_tires/tires/index/' + param.id,
                 {
                     key: KEYS,
                     param: param
@@ -105,7 +105,7 @@ export default {
 
         DELET_AUTO_TIRES_BY_API({commit}, param) {
             return axios.post(
-                '/index.php?route=api/auto_tires/tire/delete/' + param.autoTiresId,
+                '/index.php?route=api/auto_tires/tires/delete/' + param.autoTiresId,
                 {
                     key: KEYS,
                 }

@@ -10,14 +10,10 @@
             <thead>
             <tr>
               <th>Изображение</th>
-              <th>Марка и модель</th>
               <th>Год</th>
-              <th>Объём</th>
-              <th>Тип топлива</th>
-              <th>Название запчасти</th>
+              <th>Название шины</th>
               <th>Артикул</th>
-              <th>Цена</th>
-              <th>Номер запчасти</th>
+              <th>Цена за штуку</th>
               <th>Дата создания</th>
               <th>Статус</th>
               <th>Описание</th>
@@ -26,61 +22,63 @@
             </thead>
             <tbody>
             <tr
-                v-for="(auto, i) in AUTO_TIRES"
+                v-for="(autoTire, i) in AUTO_TIRES"
                 :key="i"
             >
               <td>
                 <a
-                    :href="domain + `/image/` + auto.images[0].imageBig"
-                    :data-title="auto.autoTires.name"
-                    :data-lightbox="auto.product_id"
+                    :href="domain + `/image/` + autoTire.images[0].imageBig"
+                    :data-title="autoTire.name"
+                    :data-lightbox="autoTire.product_id"
                     class="product-box-image"
                 >
                   <img
-                      :src="auto.images[i].imageMini"
-                      :alt="auto.autoTires.name"
+                      :src="autoTire.images[i].imageMini"
+                      :alt="autoTire.name"
                   />
                 </a>
                 <div class="product-box-image-flex">
                   <a
-                      :data-lightbox="auto.product_id"
-                      v-for="(image, i) in auto.images"
+                      :data-lightbox="autoTire.product_id"
+                      v-for="(image, i) in autoTire.images"
                       :key="i"
-                      :data-title="auto.autoTires.name"
+                      :data-title="autoTire.name"
                       :href="domain + `/image/` + image.imageBig"
                       class="product-box-image--small"
                       v-show="image.imageShow"
                   >
                     <img
                         :src="image.imageMini"
-                        :alt="auto.autoTires.name"
+                        :alt="autoTire.name"
                     >
                   </a>
                   <span
-                      v-if="!auto.imagesShowAllImage"
+                      v-if="!autoTire.imagesShowAllImage"
                       v-on:click="showImageAll(i)"
                       class="product-more-photo"
                   >Ещё фото</span>
                 </div>
               </td>
-              <td>{{ auto.name.marka + ' ' + auto.name.model}}</td>
-              <td>{{auto.year}}</td>
-              <td>{{auto.value}}</td>
-              <td>{{auto.fuel + " " + auto.typeEngines}}</td>
+              <td>{{autoTire.year}}</td>
               <td class="productlist">
-                <span class="d-flex align-items-center gap-2">
-                  <h6 class="mb-0 product-title">{{auto.autoTires.name}}</h6>
+                  <h6
+                      v-html="autoTire.name"
+                      class="mb-0 product-title"
+                  ></h6>
+              </td>
+              <td>{{autoTire.model}}</td>
+              <td>{{autoTire.priceUSD}}$</td>
+              <td>{{autoTire.dateAvailable}}</td>
+              <td>
+                <span
+                    class="badge rounded-pill"
+                    :class="autoTire.status == 1 ? 'alert-success' : 'alert-danger'"
+                >
+                  {{getStatus(autoTire.status)}}
                 </span>
               </td>
-              <td>{{auto.model}}</td>
-              <td>{{auto.priceUSD}}$</td>
-              <td>{{auto.sparePartNumber}}</td>
-              <td>{{auto.dateAvailable}}</td>
-              <td>
-                <span class="badge rounded-pill alert-success">{{getStatus(auto.status)}}</span>
-              </td>
               <td class="td-description">
-                {{auto.description}}
+                {{autoTire.description}}
               </td>
               <td class="text-center">
                 <div class="d-flex align-items-center gap-2 fs-6">
@@ -90,7 +88,7 @@
                     <i class="bi bi-archive"></i>
                   </a>
                   <a
-                      :href="domain + auto.linkToSite"
+                      :href="domain + autoTire.linkToSite"
                       target="_blank"
                       class="text-primary"
                       title="Открыть на сайте"
@@ -98,7 +96,7 @@
                     <i class="bi bi-eye-fill"></i>
                   </a>
                   <router-link
-                      :to="`/auto/${auto.product_id}`"
+                      :to="`/auto/${autoTire.product_id}`"
                       class="text-warning"
                       title="Редактировать"
                   >
@@ -108,14 +106,14 @@
                     <i class="bi bi-camera"></i>
                   </a>
                   <a
-                      v-on:click.prevent="autoTiresRemove(auto.product_id, i)"
+                      v-on:click.prevent="autoTiresRemove(autoTire.product_id, i)"
                       class="text-danger"
                   >
                     <i class="bi bi-trash-fill"></i>
                   </a>
                 </div>
                 <div class="td-viewed">
-                  Просмотров: {{auto.view}}
+                  Просмотров: {{autoTire.view}}
                 </div>
                 <div class="btn btn-info">Печать QR</div>
               </td>
@@ -124,7 +122,10 @@
           </table>
         </div>
       </div>
-      <div class="row">
+      <div
+          v-if="autoTiresTotal >= 20"
+          class="row"
+      >
         <v-pagination
             v-model="param.pageNum"
             :records="autoTiresTotal"

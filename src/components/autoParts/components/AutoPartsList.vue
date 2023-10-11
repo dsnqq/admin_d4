@@ -77,7 +77,12 @@
               <td>{{auto.sparePartNumber}}</td>
               <td>{{auto.dateAvailable}}</td>
               <td>
-                <span class="badge rounded-pill alert-success">{{getStatus(auto.status)}}</span>
+                <span
+                    class="badge rounded-pill"
+                    :class="autoTire.status == 1 ? 'alert-success' : 'alert-danger'"
+                >
+                  {{getStatus(auto.status)}}
+                </span>
               </td>
               <td class="td-description">
                 {{auto.description}}
