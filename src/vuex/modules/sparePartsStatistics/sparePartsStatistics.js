@@ -82,13 +82,13 @@ export default {
     },
     mutations: {
         SET_SPARE_PARTS_STATISTICS_TO_STATE: (state, sparePartsStatistics) => {
-            state.sparePartsStatistics = sparePartsStatistics;
+            state.sparePartsStatistics = Object.freeze(sparePartsStatistics);
         },
         SET_TOTALS_SPARE_PARTS_STATISTICS: (state, totalsSparePartsStatistics) => {
-            state.totalsSparePartsStatistics = totalsSparePartsStatistics;
+            state.totalsSparePartsStatistics = Object.freeze(totalsSparePartsStatistics);
         },
         SET_DAY_SPARE_PARTS_STATISTICS: (state, sparePartsStatisticsDay) => {
-            state.sparePartsStatisticsDay = sparePartsStatisticsDay;
+            state.sparePartsStatisticsDay = Object.freeze(sparePartsStatisticsDay);
         },
         LOCK_UI: (state) => {
             state.lockingPool++;

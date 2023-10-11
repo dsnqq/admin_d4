@@ -32,7 +32,7 @@ export default {
     },
     mutations: {
         SET_DASHBOARD_INFORMATION: (state, dashboardInformations) => {
-            state.dashboardInformations = dashboardInformations;
+            state.dashboardInformations = Object.freeze(dashboardInformations);
         },
     }
 }

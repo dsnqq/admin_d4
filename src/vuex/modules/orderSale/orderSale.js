@@ -53,10 +53,10 @@ export default {
     },
     mutations: {
         SET_ORDER_SALE: (state, orders) => {
-            state.orders = orders;
+            state.orders = Object.freeze(orders);
         },
         SET_ORDER_TOTALS: (state, totals) => {
-            state.totals = totals;
+            state.totals = Object.freeze(totals);
         },
     }
 }

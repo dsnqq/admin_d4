@@ -1,100 +1,25 @@
 <template>
       <div>
         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-2">
-          <div class="col">
+          <div
+              v-for="(s, i) in DASHBOARD_INFORMATION.sectionS"
+              :key="i"
+              class="col"
+          >
             <div class="card overflow-hidden radius-10">
               <div class="card-body">
                 <div class="d-flex align-items-stretch justify-content-between overflow-hidden">
                   <div class="w-50">
-                    <p>Запчасти (Активные/Неактив)</p>
-                    <h4 class="">{{DASHBOARD_INFORMATION.autoPartsCount[0]}}/{{DASHBOARD_INFORMATION.autoPartsCount[1]}} шт.</h4>
+                    <p>{{s.title}}</p>
+                    <h4>{{s.text}}</h4>
                   </div>
                   <div class="w-50">
-                    <p class="mb-3 float-end text-success"><i class="bi bi-wrench"></i></p>
-                    <div id="chart1"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card overflow-hidden radius-10">
-              <div class="card-body">
-                <div class="d-flex align-items-stretch justify-content-between overflow-hidden">
-                  <div class="w-50">
-                    <p>Шины (Активные/Неактив)</p>
-                    <h4 class="">{{DASHBOARD_INFORMATION.tireCount[0]}}/{{DASHBOARD_INFORMATION.tireCount[1]}} шт.</h4>
-                  </div>
-                  <div class="w-50">
-                    <p class="mb-3 float-end text-success"><i class="bi bi-vinyl"></i></p>
-                    <div id="chart2"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card overflow-hidden radius-10">
-              <div class="card-body">
-                <div class="d-flex align-items-stretch justify-content-between overflow-hidden">
-                  <div class="w-50">
-                    <p>Сумма всех запчастей</p>
-                    <h4 class="">{{DASHBOARD_INFORMATION.autoPartsPriceAll}}$</h4>
-                  </div>
-                  <div class="w-50">
-                    <p class="mb-3 float-end text-success"><i class="bi bi-wrench"></i></p>
-                    <div id="chart3"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card overflow-hidden radius-10">
-              <div class="card-body">
-                <div class="d-flex align-items-stretch justify-content-between overflow-hidden">
-                  <div class="w-50">
-                    <p>Сумма всех шин</p>
-                    <h4 class="">{{DASHBOARD_INFORMATION.tirePriceAll}}$</h4>
-                  </div>
-                  <div class="w-50">
-                    <p class="mb-3 float-end text-success"><i class="bi bi-vinyl"></i></p>
-                    <div id="chart4"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          
-          <div class="col">
-            <div class="card overflow-hidden radius-10">
-              <div class="card-body">
-                <div class="d-flex align-items-stretch justify-content-between overflow-hidden">
-                  <div class="w-50">
-                    <p>Просмотры З/Ч за этот месяц</p>
-                    <h4 class="">{{DASHBOARD_INFORMATION.autoPartsViewMouth}} шт.</h4>
-                  </div>
-                  <div class="w-50">
-                    <p class="mb-3 float-end text-success"><i class="bx bx-show"></i></p>
-                    <div id="chart4"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="card overflow-hidden radius-10">
-              <div class="card-body">
-                <div class="d-flex align-items-stretch justify-content-between overflow-hidden">
-                  <div class="w-50">
-                    <p>Кол-во пользователей</p>
-                    <h4 class="">{{DASHBOARD_INFORMATION.usersCount}} чел.</h4>
-                  </div>
-                  <div class="w-50">
-                    <p class="mb-3 float-end text-success"><i class="bi bi-people"></i></p>
-                    <div id="chart4"></div>
+                    <p
+                        class="mb-3 float-end"
+                        :class="s.iconColorClass"
+                    >
+                      <i :class="s.iconClass"></i>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -102,71 +27,35 @@
           </div>
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-2">
-          <div class="col">
+          <div
+              v-for="(m, i) in DASHBOARD_INFORMATION.sectionM"
+              :key="i"
+              class="col"
+          >
             <div class="card radius-10">
               <div class="card-body">
                 <div class="d-flex align-items-center">
-                  <div class="">
-                    <p class="mb-1">Свежие запчасти</p>
-                    <h4 class="mb-0 text-primary">{{DASHBOARD_INFORMATION.newAutoPartsMouth}} шт.</h4>
+                  <div>
+                    <p class="mb-1">{{m.title}}</p>
+                    <h4
+                        :class="m.colorClass"
+                        class="mb-0"
+                    >
+                      {{m.result}} шт.
+                    </h4>
                   </div>
-                  <div class="ms-auto fs-2 text-primary">
-                    <i class="bi bi-cloud-plus"></i>
-                  </div>
-                </div>
-                <hr class="my-2">
-                <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Добавлено в этом месяце</span></small>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card radius-10">
-              <div class="card-body">
-                <div class="d-flex align-items-center">
-                  <div class="">
-                    <p class="mb-1">Проданные запчасти</p>
-                    <h4 class="mb-0 text-danger">{{DASHBOARD_INFORMATION.saleAutoPartsMouth}} шт.</h4>
-                  </div>
-                  <div class="ms-auto fs-2 text-danger">
-                    <i class="bi bi-award-fill"></i>
+                  <div
+                      :class="m.colorClass"
+                      class="ms-auto fs-2"
+                  >
+                    <i :class="m.iconClass"></i>
                   </div>
                 </div>
                 <hr class="my-2">
-                <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Продано в этом месяце</span></small>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card radius-10">
-              <div class="card-body">
-                <div class="d-flex align-items-center">
-                  <div class="">
-                    <p class="mb-1">Всего заказов</p>
-                    <h4 class="mb-0 text-success">{{DASHBOARD_INFORMATION.totalOrders}} шт.</h4>
-                  </div>
-                  <div class="ms-auto fs-2 text-success">
-                    <i class="bi bi-basket2-fill"></i>
-                  </div>
-                </div>
-                <hr class="my-2">
-                <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Заказов через корзину</span></small>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card radius-10">
-              <div class="card-body">
-                <div class="d-flex align-items-center">
-                  <div class="">
-                    <p class="mb-1">В архиве</p>
-                    <h4 class="mb-0 text-orange">{{DASHBOARD_INFORMATION.arhiveAutoParts}} шт.</h4>
-                  </div>
-                  <div class="ms-auto fs-2 text-orange">
-                    <i class="bi bi-archive"></i>
-                  </div>
-                </div>
-                <hr class="my-2">
-                <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Сейчас запчастей в архиве</span></small>
+                <small class="mb-0">
+                  <i class="bi bi-arrow-up"></i>
+                  <span>{{m.text}}</span>
+                </small>
               </div>
             </div>
           </div>
@@ -222,7 +111,7 @@
     computed: {
       ...mapGetters('dashboardAdmin', [
         'DASHBOARD_INFORMATION'
-      ])
+      ]),
     },
 
     methods: {

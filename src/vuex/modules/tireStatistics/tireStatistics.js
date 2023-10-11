@@ -82,13 +82,13 @@ export default {
     },
     mutations: {
         SET_TIRE_STATISTICS_TO_STATE: (state, tireStatistics) => {
-            state.tireStatistics = tireStatistics;
+            state.tireStatistics = Object.freeze(tireStatistics);
         },
         SET_TOTALS_TIRE_STATISTICS: (state, totalsTireStatistics) => {
-            state.totalsTireStatistics = totalsTireStatistics;
+            state.totalsTireStatistics = Object.freeze(totalsTireStatistics);
         },
         SET_DAY_TIRE_STATISTICS: (state, tireStatisticsDay) => {
-            state.tireStatisticsDay = tireStatisticsDay;
+            state.tireStatisticsDay = Object.freeze(tireStatisticsDay);
         },
         LOCK_UI: (state) => {
             state.lockingPool++;

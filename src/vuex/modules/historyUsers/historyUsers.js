@@ -81,13 +81,13 @@ export default {
     },
     mutations: {
         SET_USER_HISTORY_LIST: (state, userHistoryList) => {
-            state.userHistoryList = userHistoryList;
+            state.userHistoryList = Object.freeze(userHistoryList);
         },
         SET_USER_HISTORY: (state, userHistory) => {
-            state.userHistory = userHistory;
+            state.userHistory = Object.freeze(userHistory);
         },
         SET_USER_HISTORY_TOTAL: (state, userHistoryTotal) => {
-            state.userHistoryTotal = userHistoryTotal;
+            state.userHistoryTotal = Object.freeze(userHistoryTotal);
         },
         LOCK_UI: (state) => {
             state.lockingPool++;

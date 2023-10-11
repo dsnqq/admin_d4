@@ -1,5 +1,3 @@
-import CarsAdmin from "../components/carsAdmin/CarsAdmin.vue";
-
 import VueRouter from "vue-router";
 
 const routes = [
@@ -57,7 +55,7 @@ const routes = [
         meta: {
             title: 'Авто в разборе',
         },
-        component: CarsAdmin,
+        component: () => import('../components/carsAdmin/CarsAdmin.vue'),
     },
     {
         path: '/car/:id',
@@ -65,7 +63,7 @@ const routes = [
         meta: {
             title: 'Авто в разборе',
         },
-        component: CarsAdmin,
+        component: () => import('../components/carsAdmin/CarsAdmin.vue'),
     },
     {
         path: '/car/create',
@@ -73,7 +71,7 @@ const routes = [
         meta: {
             title: 'Добавление авто',
         },
-        component: CarsAdmin,
+        component: () => import('../components/carsAdmin/CarsAdmin.vue'),
     },
     {
         path: '/tire-statistics',

@@ -112,9 +112,6 @@
                     <i class="bi bi-trash-fill"></i>
                   </a>
                 </div>
-                <div class="td-viewed">
-                  Просмотров: {{autoTire.view}}
-                </div>
                 <div class="btn btn-info">Печать QR</div>
               </td>
             </tr>
