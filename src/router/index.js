@@ -105,6 +105,14 @@ const routes = [
         component: () => import('../components/orderSale/OrderSale.vue'),
     },
     {
+        path: '/auto-tires',
+        name: 'autoTires',
+        meta: {
+            title: 'Шины',
+        },
+        component: () => import('../components/autoTires/AutoTires.vue'),
+    },
+    {
         path: '*',
         name: 'notFound',
         meta: {

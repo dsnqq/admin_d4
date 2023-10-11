@@ -25,76 +25,69 @@
             </thead>
             <tbody>
             <tr
-                v-for="(auto, i) in AUTO_PARTS_ARCHIVE"
+                v-for="(autoPartsArchive, i) in AUTO_PARTS_ARCHIVE"
                 :key="i"
             >
               <td>
                 <a
-                    :href="domain + `/image/` + auto.images[0].imageBig"
-                    :data-title="auto.autoParts.name"
-                    :data-lightbox="auto.product_id"
+                    :href="domain + `/image/` + autoPartsArchive.images[0].imageBig"
+                    :data-title="autoPartsArchive.autoParts.name"
+                    :data-lightbox="autoPartsArchive.product_id"
                     class="product-box-image"
                 >
                   <img
-                      :src="auto.images[i].imageMini"
-                      :alt="auto.autoParts.name"
+                      :src="autoPartsArchive.images[i].imageMini"
+                      :alt="autoPartsArchive.autoParts.name"
                   />
                 </a>
                 <div class="product-box-image-flex">
                   <a
-                      :data-lightbox="auto.product_id"
-                      v-for="(image, i) in auto.images"
+                      :data-lightbox="autoPartsArchive.product_id"
+                      v-for="(image, i) in autoPartsArchive.images"
                       :key="i"
-                      :data-title="auto.autoParts.name"
+                      :data-title="autoPartsArchive.autoParts.name"
                       :href="domain + `/image/` + image.imageBig"
                       class="product-box-image--small"
                       v-show="image.imageShow"
                   >
                     <img
                         :src="image.imageMini"
-                        :alt="auto.autoParts.name"
+                        :alt="autoPartsArchive.autoParts.name"
                     >
                   </a>
                   <span
-                      v-if="!auto.imagesShowAllImage"
+                      v-if="!autoPartsArchive.imagesShowAllImage"
                       v-on:click="showImageAll(i)"
                       class="product-more-photo"
                   >Ещё фото</span>
                 </div>
               </td>
-              <td>{{ auto.name.marka + ' ' + auto.name.model}}</td>
-              <td>{{auto.year}}</td>
-              <td>{{auto.value}}</td>
-              <td>{{auto.fuel + " " + auto.typeEngines}}</td>
+              <td>{{ autoPartsArchive.name.marka + ' ' + autoPartsArchive.name.model}}</td>
+              <td>{{autoPartsArchive.year}}</td>
+              <td>{{autoPartsArchive.value}}</td>
+              <td>{{autoPartsArchive.fuel + " " + autoPartsArchive.typeEngines}}</td>
               <td class="productlist">
                 <span class="d-flex align-items-center gap-2">
-                  <h6 class="mb-0 product-title">{{auto.autoParts.name}}</h6>
+                  <h6 class="mb-0 product-title">{{autoPartsArchive.autoParts.name}}</h6>
                 </span>
               </td>
-              <td>{{auto.model}}</td>
-              <td>{{auto.priceUSD}}$</td>
-              <td>{{auto.sparePartNumber}}</td>
-              <td>{{auto.dateDeleted}}</td>
+              <td>{{autoPartsArchive.model}}</td>
+              <td>{{autoPartsArchive.priceUSD}}$</td>
+              <td>{{autoPartsArchive.sparePartNumber}}</td>
+              <td>{{autoPartsArchive.dateDeleted}}</td>
               <td class="td-description">
-                {{auto.description}}
+                {{autoPartsArchive.description}}
               </td>
               <td class="text-center">
                 <div class="d-flex align-items-center gap-2 fs-6">
                   <a
-                      v-on:click="getHistoryAuto(auto.product_id)"
+                      v-on:click="getHistoryAuto(autoPartsArchive.product_id)"
                       class="text-primary cursor-pointer"
                   >
                     <i class="bi bi-archive"></i>
                   </a>
-                  <router-link
-                      :to="`/auto/${auto.product_id}`"
-                      class="text-warning"
-                      title="Редактировать"
-                  >
-                    <i class="bi bi-pencil-fill"></i>
-                  </router-link>
                   <a
-                      v-on:click.prevent="autoPartsRestore(auto.product_id, i)"
+                      v-on:click.prevent="autoPartsRestore(autoPartsArchive.product_id, i)"
                       class="text-success cursor-pointer"
                   >
                     <i class="bi bi-arrow-clockwise"></i>
@@ -109,7 +102,7 @@
       <div class="row">
         <v-pagination
             v-model="param.pageNum"
-            :records="autoPartsTotal"
+            :records="autoPartsArchiveTotal"
             :per-page="20"
             @paginate="setPageByTotal"
             :options="paginationOptions"
@@ -139,7 +132,7 @@ export default {
       'AUTO_PARTS_ARCHIVE_TOTALS'
     ]),
 
-    autoPartsTotal() {
+    autoPartsArchiveTotal() {
       return parseInt(this.AUTO_PARTS_ARCHIVE_TOTALS);
     }
   },
@@ -199,6 +192,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "./src/components/autoParts/components/style/auto-parts-list";
+@import "./src/components/autoPartsArchive/components/style/auto-parts-archive-list";
 @import "/node_modules/lightbox2/dist/css/lightbox.min.css";
 </style>

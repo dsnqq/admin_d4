@@ -13,6 +13,7 @@
   import historyUsers from "@/vuex/modules/historyUsers/historyUsers";
   import autoParts from "@/vuex/modules/autoParts/autoParts";
   import autoPartsArchive from "@/vuex/modules/autoPartsArchive/autoPartsArchive";
+  import autoTires from "@/vuex/modules/autoTires/autoTires";
 
   export default {
     name: 'PreloaderAdmin',
@@ -23,6 +24,7 @@
             tireStatistics.state.lockingPool == 1  ||
             historyUsers.state.lockingPool == 1  ||
             autoPartsArchive.state.lockingPool == 1  ||
+            autoTires.state.lockingPool == 1  ||
             autoParts.state.lockingPool == 1) {
           return true;
         }
