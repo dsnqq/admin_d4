@@ -22,7 +22,7 @@
             </thead>
             <tbody>
             <tr
-                v-for="(autoTire, i) in AUTO_TIRES"
+                v-for="(autoTire, i) in AUTO_TIRES_ARCHIVE"
                 :key="i"
             >
               <td>
@@ -61,10 +61,10 @@
               </td>
               <td>{{autoTire.year}}</td>
               <td class="productlist">
-                  <h6
-                      v-html="autoTire.name"
-                      class="mb-0 product-title"
-                  ></h6>
+                <h6
+                    v-html="autoTire.name"
+                    class="mb-0 product-title"
+                ></h6>
               </td>
               <td>{{autoTire.model}}</td>
               <td>{{autoTire.priceUSD}}$</td>
@@ -119,13 +119,10 @@
           </table>
         </div>
       </div>
-      <div
-          v-if="autoTiresTotal >= 20"
-          class="row"
-      >
+      <div class="row">
         <v-pagination
             v-model="param.pageNum"
-            :records="autoTiresTotal"
+            :records="autoTiresArchiveTotal"
             :per-page="20"
             @paginate="setPageByTotal"
             :options="paginationOptions"
@@ -136,84 +133,82 @@
 </template>
 
 <script>
-  import {DOMAIN} from "../../../constants/constants";
-  import {mapActions, mapGetters} from "vuex";
-  import Jquery from 'jquery'; // eslint-disable-line no-unused-vars
-  import lightbox from 'lightbox2'; // eslint-disable-line no-unused-vars
+import {DOMAIN} from "../../../constants/constants";
+import {mapActions, mapGetters} from "vuex";
+import Jquery from 'jquery'; // eslint-disable-line no-unused-vars
+import lightbox from 'lightbox2'; // eslint-disable-line no-unused-vars
 
-  export default {
-    name: "AutoTiresList",
+export default {
+  name: "AutoTiresArchiveList",
 
-    mounted() {
-      this.GET_AUTO_TIRES_FROM_API(this.param.pageNum);
-      this.GET_AUTO_TIRES_TOTALS();
+  mounted() {
+    this.GET_AUTO_TIRES_ARCHIVE_FROM_API(this.param.pageNum);
+    this.GET_AUTO_TIRES_ARCHIVE_TOTALS();
+
+    this.test = this.$store.state.autoTiresArchive;
+  },
+
+  computed: {
+    ...mapGetters('autoTiresArchive', [
+      'AUTO_TIRES_ARCHIVE',
+      'AUTO_TIRES_ARCHIVE_TOTALS'
+    ]),
+
+    autoTiresArchiveTotal() {
+      return parseInt(this.AUTO_TIRES_ARCHIVE_TOTALS);
+    }
+  },
+
+
+  methods: {
+    ...mapActions('autoTiresArchive', [
+      'GET_AUTO_TIRES_ARCHIVE_FROM_API',
+      'GET_AUTO_TIRES_ARCHIVE_TOTALS',
+      'SET_SHOW_ALL_IMAGE',
+      'GET_AUTO_TIRES_ARCHIVE_HISTORY',
+      'RESTORE_AUTO_TIRES_ARCHIVE_BY_API'
+    ]),
+
+    setPageByTotal(page) {
+      this.param.pageNum = page;
+      this.GET_AUTO_TIRES_ARCHIVE_FROM_API(this.param.pageNum);
     },
 
-    computed: {
-      ...mapGetters('autoTires', [
-        'AUTO_TIRES',
-        'AUTO_TIRES_TOTALS'
-      ]),
+    showImageAll(id) {
+      this.SET_SHOW_ALL_IMAGE(id);
+    },
 
-      autoTiresTotal() {
-        return parseInt(this.AUTO_TIRES_TOTALS);
+    autoPartsRestore(id, index) {
+      if(confirm("Вы действительно хотите восстановить данную шину ?")) {
+        let param = {
+          autoPartsId: id,
+          autoPartsNumber: index
+        };
+
+        this.RESTORE_AUTO_TIRES_ARCHIVE_BY_API(param);
       }
     },
+  },
 
-
-    methods: {
-      ...mapActions('autoTires', [
-        'GET_AUTO_TIRES_FROM_API',
-        'GET_AUTO_TIRES_TOTALS',
-        'SET_SHOW_ALL_IMAGE',
-        'GET_AUTO_TIRES_HISTORY',
-        'DELET_AUTO_TIRES_BY_API'
-      ]),
-
-      setPageByTotal(page) {
-        this.param.pageNum = page;
-        this.GET_AUTO_TIRES_FROM_API(this.param.pageNum);
+  data() {
+    return {
+      domain: DOMAIN,
+      param: {
+        pageNum: 1,
       },
-
-      getStatus(status) {
-        return (status == 1) ? 'Активно' : 'Неактивно';
-      },
-
-      showImageAll(id) {
-        this.SET_SHOW_ALL_IMAGE(id);
-      },
-
-      autoTiresRemove(id, index) {
-        if(confirm("Вы действительно хотите удалить данную шину ?")) {
-          let param = {
-            autoTiresId: id,
-            autoTiresNumber: index
-          };
-
-          this.DELET_AUTO_TIRES_BY_API(param);
+      paginationOptions: {
+        chunk: 6,
+        texts: {
+          count: 'Отображается с {from} по {to} (всего {count} шт.)|{count}',
         }
       },
-    },
-
-    data() {
-      return {
-        domain: DOMAIN,
-        param: {
-          pageNum: 1,
-        },
-        paginationOptions: {
-          chunk: 6,
-          texts: {
-            count: 'Отображается с {from} по {to} (всего {count} шт.)|{count}',
-          }
-        },
-      };
-    }
-
+    };
   }
+
+}
 </script>
 
 <style lang="scss" scoped>
-@import "./src/components/autoTires/components/style/auto-tires-list";
+@import "./src/components/autoTiresArchive/components/style/auto-tires-archive-list";
 @import "/node_modules/lightbox2/dist/css/lightbox.min.css";
 </style>

@@ -111,6 +111,14 @@ const routes = [
         component: () => import('../components/autoTires/AutoTires.vue'),
     },
     {
+        path: '/auto-tires-archive',
+        name: 'autoTiresArchive',
+        meta: {
+            title: 'Архив шин',
+        },
+        component: () => import('../components/autoTiresArchive/AutoTiresArchive.vue'),
+    },
+    {
         path: '*',
         name: 'notFound',
         meta: {

@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: "AutoPartsArhive",
+  name: "AutoPartsArchive",
 
   components: {
     AutoPartsArchiveList: () => import("./components/AutoPartsArchiveList.vue"),
