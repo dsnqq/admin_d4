@@ -1,6 +1,6 @@
 <template>
       <div>
-        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-4">
+        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-2">
           <div class="col">
             <div class="card overflow-hidden radius-10">
               <div class="card-body">
@@ -10,7 +10,7 @@
                     <h4 class="">{{DASHBOARD_INFORMATION.autoPartsCount[0]}}/{{DASHBOARD_INFORMATION.autoPartsCount[1]}} шт.</h4>
                   </div>
                   <div class="w-50">
-                    <p class="mb-3 float-end text-success">+ 16% <i class="bi bi-arrow-up"></i></p>
+                    <p class="mb-3 float-end text-success"><i class="bi bi-wrench"></i></p>
                     <div id="chart1"></div>
                   </div>
                 </div>
@@ -26,7 +26,7 @@
                     <h4 class="">{{DASHBOARD_INFORMATION.tireCount[0]}}/{{DASHBOARD_INFORMATION.tireCount[1]}} шт.</h4>
                   </div>
                   <div class="w-50">
-                    <p class="mb-3 float-end text-danger">- 3.4% <i class="bi bi-arrow-down"></i></p>
+                    <p class="mb-3 float-end text-success"><i class="bi bi-vinyl"></i></p>
                     <div id="chart2"></div>
                   </div>
                 </div>
@@ -42,7 +42,7 @@
                     <h4 class="">{{DASHBOARD_INFORMATION.autoPartsPriceAll}}$</h4>
                   </div>
                   <div class="w-50">
-                    <p class="mb-3 float-end text-success">+ 24% <i class="bi bi-arrow-up"></i></p>
+                    <p class="mb-3 float-end text-success"><i class="bi bi-wrench"></i></p>
                     <div id="chart3"></div>
                   </div>
                 </div>
@@ -58,7 +58,7 @@
                     <h4 class="">{{DASHBOARD_INFORMATION.tirePriceAll}}$</h4>
                   </div>
                   <div class="w-50">
-                    <p class="mb-3 float-end text-success">+ 8.2% <i class="bi bi-arrow-up"></i></p>
+                    <p class="mb-3 float-end text-success"><i class="bi bi-vinyl"></i></p>
                     <div id="chart4"></div>
                   </div>
                 </div>
@@ -76,7 +76,7 @@
                     <h4 class="">{{DASHBOARD_INFORMATION.autoPartsViewMouth}} шт.</h4>
                   </div>
                   <div class="w-50">
-                    <p class="mb-3 float-end text-success">+ 8.2% <i class="bi bi-arrow-up"></i></p>
+                    <p class="mb-3 float-end text-success"><i class="bx bx-show"></i></p>
                     <div id="chart4"></div>
                   </div>
                 </div>
@@ -93,7 +93,7 @@
                     <h4 class="">{{DASHBOARD_INFORMATION.usersCount}} чел.</h4>
                   </div>
                   <div class="w-50">
-                    <p class="mb-3 float-end text-success">+ 8.2% <i class="bi bi-arrow-up"></i></p>
+                    <p class="mb-3 float-end text-success"><i class="bi bi-people"></i></p>
                     <div id="chart4"></div>
                   </div>
                 </div>
@@ -101,7 +101,7 @@
             </div>
           </div>
         </div>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-4">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-2">
           <div class="col">
             <div class="card radius-10">
               <div class="card-body">
@@ -111,7 +111,7 @@
                     <h4 class="mb-0 text-primary">{{DASHBOARD_INFORMATION.newAutoPartsMouth}} шт.</h4>
                   </div>
                   <div class="ms-auto fs-2 text-primary">
-                    <i class="bi bi-bell"></i>
+                    <i class="bi bi-cloud-plus"></i>
                   </div>
                 </div>
                 <hr class="my-2">
@@ -128,7 +128,7 @@
                     <h4 class="mb-0 text-danger">{{DASHBOARD_INFORMATION.saleAutoPartsMouth}} шт.</h4>
                   </div>
                   <div class="ms-auto fs-2 text-danger">
-                    <i class="bi bi-pencil"></i>
+                    <i class="bi bi-award-fill"></i>
                   </div>
                 </div>
                 <hr class="my-2">
@@ -141,11 +141,11 @@
               <div class="card-body">
                 <div class="d-flex align-items-center">
                   <div class="">
-                    <p class="mb-1">Заказы</p>
+                    <p class="mb-1">Всего заказов</p>
                     <h4 class="mb-0 text-success">{{DASHBOARD_INFORMATION.totalOrders}} шт.</h4>
                   </div>
                   <div class="ms-auto fs-2 text-success">
-                    <i class="bi bi-envelope"></i>
+                    <i class="bi bi-basket2-fill"></i>
                   </div>
                 </div>
                 <hr class="my-2">
@@ -162,7 +162,7 @@
                     <h4 class="mb-0 text-orange">{{DASHBOARD_INFORMATION.arhiveAutoParts}} шт.</h4>
                   </div>
                   <div class="ms-auto fs-2 text-orange">
-                    <i class="bi bi-book"></i>
+                    <i class="bi bi-archive"></i>
                   </div>
                 </div>
                 <hr class="my-2">
@@ -178,7 +178,7 @@
                 <div class="widget-icon mx-auto mb-3 bg-light-success text-success">
                   <i class="bi bi-currency-dollar"></i>
                 </div>
-                <h3>{{DASHBOARD_INFORMATION.currency.USD}} <i class="bi bi-pencil"></i></h3>
+                <h3>{{DASHBOARD_INFORMATION.currency.USD}} <i class="bi bi-pencil text-warning"></i></h3>
                 <p class="mb-0">Доллар США (USD)</p>
               </div>
             </div>
@@ -189,7 +189,7 @@
                 <div class="widget-icon mx-auto mb-3 bg-light-primary text-primary">
                   <i class="bi bi-cash"></i>
                 </div>
-                <h3>{{DASHBOARD_INFORMATION.currency.RUB}} <i class="bi bi-pencil"></i></h3>
+                <h3>{{DASHBOARD_INFORMATION.currency.RUB}} <i class="bi bi-pencil text-warning"></i></h3>
                 <p class="mb-0">Рос. рубль (RUB)</p>
               </div>
             </div>
@@ -200,7 +200,7 @@
                 <div class="widget-icon mx-auto mb-3 bg-light-orange text-orange">
                   <i class="bi bi-currency-euro"></i>
                 </div>
-                <h3>{{DASHBOARD_INFORMATION.currency.EUR}} <i class="bi bi-pencil"></i></h3>
+                <h3>{{DASHBOARD_INFORMATION.currency.EUR}} <i class="bi bi-pencil text-warning"></i></h3>
                 <p class="mb-0">Евро (EUR)</p>
               </div>
             </div>
