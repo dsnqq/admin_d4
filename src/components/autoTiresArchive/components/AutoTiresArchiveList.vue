@@ -14,104 +14,73 @@
               <th>Название шины</th>
               <th>Артикул</th>
               <th>Цена за штуку</th>
-              <th>Дата создания</th>
-              <th>Статус</th>
+              <th>Дата удаления</th>
               <th>Описание</th>
               <th>Действия</th>
             </tr>
             </thead>
             <tbody>
             <tr
-                v-for="(autoTire, i) in AUTO_TIRES_ARCHIVE"
+                v-for="(autoTireArchive, i) in AUTO_TIRES_ARCHIVE"
                 :key="i"
             >
               <td>
-                <a
-                    :href="domain + `/image/` + autoTire.images[0].imageBig"
-                    :data-title="autoTire.name"
-                    :data-lightbox="autoTire.product_id"
-                    class="product-box-image"
-                >
-                  <img
-                      :src="autoTire.images[i].imageMini"
-                      :alt="autoTire.name"
-                  />
-                </a>
-                <div class="product-box-image-flex">
+                <template v-if="autoTireArchive.images">
                   <a
-                      :data-lightbox="autoTire.product_id"
-                      v-for="(image, i) in autoTire.images"
-                      :key="i"
-                      :data-title="autoTire.name"
-                      :href="domain + `/image/` + image.imageBig"
-                      class="product-box-image--small"
-                      v-show="image.imageShow"
+                      :href="domain + `/image/` + autoTireArchive.images[0].imageBig"
+                      :data-title="autoTireArchive.name"
+                      :data-lightbox="autoTireArchive.product_id"
+                      class="product-box-image"
                   >
                     <img
-                        :src="image.imageMini"
-                        :alt="autoTire.name"
-                    >
+                        :src="autoTireArchive.images[0].imageMini"
+                        :alt="autoTireArchive.name"
+                    />
                   </a>
-                  <span
-                      v-if="!autoTire.imagesShowAllImage"
-                      class="product-more-photo"
-                  >Ещё фото</span>
-                </div>
+                  <div class="product-box-image-flex">
+                    <a
+                        :data-lightbox="autoTireArchive.product_id"
+                        v-for="(image, i) in autoTireArchive.images"
+                        :key="i"
+                        :data-title="autoTireArchive.name"
+                        :href="domain + `/image/` + image.imageBig"
+                        class="product-box-image--small"
+                        v-show="image.imageShow"
+                    >
+                      <img
+                          :src="image.imageMini"
+                          :alt="autoTireArchive.name"
+                      >
+                    </a>
+                    <span
+                        v-if="!autoTireArchive.imagesShowAllImage"
+                        v-on:click="showImageAll(i)"
+                        class="product-more-photo"
+                    >Ещё фото</span>
+                  </div>
+                </template>
               </td>
-              <td>{{autoTire.year}}</td>
+              <td>{{autoTireArchive.year}}</td>
               <td class="productlist">
                 <h6
-                    v-html="autoTire.name"
+                    v-html="autoTireArchive.name"
                     class="mb-0 product-title"
                 ></h6>
               </td>
-              <td>{{autoTire.model}}</td>
-              <td>{{autoTire.priceUSD}}$</td>
-              <td>{{autoTire.dateAvailable}}</td>
-              <td>
-                <span
-                    class="badge rounded-pill"
-                    :class="autoTire.status == 1 ? 'alert-success' : 'alert-danger'"
-                >
-                  {{getStatus(autoTire.status)}}
-                </span>
-              </td>
+              <td>{{autoTireArchive.model}}</td>
+              <td>{{autoTireArchive.priceUSD}}$</td>
+              <td>{{autoTireArchive.dateDeleted}}</td>
               <td class="td-description">
-                {{autoTire.description}}
+                {{autoTireArchive.description}}
               </td>
               <td class="text-center">
-                <div class="d-flex align-items-center gap-2 fs-6">
+                <div class="d-flex align-items-center justify-content-center gap-1 fs-6">
                   <a
-                      class="text-primary cursor-pointer"
+                      class="text-success cursor-pointer"
                   >
-                    <i class="bi bi-archive"></i>
-                  </a>
-                  <a
-                      :href="domain + autoTire.linkToSite"
-                      target="_blank"
-                      class="text-primary"
-                      title="Открыть на сайте"
-                  >
-                    <i class="bi bi-eye-fill"></i>
-                  </a>
-                  <router-link
-                      :to="`/auto/${autoTire.product_id}`"
-                      class="text-warning"
-                      title="Редактировать"
-                  >
-                    <i class="bi bi-pencil-fill"></i>
-                  </router-link>
-                  <a class="text-primary cursor-pointer">
-                    <i class="bi bi-camera"></i>
-                  </a>
-                  <a
-                      v-on:click.prevent="autoTiresRemove(autoTire.product_id, i)"
-                      class="text-danger"
-                  >
-                    <i class="bi bi-trash-fill"></i>
+                    <i class="bi bi-arrow-clockwise"></i>
                   </a>
                 </div>
-                <div class="btn btn-info">Печать QR</div>
               </td>
             </tr>
             </tbody>
