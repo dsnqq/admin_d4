@@ -81,12 +81,7 @@
                 {{autoTire.description}}
               </td>
               <td class="text-center">
-                <div class="d-flex align-items-center gap-2 fs-6">
-                  <a
-                      class="text-primary cursor-pointer"
-                  >
-                    <i class="bi bi-archive"></i>
-                  </a>
+                <div class="d-flex align-items-center justify-content-center gap-2 fs-6">
                   <a
                       :href="domain + autoTire.linkToSite"
                       target="_blank"

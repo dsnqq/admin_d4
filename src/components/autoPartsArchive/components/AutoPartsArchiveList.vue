@@ -79,7 +79,7 @@
                 {{autoPartsArchive.description}}
               </td>
               <td class="text-center">
-                <div class="d-flex align-items-center gap-2 fs-6">
+                <div class="d-flex align-items-center justify-content-center gap-2 fs-6">
                   <a
                       v-on:click="getHistoryAuto(autoPartsArchive.product_id)"
                       class="text-primary cursor-pointer"
