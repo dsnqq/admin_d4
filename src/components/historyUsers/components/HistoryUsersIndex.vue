@@ -6,7 +6,7 @@
             :to="{name: 'historyUsers'}"
             class="btn btn-primary"
         >
-          Вернуться назад
+          {{dictionary.goBack}}
         </router-link>
       </template>
     </BreadcrumbAdmin>
@@ -40,10 +40,10 @@
                 <template v-if="c.type == 'default'">
                   {{userItem[c.name]}}
                 </template>
-                <template v-if="c.type == 'image'">
+                <template v-else-if="c.type == 'image'">
                   <img :src="userItem[c.name]" />
                 </template>
-                <template v-if="c.type == 'price'">
+                <template v-else-if="c.type == 'price'">
                   {{userItem[c.name]}}<br>{{userItem[c.name2]}}
                 </template>
               </td>
@@ -67,6 +67,7 @@
 
 <script>
 import {COLUMNS_INDEX} from '@/components/historyUsers/constants/constants'
+import {DICTIONARY} from '@/constants/constants'
 import BreadcrumbAdmin from "@/components/BreadcrumbAdmin.vue";
 import {mapActions, mapGetters} from "vuex";
 
@@ -110,6 +111,7 @@ export default {
     return {
       id: this.$route.params.id,
       columns: COLUMNS_INDEX,
+      dictionary: DICTIONARY,
       pageNum: 1,
       paginationOptions: {
         chunk: 6,

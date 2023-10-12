@@ -1,3 +1,7 @@
 export const KEYS = "ttoCiOHMPjOkCjQBRE8OheHGWMi6hITr7iYmWDupyWXdKmP8DYTLp0xxrtbFLManRy2ETpfqHe8O60lOylGpcsv737SKM2IzXQDxam7dUMOkhqyKjypBnxaFW20qOoXxVQJBarMEQyxLlPsw5RXT3l0GLIasoSujCUDhAg83yXIBvMDZBEaBumdO3oXMtvvkhv3XdhQcL4RHZIHxdc3J0JJy8PbCImuwGsXFzKaXIEDC0wx7F7J3f1PoTHXtwA5L";
 
 export const DOMAIN = "https://d4.by";
+
+export const DICTIONARY = {
+    goBack: "Вернуться назад",
+};

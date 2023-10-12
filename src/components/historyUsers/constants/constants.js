@@ -45,5 +45,39 @@ export const COLUMNS_INDEX = [
         name: "nowSection",
         type: "default"
     },
+];
 
+export const COLUMNS_LIST = [
+    {
+        title: "Имя",
+        className: "",
+        name: "firstname",
+        name2: "lastname",
+        type: "name",
+    },
+    {
+        title: "Логин",
+        className: "",
+        name: "username",
+        type: "default",
+    },
+    {
+        title: "Статус",
+        className: "text-center",
+        name: "status",
+        type: "status",
+    },
+    {
+        title: "Действие",
+        className: "text-center",
+        type: "action",
+        links: [
+            {
+                url: "/history-users/",
+                url2: "user_id",
+                className: "text-primary",
+                iconClass: "bi bi-eye-fill"
+            }
+        ]
+    }
 ];

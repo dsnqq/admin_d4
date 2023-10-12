@@ -7,23 +7,13 @@
           <table class="table table-border-1 mb-0">
             <thead>
             <tr>
-              <th scope="col">
-                Имя
-              </th>
-              <th scope="col">
-                Логин
-              </th>
               <th
-                  class="text-center"
+                  v-for="(c, i) in columns"
+                  :key="i"
                   scope="col"
+                  :class="c.className"
               >
-                Статус
-              </th>
-              <th
-                  class="text-center"
-                  scope="col"
-              >
-                Действие
+                {{c.title}}
               </th>
             </tr>
             </thead>
@@ -32,22 +22,30 @@
                 v-for="(userItem, i) in USER_HISTORY_LIST"
                 :key="i"
             >
-              <td>
-                {{ userItem.firstname + ` ` + userItem.lastname }}
-              </td>
-              <td>
-                {{ userItem.username }}
-              </td>
-              <td class="text-center">
-                {{ getStatusUser(userItem.status) }}
-              </td>
-              <td class="text-center">
-                <router-link
-                    :to="`/history-users/${userItem.user_id}`"
-                    class="text-primary"
-                >
-                  <i class="bi bi-eye-fill"></i>
-                </router-link>
+              <td
+                  v-for="(c, index) in columns"
+                  :key="index"
+                  :class="c.className"
+              >
+                <template v-if="c.type == 'name'">
+                  {{userItem[c.name] + ` ` + userItem[c.name2]}}
+                </template>
+                <template v-else-if="c.type == 'default'">
+                  {{userItem[c.name]}}
+                </template>
+                <template v-else-if="c.type == 'status'">
+                  {{getStatusUser(userItem[c.name])}}
+                </template>
+                <template v-else-if="c.type == 'action'">
+                  <router-link
+                      v-for="(l, j) in c.links"
+                      :key="j"
+                      :to="l.url + userItem[l.url2]"
+                      :class="l.className"
+                  >
+                    <i :class="l.iconClass"></i>
+                  </router-link>
+                </template>
               </td>
             </tr>
             </tbody>
@@ -59,6 +57,7 @@
 </template>
 
 <script>
+import {COLUMNS_LIST} from '@/components/historyUsers/constants/constants';
 import {mapActions, mapGetters} from "vuex";
 
 export default {
@@ -81,6 +80,12 @@ export default {
 
     getStatusUser(status) {
       return (status == 1) ? 'Активно' : 'Неактивно';
+    }
+  },
+
+  data() {
+    return {
+      columns: COLUMNS_LIST
     }
   }
 
