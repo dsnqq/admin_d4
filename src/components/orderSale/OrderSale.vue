@@ -1,66 +1,44 @@
 <template>
   <div class="card">
     <div class="card-header text-center">
-      Последние заказы отображаются вверху
+      {{dictionary.lastOrderOnTop}}
     </div>
     <div class="card-body">
       <div class="row">
         <table class="table table-border-1 mb-0">
           <thead>
-          <tr>
-            <th scope="col">Заказ №</th>
-            <th scope="col">Покупатель</th>
-            <th scope="col">E-mail</th>
-            <th scope="col">Телефон</th>
-            <th scope="col">Город</th>
-            <th scope="col">Адрес</th>
-            <th scope="col">Состав заказа</th>
-            <th scope="col">Комментарий</th>
-            <th scope="col">Полная стоимость</th>
-            <th scope="col">Дата заказа</th>
-          </tr>
+            <tr>
+              <th
+                  v-for="(c, i) in columns"
+                  :key="i"
+                  scope="col"
+              >
+                {{c.title}}
+              </th>
+            </tr>
           </thead>
           <tbody>
-          <tr
-            v-for="(order, i) in ORDER_SALE"
-            :key="i"
-          >
-            <td>
-              {{ order.order_id }}
-            </td>
-            <td>
-              {{ order.name }}
-            </td>
-            <td>
-              {{ order.email }}
-            </td>
-            <td>
-              {{ order.telephone }}
-            </td>
-            <td>
-              {{ order.information }}
-            </td>
-            <td>
-              {{ order.shipping_adress }}
-            </td>
-            <td>
-              <div
-                v-for="(product, index) in order.product_order"
-                :key="index"
+            <tr
+              v-for="(order, i) in ORDER_SALE"
+              :key="i"
+            >
+              <td
+                  v-for="(c, index) in columns"
+                  :key="index"
               >
-                {{ getInformationAbout(product) }}
-              </div>
-            </td>
-            <td>
-              {{ order.comment }}
-            </td>
-            <td>
-              {{ order.total }}
-            </td>
-            <td>
-              {{ order.date_added }}
-            </td>
-          </tr>
+                <template v-if="c.type == 'default'">
+                  {{ order[c.name] }}
+                </template>
+                <template v-else-if="c.type == 'products'">
+                  <div
+                      v-for="(p, j) in order[c.name]"
+                      :key="j"
+                  >
+                    {{ getInformationAbout(p) }}
+                  </div>
+                </template>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -78,6 +56,8 @@
 </template>
 
 <script>
+  import {COLUMNS} from "@/components/orderSale/constants/constants";
+  import {DICTIONARY} from "@/constants/constants";
   import {mapActions, mapGetters} from "vuex";
 
   export default {
@@ -119,6 +99,8 @@
     data() {
       return {
         pageNum: 1,
+        columns: COLUMNS,
+        dictionary: DICTIONARY,
         paginationOptions: {
           chunk: 6,
           texts: {

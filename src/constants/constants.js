@@ -4,4 +4,5 @@ export const DOMAIN = "https://d4.by";
 
 export const DICTIONARY = {
     goBack: "Вернуться назад",
+    lastOrderOnTop: "Последние заказы отображаются вверху",
 };
