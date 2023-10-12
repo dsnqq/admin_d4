@@ -134,10 +134,12 @@ export default {
             state.autoTiresArchiveIndex = autoTiresArchiveIndex;
         },
         SHOW_ALL_IMAGE_BY_ID: (state, id) => {
-            state.autoTiresArchive[id].imagesShowAllImage = true;
+            if(!state.autoTiresArchive[id].imagesShowAllImage) {
+                state.autoTiresArchive[id].imagesShowAllImage = true;
 
-            for(let i = 0; i < state.autoTiresArchive[id].images.length; i++){
-                state.autoTiresArchive[id].images[i].imageShow = true;
+                for (let i = 0; i < state.autoTiresArchive[id].images.length; i++) {
+                    state.autoTiresArchive[id].images[i].imageShow = true;
+                }
             }
         },
         SET_AUTO_TIRES_ARCHIVE_HISTORY_STATE: (state, autoTiresArchiveHistory) => {

@@ -134,10 +134,12 @@ export default {
             state.autoPartsIndex = autoPartsIndex;
         },
         SHOW_ALL_IMAGE_BY_ID: (state, id) => {
-            state.autoParts[id].imagesShowAllImage = true;
+            if(!state.autoParts[id].imagesShowAllImage) {
+                state.autoParts[id].imagesShowAllImage = true;
 
-            for(let i = 0; i < state.autoParts[id].images.length; i++){
-                state.autoParts[id].images[i].imageShow = true;
+                for (let i = 0; i < state.autoParts[id].images.length; i++) {
+                    state.autoParts[id].images[i].imageShow = true;
+                }
             }
         },
         SET_AUTO_PARTS_HISTORY_STATE: (state, autoPartsHistory) => {

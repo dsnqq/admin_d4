@@ -79,7 +79,7 @@
               <td>
                 <span
                     class="badge rounded-pill"
-                    :class="autoTire.status == 1 ? 'alert-success' : 'alert-danger'"
+                    :class="auto.status == 1 ? 'alert-success' : 'alert-danger'"
                 >
                   {{getStatus(auto.status)}}
                 </span>

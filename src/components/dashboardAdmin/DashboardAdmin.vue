@@ -1,6 +1,9 @@
 <template>
       <div>
-        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-2">
+        <div
+            v-if="DASHBOARD_INFORMATION.sectionS"
+            class="row row-cols-1 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-2"
+        >
           <div
               v-for="(s, i) in DASHBOARD_INFORMATION.sectionS"
               :key="i"
@@ -26,7 +29,10 @@
             </div>
           </div>
         </div>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-2">
+        <div
+            v-if="DASHBOARD_INFORMATION.sectionM"
+            class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-2"
+        >
           <div
               v-for="(m, i) in DASHBOARD_INFORMATION.sectionM"
               :key="i"
@@ -60,7 +66,10 @@
             </div>
           </div>
         </div>
-        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-3 row-cols-xl-3 row-cols-xxl-3">
+        <div
+            v-if="DASHBOARD_INFORMATION.currency"
+            class="row row-cols-2 row-cols-sm-3 row-cols-md-3 row-cols-xl-3 row-cols-xxl-3"
+        >
           <div class="col">
             <div class="card radius-10">
               <div class="card-body text-center">

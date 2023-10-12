@@ -54,7 +54,6 @@
                   </a>
                   <span
                       v-if="!autoTire.imagesShowAllImage"
-                      v-on:click="showImageAll(i)"
                       class="product-more-photo"
                   >Ещё фото</span>
                 </div>
@@ -144,14 +143,12 @@ export default {
   mounted() {
     this.GET_AUTO_TIRES_ARCHIVE_FROM_API(this.param.pageNum);
     this.GET_AUTO_TIRES_ARCHIVE_TOTALS();
-
-    this.test = this.$store.state.autoTiresArchive;
   },
 
   computed: {
     ...mapGetters('autoTiresArchive', [
       'AUTO_TIRES_ARCHIVE',
-      'AUTO_TIRES_ARCHIVE_TOTALS'
+      'AUTO_TIRES_ARCHIVE_TOTALS',
     ]),
 
     autoTiresArchiveTotal() {
@@ -164,29 +161,11 @@ export default {
     ...mapActions('autoTiresArchive', [
       'GET_AUTO_TIRES_ARCHIVE_FROM_API',
       'GET_AUTO_TIRES_ARCHIVE_TOTALS',
-      'SET_SHOW_ALL_IMAGE',
-      'GET_AUTO_TIRES_ARCHIVE_HISTORY',
-      'RESTORE_AUTO_TIRES_ARCHIVE_BY_API'
     ]),
 
     setPageByTotal(page) {
       this.param.pageNum = page;
       this.GET_AUTO_TIRES_ARCHIVE_FROM_API(this.param.pageNum);
-    },
-
-    showImageAll(id) {
-      this.SET_SHOW_ALL_IMAGE(id);
-    },
-
-    autoPartsRestore(id, index) {
-      if(confirm("Вы действительно хотите восстановить данную шину ?")) {
-        let param = {
-          autoPartsId: id,
-          autoPartsNumber: index
-        };
-
-        this.RESTORE_AUTO_TIRES_ARCHIVE_BY_API(param);
-      }
     },
   },
 

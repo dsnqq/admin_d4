@@ -134,10 +134,12 @@ export default {
             state.autoPartsArchiveIndex = autoPartsArchiveIndex;
         },
         SHOW_ALL_IMAGE_BY_ID: (state, id) => {
-            state.autoPartsArchive[id].imagesShowAllImage = true;
+            if(!state.autoPartsArchive[id].imagesShowAllImage) {
+                state.autoPartsArchive[id].imagesShowAllImage = true;
 
-            for(let i = 0; i < state.autoPartsArchive[id].images.length; i++){
-                state.autoPartsArchive[id].images[i].imageShow = true;
+                for (let i = 0; i < state.autoPartsArchive[id].images.length; i++) {
+                    state.autoPartsArchive[id].images[i].imageShow = true;
+                }
             }
         },
         SET_AUTO_PARTS_ARCHIVE_HISTORY_STATE: (state, autoPartsArchiveHistory) => {
