@@ -387,6 +387,7 @@
 
       setPageByTotal(page) {
         this.param.pageNum = page;
+        window.scrollTo(0, 0);
         this.GET_AUTO_PARTS_FROM_API(this.param);
       },
 

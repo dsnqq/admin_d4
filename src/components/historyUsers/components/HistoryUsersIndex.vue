@@ -103,6 +103,7 @@ export default {
     setPageByTotal(page) {
       this.pageNum = page;
       this.param.page = page;
+      window.scrollTo(0, 0);
       this.GET_USER_HISTORY(this.param);
     },
   },

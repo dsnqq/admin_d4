@@ -65,6 +65,7 @@ export default {
   methods: {
     setPageByTotal(page) {
       this.pageNum = page;
+      window.scrollTo(0, 0);
       this.GET_CARS_FROM_API(this.pageNum);
     },
 

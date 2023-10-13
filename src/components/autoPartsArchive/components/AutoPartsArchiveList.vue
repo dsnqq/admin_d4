@@ -29,38 +29,40 @@
                 :key="i"
             >
               <td>
-                <a
-                    :href="domain + `/image/` + autoPartsArchive.images[0].imageBig"
-                    :data-title="autoPartsArchive.autoParts.name"
-                    :data-lightbox="autoPartsArchive.product_id"
-                    class="product-box-image"
-                >
-                  <img
-                      :src="autoPartsArchive.images[i].imageMini"
-                      :alt="autoPartsArchive.autoParts.name"
-                  />
-                </a>
-                <div class="product-box-image-flex">
+                <template v-if="autoPartsArchive.images">
                   <a
-                      :data-lightbox="autoPartsArchive.product_id"
-                      v-for="(image, i) in autoPartsArchive.images"
-                      :key="i"
+                      :href="domain + `/image/` + autoPartsArchive.images[0].imageBig"
                       :data-title="autoPartsArchive.autoParts.name"
-                      :href="domain + `/image/` + image.imageBig"
-                      class="product-box-image--small"
-                      v-show="image.imageShow"
+                      :data-lightbox="autoPartsArchive.product_id"
+                      class="product-box-image"
                   >
                     <img
-                        :src="image.imageMini"
+                        :src="autoPartsArchive.images[0].imageMini"
                         :alt="autoPartsArchive.autoParts.name"
-                    >
+                    />
                   </a>
-                  <span
-                      v-if="!autoPartsArchive.imagesShowAllImage"
-                      v-on:click="showImageAll(i)"
-                      class="product-more-photo"
-                  >Ещё фото</span>
-                </div>
+                  <div class="product-box-image-flex">
+                    <a
+                        :data-lightbox="autoPartsArchive.product_id"
+                        v-for="(image, index) in autoPartsArchive.images"
+                        :key="index"
+                        :data-title="autoPartsArchive.autoParts.name"
+                        :href="domain + `/image/` + image.imageBig"
+                        class="product-box-image--small"
+                        v-show="image.imageShow"
+                    >
+                      <img
+                          :src="image.imageMini"
+                          :alt="autoPartsArchive.autoParts.name"
+                      >
+                    </a>
+                    <span
+                        v-if="!autoPartsArchive.imagesShowAllImage"
+                        v-on:click="showImageAll(i)"
+                        class="product-more-photo"
+                    >Ещё фото</span>
+                  </div>
+                </template>
               </td>
               <td>{{autoPartsArchive.name.marka + ' ' + autoPartsArchive.name.model}}</td>
               <td>{{autoPartsArchive.year}}</td>
@@ -149,6 +151,7 @@ export default {
 
     setPageByTotal(page) {
       this.param.pageNum = page;
+      window.scrollTo(0, 0);
       this.GET_AUTO_PARTS_ARCHIVE_FROM_API(this.param.pageNum);
     },
 

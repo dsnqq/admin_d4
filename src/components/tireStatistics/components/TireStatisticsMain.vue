@@ -103,6 +103,7 @@
 
       setPageByTotal(page) {
         this.pageNum = page;
+        window.scrollTo(0, 0);
         this.GET_TIRE_STATISTICS(this.pageNum);
       },
 

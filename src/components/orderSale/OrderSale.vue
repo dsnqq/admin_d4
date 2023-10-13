@@ -88,6 +88,7 @@
 
       setPageByTotal(page) {
         this.pageNum = page;
+        window.scrollTo(0, 0);
         this.GET_ORDER_SALE(this.pageNum);
       },
 

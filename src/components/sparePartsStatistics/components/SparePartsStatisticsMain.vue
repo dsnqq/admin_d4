@@ -103,6 +103,7 @@
 
       setPageByTotal(page) {
         this.pageNum = page;
+        window.scrollTo(0, 0);
         this.GET_SPARE_PARTS_STATISTICS(this.pageNum);
       },
 
