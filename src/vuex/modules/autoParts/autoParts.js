@@ -9,9 +9,17 @@ export default {
         autoPartsIndex: {},
         autoPartsTotals: 0,
         lockingPool: 0,
-        autoPartsHistory: {}
+        autoPartsHistory: {},
+        typesOfAutoParts: [],
+        brandAndModelCar: []
     },
     getters: {
+        BREND_MODEL_CAR_AUTO_PARTS(state) {
+            return state.brandAndModelCar;
+        },
+        TYPES_OF_AUTO_PARTS(state) {
+            return state.typesOfAutoParts;
+        },
         AUTO_PARTS(state) {
             return state.autoParts;
         },
@@ -35,7 +43,16 @@ export default {
                 '/index.php?route=api/auto_parts/auto',
                 {
                     key: KEYS,
-                    page: param,
+                    page: param.pageNum,
+                    filter_sparePartNumber: param.filters.sparePartNumber,
+                    filter_model: param.filters.model,
+                    filter_status: param.filters.status,
+                    filter_fuel: param.filters.fuel,
+                    filter_value: param.filters.value,
+                    filter_year_start: param.filters.yearStart,
+                    filter_year_last: param.filters.yearLast,
+                    filter_types: param.filters.types.code,
+                    filter_category: param.filters.car.code
                 }
             )
                 .then((response) => {
@@ -49,11 +66,20 @@ export default {
                 });
         },
 
-        GET_AUTO_PARTS_TOTALS({commit}) {
+        GET_AUTO_PARTS_TOTALS({commit}, param) {
             return  axios.post(
                 '/index.php?route=api/auto_parts/auto/totals',
                 {
                     key: KEYS,
+                    filter_sparePartNumber: param.filters.sparePartNumber,
+                    filter_model: param.filters.model,
+                    filter_status: param.filters.status,
+                    filter_fuel: param.filters.fuel,
+                    filter_value: param.filters.value,
+                    filter_year_start: param.filters.yearStart,
+                    filter_year_last: param.filters.yearLast,
+                    filter_types: param.filters.types.code,
+                    filter_category: param.filters.car.code
                 }
             )
                 .then((response) => {
@@ -103,6 +129,40 @@ export default {
                 });
         },
 
+        async GET_TYPES_OF_AUTO_PARTS({commit}) {
+            return await axios.post(
+                '/index.php?route=api/auto_parts/auto/types',
+                {
+                    key: KEYS,
+                }
+            )
+                .then((response) => {
+                    commit('SET_TYPES_OF_AUTO_PARTS_STATE', response.data.typesOfAutoParts);
+                    return response.data.typesOfAutoParts;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    return error;
+                });
+        },
+
+        async GET_BREND_MODEL_CAR_AUTO_PARTS({commit}) {
+            return await axios.post(
+                '/index.php?route=api/auto_parts/auto/category',
+                {
+                    key: KEYS,
+                }
+            )
+                .then((response) => {
+                    commit('SET_BREND_MODEL_CAR_AUTO_PARTS', response.data.brandAndModelCar);
+                    return response.data.brandAndModelCar;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    return error;
+                });
+        },
+
         DELET_AUTO_PARTS_BY_API({commit}, param) {
             return axios.post(
                 '/index.php?route=api/auto_parts/auto/delete/' + param.autoPartsId,
@@ -118,12 +178,32 @@ export default {
                 });
         },
 
+        CHANGE_AUTO_PARTS_STATUS({commit}, param) {
+            return axios.post(
+                '/index.php?route=api/auto_parts/auto/change_status/' + param.autoPartsId,
+                {
+                    key: KEYS,
+                    status: param.status
+                }
+            )
+                .then(() => {
+                    commit('CHANGE_AUTO_PARTS_STATUS', param.status);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+
         SET_SHOW_ALL_IMAGE({commit}, id){
             commit('SHOW_ALL_IMAGE_BY_ID', id);
         },
     },
     mutations: {
         SET_AUTO_PARTS_TO_STATE: (state, autoParts) => {
+            state.autoParts = {};
+            state.autoParts = autoParts;
+        },
+        CHANGE_AUTO_PARTS_STATUS: (state, autoParts) => {
             state.autoParts = {};
             state.autoParts = autoParts;
         },
@@ -145,10 +225,16 @@ export default {
         SET_AUTO_PARTS_HISTORY_STATE: (state, autoPartsHistory) => {
             state.autoPartsHistory = autoPartsHistory;
         },
+        SET_TYPES_OF_AUTO_PARTS_STATE: (state, typesOfAutoParts) => {
+            state.typesOfAutoParts = typesOfAutoParts;
+        },
         DELETE_THIS_AUTO_PARTS: (state, id) => {
             state.autoPartsTotals = state.autoPartsTotals - 1;
             state.autoParts.splice(id, 1);
             alert("Запчасть удалена удалено!");
+        },
+        SET_BREND_MODEL_CAR_AUTO_PARTS: (state, brandAndModelCar) => {
+            state.brandAndModelCar = brandAndModelCar;
         },
         LOCK_UI: (state) => {
             state.lockingPool++;
