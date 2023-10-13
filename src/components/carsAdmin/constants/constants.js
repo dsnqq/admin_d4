@@ -1,16 +1,4 @@
-export const BODYS = [
-    "седан",
-    "хэтчбек",
-    "универсал",
-    "купе",
-    "кабриолет",
-    "минивеэн",
-    "пикап",
-    "фургон",
-    "тягач",
-    "лифтбек",
-    "внедорожник"
-];
+import {YEARS, BODYS} from "@/constants/constants";
 
 export const TYPE_POWERS = [
     "дизель",
@@ -18,18 +6,6 @@ export const TYPE_POWERS = [
     "гибрид",
     "электро"
 ];
-
-let today = new Date();
-let year = today.getFullYear();
-let yearsNum = parseInt(year) - 1980;
-let years = [];
-
-for(let i = 0; i <= yearsNum; i++) {
-    var y = 1980 + i;
-    years.push(y);
-}
-
-export const YEARS = years;
 
 export const LIST_ITEM_COLUMN = [
     "images",

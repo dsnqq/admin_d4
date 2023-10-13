@@ -336,8 +336,7 @@
 </template>
 
 <script>
-  import {YEARS} from "@/components/autoParts/constants/constants";
-  import {DOMAIN} from "@/constants/constants";
+  import {DOMAIN, YEARS} from "@/constants/constants";
   import {mapActions, mapGetters} from "vuex";
   import Jquery from 'jquery'; // eslint-disable-line no-unused-vars
   import lightbox from 'lightbox2'; // eslint-disable-line no-unused-vars
