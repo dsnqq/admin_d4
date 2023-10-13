@@ -1,15 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import carAdmin from './modules/carAdmin/carAdmin';
-import sparePartsStatistics from './modules/sparePartsStatistics/sparePartsStatistics';
-import tireStatistics from './modules/tireStatistics/tireStatistics';
-import historyUsers from './modules/historyUsers/historyUsers';
-import autoParts from './modules/autoParts/autoParts';
-import autoPartsArchive from './modules/autoPartsArchive/autoPartsArchive';
-import orderSale from './modules/orderSale/orderSale';
-import dashboardAdmin from './modules/dashboardAdmin/dashboardAdmin';
-import autoTires from './modules/autoTires/autoTires';
-import autoTiresArchive from './modules/autoTiresArchive/autoTiresArchive';
+import carAdmin from '@/components/carsAdmin/vuex/store';
+import sparePartsStatistics from '@/components/sparePartsStatistics/vuex/store';
+import tireStatistics from "@/components/tireStatistics/vuex/store";
+import historyUsers from '@/components/historyUsers/vuex/store';
+import autoParts from '@/components/autoParts/vuex/store';
+import autoPartsArchive from "@/components/autoPartsArchive/vuex/store";
+import orderSale from '@/components/orderSale/vuex/store';
+import dashboardAdmin from '@/components/dashboardAdmin/vuex/store';
+import autoTires from '@/components/autoTires/vuex/store';
+import autoTiresArchive from '@/components/autoTiresArchive/vuex/store';
 
 Vue.use(Vuex);
 

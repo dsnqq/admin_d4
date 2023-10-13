@@ -8,13 +8,13 @@
 </template>
 
 <script>
-  import tireStatistics from "@/vuex/modules/tireStatistics/tireStatistics";
-  import sparePartsStatistics from "@/vuex/modules/sparePartsStatistics/sparePartsStatistics";
-  import historyUsers from "@/vuex/modules/historyUsers/historyUsers";
-  import autoParts from "@/vuex/modules/autoParts/autoParts";
-  import autoPartsArchive from "@/vuex/modules/autoPartsArchive/autoPartsArchive";
-  import autoTires from "@/vuex/modules/autoTires/autoTires";
-  import autoTiresArchive from "@/vuex/modules/autoTiresArchive/autoTiresArchive";
+  import tireStatistics from "@/components/tireStatistics/vuex/store";
+  import sparePartsStatistics from "@/components/sparePartsStatistics/vuex/store";
+  import historyUsers from '@/components/historyUsers/vuex/store';
+  import autoParts from '@/components/autoParts/vuex/store';
+  import autoPartsArchive from "@/components/autoPartsArchive/vuex/store";
+  import autoTires from '@/components/autoTires/vuex/store';
+  import autoTiresArchive from '@/components/autoTiresArchive/vuex/store';
 
   export default {
     name: 'PreloaderAdmin',

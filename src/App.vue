@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import AdminContent from "./components/AdminContent.vue";
-import AuthAdmin from "./components/authAdmin/AuthAdmin.vue";
+import AdminContent from "@/components/AdminContent.vue";
+import AuthAdmin from "@/components/authAdmin/AuthAdmin.vue";
 
 export default {
   name: 'App',
