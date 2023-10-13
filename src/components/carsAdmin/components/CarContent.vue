@@ -39,8 +39,8 @@
 </template>
 
 <script>
-import CarListItem from './CarListItem.vue';
-import CarListItemHead from "./CarListItemHead.vue";
+import CarListItem from '@/components/carsAdmin/components/CarListItem.vue';
+import CarListItemHead from "@/components/carsAdmin/components/CarListItemHead.vue";
 import {mapActions, mapGetters} from "vuex";
 
 export default {

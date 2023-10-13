@@ -16,8 +16,8 @@ export default {
   name: "AutoPartsArchive",
 
   components: {
-    AutoPartsArchiveList: () => import("./components/AutoPartsArchiveList.vue"),
-    AutoPartsArchiveHistoryModal: () => import("./components/modal/AutoPartsArchiveHistoryModal.vue")
+    AutoPartsArchiveList: () => import("@/components/autoPartsArchive/components/AutoPartsArchiveList.vue"),
+    AutoPartsArchiveHistoryModal: () => import("@/components/autoPartsArchive/components/modal/AutoPartsArchiveHistoryModal.vue")
   },
 
   methods: {

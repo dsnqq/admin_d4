@@ -7,8 +7,8 @@ export default {
   name: "AutoTires",
 
   components: {
-    HistoryUsersIndex: () => import("./components/HistoryUsersIndex.vue"),
-    HistoryUsersList: () => import("./components/HistoryUsersList.vue")
+    HistoryUsersIndex: () => import("@/components/historyUsers/components/HistoryUsersIndex.vue"),
+    HistoryUsersList: () => import("@/components/historyUsers/components/HistoryUsersList.vue")
   },
 
   methods: {

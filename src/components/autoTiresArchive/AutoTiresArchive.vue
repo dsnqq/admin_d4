@@ -7,7 +7,7 @@ export default {
   name: "AutoTiresArchive",
 
   components: {
-    AutoTiresArchiveList: () => import("./components/AutoTiresArchiveList.vue"),
+    AutoTiresArchiveList: () => import("@/components/autoTiresArchive/components/AutoTiresArchiveList.vue"),
   },
 
   methods: {

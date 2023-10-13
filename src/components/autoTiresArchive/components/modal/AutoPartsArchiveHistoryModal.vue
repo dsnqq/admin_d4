@@ -35,7 +35,7 @@
     name: "AutoPartsHistoryModal",
 
     components: {
-      ModalAdmin: () => import("../../../UI/ModalAdmin.vue"),
+      ModalAdmin: () => import("@/components/UI/ModalAdmin.vue"),
     },
 
     computed: {

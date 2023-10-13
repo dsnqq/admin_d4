@@ -9,7 +9,7 @@
               class="modal-header__close close"
               data-dismiss="modal"
               aria-hidden="true"
-              v-on:click.prevent="closeModalAdmin"
+              @click.prevent="closeModalAdmin"
           >
             ×
           </button>

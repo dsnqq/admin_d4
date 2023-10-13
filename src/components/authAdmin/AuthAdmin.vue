@@ -42,7 +42,7 @@
                           <button
                               type="submit"
                               class="btn btn-primary radius-30"
-                              v-on:click.prevent="loginEnter"
+                              @click.prevent="loginEnter"
                           >Войти</button>
                         </div>
                       </div>

@@ -16,10 +16,10 @@
 </template>
 
 <script>
-import HeaderAdmin from "./HeaderAdmin.vue";
-import SidebarAdmin from "./SidebarAdmin.vue";
-import BreadcrumbAdmin from "./BreadcrumbAdmin.vue";
-import PreloaderAdmin from "./UI/PreloaderAdmin.vue";
+import HeaderAdmin from "@/components/HeaderAdmin.vue";
+import SidebarAdmin from "@/components/SidebarAdmin.vue";
+import BreadcrumbAdmin from "@/components/BreadcrumbAdmin.vue";
+import PreloaderAdmin from "@/components/UI/PreloaderAdmin.vue";
 
 export default {
   name: 'AdminContent',

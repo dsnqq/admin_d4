@@ -53,7 +53,7 @@
           </li>
           <li class="nav-item dropdown dropdown-large">
             <a
-                v-on:click.prevent="logout"
+                @click.prevent="logout"
                 class="nav-link dropdown-toggle dropdown-toggle-nocaret"
             >
               <div class="d-flex align-items-center">

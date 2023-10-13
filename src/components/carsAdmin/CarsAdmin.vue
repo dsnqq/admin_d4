@@ -9,8 +9,8 @@ export default {
   name: "CarsAdmin",
 
   components: {
-    CarDismantling: () => import("./components/CarDismantling.vue"),
-    CarIndex: () => import("./components/CarIndex.vue"),
+    CarDismantling: () => import("@/components/carsAdmin/components/CarDismantling.vue"),
+    CarIndex: () => import("@/components/carsAdmin/components/CarIndex.vue"),
   },
 
   methods: {

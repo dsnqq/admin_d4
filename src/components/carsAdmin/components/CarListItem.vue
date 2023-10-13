@@ -11,8 +11,8 @@
 </template>
 
 <script>
-  import {LIST_ITEM_COLUMN} from '../constants/constants';
-  import CarListItemColumn from "./CarListItemColumn.vue";
+  import {LIST_ITEM_COLUMN} from '@/components/carsAdmin/constants/constants';
+  import CarListItemColumn from "@/components/carsAdmin/components/CarListItemColumn.vue";
 
   export default {
     name: "CarListItem",

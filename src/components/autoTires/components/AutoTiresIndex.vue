@@ -180,8 +180,8 @@
 <script>
   import BreadcrumbAdmin from "@/components/BreadcrumbAdmin.vue";
   import {mapActions, mapGetters} from "vuex";
-  import {DOMAIN} from "../../../constants/constants";
-  import {STATUS, YEARS, BODYS, TRANSMISSION, FUELS, TYPE_ENGINES_ALL, TYPE_ENGINES_DISEL, TYPE_ENGINES_BENZ} from "../constants/constants";
+  import {DOMAIN} from "@/constants/constants";
+  import {STATUS, YEARS, BODYS, TRANSMISSION, FUELS, TYPE_ENGINES_ALL, TYPE_ENGINES_DISEL, TYPE_ENGINES_BENZ} from "@/components/autoTires/constants/constants";
 
   export default {
     name: "AutoParstIndex",

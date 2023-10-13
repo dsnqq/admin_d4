@@ -70,14 +70,14 @@
                           class="car-index-photo-item__image"
                       />
                       <div
-                          v-on:click="removeImgDop(index)"
+                          @click="removeImgDop(index)"
                           class="car-index-photo-item__del"
                       >Удалить</div>
                     </div>
                   </template>
                 </div>
                 <button
-                    v-on:click.prevent="modalCarPhotoFade"
+                    @click.prevent="modalCarPhotoFade"
                     class="car-index-field-wrap__btn btn btn-primary"
                 >Добавить фото</button>
               </div>
@@ -85,12 +85,12 @@
             <div class="car-index-wrapp__field car-index-field car-index-field--is-btn">
               <button
                   v-if="isCreatedPage"
-                  v-on:click.prevent="setCarFromApi"
+                  @click.prevent="setCarFromApi"
                   class="btn btn-primary"
               >Добавить объявление</button>
               <button
                   v-if="isEditPage"
-                  v-on:click.prevent="editCar"
+                  @click.prevent="editCar"
                   class="btn btn-success"
               >Сохранить и продолжить редактирование</button>
               <router-link :to="{name: 'carsAdmin'}">
@@ -105,7 +105,7 @@
             <div class="modal-wrapper">
               <div class="modal-container">
                 <div class="modal-body">
-                  <button class="modal-default-button" v-on:click.prevent="modalCarPhotoFade">
+                  <button class="modal-default-button" @:click.prevent="modalCarPhotoFade">
                     X
                   </button>
                   <vue-dropzone
@@ -115,7 +115,7 @@
                       id="dropzone"
                   ></vue-dropzone>
                   <button
-                      v-on:click.prevent="sendingDropzonePhoto"
+                      @click.prevent="sendingDropzonePhoto"
                       class="btn btn-info"
                       id="submit-all"
                   >Загрузить изображения</button>
@@ -132,8 +132,8 @@
 <script>
   import BreadcrumbAdmin from "@/components/BreadcrumbAdmin.vue";
   import {mapActions, mapGetters} from "vuex";
-  import {DOMAIN} from "../../../constants/constants";
-  import {TABLE_HEADS} from "../constants/constants";
+  import {DOMAIN} from "@/constants/constants";
+  import {TABLE_HEADS} from "@/components/carsAdmin/constants/constants";
   import vue2Dropzone from 'vue2-dropzone'
 
   export default {

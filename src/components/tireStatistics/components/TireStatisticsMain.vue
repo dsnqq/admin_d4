@@ -72,7 +72,7 @@
 
 <script>
   import {mapActions, mapGetters} from "vuex";
-  import {DOMAIN} from "../../../../src/constants/constants";
+  import {DOMAIN} from "@/constants/constants";
 
   export default {
     name: "TireStatisticsMain",

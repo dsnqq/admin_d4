@@ -10,7 +10,7 @@
         <a
             class="nav-link"
             :class="setActiveClass(tab.component)"
-            v-on:click.prevent="setActiveTab(tab.component)"
+            @click.prevent="setActiveTab(tab.component)"
         >
           {{ tab.title }}
         </a>
@@ -27,8 +27,8 @@ export default {
   name: "SparePartsStatistics",
 
   components: {
-    SparePartsStatisticsMain: () => import("./components/SparePartsStatisticsMain.vue"),
-    SparePartsStatisticsDay: () => import("./components/SparePartsStatisticsDay.vue"),
+    SparePartsStatisticsMain: () => import("@/components/sparePartsStatistics/components/SparePartsStatisticsMain.vue"),
+    SparePartsStatisticsDay: () => import("@/components/sparePartsStatistics/components/SparePartsStatisticsDay.vue"),
   },
 
   methods: {

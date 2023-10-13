@@ -24,7 +24,7 @@
 
 <script>
 import BreadcrumbAdmin from "@/components/BreadcrumbAdmin.vue";
-import CarContent from './CarContent.vue'
+import CarContent from '@/components/carsAdmin/components/CarContent.vue'
 
 export default {
   name: 'CarDismantling',

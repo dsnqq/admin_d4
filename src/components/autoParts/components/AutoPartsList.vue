@@ -1,189 +1,193 @@
 <template>
   <div class="card">
     <div class="card-header py-2">
-      <form>
-        <div class="card-filter shadow-none bg-light border py-4">
-          <div class="row">
-            <div class="card-filter__rows">
-              <div class="card-filter__item card-filter-item">
-                <div class="card-filter-item__label">
-                  Марка и Модель
-                </div>
+      <div class="card-filter shadow-none bg-light border py-4">
+        <div class="row">
+          <div class="card-filter__rows">
+            <div class="card-filter__item card-filter-item">
+              <div class="card-filter-item__label">
+                Марка и Модель
+              </div>
 
-                <div class="card-filter-item__form d-flex justify-content-sm-between align-items-center">
-                  <v-multiselect
-                      v-model="param.filters.car"
-                      :options="BREND_MODEL_CAR_AUTO_PARTS"
-                      :custom-label="customLabelModelBrand"
-                      :selectedLabel="`Выбрано`"
-                      :deselectLabel="`Клик, чтобы удалить`"
-                      :selectLabel="`Клик, чтобы выбрать`"
-                      :placeholder="`Марка`"
-                      class="card-filter-item__select card-filter-item__select--is-year"
-                  >
-                    <template v-slot:noResult>
-                      Пусто...
-                    </template>
-                  </v-multiselect>
-                </div>
-              </div>
-              <div class="card-filter__item card-filter-item">
-                <div class="card-filter-item__label">
-                  Название запчасти
-                </div>
-                <div class="card-filter-item__form">
-                  <v-multiselect
-                      v-model="param.filters.types"
-                      :options="TYPES_OF_AUTO_PARTS"
-                      :custom-label="customLabelTypes"
-                      :selectedLabel="`Выбрано`"
-                      :deselectLabel="`Клик, чтобы удалить`"
-                      :selectLabel="`Клик, чтобы выбрать`"
-                      :placeholder="`Название запчасти`"
-                      class="card-filter-item__select"
-                  >
-                    <template v-slot:noResult>
-                      Пусто...
-                    </template>
-                  </v-multiselect>
-                </div>
-              </div>
-              <div class="card-filter__item card-filter-item">
-                <div class="card-filter-item__label">
-                  Номер запчасти
-                </div>
-                <div class="card-filter-item__form">
-                  <input
-                      v-model="param.filters.sparePartNumber"
-                      type="text"
-                      id="sparePartNumber"
-                      placeholder="Номер запчасти"
-                      class="card-filter-item__input"
-                      autocomplete="off"
-                  />
-                </div>
-              </div>
-              <div class="card-header__item card-filter-item">
-                <div class="card-filter-item__label">
-                  Артикул
-                </div>
-                <div class="card-filter-item__form">
-                  <input
-                     v-model="param.filters.model"
-                     type="text"
-                     id="model"
-                     placeholder="Артикул"
-                     class="card-filter-item__input"
-                     autocomplete="off"
-                  />
-                </div>
-              </div>
-              <div class="card-header__item card-filter-item">
-                <div class="card-filter-item__label">
-                  Тип топлива
-                </div>
-                <div class="card-filter-item__form">
-                  <v-multiselect
-                      v-model="param.filters.fuel"
-                      :options="['Не выбрано', 'дизель', 'бензин', 'гибрид', 'электро']"
-                      :selectedLabel="`Выбрано`"
-                      :deselectLabel="`Клик, чтобы удалить`"
-                      :selectLabel="`Клик, чтобы выбрать`"
-                      :placeholder="`Тип топлива`"
-                      class="card-filter-item__select"
-                  >
-                    <template v-slot:noResult>
-                      Пусто...
-                    </template>
-                  </v-multiselect>
-                </div>
-              </div>
-              <div class="card-header__item card-filter-item">
-                <div class="card-filter-item__label">
-                  Объём
-                </div>
-                <div class="card-filter-item__form">
-                  <input
-                     v-model="param.filters.value"
-                     type="text"
-                     id="value"
-                     placeholder="Объём"
-                     class="card-filter-item__input"
-                     autocomplete="off"
-                  />
-                </div>
-              </div>
-              <div class="card-header__item card-filter-item">
-                <div class="card-filter-item__label">
-                  Статус
-                </div>
-                <div class="card-filter-item__form">
-                  <v-multiselect
-                      v-model="param.filters.status"
-                      :options="['Все объявления', 'Активно', 'Неактивно']"
-                      :selectedLabel="`Выбрано`"
-                      :deselectLabel="`Клик, чтобы удалить`"
-                      :selectLabel="`Клик, чтобы выбрать`"
-                      :placeholder="`Статус`"
-                      class="card-filter-item__select"
-                  >
-                    <template v-slot:noResult>
-                      Пусто...
-                    </template>
-                  </v-multiselect>
-                </div>
-              </div>
-              <div class="card-header__item card-filter-item">
-                <div class="card-filter-item__label">
-                  Год
-                </div>
-                <div class="card-filter-item__form d-flex justify-content-sm-between align-items-center">
-                  <span class="m-1">от</span>
-                  <v-multiselect
-                      v-model="param.filters.yearStart"
-                      :options="years"
-                      :selectedLabel="`Выбрано`"
-                      :deselectLabel="`Клик, чтобы удалить`"
-                      :selectLabel="`Клик, чтобы выбрать`"
-                      :placeholder="`Год`"
-                      class="card-filter-item__select card-filter-item__select--is-year"
-                  >
-                    <template v-slot:noResult>
-                      Пусто...
-                    </template>
-                  </v-multiselect>
-                  <span class="m-1">до</span>
-                  <v-multiselect
-                      v-model="param.filters.yearLast"
-                      :options="years"
-                      :selectedLabel="`Выбрано`"
-                      :deselectLabel="`Клик, чтобы удалить`"
-                      :selectLabel="`Клик, чтобы выбрать`"
-                      :placeholder="`Год`"
-                      class="card-filter-item__select card-filter-item__select--is-year"
-                  >
-                    <template v-slot:noResult>
-                      Пусто...
-                    </template>
-                  </v-multiselect>
-                </div>
+              <div class="card-filter-item__form d-flex justify-content-sm-between align-items-center">
+                <v-multiselect
+                    v-model="param.filters.car"
+                    :options="BREND_MODEL_CAR_AUTO_PARTS"
+                    :custom-label="customLabelModelBrand"
+                    :selectedLabel="`Выбрано`"
+                    :deselectLabel="`Клик, чтобы удалить`"
+                    :selectLabel="`Клик, чтобы выбрать`"
+                    :placeholder="`Марка`"
+                    class="card-filter-item__select card-filter-item__select--is-year"
+                >
+                  <template v-slot:noResult>
+                    Пусто...
+                  </template>
+                </v-multiselect>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="card-filter__buttons">
-              <button
-                  v-on:click.prevent="setFilterOnAutoPartsPage"
-                  type="button"
-                  class="btn btn-success px-5 card-filter__search"
-              >
-                Поиск
-              </button>
-              <button type="button" class="btn btn-warning px-5 card-filter__refresh">Сброс</button>
+            <div class="card-filter__item card-filter-item">
+              <div class="card-filter-item__label">
+                Название запчасти
+              </div>
+              <div class="card-filter-item__form">
+                <v-multiselect
+                    v-model="param.filters.types"
+                    :options="TYPES_OF_AUTO_PARTS"
+                    :custom-label="customLabelTypes"
+                    :selectedLabel="`Выбрано`"
+                    :deselectLabel="`Клик, чтобы удалить`"
+                    :selectLabel="`Клик, чтобы выбрать`"
+                    :placeholder="`Название запчасти`"
+                    class="card-filter-item__select"
+                >
+                  <template v-slot:noResult>
+                    Пусто...
+                  </template>
+                </v-multiselect>
+              </div>
+            </div>
+            <div class="card-filter__item card-filter-item">
+              <div class="card-filter-item__label">
+                Номер запчасти
+              </div>
+              <div class="card-filter-item__form">
+                <input
+                    v-model="param.filters.sparePartNumber"
+                    type="text"
+                    id="sparePartNumber"
+                    placeholder="Номер запчасти"
+                    class="card-filter-item__input"
+                    autocomplete="off"
+                />
+              </div>
+            </div>
+            <div class="card-header__item card-filter-item">
+              <div class="card-filter-item__label">
+                Артикул
+              </div>
+              <div class="card-filter-item__form">
+                <input
+                   v-model="param.filters.model"
+                   type="text"
+                   id="model"
+                   placeholder="Артикул"
+                   class="card-filter-item__input"
+                   autocomplete="off"
+                />
+              </div>
+            </div>
+            <div class="card-header__item card-filter-item">
+              <div class="card-filter-item__label">
+                Тип топлива
+              </div>
+              <div class="card-filter-item__form">
+                <v-multiselect
+                    v-model="param.filters.fuel"
+                    :options="['Не выбрано', 'дизель', 'бензин', 'гибрид', 'электро']"
+                    :selectedLabel="`Выбрано`"
+                    :deselectLabel="`Клик, чтобы удалить`"
+                    :selectLabel="`Клик, чтобы выбрать`"
+                    :placeholder="`Тип топлива`"
+                    class="card-filter-item__select"
+                >
+                  <template v-slot:noResult>
+                    Пусто...
+                  </template>
+                </v-multiselect>
+              </div>
+            </div>
+            <div class="card-header__item card-filter-item">
+              <div class="card-filter-item__label">
+                Объём
+              </div>
+              <div class="card-filter-item__form">
+                <input
+                   v-model="param.filters.value"
+                   type="text"
+                   id="value"
+                   placeholder="Объём"
+                   class="card-filter-item__input"
+                   autocomplete="off"
+                />
+              </div>
+            </div>
+            <div class="card-header__item card-filter-item">
+              <div class="card-filter-item__label">
+                Статус
+              </div>
+              <div class="card-filter-item__form">
+                <v-multiselect
+                    v-model="param.filters.status"
+                    :options="['Все объявления', 'Активно', 'Неактивно']"
+                    :selectedLabel="`Выбрано`"
+                    :deselectLabel="`Клик, чтобы удалить`"
+                    :selectLabel="`Клик, чтобы выбрать`"
+                    :placeholder="`Статус`"
+                    class="card-filter-item__select"
+                >
+                  <template v-slot:noResult>
+                    Пусто...
+                  </template>
+                </v-multiselect>
+              </div>
+            </div>
+            <div class="card-header__item card-filter-item">
+              <div class="card-filter-item__label">
+                Год
+              </div>
+              <div class="card-filter-item__form d-flex justify-content-sm-between align-items-center">
+                <span class="m-1">от</span>
+                <v-multiselect
+                    v-model="param.filters.yearStart"
+                    :options="years"
+                    :selectedLabel="`Выбрано`"
+                    :deselectLabel="`Клик, чтобы удалить`"
+                    :selectLabel="`Клик, чтобы выбрать`"
+                    :placeholder="`Год`"
+                    class="card-filter-item__select card-filter-item__select--is-year"
+                >
+                  <template v-slot:noResult>
+                    Пусто...
+                  </template>
+                </v-multiselect>
+                <span class="m-1">до</span>
+                <v-multiselect
+                    v-model="param.filters.yearLast"
+                    :options="years"
+                    :selectedLabel="`Выбрано`"
+                    :deselectLabel="`Клик, чтобы удалить`"
+                    :selectLabel="`Клик, чтобы выбрать`"
+                    :placeholder="`Год`"
+                    class="card-filter-item__select card-filter-item__select--is-year"
+                >
+                  <template v-slot:noResult>
+                    Пусто...
+                  </template>
+                </v-multiselect>
+              </div>
             </div>
           </div>
         </div>
-      </form>
+        <div class="row">
+          <div class="card-filter__buttons">
+            <button
+                @click.prevent="setFilterOnAutoPartsPage"
+                type="button"
+                class="btn btn-success px-5 card-filter__search"
+            >
+              Поиск
+            </button>
+            <button
+                @click="resetFilters"
+                type="button"
+                class="btn btn-warning px-5 card-filter__refresh"
+            >
+              Сброс
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="card-body">
       <div class="row">
@@ -241,7 +245,7 @@
                     </a>
                     <span
                         v-if="!auto.imagesShowAllImage"
-                        v-on:click="showImageAll(i)"
+                        @click="showImageAll(i)"
                         class="product-more-photo"
                     >Ещё фото</span>
                   </div>
@@ -265,7 +269,7 @@
               <td>{{auto.dateAdded}}</td>
               <td>
                 <span
-                    v-on:click="changeStatus(auto)"
+                    @click="changeStatus(auto)"
                     class="badge rounded-pill cursor-pointer"
                     :class="auto.status == 1 ? 'alert-success' : 'alert-danger'"
                 >
@@ -278,7 +282,7 @@
               <td class="text-center">
                 <div class="d-flex align-items-center gap-2 fs-6">
                   <a
-                      v-on:click="getHistoryAuto(auto.product_id)"
+                      @click="getHistoryAuto(auto.product_id)"
                       class="text-primary cursor-pointer"
                   >
                     <i class="bi bi-archive"></i>
@@ -302,7 +306,7 @@
                     <i class="bi bi-camera"></i>
                   </a>
                   <a
-                      v-on:click.prevent="autoPartsRemove(auto.product_id, i)"
+                      @click.prevent="autoPartsRemove(auto.product_id, i)"
                       class="text-danger"
                   >
                     <i class="bi bi-trash-fill"></i>
@@ -333,7 +337,7 @@
 
 <script>
   import {YEARS} from "@/components/autoParts/constants/constants";
-  import {DOMAIN} from "../../../constants/constants";
+  import {DOMAIN} from "@/constants/constants";
   import {mapActions, mapGetters} from "vuex";
   import Jquery from 'jquery'; // eslint-disable-line no-unused-vars
   import lightbox from 'lightbox2'; // eslint-disable-line no-unused-vars
@@ -406,6 +410,26 @@
 
       showImageAll(id) {
         this.SET_SHOW_ALL_IMAGE(id);
+      },
+
+      resetFilters() {
+        this.param = {
+            pageNum: this.param.pageNum,
+            filters: {
+              sparePartNumber: '',
+              model: '',
+              status: 'Все объявления',
+              fuel: 'Не выбрано',
+              value: '',
+              yearStart: '',
+              yearLast: '',
+              types: {},
+              car: {},
+          }
+        }
+
+        this.GET_AUTO_PARTS_FROM_API(this.param);
+        this.GET_AUTO_PARTS_TOTALS(this.param);
       },
 
       autoPartsRemove(id, index) {

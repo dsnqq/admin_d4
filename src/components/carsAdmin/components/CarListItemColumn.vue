@@ -28,7 +28,7 @@
           <i class="bx bx-pencil"></i>
         </router-link>
         <a
-            v-on:click.prevent="removeCar(store.product_id)"
+            @click.prevent="removeCar(store.product_id)"
             class="p-2 text-danger"
         >
           <i class="bi bi-trash-fill"></i>
@@ -54,7 +54,7 @@
           >
         </form>
           <button
-              v-on:click.prevent="setEditThisColumnOnList"
+              @click.prevent="setEditThisColumnOnList"
               class="car-list-wrapper-column-edits__button car-list-wrapper-column-edit"
           >
             <i
@@ -71,8 +71,8 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
-import {DOMAIN} from "../../../constants/constants";
-import {LIST_COLUMN_EDIT} from "../constants/constants";
+import {DOMAIN} from "@/constants/constants";
+import {LIST_COLUMN_EDIT} from "@/components/carsAdmin/constants/constants";
 import Jquery from 'jquery'; // eslint-disable-line no-unused-vars
 import lightbox from 'lightbox2'; // eslint-disable-line no-unused-vars
 

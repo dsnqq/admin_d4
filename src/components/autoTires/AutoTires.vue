@@ -7,8 +7,8 @@ export default {
   name: "AutoTires",
 
   components: {
-    AutoTiresIndex: () => import("./components/AutoTiresIndex.vue"),
-    AutoTiresList: () => import("./components/AutoTiresList.vue")
+    AutoTiresIndex: () => import("@/components/autoTires/components/AutoTiresIndex.vue"),
+    AutoTiresList: () => import("@/components/autoTires/components/AutoTiresList.vue")
   },
 
   methods: {

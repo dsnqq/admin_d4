@@ -58,7 +58,7 @@
                     </a>
                     <span
                         v-if="!autoPartsArchive.imagesShowAllImage"
-                        v-on:click="showImageAll(i)"
+                        @click="showImageAll(i)"
                         class="product-more-photo"
                     >Ещё фото</span>
                   </div>
@@ -83,13 +83,13 @@
               <td class="text-center">
                 <div class="d-flex align-items-center justify-content-center gap-2 fs-6">
                   <a
-                      v-on:click="getHistoryAuto(autoPartsArchive.product_id)"
+                      @click="getHistoryAuto(autoPartsArchive.product_id)"
                       class="text-primary cursor-pointer"
                   >
                     <i class="bi bi-archive"></i>
                   </a>
                   <a
-                      v-on:click.prevent="autoPartsRestore(autoPartsArchive.product_id, i)"
+                      @click.prevent="autoPartsRestore(autoPartsArchive.product_id, i)"
                       class="text-success cursor-pointer"
                   >
                     <i class="bi bi-arrow-clockwise"></i>

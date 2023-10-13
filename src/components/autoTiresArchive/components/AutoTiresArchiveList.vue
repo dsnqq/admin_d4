@@ -54,7 +54,7 @@
                     </a>
                     <span
                         v-if="!autoTireArchive.imagesShowAllImage"
-                        v-on:click="showImageAll(i)"
+                        @click="showImageAll(i)"
                         class="product-more-photo"
                     >Ещё фото</span>
                   </div>
@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import {DOMAIN} from "../../../constants/constants";
+import {DOMAIN} from "@/constants/constants";
 import {mapActions, mapGetters} from "vuex";
 import Jquery from 'jquery'; // eslint-disable-line no-unused-vars
 import lightbox from 'lightbox2'; // eslint-disable-line no-unused-vars
