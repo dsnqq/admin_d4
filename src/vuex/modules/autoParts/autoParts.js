@@ -38,7 +38,9 @@ export default {
     },
     actions: {
         GET_AUTO_PARTS_FROM_API({commit}, param) {
-            commit('LOCK_UI');
+            if(!param.refresh){
+                commit('LOCK_UI');
+            }
             return axios.post(
                 '/index.php?route=api/auto_parts/auto',
                 {
@@ -58,6 +60,12 @@ export default {
                 .then((response) => {
                     commit('UN_LOCK_UI');
                     commit('SET_AUTO_PARTS_TO_STATE', response.data.autoParts);
+                    /*if (response.data.autoParts !== null) {
+                        setTimeout(() => {
+                            param.refresh = true;
+                            this.dispatch('autoParts/GET_AUTO_PARTS_FROM_API', param.refresh);
+                        }, 60000);
+                    }*/
                     return response.data.autoParts;
                 })
                 .catch(function (error) {

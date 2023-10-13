@@ -220,15 +220,15 @@
                       class="product-box-image"
                   >
                     <img
-                        :src="auto.images[i].imageMini"
+                        :src="auto.images[0].imageMini"
                         :alt="auto.autoParts.name"
                     />
                   </a>
                   <div class="product-box-image-flex">
                     <a
                         :data-lightbox="auto.product_id"
-                        v-for="(image, i) in auto.images"
-                        :key="i"
+                        v-for="(image, index) in auto.images"
+                        :key="index"
                         :data-title="auto.autoParts.name"
                         :href="domain + `/image/` + image.imageBig"
                         class="product-box-image--small"
@@ -257,9 +257,12 @@
                 </span>
               </td>
               <td>{{auto.model}}</td>
-              <td>{{auto.priceUSD}}$</td>
+              <td>
+                <div>{{auto.priceUSD}} $</div>
+                <div>{{auto.priceBYN}} руб.</div>
+              </td>
               <td>{{auto.sparePartNumber}}</td>
-              <td>{{auto.dateAvailable}}</td>
+              <td>{{auto.dateAdded}}</td>
               <td>
                 <span
                     v-on:click="changeStatus(auto)"
@@ -357,7 +360,6 @@
         return parseInt(this.AUTO_PARTS_TOTALS);
       }
     },
-
 
     methods: {
       ...mapActions('autoParts', [
