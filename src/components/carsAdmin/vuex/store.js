@@ -1,5 +1,5 @@
 import axios from "axios";
-import {KEYS} from '/src/constants/constants';
+import {DOMAIN, KEYS} from '/src/constants/constants';
 
 export default {
     namespaced: true,
@@ -30,7 +30,7 @@ export default {
     actions: {
         GET_CARS_FROM_API({commit}, param) {
             return axios.post(
-                '/index.php?route=api/auto/cars',
+                DOMAIN + '/index.php?route=api/auto/cars',
                 {
                     key: KEYS,
                     page: param,
@@ -48,7 +48,7 @@ export default {
 
         GET_CARS_TOTALS_FROM_API({commit}) {
             return  axios.post(
-                '/index.php?route=api/auto/cars/total',
+                DOMAIN + '/index.php?route=api/auto/cars/total',
                 {
                     key: KEYS,
                 }
@@ -65,7 +65,7 @@ export default {
 
         GET_MARKA_FROM_API({commit}) {
             return axios.post(
-                '/index.php?route=api/auto/cars/marka',
+                DOMAIN + '/index.php?route=api/auto/cars/marka',
                 {
                     key: KEYS,
                 }
@@ -82,7 +82,7 @@ export default {
 
         GET_MODEL_FROM_API({commit}, marka) {
             return axios.post(
-                '/index.php?route=api/auto/cars/model',
+                DOMAIN + '/index.php?route=api/auto/cars/model',
                 {
                     marka: marka,
                     key: KEYS,
@@ -100,7 +100,7 @@ export default {
 
         GET_CAR_FROM_API({commit}, car_id) {
             return axios.post(
-                '/index.php?route=api/auto/cars/' + car_id,
+                DOMAIN + '/index.php?route=api/auto/cars/' + car_id,
                 {
                     key: KEYS,
                 }
@@ -117,7 +117,7 @@ export default {
 
         SET_CAR_FROM_API({commit}, param) {
             return axios.post(
-                '/index.php?route=api/auto/cars/create',
+                DOMAIN + '/index.php?route=api/auto/cars/create',
                 param
             )
                 .then(() => {
@@ -138,7 +138,7 @@ export default {
 
         EDIT_CAR_FROM_API({commit}, param) {
             return axios.post(
-                '/index.php?route=api/auto/cars/' + param.id + '/edit',
+                DOMAIN + '/index.php?route=api/auto/cars/' + param.id + '/edit',
                 param.car
             )
                 .then(() => {
@@ -154,7 +154,7 @@ export default {
         SET_EDIT_COLUMN_ON_LIST({commit}, param) {
             return axios
                 .post(
-                    '/index.php?route=api/auto/cars/' + param.id + '/save',
+                    DOMAIN + '/index.php?route=api/auto/cars/' + param.id + '/save',
                     param.xForm
                 )
                 .then(() => {
@@ -167,7 +167,7 @@ export default {
 
         DELET_CAR_BY_API({commit}, param) {
             return axios.post(
-                '/index.php?route=api/auto/cars/' + param.carId + '/delete',
+                DOMAIN + '/index.php?route=api/auto/cars/' + param.carId + '/delete',
                 {
                     key: KEYS,
                 }

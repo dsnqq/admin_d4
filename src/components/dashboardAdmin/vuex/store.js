@@ -1,5 +1,5 @@
 import axios from "axios";
-import {KEYS} from '/src/constants/constants';
+import {DOMAIN, KEYS} from '/src/constants/constants';
 
 export default {
     namespaced: true,
@@ -15,7 +15,7 @@ export default {
     actions: {
         GET_DASHBOARD_INFORMATION({commit}) {
             return axios.post(
-                '/index.php?route=api/dashboard_admin/index',
+                DOMAIN + '/index.php?route=api/dashboard_admin/index',
                 {
                     key: KEYS,
                 }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {KEYS} from '/src/constants/constants';
+import {DOMAIN, KEYS} from '/src/constants/constants';
 
 export default {
     namespaced: true,
@@ -42,7 +42,7 @@ export default {
                 commit('LOCK_UI');
             }
             return axios.post(
-                '/index.php?route=api/auto_parts/auto',
+                DOMAIN + '/index.php?route=api/auto_parts/auto',
                 {
                     key: KEYS,
                     page: param.pageNum,
@@ -76,7 +76,7 @@ export default {
 
         GET_AUTO_PARTS_TOTALS({commit}, param) {
             return  axios.post(
-                '/index.php?route=api/auto_parts/auto/totals',
+                DOMAIN + '/index.php?route=api/auto_parts/auto/totals',
                 {
                     key: KEYS,
                     filter_sparePartNumber: param.filters.sparePartNumber,
@@ -103,7 +103,7 @@ export default {
         GET_AUTO_PARTS_HISTORY({commit}, id) {
             commit('LOCK_UI');
             return  axios.post(
-                '/index.php?route=api/auto_parts/auto/history/' + id,
+                DOMAIN + '/index.php?route=api/auto_parts/auto/history/' + id,
                 {
                     key: KEYS,
                 }
@@ -121,7 +121,7 @@ export default {
 
         GET_AUTO_PARTS_INDEX({commit}, param) {
             return  axios.post(
-                '/index.php?route=api/auto_parts/auto/index/' + param.id,
+                DOMAIN + '/index.php?route=api/auto_parts/auto/index/' + param.id,
                 {
                     key: KEYS,
                     param: param
@@ -139,7 +139,7 @@ export default {
 
         async GET_TYPES_OF_AUTO_PARTS({commit}) {
             return await axios.post(
-                '/index.php?route=api/auto_parts/auto/types',
+                DOMAIN + '/index.php?route=api/auto_parts/auto/types',
                 {
                     key: KEYS,
                 }
@@ -156,7 +156,7 @@ export default {
 
         async GET_BREND_MODEL_CAR_AUTO_PARTS({commit}) {
             return await axios.post(
-                '/index.php?route=api/auto_parts/auto/category',
+                DOMAIN + '/index.php?route=api/auto_parts/auto/category',
                 {
                     key: KEYS,
                 }
@@ -173,7 +173,7 @@ export default {
 
         DELET_AUTO_PARTS_BY_API({commit}, param) {
             return axios.post(
-                '/index.php?route=api/auto_parts/auto/delete/' + param.autoPartsId,
+                DOMAIN + '/index.php?route=api/auto_parts/auto/delete/' + param.autoPartsId,
                 {
                     key: KEYS,
                 }
@@ -188,7 +188,7 @@ export default {
 
         CHANGE_AUTO_PARTS_STATUS({commit}, param) {
             return axios.post(
-                '/index.php?route=api/auto_parts/auto/change_status/' + param.autoPartsId,
+                DOMAIN + '/index.php?route=api/auto_parts/auto/change_status/' + param.autoPartsId,
                 {
                     key: KEYS,
                     status: param.status

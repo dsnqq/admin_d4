@@ -1,5 +1,5 @@
 import axios from "axios";
-import {KEYS} from '/src/constants/constants';
+import {DOMAIN, KEYS} from '/src/constants/constants';
 
 export default {
     namespaced: true,
@@ -27,7 +27,7 @@ export default {
         GET_USER_HISTORY_LIST({commit}, param) {
             commit('LOCK_UI');
             return axios.post(
-                '/index.php?route=api/history_users/index',
+                DOMAIN + '/index.php?route=api/history_users/index',
                 {
                     key: KEYS,
                     page: param,
@@ -46,7 +46,7 @@ export default {
         GET_USER_HISTORY({commit}, param) {
             commit('LOCK_UI');
             return axios.post(
-                '/index.php?route=api/history_users/index/' + param.user_id,
+                DOMAIN + '/index.php?route=api/history_users/index/' + param.user_id,
                 {
                     page: param.page,
                     key: KEYS,
@@ -64,7 +64,7 @@ export default {
         },
         GET_USER_HISTORY_TOTAL({commit}, user_id) {
             return axios.post(
-                '/index.php?route=api/history_users/index/' + user_id + '/total',
+                DOMAIN + '/index.php?route=api/history_users/index/' + user_id + '/total',
                 {
                     key: KEYS,
                 }

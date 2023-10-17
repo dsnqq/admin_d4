@@ -1,5 +1,5 @@
 import axios from "axios";
-import {KEYS} from '/src/constants/constants';
+import {DOMAIN, KEYS} from '/src/constants/constants';
 
 export default {
     namespaced: true,
@@ -27,7 +27,7 @@ export default {
         async GET_SPARE_PARTS_STATISTICS({commit}, param) {
             commit('LOCK_UI');
             return axios.post(
-                '/index.php?route=api/spare_parts_statistics/index',
+                DOMAIN + '/index.php?route=api/spare_parts_statistics/index',
                 {
                     key: KEYS,
                     page: param,
@@ -46,7 +46,7 @@ export default {
 
         GET_SPARE_PARTS_STATISTICS_TOTALS({commit}) {
             return  axios.post(
-                '/index.php?route=api/spare_parts_statistics/index/totals',
+                DOMAIN + '/index.php?route=api/spare_parts_statistics/index/totals',
                 {
                     key: KEYS,
                 }
@@ -64,7 +64,7 @@ export default {
         GET_SPARE_PARTS_STATISTICS_DAY({commit}) {
             commit('LOCK_UI');
             return  axios.post(
-                '/index.php?route=api/spare_parts_statistics/index/day',
+                DOMAIN + '/index.php?route=api/spare_parts_statistics/index/day',
                 {
                     key: KEYS,
                 }

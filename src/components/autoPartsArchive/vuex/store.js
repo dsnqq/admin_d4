@@ -1,5 +1,5 @@
 import axios from "axios";
-import {KEYS} from '/src/constants/constants';
+import {DOMAIN, KEYS} from '/src/constants/constants';
 
 export default {
     namespaced: true,
@@ -32,7 +32,7 @@ export default {
         GET_AUTO_PARTS_ARCHIVE_FROM_API({commit}, param) {
             commit('LOCK_UI');
             return axios.post(
-                '/index.php?route=api/auto_parts_archive/auto',
+                DOMAIN + '/index.php?route=api/auto_parts_archive/auto',
                 {
                     key: KEYS,
                     page: param,
@@ -51,7 +51,7 @@ export default {
 
         GET_AUTO_PARTS_ARCHIVE_TOTALS({commit}) {
             return  axios.post(
-                '/index.php?route=api/auto_parts_archive/auto/totals',
+                DOMAIN + '/index.php?route=api/auto_parts_archive/auto/totals',
                 {
                     key: KEYS,
                 }
@@ -69,7 +69,7 @@ export default {
         GET_AUTO_PARTS_ARCHIVE_HISTORY({commit}, id) {
             commit('LOCK_UI');
             return  axios.post(
-                '/index.php?route=api/auto_parts_archive/auto/history/' + id,
+                DOMAIN + '/index.php?route=api/auto_parts_archive/auto/history/' + id,
                 {
                     key: KEYS,
                 }
@@ -87,7 +87,7 @@ export default {
 
         GET_AUTO_PARTS_ARCHIVE_INDEX({commit}, param) {
             return  axios.post(
-                '/index.php?route=api/auto_parts_archive/auto/index/' + param.id,
+                DOMAIN + '/index.php?route=api/auto_parts_archive/auto/index/' + param.id,
                 {
                     key: KEYS,
                     param: param
@@ -105,7 +105,7 @@ export default {
 
         RESTORE_AUTO_PARTS_ARCHIVE_BY_API({commit}, param) {
             return axios.post(
-                '/index.php?route=api/auto_parts_archive/auto/restore/' + param.autoPartsId,
+                DOMAIN + '/index.php?route=api/auto_parts_archive/auto/restore/' + param.autoPartsId,
                 {
                     key: KEYS,
                 }
