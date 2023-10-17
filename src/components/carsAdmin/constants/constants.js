@@ -1,11 +1,4 @@
-import {YEARS, BODYS} from "@/constants/constants";
-
-export const TYPE_POWERS = [
-    "дизель",
-    "бензин",
-    "гибрид",
-    "электро"
-];
+import {YEARS, BODYS, FUELS} from "@/constants/constants";
 
 export const LIST_ITEM_COLUMN = [
     "images",
@@ -80,7 +73,7 @@ export const TABLE_HEADS = [
         index: true,
         login: "typePower",
         type: "select",
-        options: TYPE_POWERS,
+        options: FUELS,
     },
     {
         id: 8,

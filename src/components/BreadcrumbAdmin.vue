@@ -9,7 +9,10 @@
               <i class="bx bx-home-alt"></i>
             </router-link>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">
+          <li
+              class="breadcrumb-item active"
+              aria-current="page"
+          >
             {{ $route.meta.title }}
           </li>
         </ol>

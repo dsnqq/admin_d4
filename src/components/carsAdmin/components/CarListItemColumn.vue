@@ -154,6 +154,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "./src/components/carsAdmin/style/car-list-item.scss";
+@import "@/components/carsAdmin/components/style/car-list-item.scss";
 @import "../../../../node_modules/lightbox2/dist/css/lightbox.min.css";
 </style>

@@ -186,6 +186,21 @@ export default {
                 });
         },
 
+        EDIT_AUTO_PARTS_FROM_API({commit}, param) {
+            return axios.post(
+                DOMAIN + '/index.php?route=api/auto_parts/auto/' + param.id + '/edit',
+                param.autoParts
+            )
+                .then(() => {
+                    commit('EDIT_AUTO_PARTS_ON_STATE');
+                    return param.autoParts;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    return error;
+                });
+        },
+
         CHANGE_AUTO_PARTS_STATUS({commit}, param) {
             return axios.post(
                 DOMAIN + '/index.php?route=api/auto_parts/auto/change_status/' + param.autoPartsId,
@@ -220,6 +235,9 @@ export default {
         },
         SET_AUTO_PARTS_INDEX_STATE: (state, autoPartsIndex) => {
             state.autoPartsIndex = autoPartsIndex;
+        },
+        EDIT_AUTO_PARTS_ON_STATE: () => {
+            alert("изменения сохранены!");
         },
         SHOW_ALL_IMAGE_BY_ID: (state, id) => {
             if(!state.autoParts[id].imagesShowAllImage) {

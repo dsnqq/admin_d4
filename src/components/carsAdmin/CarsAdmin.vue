@@ -25,10 +25,6 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
-@import "./src/components/carsAdmin/style/app.scss"
-</style>
-
 <style lang="sass">
 @import "../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css"
 </style>

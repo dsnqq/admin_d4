@@ -18,7 +18,7 @@
                     :deselectLabel="`Клик, чтобы удалить`"
                     :selectLabel="`Клик, чтобы выбрать`"
                     :placeholder="`Марка`"
-                    class="card-filter-item__select card-filter-item__select--is-year"
+                    class="card-filter-item__select"
                 >
                   <template v-slot:noResult>
                     Пусто...

@@ -19,27 +19,50 @@
           <form>
             <div class="auto-parts-index__wrapp auto-parts-index-wrapp">
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label">Статус:</label>
+                <label class="auto-parts-index-field__label">
+                  Статус:
+                </label>
                 <div class="auto-parts-index-field__wrap">
                   <v-multiselect
                       v-model="getThisStatus"
                       :options="statusOptions"
+                      :selectedLabel="`Выбрано`"
+                      :deselectLabel="`Клик, чтобы удалить`"
+                      :selectLabel="`Клик, чтобы выбрать`"
+                      :placeholder="`Статус`"
                       class="auto-parts-index-field__select"
-                  ></v-multiselect>
+                  >
+                    <template v-slot:noResult>
+                      Пусто...
+                    </template>
+                  </v-multiselect>
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label auto-parts-index-field__label--is-required">Марка и модель:</label>
+                <label class="auto-parts-index-field__label auto-parts-index-field__label--is-required">
+                  Марка и модель:
+                </label>
                 <div class="auto-parts-index-field__wrap">
                   <v-multiselect
-                      v-model="AUTO_PARTS_INDEX.year"
+                      v-model="AUTO_PARTS_INDEX.autoPartsModelBrand"
                       :options="BREND_MODEL_CAR_AUTO_PARTS"
+                      :custom-label="customLabelModelBrand"
+                      :selectedLabel="`Выбрано`"
+                      :deselectLabel="`Клик, чтобы удалить`"
+                      :selectLabel="`Клик, чтобы выбрать`"
+                      :placeholder="`Марка и Модель`"
                       class="auto-parts-index-field__select"
-                  ></v-multiselect>
+                  >
+                    <template v-slot:noResult>
+                      Пусто...
+                    </template>
+                  </v-multiselect>
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label auto-parts-index-field__label--is-required">Год:</label>
+                <label class="auto-parts-index-field__label auto-parts-index-field__label--is-required">
+                  Год:
+                </label>
                 <div class="auto-parts-index-field__wrap auto-parts-index-field__wrap--is-flex">
                   <v-multiselect
                       v-model="AUTO_PARTS_INDEX.year"
@@ -64,7 +87,9 @@
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label">Объем (л), топливо и тип:</label>
+                <label class="auto-parts-index-field__label">
+                  Объем (л), топливо и тип:
+                </label>
                 <div class="auto-parts-index-field__wrap auto-parts-index-field__wrap--is-flex">
                   <input
                       v-model="AUTO_PARTS_INDEX.value"
@@ -102,7 +127,9 @@
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label">Тип кузова и коробка:</label>
+                <label class="auto-parts-index-field__label">
+                  Тип кузова и коробка:
+                </label>
                 <div class="auto-parts-index-field__wrap auto-parts-index-field__wrap--is-flex">
                   <v-multiselect
                       v-model="AUTO_PARTS_INDEX.typeBody"
@@ -133,12 +160,14 @@
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label auto-parts-index-field__label--is-required">Запчасть:</label>
+                <label class="auto-parts-index-field__label auto-parts-index-field__label--is-required">
+                  Запчасть:
+                </label>
                 <div class="auto-parts-index-field__wrap">
                   <v-multiselect
-                      v-model="AUTO_PARTS_INDEX.transmission"
+                      v-model="AUTO_PARTS_INDEX.autoPartsName"
                       :options="TYPES_OF_AUTO_PARTS"
-                      :custom-label="customLabelModelBrand"
+                      :custom-label="customLabelTypes"
                       :selectedLabel="`Выбрано`"
                       :deselectLabel="`Клик, чтобы удалить`"
                       :selectLabel="`Клик, чтобы выбрать`"
@@ -152,16 +181,21 @@
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label">Описание:</label>
+                <label class="auto-parts-index-field__label">
+                  Описание:
+                </label>
                 <div class="auto-parts-index-field__wrap">
                   <textarea
+                      v-model="AUTO_PARTS_INDEX.description"
                       placeholder="Описание"
                       class="auto-parts-index-field__textarea"
                   ></textarea>
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label">Артикул (ext_id автоматически):</label>
+                <label class="auto-parts-index-field__label">
+                  Артикул (ext_id автоматически):
+                </label>
                 <div class="auto-parts-index-field__wrap">
                   <input
                       v-model="AUTO_PARTS_INDEX.model"
@@ -172,7 +206,9 @@
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label">Номер запчасти:</label>
+                <label class="auto-parts-index-field__label">
+                  Номер запчасти:
+                </label>
                 <div class="auto-parts-index-field__wrap">
                   <input
                       v-model="AUTO_PARTS_INDEX.sparePartNumber"
@@ -183,7 +219,9 @@
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label auto-parts-index-field__label--is-required">Цена в долларах:</label>
+                <label class="auto-parts-index-field__label auto-parts-index-field__label--is-required">
+                  Цена в долларах:
+                </label>
                 <div class="auto-parts-index-field__wrap">
                   <input
                       v-model="AUTO_PARTS_INDEX.priceUSD"
@@ -194,13 +232,9 @@
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label">Процент скидки (мин.5%):</label>
-                <div class="auto-parts-index-field__wrap">
-                  <input type="text" id="vin" placeholder="Скидка" class="auto-parts-index-field__input">
-                </div>
-              </div>
-              <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label">Код видео с youtube.com:</label>
+                <label class="auto-parts-index-field__label">
+                  Код видео с youtube.com:
+                </label>
                 <div class="auto-parts-index-field__wrap">
                   <input
                       v-model="AUTO_PARTS_INDEX.youtube"
@@ -210,19 +244,67 @@
                   >
                 </div>
               </div>
+              <div class="auto-parts-index-wrapp__field auto-parts-index-field">
+                <label class="auto-parts-index-field__label">
+                  Фото:
+                </label>
+                <div class="auto-parts-index-field__wrap auto-parts-index-field-wrap">
+                  <div class="auto-parts-index-field-wrap__photos auto-parts-index-photo-list">
+                    <template v-if="AUTO_PARTS_INDEX.images">
+                      <div
+                          v-for="(image, index) in AUTO_PARTS_INDEX.images"
+                          v-bind:key="index"
+                          class="auto-parts-index-photo-list__item auto-parts-index-photo-item"
+                      >
+                        <img
+                            :src="isImageUrlLocalOrServer(image.imageBig)"
+                            class="auto-parts-index-photo-item__image"
+                        />
+                        <div
+                            class="auto-parts-index-photo-item__del"
+                        >Удалить</div>
+                      </div>
+                    </template>
+                  </div>
+                  <button
+                      class="auto-parts-index-field-wrap__btn btn btn-primary"
+                  >
+                    Добавить фото
+                  </button>
+                </div>
+              </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field auto-parts-index-field--is-btn">
                 <button
+                    v-if="isCreatedPage"
                     class="btn btn-primary"
-                >Добавить объявление</button>
+                >
+                  Добавить объявление
+                </button>
+                <button
+                    v-else
+                    @click.prevent="editAutoParts"
+                    class="btn btn-primary"
+                >
+                  Сохранить
+                </button>
                 <button
                     class="btn btn-success"
-                >Сохранить и продолжить редактирование</button>
-                <router-link :to="{name: 'carsAdmin'}">
-                  <button class="btn btn-info">Выйти без сохранения</button>
+                >
+                  Сохранить и продолжить редактирование
+                </button>
+                <router-link
+                    :to="{name: 'autoParts'}"
+                    class="btn btn-info"
+                >
+                    Выйти без сохранения
                 </router-link>
-                <button
+                <a
+                    :href="domain + AUTO_PARTS_INDEX.linkToSite"
+                    target="_blank"
                     class="btn btn-warning"
-                >Посмотреть на сайте</button>
+                >
+                  Посмотреть на сайте
+                </a>
               </div>
             </div>
           </form>
@@ -258,6 +340,10 @@
           'TYPES_OF_AUTO_PARTS'
       ]),
 
+      isCreatedPage() {
+        return this.$route.name === "autoPartsCreate";
+      },
+
       getThisStatus() {
         return (this.AUTO_PARTS_INDEX.status == 1) ? 'Активно' : 'Неактивно';
       },
@@ -267,8 +353,104 @@
       ...mapActions('autoParts', [
         'GET_AUTO_PARTS_INDEX',
         'GET_BREND_MODEL_CAR_AUTO_PARTS',
-        'GET_TYPES_OF_AUTO_PARTS'
+        'GET_TYPES_OF_AUTO_PARTS',
+        'EDIT_AUTO_PARTS_FROM_API'
       ]),
+
+      getFormDataAboutAutoParts() {
+        let xForm = new FormData();
+
+        if(this.AUTO_PARTS_INDEX.year !== undefined){
+          xForm.append('year', this.AUTO_PARTS_INDEX.year);
+        }
+
+        if(this.AUTO_PARTS_INDEX.status !== undefined){
+          xForm.append('status', this.AUTO_PARTS_INDEX.status);
+        }
+
+        if(this.AUTO_PARTS_INDEX.model !== undefined){
+          xForm.append('model', this.AUTO_PARTS_INDEX.model);
+        }
+
+        if(this.AUTO_PARTS_INDEX.modification !== undefined){
+          xForm.append('modification', this.AUTO_PARTS_INDEX.modification);
+        }
+
+        if(this.AUTO_PARTS_INDEX.fuel !== undefined){
+          xForm.append('fuel', this.AUTO_PARTS_INDEX.fuel);
+        }
+
+        if(this.AUTO_PARTS_INDEX.value !== undefined){
+          xForm.append('value', this.AUTO_PARTS_INDEX.value);
+        }
+
+        if(this.AUTO_PARTS_INDEX.typeEngines !== undefined){
+          xForm.append('typeEngines', this.AUTO_PARTS_INDEX.typeEngines);
+        }
+
+        if(this.AUTO_PARTS_INDEX.transmission !== undefined){
+          xForm.append('transmission', this.AUTO_PARTS_INDEX.transmission);
+        }
+
+        if(this.AUTO_PARTS_INDEX.typeBody !== undefined){
+          xForm.append('typeBody', this.AUTO_PARTS_INDEX.typeBody);
+        }
+
+        if(this.AUTO_PARTS_INDEX.wheelDiameterR !== undefined){
+          xForm.append('wheelDiameterR', this.AUTO_PARTS_INDEX.wheelDiameterR);
+        }
+
+        if(this.AUTO_PARTS_INDEX.wheelWidthJ !== undefined){
+          xForm.append('wheelWidthJ', this.AUTO_PARTS_INDEX.wheelWidthJ);
+        }
+
+        if(this.AUTO_PARTS_INDEX.numberOfHoles !== undefined){
+          xForm.append('numberOfHoles', this.AUTO_PARTS_INDEX.numberOfHoles);
+        }
+
+        if(this.AUTO_PARTS_INDEX.departureE !== undefined){
+          xForm.append('departureE', this.AUTO_PARTS_INDEX.departureE);
+        }
+
+        if(this.AUTO_PARTS_INDEX.departureE !== undefined){
+          xForm.append('departureE', this.AUTO_PARTS_INDEX.departureE);
+        }
+
+        if(this.AUTO_PARTS_INDEX.sparePartNumber !== undefined){
+          xForm.append('sparePartNumber', this.AUTO_PARTS_INDEX.sparePartNumber);
+        }
+
+        if(this.AUTO_PARTS_INDEX.pcd !== undefined){
+          xForm.append('pcd', this.AUTO_PARTS_INDEX.pcd);
+        }
+
+        if(this.AUTO_PARTS_INDEX.priceUSD !== undefined){
+          xForm.append('priceUSD', this.AUTO_PARTS_INDEX.priceUSD);
+        }
+
+        if(this.AUTO_PARTS_INDEX.autoPartsName !== undefined){
+          xForm.append('autoPartsName', this.AUTO_PARTS_INDEX.autoPartsName.id);
+        }
+
+        return xForm;
+      },
+
+      editAutoParts() {
+        let postAutoPartsInformation = {
+          autoParts: this.getFormDataAboutAutoParts(),
+          id: this.param.id
+        };
+
+        this.EDIT_AUTO_PARTS_FROM_API(postAutoPartsInformation);
+      },
+
+      isImageUrlLocalOrServer(image) {
+        if(image.substr(0, 4) === "data") {
+          return image;
+        }
+
+        return this.domain + `/image/` + image;
+      },
 
       customLabelTypes({ name }) {
         return name;
@@ -307,5 +489,6 @@
 </script>
 
 <style scoped lang="sass">
-@import "./src/components/autoParts/components/style/auto-parts-index"
+@import "../../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css"
+@import "@/components/autoParts/components/style/auto-parts-index.scss"
 </style>

@@ -18,6 +18,14 @@ const routes = [
         component: () => import('../components/autoParts/AutoPartsAdmin.vue'),
     },
     {
+        path: '/auto-parts/create',
+        name: 'autoPartsCreate',
+        meta: {
+            title: 'Добавить автозапчасть',
+        },
+        component: () => import('../components/autoParts/components/AutoPartsIndex.vue'),
+    },
+    {
         path: '/auto/:id',
         name: 'autoPartsDetail',
         meta: {

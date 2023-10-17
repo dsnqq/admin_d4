@@ -299,5 +299,5 @@
 
 <style scoped lang="sass">
 @import "vue2-dropzone/dist/vue2Dropzone.min.css"
-@import "./src/components/carsAdmin/style/car-index.scss"
+@import "@/components/carsAdmin/components/style/car-index.scss"
 </style>
