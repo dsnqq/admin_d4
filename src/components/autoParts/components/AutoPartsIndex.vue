@@ -31,7 +31,11 @@
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
                 <label class="auto-parts-index-field__label auto-parts-index-field__label--is-required">Марка и модель:</label>
                 <div class="auto-parts-index-field__wrap">
-                  <input type="text" id="vin" placeholder="VIN" class="auto-parts-index-field__input">
+                  <v-multiselect
+                      v-model="AUTO_PARTS_INDEX.year"
+                      :options="BREND_MODEL_CAR_AUTO_PARTS"
+                      class="auto-parts-index-field__select"
+                  ></v-multiselect>
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
@@ -40,9 +44,23 @@
                   <v-multiselect
                       v-model="AUTO_PARTS_INDEX.year"
                       :options="this.years"
+                      :selectedLabel="`Выбрано`"
+                      :deselectLabel="`Клик, чтобы удалить`"
+                      :selectLabel="`Клик, чтобы выбрать`"
+                      :placeholder="`Год`"
+                      @select="getFuelToTypeEngines"
                       class="auto-parts-index-field__select"
-                  ></v-multiselect>
-                  <input type="text" id="vin" placeholder="Модификация" class="auto-parts-index-field__input">
+                  >
+                    <template v-slot:noResult>
+                      Пусто...
+                    </template>
+                  </v-multiselect>
+                  <input
+                      v-model="AUTO_PARTS_INDEX.modification"
+                      type="text"
+                      placeholder="Модификация"
+                      class="auto-parts-index-field__input"
+                  />
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
@@ -71,8 +89,16 @@
                   <v-multiselect
                       v-model="AUTO_PARTS_INDEX.typeEngines"
                       :options="this.typeEngines"
+                      :selectedLabel="`Выбрано`"
+                      :deselectLabel="`Клик, чтобы удалить`"
+                      :selectLabel="`Клик, чтобы выбрать`"
+                      :placeholder="`Тип`"
                       class="auto-parts-index-field__select"
-                  ></v-multiselect>
+                  >
+                    <template v-slot:noResult>
+                      Пусто...
+                    </template>
+                  </v-multiselect>
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
@@ -81,19 +107,48 @@
                   <v-multiselect
                       v-model="AUTO_PARTS_INDEX.typeBody"
                       :options="this.body"
+                      :selectedLabel="`Выбрано`"
+                      :deselectLabel="`Клик, чтобы удалить`"
+                      :selectLabel="`Клик, чтобы выбрать`"
+                      :placeholder="`Кузов`"
                       class="auto-parts-index-field__select"
-                  ></v-multiselect>
+                  >
+                    <template v-slot:noResult>
+                      Пусто...
+                    </template>
+                  </v-multiselect>
                   <v-multiselect
                       v-model="AUTO_PARTS_INDEX.transmission"
                       :options="this.transmission"
+                      :selectedLabel="`Выбрано`"
+                      :deselectLabel="`Клик, чтобы удалить`"
+                      :selectLabel="`Клик, чтобы выбрать`"
+                      :placeholder="`Коробка`"
                       class="auto-parts-index-field__select"
-                  ></v-multiselect>
+                  >
+                    <template v-slot:noResult>
+                      Пусто...
+                    </template>
+                  </v-multiselect>
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
                 <label class="auto-parts-index-field__label auto-parts-index-field__label--is-required">Запчасть:</label>
                 <div class="auto-parts-index-field__wrap">
-                  <input type="text" id="vin" placeholder="Запчасть" class="auto-parts-index-field__input">
+                  <v-multiselect
+                      v-model="AUTO_PARTS_INDEX.transmission"
+                      :options="TYPES_OF_AUTO_PARTS"
+                      :custom-label="customLabelModelBrand"
+                      :selectedLabel="`Выбрано`"
+                      :deselectLabel="`Клик, чтобы удалить`"
+                      :selectLabel="`Клик, чтобы выбрать`"
+                      :placeholder="`Запчасть`"
+                      class="auto-parts-index-field__select"
+                  >
+                    <template v-slot:noResult>
+                      Пусто...
+                    </template>
+                  </v-multiselect>
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
@@ -192,22 +247,36 @@
 
     mounted() {
       this.GET_AUTO_PARTS_INDEX(this.param);
+      this.GET_BREND_MODEL_CAR_AUTO_PARTS();
+      this.GET_TYPES_OF_AUTO_PARTS();
     },
 
     computed: {
       ...mapGetters('autoParts', [
-          'AUTO_PARTS_INDEX'
+          'AUTO_PARTS_INDEX',
+          'BREND_MODEL_CAR_AUTO_PARTS',
+          'TYPES_OF_AUTO_PARTS'
       ]),
 
       getThisStatus() {
         return (this.AUTO_PARTS_INDEX.status == 1) ? 'Активно' : 'Неактивно';
-      }
+      },
     },
 
     methods: {
       ...mapActions('autoParts', [
         'GET_AUTO_PARTS_INDEX',
+        'GET_BREND_MODEL_CAR_AUTO_PARTS',
+        'GET_TYPES_OF_AUTO_PARTS'
       ]),
+
+      customLabelTypes({ name }) {
+        return name;
+      },
+
+      customLabelModelBrand({ name }) {
+        return name;
+      },
 
       getFuelToTypeEngines(option) {
         if(option == 'дизель') {
