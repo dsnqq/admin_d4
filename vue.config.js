@@ -6,7 +6,5 @@ module.exports = defineConfig({
     port: 8083,
   },
   lintOnSave: true,
-  publicPath: process.env.NODE_ENV === 'production'
-      ? '/'
-      : '/'
+  publicPath: '/'
 })
