@@ -1,30 +1,33 @@
 <template>
   <ModalAdmin
-      @closeModalAdmin="closeModalAdmin"
+      @closeModalAdmin="closeHistoryModalAdmin"
   >
-    <table class="table mb-0 table-border-1">
-      <thead>
-      <tr>
-        <th scope="col">Значение</th>
-        <th scope="col">Дата изменения</th>
-        <th scope="col">Старое значение</th>
-        <th scope="col">Новое значение</th>
-        <th scope="col">Пользователь</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr
-          v-for="(autoPartsHistory, i) in AUTO_PARTS_HISTORY"
-          :key="i"
-      >
-        <td>{{autoPartsHistory.valueName}}</td>
-        <td>{{autoPartsHistory.dataChange}}</td>
-        <td>{{autoPartsHistory.valueOld}}</td>
-        <td>{{autoPartsHistory.valueNew}}</td>
-        <td>{{autoPartsHistory.firstName + autoPartsHistory.lastName}}</td>
-      </tr>
-      </tbody>
-    </table>
+    <template v-slot:header>История запчасти</template>
+    <template>
+      <table class="table mb-0 table-border-1">
+        <thead>
+        <tr>
+          <th scope="col">Значение</th>
+          <th scope="col">Дата изменения</th>
+          <th scope="col">Старое значение</th>
+          <th scope="col">Новое значение</th>
+          <th scope="col">Пользователь</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+            v-for="(autoPartsHistory, i) in AUTO_PARTS_HISTORY"
+            :key="i"
+        >
+          <td>{{autoPartsHistory.valueName}}</td>
+          <td>{{autoPartsHistory.dataChange}}</td>
+          <td>{{autoPartsHistory.valueOld}}</td>
+          <td>{{autoPartsHistory.valueNew}}</td>
+          <td>{{autoPartsHistory.firstName + autoPartsHistory.lastName}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </template>
   </ModalAdmin>
 </template>
 
@@ -45,8 +48,8 @@
     },
 
     methods: {
-      closeModalAdmin() {
-        this.$emit('closeModalAdmin');
+      closeHistoryModalAdmin() {
+        this.$emit('closeHistoryModalAdmin');
       }
     }
   }

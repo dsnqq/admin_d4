@@ -302,7 +302,10 @@
                   >
                     <i class="bi bi-pencil-fill"></i>
                   </router-link>
-                  <a class="text-primary cursor-pointer">
+                  <a
+                      @click="getPhotoAutoParts(auto.product_id)"
+                      class="text-primary cursor-pointer"
+                  >
                     <i class="bi bi-camera"></i>
                   </a>
                   <a
@@ -397,6 +400,10 @@
       getHistoryAuto(id) {
         this.$emit('getHistoryAuto');
         this.GET_AUTO_PARTS_HISTORY(id);
+      },
+
+      getPhotoAutoParts(id) {
+        this.$emit('getPhotoAutoParts', id);
       },
 
       getStatus(status) {

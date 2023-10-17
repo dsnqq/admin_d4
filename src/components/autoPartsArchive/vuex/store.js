@@ -148,7 +148,7 @@ export default {
         RESTORE_THIS_AUTO_PARTS_ARCHIVE: (state, id) => {
             state.autoPartsArchiveTotals = state.autoPartsArchiveTotals - 1;
             state.autoPartsArchive.splice(id, 1);
-            alert("Запчасть восстановлена удалено!");
+            alert("Запчасть восстановлена!");
         },
         LOCK_UI: (state) => {
             state.lockingPool++;

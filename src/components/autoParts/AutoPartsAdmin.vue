@@ -2,11 +2,16 @@
     <div>
       <component
           @getHistoryAuto="getHistoryAuto"
+          @getPhotoAutoParts="getPhotoAutoParts"
           :is="autoPartsAdmin()"
       ></component>
       <AutoPartsHistoryModal
-          @closeModalAdmin="closeModalAdmin"
-          v-if="modalAdminShow"
+          @closeHistoryModalAdmin="closeHistoryModalAdmin"
+          v-if="modalHistoryAdminShow"
+      />
+      <AutoPartsPhotoModal
+          @closePhotoModalAdmin="closePhotoModalAdmin"
+          v-if="modalPhotoAdminShow"
       />
     </div>
 </template>
@@ -18,16 +23,25 @@
     components: {
       AutoPartsIndex: () => import("./components/AutoPartsIndex.vue"),
       AutoPartsList: () => import("./components/AutoPartsList.vue"),
-      AutoPartsHistoryModal: () => import("./components/modal/AutoPartsHistoryModal.vue")
+      AutoPartsHistoryModal: () => import("./components/modal/AutoPartsHistoryModal.vue"),
+      AutoPartsPhotoModal: () => import("./components/modal/AutoPartsPhotoModal.vue")
     },
 
     methods: {
       getHistoryAuto() {
-        this.modalAdminShow = true;
+        this.modalHistoryAdminShow = true;
       },
 
-      closeModalAdmin() {
-        this.modalAdminShow = false;
+      getPhotoAutoParts() {
+        this.modalPhotoAdminShow = true;
+      },
+
+      closeHistoryModalAdmin() {
+        this.modalHistoryAdminShow = false;
+      },
+
+      closePhotoModalAdmin() {
+        this.modalPhotoAdminShow = false;
       },
 
       autoPartsAdmin() {
@@ -41,7 +55,8 @@
 
     data() {
       return {
-        modalAdminShow: false
+        modalHistoryAdminShow: false,
+        modalPhotoAdminShow: false
       }
     }
   }
