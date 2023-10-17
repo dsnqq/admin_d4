@@ -28,7 +28,7 @@
               </div>
             </div>
             <div class="col-xl-7">
-              <img src="/assets/images/404-error.png" class="img-fluid">
+              <img :src="`./assets/images/404-error.png`" class="img-fluid">
             </div>
           </div>
         </div>

@@ -7,6 +7,6 @@ module.exports = defineConfig({
   },
   lintOnSave: true,
   publicPath: process.env.NODE_ENV === 'production'
-      ? '/admin/applications/car/'
+      ? '/'
       : '/'
 })

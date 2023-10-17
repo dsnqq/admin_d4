@@ -1,9 +1,9 @@
-<template v-once>
+<template>
   <aside class="sidebar-wrapper" data-simplebar="true">
     <div class="sidebar-header">
       <div>
         <img
-            src="/assets/images/logo-icon.png"
+            :src="`./assets/images/logo-icon.png`"
             class="logo-icon"
             alt="d4.by - logo"
         />
