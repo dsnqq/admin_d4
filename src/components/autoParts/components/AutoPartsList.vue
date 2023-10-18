@@ -269,7 +269,7 @@
               <td>{{auto.dateAdded}}</td>
               <td>
                 <span
-                    @click="changeStatus(auto)"
+                    @click="changeStatus(auto.product_id, auto.status)"
                     class="badge rounded-pill cursor-pointer"
                     :class="auto.status == 1 ? 'alert-success' : 'alert-danger'"
                 >
@@ -342,7 +342,8 @@
   import {DOMAIN, YEARS} from "@/constants/constants";
   import {mapActions, mapGetters} from "vuex";
   import Jquery from 'jquery'; // eslint-disable-line no-unused-vars
-  import lightbox from 'lightbox2'; // eslint-disable-line no-unused-vars
+  import lightbox from 'lightbox2';
+  import {stat} from "@babel/core/lib/gensync-utils/fs"; // eslint-disable-line no-unused-vars
 
   export default {
     name: "AutoPartsList",
@@ -375,7 +376,8 @@
         'GET_AUTO_PARTS_HISTORY',
         'DELET_AUTO_PARTS_BY_API',
         'GET_TYPES_OF_AUTO_PARTS',
-        'GET_BREND_MODEL_CAR_AUTO_PARTS'
+        'GET_BREND_MODEL_CAR_AUTO_PARTS',
+        'CHANGE_AUTO_PARTS_STATUS'
       ]),
 
       customLabelTypes({ name }) {
@@ -410,8 +412,13 @@
         return (status == 1) ? 'Активно' : 'Неактивно';
       },
 
-      changeStatus(auto) {
-        return auto.status = !auto.status;
+      changeStatus(id, status) {
+        let param = {
+          id: id,
+          status: status
+        };
+
+        this.CHANGE_AUTO_PARTS_STATUS(param);
       },
 
       showImageAll(id) {

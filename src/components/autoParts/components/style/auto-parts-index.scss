@@ -98,12 +98,16 @@
 
 .auto-parts-index-photo-list {
   display: flex;
+  flex-wrap: wrap;
+  margin: -5px;
+
+  &__item {
+    margin: 5px;
+  }
 }
 
 .auto-parts-index-photo-item {
   $self: &;
-
-  margin-right: 20px;
 
   &__del {
     text-align: center;

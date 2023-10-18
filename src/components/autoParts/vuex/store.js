@@ -203,14 +203,14 @@ export default {
 
         CHANGE_AUTO_PARTS_STATUS({commit}, param) {
             return axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts/auto/change_status/' + param.autoPartsId,
+                DOMAIN + '/index.php?route=api/auto_parts/auto/change_status/' + param.id,
                 {
                     key: KEYS,
                     status: param.status
                 }
             )
                 .then(() => {
-                    commit('CHANGE_AUTO_PARTS_STATUS', param.status);
+                    commit('CHANGE_AUTO_PARTS_STATUS', param);
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -226,9 +226,8 @@ export default {
             state.autoParts = {};
             state.autoParts = autoParts;
         },
-        CHANGE_AUTO_PARTS_STATUS: (state, autoParts) => {
-            state.autoParts = {};
-            state.autoParts = autoParts;
+        CHANGE_AUTO_PARTS_STATUS: (id) => {
+            console.log('статус изменен у ' + id);
         },
         SET_AUTO_PARTS_TOTALS_STATE: (state, autoPartsTotals) => {
             state.autoPartsTotals = autoPartsTotals;
