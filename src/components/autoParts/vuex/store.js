@@ -226,8 +226,8 @@ export default {
             state.autoParts = {};
             state.autoParts = autoParts;
         },
-        CHANGE_AUTO_PARTS_STATUS: (id) => {
-            console.log('статус изменен у ' + id);
+        CHANGE_AUTO_PARTS_STATUS: (state, param) => {
+            state.autoParts[param.index].status = !parseInt(param.status);
         },
         SET_AUTO_PARTS_TOTALS_STATE: (state, autoPartsTotals) => {
             state.autoPartsTotals = autoPartsTotals;

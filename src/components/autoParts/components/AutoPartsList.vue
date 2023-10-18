@@ -266,10 +266,12 @@
                 <div>{{auto.priceBYN}} руб.</div>
               </td>
               <td>{{auto.sparePartNumber}}</td>
-              <td>{{auto.dateAdded}}</td>
+              <td>
+                {{auto.dateAdded}}
+              </td>
               <td>
                 <span
-                    @click="changeStatus(auto.product_id, auto.status)"
+                    @click="changeStatus(auto.product_id, auto.status, i)"
                     class="badge rounded-pill cursor-pointer"
                     :class="auto.status == 1 ? 'alert-success' : 'alert-danger'"
                 >
@@ -318,7 +320,12 @@
                 <div class="td-viewed">
                   Просмотров: {{auto.view}}
                 </div>
-                <div class="btn btn-info">Печать QR</div>
+                <div
+                    @click="getPrintQrCodeAutoParts(auto.qrCode)"
+                    class="btn btn-info"
+                >
+                  Печать QR
+                </div>
               </td>
             </tr>
             </tbody>
@@ -343,7 +350,6 @@
   import {mapActions, mapGetters} from "vuex";
   import Jquery from 'jquery'; // eslint-disable-line no-unused-vars
   import lightbox from 'lightbox2';
-  import {stat} from "@babel/core/lib/gensync-utils/fs"; // eslint-disable-line no-unused-vars
 
   export default {
     name: "AutoPartsList",
@@ -412,10 +418,15 @@
         return (status == 1) ? 'Активно' : 'Неактивно';
       },
 
-      changeStatus(id, status) {
+      getPrintQrCodeAutoParts(qr) {
+        this.$emit('getPrintQrCodeAutoParts', qr);
+      },
+
+      changeStatus(id, status, i) {
         let param = {
           id: id,
-          status: status
+          status: status,
+          index: i
         };
 
         this.CHANGE_AUTO_PARTS_STATUS(param);
