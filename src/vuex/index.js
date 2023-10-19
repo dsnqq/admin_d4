@@ -11,6 +11,7 @@ import dashboardAdmin from '@/components/dashboardAdmin/vuex/store';
 import autoTires from '@/components/autoTires/vuex/store';
 import autoTiresArchive from '@/components/autoTiresArchive/vuex/store';
 import authAdmin from "@/components/authAdmin/vuex/store";
+import generalStore from "@/vuex/store";
 
 Vue.use(Vuex);
 
@@ -26,7 +27,8 @@ export default new Vuex.Store({
         autoPartsArchive,
         autoTires,
         autoTiresArchive,
-        authAdmin
+        authAdmin,
+        generalStore
     },
     strict: process.env.NODE_ENV === 'development'
 })

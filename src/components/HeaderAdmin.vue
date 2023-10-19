@@ -31,7 +31,12 @@
                 class="nav-link dropdown-toggle dropdown-toggle-nocaret"
             >
               <div class="notifications">
-                <span class="notify-badge">8</span>
+                <span
+                    v-if="NOTIFICATION > 0"
+                    class="notify-badge"
+                >
+                  {{NOTIFICATION}}
+                </span>
                 <i class="bi bi-bell-fill"></i>
               </div>
             </router-link>
@@ -74,18 +79,31 @@
 </template>
 
 <script>
+  import {mapActions, mapGetters} from "vuex";
   import {DOMAIN} from "@/constants/constants";
 
   export default {
     name: "HeaderAdmin",
 
+    mounted() {
+      this.NOTIFICATION_FROM_API();
+    },
+
     computed: {
       userInformationAbout() {
         return JSON.parse(localStorage.user);
-      }
+      },
+
+      ...mapGetters('generalStore', [
+        'NOTIFICATION',
+      ]),
     },
 
     methods: {
+      ...mapActions('generalStore', [
+        'NOTIFICATION_FROM_API',
+      ]),
+
       logout() {
         localStorage.user = '';
         location.reload();
