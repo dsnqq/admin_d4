@@ -4,11 +4,15 @@
       <div class="mobile-toggle-icon fs-3">
         <i class="bi bi-list"></i>
       </div>
+      <!---
       <form class="searchbar">
         <div class="position-absolute top-50 translate-middle-y search-icon ms-3"><i class="bi bi-search"></i></div>
         <input class="form-control" type="text" placeholder="Здесь можно что-нибудь найти...">
         <div class="position-absolute top-50 translate-middle-y search-close-icon"><i class="bi bi-x-lg"></i></div>
-      </form>
+      </form>--->
+      <a href="https://d4.by/admin" class="fs-6">
+        Перейти в старую админ-панель
+      </a>
       <div class="top-navbar-right ms-auto">
         <ul class="navbar-nav align-items-center">
           <li class="nav-item search-toggle-icon">
