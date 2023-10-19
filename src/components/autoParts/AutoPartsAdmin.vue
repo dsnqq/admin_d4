@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="auto-parts-admin">
       <component
           @getHistoryAuto="getHistoryAuto"
           @getPhotoAutoParts="getPhotoAutoParts"
@@ -14,7 +14,7 @@
           @closePhotoModalAdmin="closePhotoModalAdmin"
           v-if="modalPhotoAdminShow"
       />
-      <iframe name="imgFrame" style="width: 0; height: 0; border: 0;color:#fff;"></iframe>
+      <iframe name="autoPartsQrCode" class="auto-parts-admin__iframe"></iframe>
     </div>
 </template>
 
@@ -31,10 +31,9 @@
 
     methods: {
       getPrintQrCodeAutoParts(qr) {
-        var frame = window.frames['imgFrame'];
-        frame.document.write('<html><head><style>@print{@page :footer {color: #fff }@page :header {color: #fff}}</style></head><body style="font-family: Open Sans, sans-serif;" onload="window.print()"><div style="margin:0 auto;color:#000;display:flex;align-items:center;max-width:275px;border:1px solid #000;"><div><?php echo $img_sm_qr1; ?></div><div style="text-align:center;font-size:12px;margin:0 auto;padding-left:10px;font-weight:bold;line-height:18px;">' + qr + '</div></div></body></html>');
-        frame.document.close();
-        console.log("Сейчас напечатаем!");
+        let isIframe = window.frames['autoPartsQrCode'];
+        isIframe.document.write(qr);
+        isIframe.document.close();
       },
 
       getHistoryAuto() {
@@ -70,3 +69,7 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+@import "@/components/autoParts/style/auto-parts-admin.scss"
+</style>

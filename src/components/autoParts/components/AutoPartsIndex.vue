@@ -305,12 +305,19 @@
                 >
                   Посмотреть на сайте
                 </a>
+                <button
+                    @click.prevent="printQrAutoParts"
+                    class="btn btn-dark"
+                >
+                  Печать QR
+                </button>
               </div>
             </div>
           </form>
         </div>
       </div>
     </div>
+    <iframe name="autoPartsQrCode" class="auto-parts-index__iframe"></iframe>
   </div>
 </template>
 
@@ -356,6 +363,12 @@
         'GET_TYPES_OF_AUTO_PARTS',
         'EDIT_AUTO_PARTS_FROM_API'
       ]),
+
+      printQrAutoParts() {
+        let isIframe = window.frames['autoPartsQrCode'];
+        isIframe.document.write(this.AUTO_PARTS_INDEX.qrCode);
+        isIframe.document.close();
+      },
 
       getFormDataAboutAutoParts() {
         let xForm = new FormData();
