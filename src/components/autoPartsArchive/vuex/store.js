@@ -9,9 +9,17 @@ export default {
         autoPartsArchiveIndex: {},
         autoPartsArchiveTotals: 0,
         lockingPool: 0,
-        autoPartsArchiveHistory: {}
+        autoPartsArchiveHistory: {},
+        typesOfAutoPartsArchive: [],
+        brandAndModelCar: []
     },
     getters: {
+        BREND_MODEL_CAR_AUTO_PARTS(state) {
+            return state.brandAndModelCar;
+        },
+        TYPES_OF_AUTO_PARTS_ARCHIVE(state) {
+            return state.typesOfAutoPartsArchive;
+        },
         AUTO_PARTS_ARCHIVE(state) {
             return state.autoPartsArchive;
         },
@@ -29,13 +37,38 @@ export default {
         },
     },
     actions: {
+        async GET_BREND_MODEL_CAR_AUTO_PARTS({commit}) {
+            return await axios.post(
+                DOMAIN + '/index.php?route=api/auto_parts/auto/category',
+                {
+                    key: KEYS,
+                }
+            )
+                .then((response) => {
+                    commit('SET_BREND_MODEL_CAR_AUTO_PARTS', response.data.brandAndModelCar);
+                    return response.data.brandAndModelCar;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    return error;
+                });
+        },
+
         GET_AUTO_PARTS_ARCHIVE_FROM_API({commit}, param) {
             commit('LOCK_UI');
             return axios.post(
                 DOMAIN + '/index.php?route=api/auto_parts_archive/auto',
                 {
                     key: KEYS,
-                    page: param,
+                    page: param.pageNum,
+                    filter_sparePartNumber: param.filters.sparePartNumber,
+                    filter_model: param.filters.model,
+                    filter_fuel: param.filters.fuel,
+                    filter_value: param.filters.value,
+                    filter_year_start: param.filters.yearStart,
+                    filter_year_last: param.filters.yearLast,
+                    filter_types: param.filters.types.code,
+                    filter_category: param.filters.car.code
                 }
             )
                 .then((response) => {
@@ -49,11 +82,19 @@ export default {
                 });
         },
 
-        GET_AUTO_PARTS_ARCHIVE_TOTALS({commit}) {
+        GET_AUTO_PARTS_ARCHIVE_TOTALS({commit}, param) {
             return  axios.post(
                 DOMAIN + '/index.php?route=api/auto_parts_archive/auto/totals',
                 {
                     key: KEYS,
+                    filter_sparePartNumber: param.filters.sparePartNumber,
+                    filter_model: param.filters.model,
+                    filter_fuel: param.filters.fuel,
+                    filter_value: param.filters.value,
+                    filter_year_start: param.filters.yearStart,
+                    filter_year_last: param.filters.yearLast,
+                    filter_types: param.filters.types.code,
+                    filter_category: param.filters.car.code
                 }
             )
                 .then((response) => {
@@ -78,6 +119,23 @@ export default {
                     commit('UN_LOCK_UI');
                     commit('SET_AUTO_PARTS_ARCHIVE_HISTORY_STATE', response.data.autoPartsArchiveHistory);
                     return response.data.autoPartsArchiveHistory;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    return error;
+                });
+        },
+
+        async GET_TYPES_OF_AUTO_PARTS_ARCHIVE({commit}) {
+            return await axios.post(
+                DOMAIN + '/index.php?route=api/auto_parts/auto/types',
+                {
+                    key: KEYS,
+                }
+            )
+                .then((response) => {
+                    commit('SET_TYPES_OF_AUTO_PARTS_STATE', response.data.typesOfAutoParts);
+                    return response.data.typesOfAutoParts;
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -130,6 +188,9 @@ export default {
         SET_AUTO_PARTS_ARCHIVE_TOTALS_STATE: (state, autoPartsArchiveTotals) => {
             state.autoPartsArchiveTotals = autoPartsArchiveTotals;
         },
+        SET_TYPES_OF_AUTO_PARTS_STATE: (state, typesOfAutoPartsArchive) => {
+            state.typesOfAutoPartsArchive = typesOfAutoPartsArchive;
+        },
         SET_AUTO_PARTS_ARCHIVE_INDEX_STATE: (state, autoPartsArchiveIndex) => {
             state.autoPartsArchiveIndex = autoPartsArchiveIndex;
         },
@@ -149,6 +210,9 @@ export default {
             state.autoPartsArchiveTotals = state.autoPartsArchiveTotals - 1;
             state.autoPartsArchive.splice(id, 1);
             alert("Запчасть восстановлена!");
+        },
+        SET_BREND_MODEL_CAR_AUTO_PARTS: (state, brandAndModelCar) => {
+            state.brandAndModelCar = brandAndModelCar;
         },
         LOCK_UI: (state) => {
             state.lockingPool++;

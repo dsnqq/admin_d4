@@ -12,7 +12,7 @@
     </BreadcrumbAdmin>
     <div class="card">
       <div class="card-header py-3">
-        шапочка
+        Тут скоро будет больше удобных функций
       </div>
       <div class="card-body">
         <div class="row">

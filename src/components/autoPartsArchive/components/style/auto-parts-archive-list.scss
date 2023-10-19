@@ -1,3 +1,60 @@
+.card-filter {
+  &__rows {
+    display: grid;
+    grid-row-gap: 15px;
+    grid-template-columns: repeat(3,1fr);
+    padding: 0 30px;
+  }
+
+  &__buttons {
+    display: flex;
+    padding: 0 30px;
+
+    .btn {
+      margin-right: 10px;
+    }
+  }
+
+  &__search,
+  &__refresh {
+    max-width: 150px;
+    margin-top: 15px;
+  }
+}
+
+.card-filter-item {
+  display: flex;
+  align-items: center;
+
+  &__form {
+    min-width: 300px;
+  }
+
+  &__select {
+    min-width: 300px;
+    border-radius: 3px;
+
+    &--is-year {
+      min-width: 100px;
+    }
+  }
+
+  &__label {
+    font-weight: bold;
+    min-width: 150px;
+  }
+
+  &__input {
+    height: 30px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid hsl(0, 0%, 73%);
+    min-width: 300px;
+  }
+}
+
 .product-box-image-flex {
   display: flex;
   flex-wrap: wrap;
