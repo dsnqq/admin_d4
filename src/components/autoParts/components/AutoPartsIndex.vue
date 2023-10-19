@@ -336,7 +336,10 @@
     },
 
     mounted() {
-      this.GET_AUTO_PARTS_INDEX(this.param);
+      if(!this.isCreatedPage) {
+        this.GET_AUTO_PARTS_INDEX(this.param);
+      }
+
       this.GET_BREND_MODEL_CAR_AUTO_PARTS();
       this.GET_TYPES_OF_AUTO_PARTS();
     },

@@ -43,7 +43,7 @@
           {title: 'Главная панель', component: 'dashboardAdmin', icon: 'bi-house-fill'},
           {title: 'Мои запчасти', component: 'autoParts', icon: 'bi-basket2-fill'},
           {title: 'Архив Запчастей', component: 'autoPartsArchive', icon: 'bi-archive'},
-          {title: 'Добавить запчасть', component: '', icon: 'bi-plus-square'},
+          {title: 'Добавить запчасть', component: 'autoPartsCreate', icon: 'bi-plus-square'},
           {title: 'История пользователей', component: 'historyUsers', icon: 'bi-journal-text'},
           {title: 'Авто в разборе', component: 'carsAdmin', icon: 'bi-wrench'},
           {title: 'Мои шины', component: 'autoTires', icon: 'bi-vinyl'},

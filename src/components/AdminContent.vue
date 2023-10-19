@@ -38,7 +38,8 @@ export default {
           'carsAdmin',
           'carDetail',
           'carCreate',
-          'autoPartsDetail'
+          'autoPartsDetail',
+          'autoPartsCreate'
       ];
 
       return (noBreadcrumbAdmin.includes(this.$route.name)) ? false : true;
