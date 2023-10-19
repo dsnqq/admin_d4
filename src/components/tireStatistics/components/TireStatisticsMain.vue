@@ -44,13 +44,13 @@
                 >
                   <i class="bx bx-show"></i>
                 </a>
-                <a
+                <router-link
+                    :to="{name: 'dashboardAdmin'}"
                     target="_blank"
-                    class="p-2 theme-icons text-warning"
-                    :href="domain + tireStatisticsItem.linkEdit"
+                    class="p-2 theme-icons text-warning cursor-pointer"
                 >
                   <i class="bx bx-pencil"></i>
-                </a>
+                </router-link>
               </td>
             </tr>
             </tbody>

@@ -1,6 +1,9 @@
 <template>
   <aside class="sidebar-wrapper" data-simplebar="true">
-    <div class="sidebar-header">
+    <router-link
+        :to="{name: 'dashboardAdmin'}"
+        class="sidebar-header"
+    >
       <div>
         <img
             :src="`/assets/images/logo-icon.png`"
@@ -11,7 +14,7 @@
       <div>
         <h4 class="logo-text">D4.by</h4>
       </div>
-    </div>
+    </router-link>
     <ul class="metismenu" id="menu">
       <li
           v-for="link in links"

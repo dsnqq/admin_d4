@@ -31,6 +31,7 @@ const routes = [
         meta: {
             title: 'Автозапчасть',
         },
+        props: true,
         component: () => import('../components/autoParts/components/AutoPartsIndex.vue'),
     },
     {

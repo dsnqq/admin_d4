@@ -44,13 +44,13 @@
                 >
                   <i class="bx bx-show"></i>
                 </a>
-                <a
+                <router-link
+                    :to="{name: 'autoPartsDetail', params: {id: sparePartsStatisticsItem.product_id}}"
                     target="_blank"
-                    class="p-2 theme-icons text-warning"
-                    :href="domain + sparePartsStatisticsItem.linkEdit"
+                    class="p-2 theme-icons text-warning cursor-pointer"
                 >
                   <i class="bx bx-pencil"></i>
-                </a>
+                </router-link>
               </td>
             </tr>
             </tbody>

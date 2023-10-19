@@ -37,19 +37,20 @@
             </router-link>
           </li>
           <li class="nav-item dropdown dropdown-large">
-              <router-link
-                  :to="{name: 'dashboardAdmin'}"
+              <a
+                  :href="domain"
+                  target="_blank"
                   class="nav-link dropdown-toggle dropdown-toggle-nocaret"
               >
                 <div class="d-flex align-items-center">
                   <div class="ms-3">
                     <span>
-                      На главную
+                      На главную d4.by
                       <i class="bi bi-house-fill"></i>
                     </span>
                   </div>
                 </div>
-              </router-link>
+              </a>
           </li>
           <li class="nav-item dropdown dropdown-large">
             <a
@@ -73,6 +74,8 @@
 </template>
 
 <script>
+  import {DOMAIN} from "@/constants/constants";
+
   export default {
     name: "HeaderAdmin",
 
@@ -86,6 +89,12 @@
       logout() {
         localStorage.user = '';
         location.reload();
+      }
+    },
+
+    data() {
+      return {
+        domain: DOMAIN
       }
     }
   }
