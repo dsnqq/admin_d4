@@ -1,44 +1,28 @@
 <template>
   <div id="app">
-    <AdminContent
-      v-if="login"
-    />
-    <AuthAdmin
-        @setLoginTrue="setLoginTrue"
-        v-else
-    />
+    <AdminContent v-if="loginUserChecked"/>
+    <AuthAdmin v-else/>
   </div>
 </template>
 
 <script>
-import AdminContent from "@/components/AdminContent.vue";
 import AuthAdmin from "@/components/authAdmin/AuthAdmin.vue";
+import AdminContent from "@/components/AdminContent.vue";
 
 export default {
   name: 'App',
 
+  computed: {
+    loginUserChecked() {
+      if(!localStorage.user) return false;
+      let user = JSON.parse(localStorage.user);
+      return user.user_id;
+    }
+  },
+
   components: {
     AdminContent,
-    AuthAdmin,
-  },
-
-  mounted() {
-    if(localStorage.login) {
-      this.login = localStorage.login;
-    }
-  },
-
-  methods: {
-    setLoginTrue() {
-      this.login = true;
-      localStorage.login = this.login;
-    },
-  },
-
-  data() {
-    return {
-      login: localStorage.login
-    }
+    AuthAdmin
   }
 }
 </script>

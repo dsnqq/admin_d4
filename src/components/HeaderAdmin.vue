@@ -21,7 +21,7 @@
           <li class="nav-item dropdown dropdown-user-setting">
             <a class="nav-link dropdown-toggle dropdown-toggle-nocaret">
               <div class="user-setting d-flex align-items-center">
-                Даниил Разработчик
+                {{ userInformationAbout.firstname + ' ' + userInformationAbout.lastname}}
               </div>
             </a>
           </li>
@@ -54,7 +54,7 @@
           <li class="nav-item dropdown dropdown-large">
             <a
                 @click.prevent="logout"
-                class="nav-link dropdown-toggle dropdown-toggle-nocaret"
+                class="nav-link dropdown-toggle dropdown-toggle-nocaret cursor-pointer"
             >
               <div class="d-flex align-items-center">
                 <div class="ms-3">
@@ -76,9 +76,16 @@
   export default {
     name: "HeaderAdmin",
 
+    computed: {
+      userInformationAbout() {
+        return JSON.parse(localStorage.user);
+      }
+    },
+
     methods: {
       logout() {
-        localStorage.login = false;
+        localStorage.user = '';
+        location.reload();
       }
     }
   }

@@ -19,14 +19,26 @@
                         <label for="inputEmailAddress" class="form-label">Логин</label>
                         <div class="ms-auto position-relative">
                           <div class="position-absolute top-50 translate-middle-y search-icon px-3"><i class="bi bi-envelope-fill"></i></div>
-                          <input type="email" class="form-control radius-30 ps-5" id="inputEmailAddress" placeholder="Введите логин">
+                          <input
+                              v-model="param.login"
+                              type="text"
+                              class="form-control radius-30 ps-5"
+                              id="inputEmailAddress"
+                              placeholder="Введите логин"
+                          >
                         </div>
                       </div>
                       <div class="col-12">
                         <label for="inputChoosePassword" class="form-label">Пароль</label>
                         <div class="ms-auto position-relative">
                           <div class="position-absolute top-50 translate-middle-y search-icon px-3"><i class="bi bi-lock-fill"></i></div>
-                          <input type="password" class="form-control radius-30 ps-5" id="inputChoosePassword" placeholder="Введите пароль">
+                          <input
+                              v-model="param.password"
+                              type="password"
+                              class="form-control radius-30 ps-5"
+                              id="inputChoosePassword"
+                              placeholder="Введите пароль"
+                          />
                         </div>
                       </div>
                       <div class="col-6">
@@ -62,13 +74,42 @@
 </template>
 
 <script>
+  import {mapActions, mapGetters} from "vuex";
+
   export default {
     name: "AuthAdmin",
 
+    computed: {
+      ...mapGetters('authAdmin', [
+        'USER',
+      ]),
+    },
+
     methods: {
+      ...mapActions('authAdmin', [
+        'LOGIN_FROM_API',
+      ]),
+
       loginEnter() {
-        this.$emit('setLoginTrue');
+        this.LOGIN_FROM_API(this.param);
       }
     },
+
+    watch: {
+      'USER': function() {
+        this.$router.push({ name: 'dashboardAdmin' }).catch(()=>{});
+        location.reload();
+      }
+    },
+
+    data() {
+      return {
+        auth: false,
+        param: {
+          login: '',
+          password: ''
+        }
+      }
+    }
   }
 </script>

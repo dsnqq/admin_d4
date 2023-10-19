@@ -98,7 +98,7 @@ const routes = [
         component: () => import('../components/sparePartsStatistics/SparePartsStatistics.vue'),
     },
     {
-        path: '/admin',
+        path: '/login',
         name: 'authAdmin',
         component: () => import('../components/authAdmin/AuthAdmin.vue'),
     },
