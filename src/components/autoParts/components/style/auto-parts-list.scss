@@ -117,3 +117,27 @@
       min-width: 300px;
   }
 }
+
+.auto-parts-list-wrapper-column-edit {
+  background-color: unset;
+  border: none;
+  color: hsl(208, 77%, 47%);
+  padding: 0;
+  cursor: pointer;
+}
+
+.auto-parts-list-wrapper-column-edits {
+  &__button {
+    margin-top: 2px;
+    outline: none;
+  }
+
+  &__input {
+    height: 30px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid hsl(0, 0%, 73%);
+  }
+}

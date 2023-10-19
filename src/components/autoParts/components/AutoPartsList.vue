@@ -262,7 +262,33 @@
               </td>
               <td>{{auto.model}}</td>
               <td>
-                <div>{{auto.priceUSD}} $</div>
+                <div>
+                  <template v-if="!columnEdit">
+                  {{auto.priceUSD}} $
+                  </template>
+                  <span
+                      class="auto-parts-list-wrapper-column__edits auto-parts-list-wrapper-column-edits"
+                  >
+                  <input
+                      v-if="columnEdit"
+                      placeholder="Туть что-то"
+                      v-model="auto.priceUSD"
+                      class="auto-parts-list-wrapper-column-edits__input"
+                      type="text"
+                  >
+                  <button
+                      @click.prevent="setEditThisColumnOnList"
+                      class="auto-parts-list-wrapper-column-edits__button auto-parts-list-wrapper-column-edit"
+                  >
+                    <i
+                        v-if="!columnEdit"
+                        class="bx bx-pencil p-2 text-warning"></i>
+                    <i
+                        v-else
+                        class="lni lni-save p-2 text-warning"></i>
+                  </button>
+                </span>
+                </div>
                 <div>{{auto.priceBYN}} руб.</div>
               </td>
               <td>{{auto.sparePartNumber}}</td>
@@ -394,6 +420,10 @@
         return name;
       },
 
+      setEditThisColumnOnList() {
+        this.columnEdit = !this.columnEdit;
+      },
+
       setFilterOnAutoPartsPage() {
         this.GET_AUTO_PARTS_FROM_API(this.param);
         this.GET_AUTO_PARTS_TOTALS(this.param);
@@ -472,6 +502,7 @@
       return {
         domain: DOMAIN,
         years: YEARS,
+        columnEdit: false,
         param: {
           pageNum: 1,
           filters: {

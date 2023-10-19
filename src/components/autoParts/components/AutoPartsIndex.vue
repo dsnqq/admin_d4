@@ -306,6 +306,7 @@
                   Посмотреть на сайте
                 </a>
                 <button
+                    v-if="!isCreatedPage"
                     @click.prevent="printQrAutoParts"
                     class="btn btn-dark"
                 >
