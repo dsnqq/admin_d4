@@ -24,8 +24,8 @@
                 </label>
                 <div class="auto-parts-index-field__wrap">
                   <v-multiselect
-                      v-model="getThisStatus"
-                      :options="statusOptions"
+                      v-model="AUTO_PARTS_INDEX.status"
+                      :options="STATUS"
                       :selectedLabel="`Выбрано`"
                       :deselectLabel="`Клик, чтобы удалить`"
                       :selectLabel="`Клик, чтобы выбрать`"
@@ -66,7 +66,7 @@
                 <div class="auto-parts-index-field__wrap auto-parts-index-field__wrap--is-flex auto-parts-index-field__wrap--is-too">
                   <v-multiselect
                       v-model="AUTO_PARTS_INDEX.year"
-                      :options="this.years"
+                      :options="YEARS"
                       :selectedLabel="`Выбрано`"
                       :deselectLabel="`Клик, чтобы удалить`"
                       :selectLabel="`Клик, чтобы выбрать`"
@@ -99,7 +99,7 @@
                   />
                   <v-multiselect
                       v-model="AUTO_PARTS_INDEX.fuel"
-                      :options="this.fuels"
+                      :options="FUELS"
                       :selectedLabel="`Выбрано`"
                       :deselectLabel="`Клик, чтобы удалить`"
                       :selectLabel="`Клик, чтобы выбрать`"
@@ -133,7 +133,7 @@
                 <div class="auto-parts-index-field__wrap auto-parts-index-field__wrap--is-flex auto-parts-index-field__wrap--is-too">
                   <v-multiselect
                       v-model="AUTO_PARTS_INDEX.typeBody"
-                      :options="this.body"
+                      :options="BODYS"
                       :selectedLabel="`Выбрано`"
                       :deselectLabel="`Клик, чтобы удалить`"
                       :selectLabel="`Клик, чтобы выбрать`"
@@ -146,7 +146,7 @@
                   </v-multiselect>
                   <v-multiselect
                       v-model="AUTO_PARTS_INDEX.transmission"
-                      :options="this.transmission"
+                      :options="TRANSMISSION"
                       :selectedLabel="`Выбрано`"
                       :deselectLabel="`Клик, чтобы удалить`"
                       :selectLabel="`Клик, чтобы выбрать`"
@@ -267,6 +267,7 @@
                     </template>
                   </div>
                   <button
+                      @click.prevent="modalCarPhotoFade"
                       class="auto-parts-index-field-wrap__btn btn btn-primary"
                   >
                     Добавить фото
@@ -318,6 +319,32 @@
         </div>
       </div>
     </div>
+
+    <div
+        class="modal-mask"
+        v-show="showModal"
+    >
+      <div class="modal-wrapper">
+        <div class="modal-container">
+          <div class="modal-body">
+            <button class="modal-default-button" @click.prevent="modalCarPhotoFade">
+              X
+            </button>
+            <vue-dropzone
+                v-on:vdropzone-sending="sendingEvent"
+                :options="dropzoneOptions"
+                ref="myVueDropzone"
+                id="dropzone"
+            ></vue-dropzone>
+            <button
+                @click.prevent="sendingDropzonePhoto"
+                class="btn btn-info"
+                id="submit-all"
+            >Загрузить изображения</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <iframe name="autoPartsQrCode" class="auto-parts-index__iframe"></iframe>
   </div>
 </template>
@@ -326,13 +353,15 @@
   import BreadcrumbAdmin from "@/components/BreadcrumbAdmin.vue";
   import {mapActions, mapGetters} from "vuex";
   import {DOMAIN} from "@/constants/constants";
-  import {STATUS, YEARS, BODYS, TRANSMISSION, FUELS, TYPE_ENGINES_ALL, TYPE_ENGINES_DISEL, TYPE_ENGINES_BENZ} from "@/constants/constants"
+  import {STATUS, YEARS, BODYS, TRANSMISSION, FUELS, TYPE_ENGINES_ALL, TYPE_ENGINES_DISEL, TYPE_ENGINES_BENZ} from "@/constants/constants";
+  import vue2Dropzone from 'vue2-dropzone';
 
   export default {
     name: "AutoParstIndex",
 
     components: {
-      BreadcrumbAdmin
+      BreadcrumbAdmin,
+      vueDropzone: vue2Dropzone,
     },
 
     mounted() {
@@ -354,10 +383,6 @@
       isCreatedPage() {
         return this.$route.name === "autoPartsCreate";
       },
-
-      getThisStatus() {
-        return (this.AUTO_PARTS_INDEX.status == 1) ? 'Активно' : 'Неактивно';
-      },
     },
 
     methods: {
@@ -367,6 +392,10 @@
         'GET_TYPES_OF_AUTO_PARTS',
         'EDIT_AUTO_PARTS_FROM_API'
       ]),
+
+      modalCarPhotoFade() {
+        this.showModal = !this.showModal;
+      },
 
       printQrAutoParts() {
         let isIframe = window.frames['autoPartsQrCode'];
@@ -382,7 +411,8 @@
         }
 
         if(this.AUTO_PARTS_INDEX.status !== undefined){
-          xForm.append('status', this.AUTO_PARTS_INDEX.status);
+          let status = (this.AUTO_PARTS_INDEX.status == 'Активно') ? '1' : '0';
+          xForm.append('status', status);
         }
 
         if(this.AUTO_PARTS_INDEX.model !== undefined){
@@ -399,6 +429,10 @@
 
         if(this.AUTO_PARTS_INDEX.value !== undefined){
           xForm.append('value', this.AUTO_PARTS_INDEX.value);
+        }
+
+        if(this.AUTO_PARTS_INDEX.youtube !== undefined){
+          xForm.append('youtube', this.AUTO_PARTS_INDEX.youtube);
         }
 
         if(this.AUTO_PARTS_INDEX.typeEngines !== undefined){
@@ -449,7 +483,21 @@
           xForm.append('autoPartsName', this.AUTO_PARTS_INDEX.autoPartsName.id);
         }
 
+        if(this.AUTO_PARTS_INDEX.description !== undefined){
+          xForm.append('description', this.AUTO_PARTS_INDEX.description);
+        }
+
+        if(this.AUTO_PARTS_INDEX.images !== undefined) {
+          xForm.append('images', this.AUTO_PARTS_INDEX.images);
+        }
+
         return xForm;
+      },
+
+      sendingEvent(file) {
+        this.showModal = false;
+        console.log('Отправка!');
+        //this.SET_CAR_IMAGE_FROM_USER(file);
       },
 
       editAutoParts() {
@@ -493,19 +541,37 @@
         param: {
           id: this.$route.params.id
         },
+        showModal: false,
         domain: DOMAIN,
-        statusOptions: STATUS,
-        years: YEARS,
-        body: BODYS,
-        transmission: TRANSMISSION,
-        fuels: FUELS,
-        typeEngines: TYPE_ENGINES_ALL
+        STATUS,
+        YEARS,
+        BODYS,
+        TRANSMISSION,
+        FUELS,
+        typeEngines: TYPE_ENGINES_ALL,
+        dropzoneOptions: {
+          url: '/upload.php',
+          thumbnailWidth: 150,
+          thumbnailHeight: 150,
+          maxFilesize: 2500,
+          autoProcessQueue: false,
+          parallelUploads: 20,
+          maxThumbnailFilesize: 200,
+          resizeWidth: 800,
+          timeout: 180000000,
+          acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg",
+          renameFile: function (file) {
+            let newName = new Date().getTime() + '_' + file.name;
+            return newName;
+          }
+        },
       };
     }
   }
 </script>
 
 <style scoped lang="sass">
+@import "vue2-dropzone/dist/vue2Dropzone.min.css"
 @import "../../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css"
 @import "@/components/autoParts/components/style/auto-parts-index.scss"
 </style>

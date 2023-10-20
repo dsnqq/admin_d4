@@ -108,7 +108,7 @@
             <div class="modal-wrapper">
               <div class="modal-container">
                 <div class="modal-body">
-                  <button class="modal-default-button" @:click.prevent="modalCarPhotoFade">
+                  <button class="modal-default-button" @click.prevent="modalCarPhotoFade">
                     X
                   </button>
                   <vue-dropzone
