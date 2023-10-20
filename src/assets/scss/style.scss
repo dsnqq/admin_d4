@@ -58,18 +58,24 @@ body {
   cursor: pointer;
 }
 
-*::-webkit-scrollbar {
-  width: 7px;
-  height: 4px;
-  background-color: hsl(0, 0%, 84%);
-}
-*::-webkit-scrollbar-thumb {
-  background-color: hsl(216, 98%, 52%);
-  border-radius: 3px;
+* {
+  &::-webkit-scrollbar {
+    width: 7px;
+    height: 4px;
+    background-color: hsl(0, 0%, 84%);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: hsl(216, 98%, 52%);
+    border-radius: 3px;
+  }
 }
 
 .btn {
   color: hsl(0, 0%, 100%);
+  @media screen and (max-width: 560px) {
+    font-size: 14px !important;
+  }
 
   &.btn-info,
   &.btn-warning {

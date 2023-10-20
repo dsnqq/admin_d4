@@ -2,7 +2,6 @@ $breakpoint-alpha: 1280px;
 
 .middle-responsive {
   @media screen and (max-width: 1570px) and (min-width: 1281px) {
-    overflow: auto !important;
     display: block !important;
     overflow-y: hidden !important;
     overflow-x: auto !important;
@@ -25,6 +24,7 @@ $breakpoint-alpha: 1280px;
     &:first-child {
       padding-top: .5em;
     }
+
     &:last-child {
       padding-bottom: .5em;
     }
@@ -59,7 +59,6 @@ $breakpoint-alpha: 1280px;
         padding-right: 0;
       }
     }
-
   }
 }
 

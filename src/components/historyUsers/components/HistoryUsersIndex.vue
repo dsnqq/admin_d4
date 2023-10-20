@@ -15,7 +15,7 @@
       <div class="card-body">
         <div class="row">
           <table
-              class="table table-border-1 mb-0 table-center-td"
+              class="table table-border-1 mb-0 table-center-td rwd-table"
           >
             <thead>
             <tr>
@@ -36,6 +36,7 @@
               <td
                   v-for="(c, index) in columns"
                   :key="index"
+                  :data-th="c.title"
               >
                 <template v-if="c.type == 'default'">
                   {{userItem[c.name]}}
@@ -131,4 +132,5 @@ export default {
 
 <style lang="scss" scoped>
 @import "./src/components/historyUsers/components/style/history-users-index.scss";
+@import "@/assets/scss/table-adaptive.scss";
 </style>
