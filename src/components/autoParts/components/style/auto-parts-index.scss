@@ -15,8 +15,13 @@
   display: flex;
   align-items: center;
   padding: 10px 0;
+  @media screen and (max-width: 1024px) {
+    display: grid;
+  }
 
   &--is-btn {
+    grid-gap: 10px;
+
     .btn {
       margin-right: 10px;
       margin-left: 10px;
@@ -43,6 +48,10 @@
     box-sizing: border-box;
     font-size: 14px;
     font-weight: bold;
+    @media screen and (max-width: 1024px) {
+      padding: 0 0 5px;
+      min-width: 100%;
+    }
 
     &--is-required {
       &::after {
@@ -64,38 +73,28 @@
     box-sizing: border-box;
     outline: none;
     border-radius: 3px;
-    min-width: 300px;
     border: 1px solid hsl(0, 0%, 73%);
     resize: none;
+    width: 100%;
   }
 
   &__wrap {
+
     &--is-flex {
-      display: flex;
-
-      #{$self}__input,
-      #{$self}__select {
-        margin-right: 10px;
-      }
+      display: grid;
+      grid-gap: 10px;
     }
-  }
+    &--is-three {
+      grid-template-columns: repeat(3, 1fr);
+    }
 
-  &__back {
-    text-decoration: none;
-    font-size: 14px;
-    margin-left: 15px;
-    font-weight: bold;
-    color: #000000;
-    color: red;
-    border-bottom: 1px solid;
-
-    &:hover {
-      border-color: transparent;
+    &--is-too {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 
   &__input {
-    min-width: 300px;
+    width: 100%;
   }
 }
 

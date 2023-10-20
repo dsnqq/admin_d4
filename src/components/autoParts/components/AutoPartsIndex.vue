@@ -63,7 +63,7 @@
                 <label class="auto-parts-index-field__label auto-parts-index-field__label--is-required">
                   Год:
                 </label>
-                <div class="auto-parts-index-field__wrap auto-parts-index-field__wrap--is-flex">
+                <div class="auto-parts-index-field__wrap auto-parts-index-field__wrap--is-flex auto-parts-index-field__wrap--is-too">
                   <v-multiselect
                       v-model="AUTO_PARTS_INDEX.year"
                       :options="this.years"
@@ -90,7 +90,7 @@
                 <label class="auto-parts-index-field__label">
                   Объем (л), топливо и тип:
                 </label>
-                <div class="auto-parts-index-field__wrap auto-parts-index-field__wrap--is-flex">
+                <div class="auto-parts-index-field__wrap auto-parts-index-field__wrap--is-flex auto-parts-index-field__wrap--is-three">
                   <input
                       v-model="AUTO_PARTS_INDEX.value"
                       type="text"
@@ -130,7 +130,7 @@
                 <label class="auto-parts-index-field__label">
                   Тип кузова и коробка:
                 </label>
-                <div class="auto-parts-index-field__wrap auto-parts-index-field__wrap--is-flex">
+                <div class="auto-parts-index-field__wrap auto-parts-index-field__wrap--is-flex auto-parts-index-field__wrap--is-too">
                   <v-multiselect
                       v-model="AUTO_PARTS_INDEX.typeBody"
                       :options="this.body"
