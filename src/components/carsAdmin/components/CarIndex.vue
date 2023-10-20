@@ -93,8 +93,11 @@
                   @click.prevent="editCar"
                   class="btn btn-success"
               >Сохранить и продолжить редактирование</button>
-              <router-link :to="{name: 'carsAdmin'}">
-                <button class="btn btn-info">Выйти без сохранения</button>
+              <router-link
+                  :to="{name: 'carsAdmin'}"
+                  class="btn btn-info"
+              >
+                Выйти без сохранения
               </router-link>
             </div>
           </div>
