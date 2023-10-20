@@ -154,14 +154,14 @@
             <button
                 @click.prevent="loadAutoPartsArchive"
                 type="button"
-                class="btn btn-success px-5 card-filter__search"
+                class="btn btn-success card-filter__search"
             >
               Поиск
             </button>
             <button
                 @click.prevent="resetFilters"
                 type="button"
-                class="btn btn-warning px-5 card-filter__refresh"
+                class="btn btn-warning card-filter__refresh"
             >
               Сброс
             </button>
@@ -172,7 +172,7 @@
     <div class="card-body">
       <div class="row">
         <div class="table-responsive">
-          <table class="table align-middle table-striped table-border-1">
+          <table class="table align-middle table-striped table-border-1 rwd-table">
             <thead>
             <tr>
               <th>Изображение</th>
@@ -194,7 +194,7 @@
                 v-for="(autoPartsArchive, i) in AUTO_PARTS_ARCHIVE"
                 :key="i"
             >
-              <td>
+              <td data-th="Изображение">
                 <template v-if="autoPartsArchive.images">
                   <a
                       :href="domain + `/image/` + autoPartsArchive.images[0].imageBig"
@@ -230,23 +230,32 @@
                   </div>
                 </template>
               </td>
-              <td>{{autoPartsArchive.name.marka + ' ' + autoPartsArchive.name.model}}</td>
-              <td>{{autoPartsArchive.year}}</td>
-              <td>{{autoPartsArchive.value}}</td>
-              <td>{{autoPartsArchive.fuel + " " + autoPartsArchive.typeEngines}}</td>
-              <td class="productlist">
+              <td data-th="Марка и модель">{{autoPartsArchive.name.marka + ' ' + autoPartsArchive.name.model}}</td>
+              <td data-th="Год">{{autoPartsArchive.year}}</td>
+              <td data-th="Объём">{{autoPartsArchive.value}}</td>
+              <td data-th="Тип топлива">{{autoPartsArchive.fuel + " " + autoPartsArchive.typeEngines}}</td>
+              <td
+                  data-th="Название запчасти"
+                  class="productlist"
+              >
                 <span class="d-flex align-items-center gap-2">
                   <h6 class="mb-0 product-title">{{autoPartsArchive.autoParts.name}}</h6>
                 </span>
               </td>
-              <td>{{autoPartsArchive.model}}</td>
-              <td>{{autoPartsArchive.priceUSD}}$</td>
-              <td>{{autoPartsArchive.sparePartNumber}}</td>
-              <td>{{autoPartsArchive.dateDeleted}}</td>
-              <td class="td-description">
+              <td data-th="Артикул">{{autoPartsArchive.model}}</td>
+              <td data-th="Цена">{{autoPartsArchive.priceUSD}}$</td>
+              <td data-th="Номер запчасти">{{autoPartsArchive.sparePartNumber}}</td>
+              <td data-th="Дата удаления">{{autoPartsArchive.dateDeleted}}</td>
+              <td
+                  data-th="Описание"
+                  class="td-description"
+              >
                 {{autoPartsArchive.description}}
               </td>
-              <td class="text-center">
+              <td
+                  data-th="Действия"
+                  class="text-center"
+              >
                 <div class="d-flex align-items-center justify-content-center gap-2 fs-6">
                   <a
                       @click="getHistoryAuto(autoPartsArchive.product_id)"
@@ -411,4 +420,5 @@ export default {
 @import "./src/components/autoPartsArchive/components/style/auto-parts-archive-list";
 @import "/node_modules/lightbox2/dist/css/lightbox.min.css";
 @import "../../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css";
+@import "@/assets/scss/table-adaptive.scss";
 </style>

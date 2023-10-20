@@ -4,7 +4,7 @@
   >
     <template v-slot:header>История запчасти</template>
     <template>
-      <table class="table mb-0 table-border-1">
+      <table class="table mb-0 table-border-1 rwd-table">
         <thead>
         <tr>
           <th scope="col">Значение</th>
@@ -54,3 +54,7 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/scss/table-adaptive.scss";
+</style>

@@ -36,6 +36,9 @@
   max-width: 100px;
   font-size: 12px;
   white-space: normal;
+  @media screen and (max-width: 1280px) {
+    max-width: 100%;
+  }
 }
 
 .product-more-photo {
@@ -56,7 +59,132 @@
   text-align: center;
 }
 
-.productlist .product-title {
-  max-width: 240px;
-  white-space: normal;
+.productlist {
+  .product-title {
+    max-width: 150px;
+    white-space: normal;
+    @media screen and (max-width: 1280px) {
+      font-size: 14px;
+      max-width: 100%;
+    }
+  }
+}
+
+.card-filter {
+  &__rows {
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: repeat(3,1fr);
+    padding: 0 30px;
+
+    @media screen and (max-width: 1700px) {
+      grid-template-columns: repeat(2,1fr);
+    }
+    @media screen and (max-width: 1280px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    padding: 0 30px;
+    margin-top: 15px;
+
+    .btn:not(:first-child) {
+      margin-left: 10px;
+    }
+  }
+
+  &__search,
+  &__refresh {
+    width: 100%;
+
+    max-width: 150px;
+
+    @media screen and (max-width: 1280px) {
+      max-width: none;
+      flex-grow: 1;
+    }
+  }
+}
+
+.card-filter-item {
+  display: flex;
+  align-items: center;
+  @media screen and (max-width: 560px) {
+    display: grid;
+  }
+
+  &__form {
+    flex-grow: 1;
+    @media screen and (max-width: 560px) {
+      width: 100%;
+    }
+
+    &--is-year {
+      display: flex;
+    }
+  }
+
+  &__select {
+    width: 100%;
+    border-radius: 3px;
+    @media screen and (max-width: 560px) {
+      min-width: 100%;
+    }
+
+    &--is-year {
+      min-width: 100px;
+      flex-grow: 1;
+    }
+  }
+
+  &__label {
+    font-weight: bold;
+    min-width: 150px;
+  }
+
+  &__input {
+    width: 100%;
+    height: 30px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid hsl(0, 0%, 73%);
+
+    @media screen and (max-width: 560px) {
+      min-width: 100%;
+    }
+  }
+}
+
+.auto-parts-list-wrapper-column-edit {
+  background-color: unset;
+  border: none;
+  color: hsl(208, 77%, 47%);
+  padding: 0;
+  cursor: pointer;
+}
+
+.auto-parts-list-wrapper-column-edits {
+  &__button {
+    margin-top: 2px;
+    outline: none;
+  }
+
+  &__input {
+    height: 30px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid hsl(0, 0%, 73%);
+  }
+}
+
+.actions-mobile {
+  @media screen and (max-width: 1280px) {
+    margin: auto;
+  }
 }

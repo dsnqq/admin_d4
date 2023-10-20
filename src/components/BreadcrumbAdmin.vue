@@ -1,7 +1,7 @@
 <template>
-  <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+  <div class="page-breadcrumb d-flex align-items-center mb-3">
     <div class="breadcrumb-title pe-3">{{ $route.meta.title }}</div>
-    <div class="ps-3">
+    <div class="ps-3 page-breadcrumb__links">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb mb-0 p-0">
           <li class="breadcrumb-item">
@@ -31,3 +31,7 @@
     name: "BreadcrumbAdmin",
   }
 </script>
+
+<style lang="scss" scoped>
+@import "@/components/style/breadcrumb-admin.scss";
+</style>

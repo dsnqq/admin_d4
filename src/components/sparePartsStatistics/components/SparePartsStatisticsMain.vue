@@ -5,7 +5,7 @@
     <div class="card">
       <div class="card-body">
         <div class="row">
-          <table class="table table-border-1 mb-0">
+          <table class="table table-border-1 mb-0 rwd-table">
             <thead>
             <tr>
               <th scope="col">Дата</th>
@@ -21,22 +21,22 @@
                 v-for="(sparePartsStatisticsItem, i) in SPARE_PARTS_STATISTICS"
                 :key="i"
             >
-              <td>
+              <td data-th="Дата">
                 {{ sparePartsStatisticsItem.date }}
               </td>
-              <td>
+              <td data-th="Название">
                 {{ sparePartsStatisticsItem.name }}
               </td>
-              <td>
+              <td data-th="Артикул">
                 {{ sparePartsStatisticsItem.article }}
               </td>
-              <td>
+              <td data-th="Статус З/Ч">
                 {{ setStatusByApi(sparePartsStatisticsItem.status) }}
               </td>
-              <td>
+              <td data-th="Кол-во просмотров">
                 {{ sparePartsStatisticsItem.views }}
               </td>
-              <td class="fs-6">
+              <td data-th="Действие">
                 <a
                     target="_blank"
                     class="p-2 theme-icons text-primary"
@@ -129,4 +129,5 @@
 
 <style lang="scss" scoped>
 @import "./src/components/sparePartsStatistics/components/style/spare-parts-statistics-main";
+@import "@/assets/scss/table-adaptive.scss";
 </style>

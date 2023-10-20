@@ -1,12 +1,9 @@
 <template>
   <div class="card">
-    <div class="card-header py-3">
-      фильтра
-    </div>
     <div class="card-body">
       <div class="row">
         <div class="table-responsive">
-          <table class="table align-middle table-striped table-border-1">
+          <table class="table align-middle table-striped table-border-1 rwd-table">
             <thead>
             <tr>
               <th>Изображение</th>
@@ -24,7 +21,7 @@
                 v-for="(autoTireArchive, i) in AUTO_TIRES_ARCHIVE"
                 :key="i"
             >
-              <td>
+              <td data-th="Изображение">
                 <template v-if="autoTireArchive.images">
                   <a
                       :href="domain + `/image/` + autoTireArchive.images[0].imageBig"
@@ -60,20 +57,29 @@
                   </div>
                 </template>
               </td>
-              <td>{{autoTireArchive.year}}</td>
-              <td class="productlist">
+              <td data-th="Год">{{autoTireArchive.year}}</td>
+              <td
+                  data-th="Название шины"
+                  class="productlist"
+              >
                 <h6
                     v-html="autoTireArchive.name"
                     class="mb-0 product-title"
                 ></h6>
               </td>
-              <td>{{autoTireArchive.model}}</td>
-              <td>{{autoTireArchive.priceUSD}}$</td>
-              <td>{{autoTireArchive.dateDeleted}}</td>
-              <td class="td-description">
+              <td data-th="Артикул">{{autoTireArchive.model}}</td>
+              <td data-th="Цена">{{autoTireArchive.priceUSD}}$</td>
+              <td data-th="Дата удаления">{{autoTireArchive.dateDeleted}}</td>
+              <td
+                  data-th="Описание"
+                  class="td-description"
+              >
                 {{autoTireArchive.description}}
               </td>
-              <td class="text-center">
+              <td
+                  data-th="Действия"
+                  class="text-center"
+              >
                 <div class="d-flex align-items-center justify-content-center gap-1 fs-6">
                   <a
                       class="text-success cursor-pointer"
@@ -160,4 +166,5 @@ export default {
 <style lang="scss" scoped>
 @import "./src/components/autoTiresArchive/components/style/auto-tires-archive-list";
 @import "/node_modules/lightbox2/dist/css/lightbox.min.css";
+@import "@/assets/scss/table-adaptive.scss";
 </style>

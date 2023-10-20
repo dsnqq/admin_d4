@@ -4,7 +4,7 @@
       <div class="card-body">
         <div class="row">
           <div class="table-responsive">
-            <table class="table align-middle table-striped">
+            <table class="table align-middle table-striped rwd-table">
               <thead>
                 <CarListItemHead
                     class="car-list__head"
@@ -93,3 +93,7 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+@import "@/assets/scss/table-adaptive.scss";
+</style>

@@ -1,12 +1,9 @@
 <template>
   <div class="card">
-    <div class="card-header py-3">
-      фильтра
-    </div>
     <div class="card-body">
       <div class="row">
         <div class="table-responsive">
-          <table class="table align-middle table-striped table-border-1">
+          <table class="table align-middle table-striped table-border-1 rwd-table">
             <thead>
             <tr>
               <th>Изображение</th>
@@ -25,7 +22,7 @@
                 v-for="(autoTire, i) in AUTO_TIRES"
                 :key="i"
             >
-              <td>
+              <td data-th="Изображение">
                 <a
                     :href="domain + `/image/` + autoTire.images[0].imageBig"
                     :data-title="autoTire.name"
@@ -59,17 +56,20 @@
                   >Ещё фото</span>
                 </div>
               </td>
-              <td>{{autoTire.year}}</td>
-              <td class="productlist">
+              <td data-th="Год">{{autoTire.year}}</td>
+              <td
+                  data-th="Название шины"
+                  class="productlist"
+              >
                   <h6
                       v-html="autoTire.name"
                       class="mb-0 product-title"
                   ></h6>
               </td>
-              <td>{{autoTire.model}}</td>
-              <td>{{autoTire.priceUSD}}$</td>
-              <td>{{autoTire.dateAvailable}}</td>
-              <td>
+              <td data-th="Артикул">{{autoTire.model}}</td>
+              <td data-th="Цена за штуку">{{autoTire.priceUSD}}$</td>
+              <td data-th="Дата создания">{{autoTire.dateAvailable}}</td>
+              <td data-th="Статус">
                 <span
                     class="badge rounded-pill"
                     :class="autoTire.status == 1 ? 'alert-success' : 'alert-danger'"
@@ -77,37 +77,45 @@
                   {{getStatus(autoTire.status)}}
                 </span>
               </td>
-              <td class="td-description">
+              <td
+                  data-th="Описание"
+                  class="td-description"
+              >
                 {{autoTire.description}}
               </td>
-              <td class="text-center">
-                <div class="d-flex align-items-center justify-content-center gap-2 fs-6">
-                  <a
-                      :href="domain + autoTire.linkToSite"
-                      target="_blank"
-                      class="text-primary"
-                      title="Открыть на сайте"
-                  >
-                    <i class="bi bi-eye-fill"></i>
-                  </a>
-                  <router-link
-                      :to="`/auto/${autoTire.product_id}`"
-                      class="text-warning"
-                      title="Редактировать"
-                  >
-                    <i class="bi bi-pencil-fill"></i>
-                  </router-link>
-                  <a class="text-primary cursor-pointer">
-                    <i class="bi bi-camera"></i>
-                  </a>
-                  <a
-                      @click.prevent="autoTiresRemove(autoTire.product_id, i)"
-                      class="text-danger"
-                  >
-                    <i class="bi bi-trash-fill"></i>
-                  </a>
+              <td
+                  data-th="Действия"
+                  class="text-center"
+              >
+                <div class="actions-mobile">
+                  <div class="d-flex align-items-center justify-content-center gap-2 fs-6">
+                    <a
+                        :href="domain + autoTire.linkToSite"
+                        target="_blank"
+                        class="text-primary"
+                        title="Открыть на сайте"
+                    >
+                      <i class="bi bi-eye-fill"></i>
+                    </a>
+                    <router-link
+                        :to="`/auto/${autoTire.product_id}`"
+                        class="text-warning"
+                        title="Редактировать"
+                    >
+                      <i class="bi bi-pencil-fill"></i>
+                    </router-link>
+                    <a class="text-primary cursor-pointer">
+                      <i class="bi bi-camera"></i>
+                    </a>
+                    <a
+                        @click.prevent="autoTiresRemove(autoTire.product_id, i)"
+                        class="text-danger"
+                    >
+                      <i class="bi bi-trash-fill"></i>
+                    </a>
+                  </div>
+                  <div class="btn btn-info">Печать QR</div>
                 </div>
-                <div class="btn btn-info">Печать QR</div>
               </td>
             </tr>
             </tbody>
@@ -212,4 +220,5 @@
 <style lang="scss" scoped>
 @import "./src/components/autoTires/components/style/auto-tires-list";
 @import "/node_modules/lightbox2/dist/css/lightbox.min.css";
+@import "@/assets/scss/table-adaptive.scss";
 </style>

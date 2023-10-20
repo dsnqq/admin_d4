@@ -1,0 +1,13 @@
+.page-breadcrumb {
+  &__links {
+    @media (max-width: 1280px) {
+      display: none !important;
+    }
+  }
+}
+
+.breadcrumb-title {
+  font-size: 18px;
+  border-right: none;
+  padding: 0;
+}

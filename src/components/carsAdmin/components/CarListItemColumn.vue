@@ -1,5 +1,8 @@
 <template>
-  <td class="car-list-wrapper-column">
+  <td
+      :data-th="TABLE_HEADS[num].name"
+      class="car-list-wrapper-column"
+  >
     <template v-if="this.name === 'images'">
       <div
           v-if="store[this.name]"
@@ -72,7 +75,7 @@
 <script>
 import {mapActions, mapGetters} from "vuex";
 import {DOMAIN} from "@/constants/constants";
-import {LIST_COLUMN_EDIT} from "@/components/carsAdmin/constants/constants";
+import {LIST_COLUMN_EDIT, TABLE_HEADS} from "@/components/carsAdmin/constants/constants";
 import Jquery from 'jquery'; // eslint-disable-line no-unused-vars
 import lightbox from 'lightbox2'; // eslint-disable-line no-unused-vars
 
@@ -140,12 +143,17 @@ export default {
 
     store: {
       type: Object
+    },
+
+    num: {
+      type: Number
     }
   },
 
   data() {
     return {
       DOMAIN,
+      TABLE_HEADS,
       edits: this.store[this.name],
       columnEdit: false
     }

@@ -3,6 +3,7 @@
     <CarListItemColumn
         v-for="(itemColumn, index) in LIST_ITEM_COLUMN"
         :key="index"
+        :num="index"
         :name="itemColumn"
         :store="store"
         :number="number"
