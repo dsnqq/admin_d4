@@ -5,7 +5,7 @@
     </div>
     <div class="card-body">
       <div class="row">
-        <table class="table table-border-1 mb-0">
+        <table class="table table-border-1 mb-0 rwd-table middle-responsive">
           <thead>
             <tr>
               <th
@@ -23,11 +23,27 @@
               :key="i"
             >
               <td
+                  :data-th="c.title"
                   v-for="(c, index) in columns"
                   :key="index"
               >
                 <template v-if="c.type == 'default'">
                   {{ order[c.name] }}
+                </template>
+                <template v-if="c.type == 'address'">
+                  <span
+                      :title="order[c.name2]"
+                      class="cursor-pointer"
+                  >
+                    {{ order[c.name] }}
+                  </span>
+                </template>
+                <template v-else-if="c.type == 'email'">
+                  <span
+                      :title="order[c.name]"
+                  >
+                    {{ order[c.name] }}
+                  </span>
                 </template>
                 <template v-else-if="c.type == 'products'">
                   <div
@@ -103,7 +119,7 @@
         columns: COLUMNS,
         dictionary: DICTIONARY,
         paginationOptions: {
-          chunk: 6,
+          chunk: 5,
           texts: {
             count: 'Отображается с {from} по {to} (всего {count} шт.)|{count}',
           }
@@ -112,3 +128,7 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/scss/table-adaptive.scss";
+</style>

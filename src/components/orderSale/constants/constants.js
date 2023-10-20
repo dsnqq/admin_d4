@@ -1,6 +1,6 @@
 export const COLUMNS = [
     {
-        title: "Заказ №",
+        title: "№",
         name: "order_id",
         type: "default",
     },
@@ -12,22 +12,23 @@ export const COLUMNS = [
     {
         title: "E-mail",
         name: "email",
-        type: "default",
+        type: "email",
     },
     {
         title: "Телефон",
         name: "telephone",
         type: "default",
     },
-    {
+    /*{
         title: "Город",
         name: "information",
         type: "default",
-    },
+    },*/
     {
         title: "Адрес",
         name: "shipping_adress",
-        type: "default",
+        name2: "information",
+        type: "address",
     },
     {
         title: "Состав заказа",

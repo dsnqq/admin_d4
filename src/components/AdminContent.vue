@@ -1,8 +1,15 @@
 <template>
   <div class="admin-content">
-    <div class="wrapper">
-      <HeaderAdmin/>
-      <SidebarAdmin />
+    <div
+        :class="{'toggled' : this.menu}"
+        class="wrapper"
+    >
+      <HeaderAdmin
+          @leftMenuMobileShow="leftMenuMobileShow"
+      />
+      <SidebarAdmin
+        @menuSideBarClosed="menuSideBarClosed"
+      />
 
       <main class="page-content">
         <PreloaderAdmin />
@@ -43,6 +50,28 @@ export default {
       ];
 
       return (noBreadcrumbAdmin.includes(this.$route.name)) ? false : true;
+    }
+  },
+
+  methods: {
+    leftMenuMobileShow(menu) {
+      this.menu = menu;
+    },
+
+    menuSideBarClosed(){
+      this.menu = !this.menu;
+    }
+  },
+
+  watch: {
+    '$route' () {
+      this.menu = false;
+    }
+  },
+
+  data() {
+    return {
+      menu: false
     }
   }
 }

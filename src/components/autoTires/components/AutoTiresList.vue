@@ -198,7 +198,7 @@
           pageNum: 1,
         },
         paginationOptions: {
-          chunk: 6,
+          chunk: 5,
           texts: {
             count: 'Отображается с {from} по {to} (всего {count} шт.)|{count}',
           }

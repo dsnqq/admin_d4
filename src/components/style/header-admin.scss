@@ -1,0 +1,19 @@
+.top-header__oldest {
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
+}
+
+.top-header .navbar .top-navbar-right .nav-link {
+  @media screen and (max-width: 1024px) {
+    font-size: 16px;
+    padding: 0;
+  }
+}
+
+.user-setting.d-flex.align-items-center {
+  @media screen and (max-width: 1024px) {
+    font-size: 12px;
+    margin-right: 10px;
+  }
+}

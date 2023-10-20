@@ -136,7 +136,7 @@
               <div class="card-filter-item__label">
                 Год
               </div>
-              <div class="card-filter-item__form d-flex justify-content-sm-between align-items-center">
+              <div class="card-filter-item__form card-filter-item__form--is-year">
                 <span class="m-1">от</span>
                 <v-multiselect
                     v-model="param.filters.yearStart"
@@ -174,14 +174,14 @@
             <button
                 @click.prevent="setFilterOnAutoPartsPage"
                 type="button"
-                class="btn btn-success px-5 card-filter__search"
+                class="btn btn-success card-filter__search"
             >
               Поиск
             </button>
             <button
                 @click="resetFilters"
                 type="button"
-                class="btn btn-warning px-5 card-filter__refresh"
+                class="btn btn-warning card-filter__refresh"
             >
               Сброс
             </button>
@@ -192,7 +192,7 @@
     <div class="card-body">
       <div class="row">
         <div class="table-responsive">
-          <table class="table align-middle table-striped table-border-1">
+          <table class="table align-middle table-striped table-border-1 rwd-table">
             <thead>
             <tr>
               <th>Изображение</th>
@@ -215,7 +215,7 @@
                 v-for="(auto, i) in AUTO_PARTS"
                 :key="i"
             >
-              <td>
+              <td data-th="Изображение">
                 <template v-if="auto.images">
                   <a
                       :href="domain + `/image/` + auto.images[0].imageBig"
@@ -251,17 +251,20 @@
                   </div>
                 </template>
               </td>
-              <td>{{ auto.name.marka + ' ' + auto.name.model}}</td>
-              <td>{{auto.year}}</td>
-              <td>{{auto.value}}</td>
-              <td>{{auto.fuel + " " + auto.typeEngines}}</td>
-              <td class="productlist">
+              <td data-th="Марка и модель">{{ auto.name.marka + ' ' + auto.name.model}}</td>
+              <td data-th="Год">{{auto.year}}</td>
+              <td data-th="Объём">{{auto.value}}</td>
+              <td data-th="Тип топлива">{{auto.fuel + " " + auto.typeEngines}}</td>
+              <td
+                  data-th="Название запчасти"
+                  class="productlist"
+              >
                 <span class="d-flex align-items-center gap-2">
                   <h6 class="mb-0 product-title">{{auto.autoParts.name}}</h6>
                 </span>
               </td>
-              <td>{{auto.model}}</td>
-              <td>
+              <td data-th="Артикул">{{auto.model}}</td>
+              <td data-th="Цена">
                 <div>
                   <template v-if="!columnEdit">
                   {{auto.priceUSD}} $
@@ -291,11 +294,11 @@
                 </div>
                 <div>{{auto.priceBYN}} руб.</div>
               </td>
-              <td>{{auto.sparePartNumber}}</td>
-              <td>
+              <td data-th="Номер запчасти">{{auto.sparePartNumber}}</td>
+              <td data-th="Дата создания">
                 {{auto.dateAdded}}
               </td>
-              <td>
+              <td data-th="Статус">
                 <span
                     @click="changeStatus(auto.product_id, auto.status, i)"
                     class="badge rounded-pill cursor-pointer"
@@ -304,10 +307,16 @@
                   {{getStatus(auto.status)}}
                 </span>
               </td>
-              <td class="td-description">
+              <td
+                  data-th="Описание"
+                  class="td-description"
+              >
                 {{auto.description}}
               </td>
-              <td class="text-center">
+              <td
+                  data-th="Действия"
+                  class="text-center"
+              >
                 <div class="d-flex align-items-center gap-2 fs-6">
                   <a
                       @click="getHistoryAuto(auto.product_id)"
@@ -518,7 +527,7 @@
           }
         },
         paginationOptions: {
-          chunk: 6,
+          chunk: 5,
           texts: {
             count: 'Отображается с {from} по {to} (всего {count} шт.)|{count}',
           }
@@ -533,4 +542,5 @@
 @import "./src/components/autoParts/components/style/auto-parts-list";
 @import "/node_modules/lightbox2/dist/css/lightbox.min.css";
 @import "../../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css";
+@import "@/assets/scss/table-adaptive.scss";
 </style>

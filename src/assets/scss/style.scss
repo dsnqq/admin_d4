@@ -1,3 +1,27 @@
+body {
+  @media screen and (max-width: 1024px) {
+    font-size: 12px;
+  }
+}
+
+.h4, h4 {
+  @media screen and (max-width: 1024px) {
+    font-size: 18px;
+  }
+}
+
+.mobile-hidden {
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
+}
+
+.desktop-hidden {
+  @media screen and (min-width: 1024px) {
+    display: none;
+  }
+}
+
 .page-content {
   position: relative;
 }
@@ -19,6 +43,10 @@
     justify-content: space-between;
     align-items: center;
     margin: 0;
+
+    @media screen and (max-width: 560px) {
+      flex-wrap: wrap;
+    }
   }
 
   p {

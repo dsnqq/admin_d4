@@ -1,9 +1,10 @@
 <template>
   <aside class="sidebar-wrapper" data-simplebar="true">
-    <router-link
-        :to="{name: 'dashboardAdmin'}"
-        class="sidebar-header"
-    >
+    <div class="sidebar-header">
+      <router-link
+          class="sidebar-header__link"
+          :to="{name: 'dashboardAdmin'}"
+      >
       <div>
         <img
             :src="`/assets/images/logo-icon.png`"
@@ -14,7 +15,14 @@
       <div>
         <h4 class="logo-text">D4.by</h4>
       </div>
-    </router-link>
+      </router-link>
+      <div
+          @click="menuSideBarClosed"
+          class="toggle-icon ms-auto desktop-hidden"
+      >
+        <i class="bi bi-list"></i>
+      </div>
+    </div>
     <ul class="metismenu" id="menu">
       <li
           v-for="link in links"
@@ -40,6 +48,12 @@
   export default {
     name: "SidebarAdmin",
 
+    methods: {
+      menuSideBarClosed() {
+        this.$emit("menuSideBarClosed");
+      }
+    },
+
     data() {
       return {
         links: [
@@ -59,3 +73,7 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+@import "@/components/style/sidebar-admin.scss";
+</style>
