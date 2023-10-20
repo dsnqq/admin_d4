@@ -20,7 +20,7 @@
           @click="menuSideBarClosed"
           class="toggle-icon ms-auto desktop-hidden"
       >
-        <i class="bi bi-list"></i>
+        <i class="bi bi-x-lg"></i>
       </div>
     </div>
     <ul class="metismenu" id="menu">
