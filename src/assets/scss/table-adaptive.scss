@@ -11,6 +11,9 @@ $breakpoint-alpha: 1280px;
 
 .rwd-table {
   min-width: 300px;
+  @media (max-width: $breakpoint-alpha) {
+    margin-bottom: 0;
+  }
 
   th {
     display: none;

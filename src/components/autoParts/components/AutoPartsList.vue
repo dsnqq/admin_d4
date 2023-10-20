@@ -317,49 +317,51 @@
                   data-th="Действия"
                   class="text-center"
               >
-                <div class="d-flex align-items-center gap-2 fs-6">
-                  <a
-                      @click="getHistoryAuto(auto.product_id)"
-                      class="text-primary cursor-pointer"
+                <div class="actions-mobile">
+                  <div class="d-flex align-items-center gap-2 fs-6">
+                    <a
+                        @click="getHistoryAuto(auto.product_id)"
+                        class="text-primary cursor-pointer"
+                    >
+                      <i class="bi bi-archive"></i>
+                    </a>
+                    <a
+                        :href="domain + auto.linkToSite"
+                        target="_blank"
+                        class="text-primary"
+                        title="Открыть на сайте"
+                    >
+                      <i class="bi bi-eye-fill"></i>
+                    </a>
+                    <router-link
+                        :to="`/auto/${auto.product_id}`"
+                        class="text-warning"
+                        title="Редактировать"
+                    >
+                      <i class="bi bi-pencil-fill"></i>
+                    </router-link>
+                    <a
+                        @click="getPhotoAutoParts(auto.product_id)"
+                        class="text-primary cursor-pointer"
+                    >
+                      <i class="bi bi-camera"></i>
+                    </a>
+                    <a
+                        @click.prevent="autoPartsRemove(auto.product_id, i)"
+                        class="text-danger"
+                    >
+                      <i class="bi bi-trash-fill"></i>
+                    </a>
+                  </div>
+                  <div class="td-viewed">
+                    Просмотров: {{auto.view}}
+                  </div>
+                  <div
+                      @click="getPrintQrCodeAutoParts(auto.qrCode)"
+                      class="btn btn-info"
                   >
-                    <i class="bi bi-archive"></i>
-                  </a>
-                  <a
-                      :href="domain + auto.linkToSite"
-                      target="_blank"
-                      class="text-primary"
-                      title="Открыть на сайте"
-                  >
-                    <i class="bi bi-eye-fill"></i>
-                  </a>
-                  <router-link
-                      :to="`/auto/${auto.product_id}`"
-                      class="text-warning"
-                      title="Редактировать"
-                  >
-                    <i class="bi bi-pencil-fill"></i>
-                  </router-link>
-                  <a
-                      @click="getPhotoAutoParts(auto.product_id)"
-                      class="text-primary cursor-pointer"
-                  >
-                    <i class="bi bi-camera"></i>
-                  </a>
-                  <a
-                      @click.prevent="autoPartsRemove(auto.product_id, i)"
-                      class="text-danger"
-                  >
-                    <i class="bi bi-trash-fill"></i>
-                  </a>
-                </div>
-                <div class="td-viewed">
-                  Просмотров: {{auto.view}}
-                </div>
-                <div
-                    @click="getPrintQrCodeAutoParts(auto.qrCode)"
-                    class="btn btn-info"
-                >
-                  Печать QR
+                    Печать QR
+                  </div>
                 </div>
               </td>
             </tr>

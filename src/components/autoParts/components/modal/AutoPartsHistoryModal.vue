@@ -4,7 +4,7 @@
   >
     <template v-slot:header>История запчасти</template>
     <template>
-      <table class="table mb-0 table-border-1">
+      <table class="table mb-0 table-border-1 rwd-table">
         <thead>
         <tr>
           <th scope="col">Значение</th>
@@ -19,11 +19,11 @@
             v-for="(autoPartsHistory, i) in AUTO_PARTS_HISTORY"
             :key="i"
         >
-          <td>{{autoPartsHistory.valueName}}</td>
-          <td>{{autoPartsHistory.dataChange}}</td>
-          <td>{{autoPartsHistory.valueOld}}</td>
-          <td>{{autoPartsHistory.valueNew}}</td>
-          <td>{{autoPartsHistory.firstName + autoPartsHistory.lastName}}</td>
+          <td data-th="Значение">{{autoPartsHistory.valueName}}</td>
+          <td data-th="Дата изменения">{{autoPartsHistory.dataChange}}</td>
+          <td data-th="Старое значение">{{autoPartsHistory.valueOld}}</td>
+          <td data-th="Новое значение">{{autoPartsHistory.valueNew}}</td>
+          <td data-th="Пользователь">{{autoPartsHistory.firstName + autoPartsHistory.lastName}}</td>
         </tr>
         </tbody>
       </table>
@@ -54,3 +54,7 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/scss/table-adaptive.scss";
+</style>
