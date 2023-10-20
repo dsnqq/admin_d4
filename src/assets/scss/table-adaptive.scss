@@ -64,6 +64,12 @@ $breakpoint-alpha: 1280px;
 
 .rwd-table {
   overflow: hidden;
+  thead {
+    th {
+      white-space: nowrap;
+    }
+  }
+
   th, td {
     @media (min-width: $breakpoint-alpha) {
       padding: 1em !important;

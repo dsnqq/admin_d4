@@ -2,8 +2,8 @@
   <div class="card">
     <div class="card-body">
       <div class="row">
-        <div class="table-responsive">
-          <table class="table align-middle table-striped table-border-1 rwd-table">
+        <div>
+          <table class="table align-middle table-striped table-border-1 rwd-table middle-responsive">
             <thead>
             <tr>
               <th>Изображение</th>
