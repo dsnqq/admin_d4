@@ -5,7 +5,7 @@ export default {
     namespaced: true,
 
     state: {
-        user: ''
+        user: {}
     },
     getters: {
         USER(state) {

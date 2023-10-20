@@ -1,5 +1,26 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper auth-admin">
+    <div
+        v-if="!this.auth.status"
+        class="alert border-0 bg-light-danger alert-dismissible fade show py-2"
+    >
+      <div class="d-flex align-items-center">
+        <div class="fs-3 text-danger"><i class="bi bi-x-circle-fill"></i>
+        </div>
+        <div class="ms-3">
+          <div class="text-danger">
+            {{this.auth.message}}
+          </div>
+        </div>
+      </div>
+      <button
+          @click.prevent="closeAlertMessage"
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close">
+      </button>
+    </div>
     <main class="authentication-content">
       <div class="container-fluid">
         <div class="authentication-card">
@@ -13,32 +34,47 @@
                   <h5 class="card-title">Вход</h5>
                   <p class="card-text">Для использования системы - авторизуйтесь!</p>
                   <hr>
-                  <form class="form-body">
+                  <div class="form-body">
                     <div class="row g-3">
                       <div class="col-12">
                         <label for="inputEmailAddress" class="form-label">Логин</label>
                         <div class="ms-auto position-relative">
-                          <div class="position-absolute top-50 translate-middle-y search-icon px-3"><i class="bi bi-envelope-fill"></i></div>
+                          <div class="position-absolute top-50 translate-middle-y search-icon px-3">
+                            <i class="bi bi-envelope-fill"></i>
+                          </div>
                           <input
                               v-model="param.login"
+                              @input="loginValidateChecked"
                               type="text"
                               class="form-control radius-30 ps-5"
+                              :class="{'is-invalid' : !loginValidate.status}"
                               id="inputEmailAddress"
                               placeholder="Введите логин"
+                              autocomplete="off"
                           >
+                          <div v-if="!loginValidate.status" class="invalid-feedback">
+                            {{loginValidate.message}}
+                          </div>
                         </div>
                       </div>
                       <div class="col-12">
                         <label for="inputChoosePassword" class="form-label">Пароль</label>
                         <div class="ms-auto position-relative">
-                          <div class="position-absolute top-50 translate-middle-y search-icon px-3"><i class="bi bi-lock-fill"></i></div>
+                          <div class="position-absolute top-50 translate-middle-y search-icon px-3">
+                            <i class="bi bi-lock-fill"></i>
+                          </div>
                           <input
                               v-model="param.password"
+                              @input="passwordValidateChecked"
                               type="password"
                               class="form-control radius-30 ps-5"
+                              :class="{'is-invalid' : !passwordValidate.status}"
                               id="inputChoosePassword"
                               placeholder="Введите пароль"
                           />
+                          <div v-if="!passwordValidate.status" class="invalid-feedback">
+                            {{passwordValidate.message}}
+                          </div>
                         </div>
                       </div>
                       <div class="col-6">
@@ -52,17 +88,19 @@
                       <div class="col-12">
                         <div class="d-grid">
                           <button
-                              type="submit"
                               class="btn btn-primary radius-30"
                               @click.prevent="loginEnter"
-                          >Войти</button>
+                              title="Войти"
+                          >
+                            Войти
+                          </button>
                         </div>
                       </div>
                       <div class="col-12">
                         <p class="mb-0">© 2006-2021 Компания «D4.by», УНП 290794808</p>
                       </div>
                     </div>
-                  </form>
+                  </div>
                 </div>
               </div>
             </div>
@@ -90,21 +128,74 @@
         'LOGIN_FROM_API',
       ]),
 
+      loginValidateChecked () {
+        let lg = this.param.login;
+
+        if (lg === "" || lg.length < 3 || lg.length > 7) {
+          this.loginValidate.message = "Проверьте правильность поля логин!";
+          this.loginValidate.status = false;
+        } else {
+          this.loginValidate.status = true;
+        }
+      },
+
+      passwordValidateChecked() {
+        let ps = this.param.password;
+
+        if(ps === "" || ps.length < 4 || ps.length > 12){
+          this.passwordValidate.message = "Проверьте правильность поля пароль!";
+          this.passwordValidate.status = false;
+        } else {
+          this.passwordValidate.status = true;
+        }
+      },
+
       loginEnter() {
-        this.LOGIN_FROM_API(this.param);
+        this.auth.status = true;
+        this.passwordValidate.status = true;
+        this.loginValidate.status = true;
+
+        this.passwordValidateChecked();
+        this.loginValidateChecked();
+
+        if(this.passwordValidate.status && this.loginValidate.status){
+          this.LOGIN_FROM_API(this.param);
+        } else {
+          this.auth.status = false;
+        }
+      },
+
+      closeAlertMessage() {
+        this.auth.status = true;
       }
     },
 
     watch: {
       'USER': function() {
-        this.$router.push({ name: 'dashboardAdmin' }).catch(()=>{});
-        location.reload();
+        if(this.USER.user_id != null) {
+          this.$router.push({ name: 'dashboardAdmin' }).catch(()=>{});
+          location.reload();
+        } else {
+          this.auth.status = false;
+          this.auth.message = 'Неверные логин или пароль! Попробуйте снова!';
+        }
       }
     },
 
     data() {
       return {
-        auth: false,
+        auth: {
+          status: true,
+          message: "Данные не верны! Попробуйте снова!",
+        },
+        loginValidate: {
+          message: "",
+          status: true,
+        },
+        passwordValidate: {
+          message: "",
+          status: true,
+        },
         param: {
           login: '',
           password: ''
@@ -113,3 +204,7 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+@import "@/components/authAdmin/style/auth-admin.scss";
+</style>
