@@ -265,7 +265,7 @@
               </td>
               <td data-th="Артикул">{{auto.model}}</td>
               <td data-th="Цена">
-                <div>
+                <div class="price-table">
                   <template v-if="!columnEdit">
                   {{auto.priceUSD}} $
                   </template>
@@ -277,7 +277,7 @@
                       placeholder="Туть что-то"
                       v-model="auto.priceUSD"
                       class="auto-parts-list-wrapper-column-edits__input"
-                      type="text"
+                      type="number"
                   >
                   <button
                       @click.prevent="setEditThisColumnOnList"
@@ -288,7 +288,8 @@
                         class="bx bx-pencil p-2 text-warning"></i>
                     <i
                         v-else
-                        class="lni lni-save p-2 text-warning"></i>
+                        @click="setPriceAutoParts(auto.product_id, auto.priceUSD, i)"
+                        class="lni lni-save p-2 text-success"></i>
                   </button>
                 </span>
                 </div>
@@ -315,9 +316,9 @@
               </td>
               <td
                   data-th="Действия"
-                  class="text-center"
+                  class="text-lg-center"
               >
-                <div class="actions-mobile">
+                <div>
                   <div class="d-flex align-items-center gap-2 fs-6">
                     <a
                         @click="getHistoryAuto(auto.product_id)"
@@ -420,7 +421,8 @@
         'DELET_AUTO_PARTS_BY_API',
         'GET_TYPES_OF_AUTO_PARTS',
         'GET_BREND_MODEL_CAR_AUTO_PARTS',
-        'CHANGE_AUTO_PARTS_STATUS'
+        'CHANGE_AUTO_PARTS_STATUS',
+        'CHANGE_AUTO_PARTS_PRICE'
       ]),
 
       customLabelTypes({ name }) {
@@ -433,6 +435,18 @@
 
       setEditThisColumnOnList() {
         this.columnEdit = !this.columnEdit;
+      },
+
+      setPriceAutoParts(id, priceUSD, i) {
+        let param = {
+          id: id,
+          priceUSD: priceUSD,
+          index: i
+        };
+
+        if(priceUSD != null && parseInt(priceUSD) != 0) {
+          this.CHANGE_AUTO_PARTS_PRICE(param);
+        }
       },
 
       setFilterOnAutoPartsPage() {

@@ -87,7 +87,7 @@
                   data-th="Действия"
                   class="text-center"
               >
-                <div class="actions-mobile">
+                <div>
                   <div class="d-flex align-items-center justify-content-center gap-2 fs-6">
                     <a
                         :href="domain + autoTire.linkToSite"

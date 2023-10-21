@@ -153,14 +153,14 @@ export default {
                     key: KEYS,
                 }
             )
-                .then((response) => {
-                    commit('SET_BREND_MODEL_CAR_AUTO_PARTS', response.data.brandAndModelCar);
-                    return response.data.brandAndModelCar;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    return error;
-                });
+            .then((response) => {
+                commit('SET_BREND_MODEL_CAR_AUTO_PARTS', response.data.brandAndModelCar);
+                return response.data.brandAndModelCar;
+            })
+            .catch(function (error) {
+                console.log(error);
+                return error;
+            });
         },
 
         DELET_AUTO_PARTS_BY_API({commit}, param) {
@@ -193,6 +193,29 @@ export default {
                 });
         },
 
+        CHANGE_AUTO_PARTS_PRICE({commit}, param) {
+            return axios.post(
+                DOMAIN + '/index.php?route=api/auto_parts/auto/change_price/' + param.id,
+                {
+                    key: KEYS,
+                    price: param.priceUSD
+                }
+            )
+            .then((response) => {
+                let data = {
+                    priceBYN: response.data.autoPartsPriceChange.priceBYN,
+                    priceUSD: response.data.autoPartsPriceChange.priceUSD,
+                    index: param.index,
+                }
+
+                commit('SET_CHANGE_AUTO_PARTS_PRICE', data);
+                return data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
+
         CHANGE_AUTO_PARTS_STATUS({commit}, param) {
             return axios.post(
                 DOMAIN + '/index.php?route=api/auto_parts/auto/change_status/' + param.id,
@@ -202,7 +225,7 @@ export default {
                 }
             )
                 .then(() => {
-                    commit('CHANGE_AUTO_PARTS_STATUS', param);
+                    commit('SET_CHANGE_AUTO_PARTS_STATUS', param);
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -218,8 +241,12 @@ export default {
             state.autoParts = {};
             state.autoParts = autoParts;
         },
-        CHANGE_AUTO_PARTS_STATUS: (state, param) => {
+        SET_CHANGE_AUTO_PARTS_STATUS: (state, param) => {
             state.autoParts[param.index].status = !parseInt(param.status);
+        },
+        SET_CHANGE_AUTO_PARTS_PRICE: (state, param) => {
+            state.autoParts[param.index].priceUSD = param.priceUSD;
+            state.autoParts[param.index].priceBYN = param.priceBYN;
         },
         SET_AUTO_PARTS_TOTALS_STATE: (state, autoPartsTotals) => {
             state.autoPartsTotals = autoPartsTotals;

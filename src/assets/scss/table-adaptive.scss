@@ -1,11 +1,8 @@
-$breakpoint-alpha: 1280px;
+$breakpoint-alpha: 1570px;
 
 .middle-responsive {
-  @media screen and (max-width: 1570px) and (min-width: 1281px) {
-    display: block !important;
     overflow-y: hidden !important;
     overflow-x: auto !important;
-  }
 }
 
 .rwd-table {
@@ -34,8 +31,8 @@ $breakpoint-alpha: 1280px;
       font-weight: bold;
       white-space: normal;
 
-      width: 100px;
-      min-width: 100px;
+      width: 107px;
+      min-width: 107px;
       display: inline-block;
 
       @media (min-width: $breakpoint-alpha) {
