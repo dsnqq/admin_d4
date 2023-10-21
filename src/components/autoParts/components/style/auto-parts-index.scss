@@ -127,7 +127,8 @@
     text-decoration: none;
     margin-top: 5px;
 
-    &:hover {
+    &:hover,
+    &--is-active {
       color: hsl(0, 0%, 100%);
       background: hsl(208, 77%, 47%);
       border-color: hsl(208, 77%, 47%);

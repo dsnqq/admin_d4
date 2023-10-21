@@ -257,12 +257,18 @@
                           class="auto-parts-index-photo-list__item auto-parts-index-photo-item"
                       >
                         <img
-                            :src="isImageUrlLocalOrServer(image.imageBig)"
+                            :src="isImageUrlLocalOrServer(image)"
                             class="auto-parts-index-photo-item__image"
                         />
                         <div
+                            @click="removeImgDop(index)"
                             class="auto-parts-index-photo-item__del"
                         >Удалить</div>
+                        <div
+                            @click="setThisPhotoOnMain(image)"
+                            class="auto-parts-index-photo-item__del"
+                            :class="{'auto-parts-index-photo-item__del--is-active' :mainPhotoSetAutoParts(image)}"
+                        >Главное фото</div>
                       </div>
                     </template>
                   </div>
@@ -277,6 +283,7 @@
               <div class="auto-parts-index-wrapp__field auto-parts-index-field auto-parts-index-field--is-btn">
                 <button
                     v-if="isCreatedPage"
+                    @click.prevent="setAutoPartsFromApi"
                     class="btn btn-primary"
                 >
                   Добавить объявление
@@ -319,7 +326,6 @@
         </div>
       </div>
     </div>
-
     <div
         class="modal-mask"
         v-show="showModal"
@@ -390,8 +396,48 @@
         'GET_AUTO_PARTS_INDEX',
         'GET_BREND_MODEL_CAR_AUTO_PARTS',
         'GET_TYPES_OF_AUTO_PARTS',
-        'EDIT_AUTO_PARTS_FROM_API'
+        'EDIT_AUTO_PARTS_FROM_API',
+        'SET_AUTO_PARTS_IMAGE_FROM_USER',
+        'SET_AUTO_PARTS_FROM_API'
       ]),
+
+      mainPhotoSetAutoParts(image){
+        return this.AUTO_PARTS_INDEX.mainImage == image;
+      },
+
+      setAutoPartsFromApi() {
+        let postAutoPartsInformation = {
+          autoPartsNew: this.getFormDataAboutAutoParts(),
+          autoPartsObject: this.AUTO_PARTS_INDEX
+        };
+
+        this.SET_AUTO_PARTS_FROM_API(postAutoPartsInformation);
+      },
+
+      setThisPhotoOnMain(image) {
+        this.AUTO_PARTS_INDEX.mainImage = image;
+      },
+
+      removeImgDop(index) {
+        this.AUTO_PARTS_INDEX.images.splice(index, 1);
+        this.AUTO_PARTS_INDEX.imagesServer.splice(index, 1);
+
+        if(this.AUTO_PARTS_INDEX.images.length == 0) {
+          this.AUTO_PARTS_INDEX.mainImage = "";
+        }
+      },
+
+      isImageUrlLocalOrServer(image) {
+        if(image.substr(0, 4) === "data") {
+          return image;
+        }
+
+        return this.domain + `/image/` + image;
+      },
+
+      sendingDropzonePhoto() {
+        this.$refs.myVueDropzone.processQueue();
+      },
 
       modalCarPhotoFade() {
         this.showModal = !this.showModal;
@@ -487,8 +533,12 @@
           xForm.append('description', this.AUTO_PARTS_INDEX.description);
         }
 
-        if(this.AUTO_PARTS_INDEX.images !== undefined) {
-          xForm.append('images', this.AUTO_PARTS_INDEX.images);
+        if(this.AUTO_PARTS_INDEX.imagesServer !== undefined) {
+          xForm.append('images', this.AUTO_PARTS_INDEX.imagesServer);
+        }
+
+        if(this.AUTO_PARTS_INDEX.mainImage !== undefined) {
+          xForm.append('imagesMain', this.AUTO_PARTS_INDEX.mainImage);
         }
 
         return xForm;
@@ -496,8 +546,7 @@
 
       sendingEvent(file) {
         this.showModal = false;
-        console.log('Отправка!');
-        //this.SET_CAR_IMAGE_FROM_USER(file);
+        this.SET_AUTO_PARTS_IMAGE_FROM_USER(file);
       },
 
       editAutoParts() {
@@ -507,14 +556,6 @@
         };
 
         this.EDIT_AUTO_PARTS_FROM_API(postAutoPartsInformation);
-      },
-
-      isImageUrlLocalOrServer(image) {
-        if(image.substr(0, 4) === "data") {
-          return image;
-        }
-
-        return this.domain + `/image/` + image;
       },
 
       customLabelTypes({ name }) {

@@ -23,7 +23,7 @@ const routes = [
         meta: {
             title: 'Добавить автозапчасть',
         },
-        component: () => import('../components/autoParts/components/AutoPartsIndex.vue'),
+        component: () => import('../components/autoParts/AutoPartsAdmin.vue'),
     },
     {
         path: '/auto/:id',

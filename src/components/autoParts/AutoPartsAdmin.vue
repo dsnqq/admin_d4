@@ -15,7 +15,7 @@
 
     methods: {
       autoPartsAdmin() {
-        if(this.$route.name === "autoPartsDetail"){
+        if(this.$route.name === "autoPartsDetail" || this.$route.name === "autoPartsCreate"){
           return 'AutoPartsIndex';
         }
 

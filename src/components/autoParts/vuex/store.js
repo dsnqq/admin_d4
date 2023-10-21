@@ -193,6 +193,11 @@ export default {
                 });
         },
 
+        SET_AUTO_PARTS_IMAGE_FROM_USER({commit}, param) {
+            commit('ADD_AUTO_PARTS_IMAGE', param);
+            return param;
+        },
+
         CHANGE_AUTO_PARTS_PRICE({commit}, param) {
             return axios.post(
                 DOMAIN + '/index.php?route=api/auto_parts/auto/change_price/' + param.id,
@@ -214,6 +219,25 @@ export default {
             .catch(function (error) {
                 console.log(error);
             });
+        },
+
+        SET_AUTO_PARTS_FROM_API({commit}, param) {
+            return axios.post(
+                DOMAIN + '/index.php?route=api/auto_parts/auto/create',
+                {
+                    key: KEYS,
+                    param: param.autoPartsNew
+                }
+            )
+                .then(() => {
+                    commit('ADD_AUTO_PARTS_TO_STATE', param.autoPartsObject);
+                    alert('Добавлено новая Запчасть!')
+                    return param;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    return error;
+                });
         },
 
         CHANGE_AUTO_PARTS_STATUS({commit}, param) {
@@ -241,8 +265,19 @@ export default {
             state.autoParts = {};
             state.autoParts = autoParts;
         },
+        ADD_AUTO_PARTS_TO_STATE: (state, autoPartsIndex) => {
+            state.autoPartsIndex = autoPartsIndex;
+            console.log('Добавлена запчасть!');
+        },
         SET_CHANGE_AUTO_PARTS_STATUS: (state, param) => {
             state.autoParts[param.index].status = !parseInt(param.status);
+        },
+        ADD_AUTO_PARTS_IMAGE: (state, file) => {
+            if(!state.autoPartsIndex.images) {state.autoPartsIndex.images = []}
+            if(!state.autoPartsIndex.imagesServer) {state.autoPartsIndex.imagesServer = []}
+
+            state.autoPartsIndex.images.push(file.dataURL);
+            state.autoPartsIndex.imagesServer.push(file.upload.filename);
         },
         SET_CHANGE_AUTO_PARTS_PRICE: (state, param) => {
             state.autoParts[param.index].priceUSD = param.priceUSD;
