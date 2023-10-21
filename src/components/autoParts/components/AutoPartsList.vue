@@ -195,19 +195,12 @@
           <table class="table align-middle table-striped table-border-1 rwd-table middle-responsive">
             <thead>
             <tr>
-              <th>Изображение</th>
-              <th>Марка и модель</th>
-              <th>Год</th>
-              <th>Объём</th>
-              <th>Тип топлива</th>
-              <th>Название запчасти</th>
-              <th>Артикул</th>
-              <th>Цена</th>
-              <th>Номер запчасти</th>
-              <th>Дата создания</th>
-              <th>Статус</th>
-              <th>Описание</th>
-              <th>Действия</th>
+              <th
+                  v-for="(c, index) in COLUMNS"
+                  :key="index"
+              >
+                {{c.title}}
+              </th>
             </tr>
             </thead>
             <tbody>
@@ -216,45 +209,27 @@
                 :key="i"
             >
               <td data-th="Изображение">
-                <template v-if="auto.images">
-                  <a
-                      :href="domain + `/image/` + auto.images[0].imageBig"
-                      :data-title="auto.autoParts.name"
-                      :data-lightbox="auto.product_id"
-                      class="product-box-image"
-                  >
-                    <img
-                        :src="auto.images[0].imageMini"
-                        :alt="auto.autoParts.name"
-                    />
-                  </a>
-                  <div class="product-box-image-flex">
-                    <a
-                        :data-lightbox="auto.product_id"
-                        v-for="(image, index) in auto.images"
-                        :key="index"
-                        :data-title="auto.autoParts.name"
-                        :href="domain + `/image/` + image.imageBig"
-                        class="product-box-image--small"
-                        v-show="image.imageShow"
-                    >
-                      <img
-                          :src="image.imageMini"
-                          :alt="auto.autoParts.name"
-                      >
-                    </a>
-                    <span
-                        v-if="!auto.imagesShowAllImage"
-                        @click="showImageAll(i)"
-                        class="product-more-photo"
-                    >Ещё фото</span>
-                  </div>
-                </template>
+                <AutoPartsListColumnImages
+                  v-if="auto.images"
+                  :images="auto.images"
+                  :title="auto.autoParts.name"
+                  :index="i"
+                  :id="auto.product_id"
+                  :showAll="auto.imagesShowAllImage"
+                />
               </td>
-              <td data-th="Марка и модель">{{ auto.name.marka + ' ' + auto.name.model}}</td>
-              <td data-th="Год">{{auto.year}}</td>
-              <td data-th="Объём">{{auto.value}}</td>
-              <td data-th="Тип топлива">{{auto.fuel + " " + auto.typeEngines}}</td>
+              <td data-th="Марка и модель">
+                <AutoPartsListColumnDefault :content="auto.name.marka + ' ' + auto.name.model" />
+              </td>
+              <td data-th="Год">
+                <AutoPartsListColumnDefault :content="auto.year" />
+              </td>
+              <td data-th="Объём">
+                <AutoPartsListColumnDefault :content="auto.value" />
+              </td>
+              <td data-th="Тип топлива">
+                <AutoPartsListColumnDefault :content="auto.fuel + ' ' + auto.typeEngines" />
+              </td>
               <td
                   data-th="Название запчасти"
                   class="productlist"
@@ -263,107 +238,47 @@
                   <h6 class="mb-0 product-title">{{auto.autoParts.name}}</h6>
                 </span>
               </td>
-              <td data-th="Артикул">{{auto.model}}</td>
-              <td data-th="Цена">
-                <div class="price-table">
-                  <template v-if="!columnEdit">
-                  {{auto.priceUSD}} $
-                  </template>
-                  <span
-                      class="auto-parts-list-wrapper-column__edits auto-parts-list-wrapper-column-edits"
-                  >
-                  <input
-                      v-if="columnEdit"
-                      placeholder="Туть что-то"
-                      v-model="auto.priceUSD"
-                      class="auto-parts-list-wrapper-column-edits__input"
-                      type="number"
-                  >
-                  <button
-                      @click.prevent="setEditThisColumnOnList"
-                      class="auto-parts-list-wrapper-column-edits__button auto-parts-list-wrapper-column-edit"
-                  >
-                    <i
-                        v-if="!columnEdit"
-                        class="bx bx-pencil p-2 text-warning"></i>
-                    <i
-                        v-else
-                        @click="setPriceAutoParts(auto.product_id, auto.priceUSD, i)"
-                        class="lni lni-save p-2 text-success"></i>
-                  </button>
-                </span>
-                </div>
-                <div>{{auto.priceBYN}} руб.</div>
+              <td data-th="Артикул">
+                <AutoPartsListColumnDefault :content="auto.model" />
               </td>
-              <td data-th="Номер запчасти">{{auto.sparePartNumber}}</td>
+              <td data-th="Цена">
+                <AutoPartsListColumnPrice
+                  :priceUSD="auto.priceUSD"
+                  :priceBYN="auto.priceBYN"
+                  :id="auto.product_id"
+                  :index="i"
+                />
+              </td>
+              <td data-th="Номер запчасти">
+                <AutoPartsListColumnDefault :content="auto.sparePartNumber" />
+              </td>
               <td data-th="Дата создания">
-                {{auto.dateAdded}}
+                <AutoPartsListColumnDefault :content="auto.dateAdded" />
               </td>
               <td data-th="Статус">
-                <span
-                    @click="changeStatus(auto.product_id, auto.status, i)"
-                    class="badge rounded-pill cursor-pointer"
-                    :class="auto.status == 1 ? 'alert-success' : 'alert-danger'"
-                >
-                  {{getStatus(auto.status)}}
-                </span>
+                <AutoPartsListColumnStatus
+                  :id="auto.product_id"
+                  :index="i"
+                  :status="auto.status"
+                />
               </td>
               <td
                   data-th="Описание"
                   class="td-description"
               >
-                {{auto.description}}
+                <AutoPartsListColumnDefault :content="auto.description" />
               </td>
               <td
                   data-th="Действия"
                   class="text-lg-center"
               >
-                <div>
-                  <div class="d-flex align-items-center gap-2 fs-6">
-                    <a
-                        @click="getHistoryAuto(auto.product_id)"
-                        class="text-primary cursor-pointer"
-                    >
-                      <i class="bi bi-archive"></i>
-                    </a>
-                    <a
-                        :href="domain + auto.linkToSite"
-                        target="_blank"
-                        class="text-primary"
-                        title="Открыть на сайте"
-                    >
-                      <i class="bi bi-eye-fill"></i>
-                    </a>
-                    <router-link
-                        :to="`/auto/${auto.product_id}`"
-                        class="text-warning"
-                        title="Редактировать"
-                    >
-                      <i class="bi bi-pencil-fill"></i>
-                    </router-link>
-                    <a
-                        @click="getPhotoAutoParts(auto.product_id)"
-                        class="text-primary cursor-pointer"
-                    >
-                      <i class="bi bi-camera"></i>
-                    </a>
-                    <a
-                        @click.prevent="autoPartsRemove(auto.product_id, i)"
-                        class="text-danger"
-                    >
-                      <i class="bi bi-trash-fill"></i>
-                    </a>
-                  </div>
-                  <div class="td-viewed">
-                    Просмотров: {{auto.view}}
-                  </div>
-                  <div
-                      @click="getPrintQrCodeAutoParts(auto.qrCode)"
-                      class="btn btn-info"
-                  >
-                    Печать QR
-                  </div>
-                </div>
+                <AutoPartsListColumnActions
+                  :id="auto.product_id"
+                  :linkToSite="auto.linkToSite"
+                  :index="i"
+                  :view="auto.view"
+                  :qrCode="auto.qrCode"
+                />
               </td>
             </tr>
             </tbody>
@@ -384,8 +299,14 @@
 </template>
 
 <script>
-  import {DOMAIN, YEARS} from "@/constants/constants";
+  import {COLUMNS} from "@/components/autoParts/constants/constants";
+  import {YEARS} from "@/constants/constants";
   import {mapActions, mapGetters} from "vuex";
+  import AutoPartsListColumnPrice from "@/components/autoParts/components/AutoPartsListColumnPrice.vue";
+  import AutoPartsListColumnDefault from "@/components/autoParts/components/AutoPartsListColumnDefault.vue";
+  import AutoPartsListColumnImages from "@/components/autoParts/components/AutoPartsListColumnImages.vue";
+  import AutoPartsListColumnActions from "@/components/autoParts/components/AutoPartsListColumnActions.vue";
+  import AutoPartsListColumnStatus from "@/components/autoParts/components/AutoPartsListColumnStatus.vue";
   import Jquery from 'jquery'; // eslint-disable-line no-unused-vars
   import lightbox from 'lightbox2';
 
@@ -397,6 +318,14 @@
       this.GET_AUTO_PARTS_TOTALS(this.param);
       this.GET_TYPES_OF_AUTO_PARTS();
       this.GET_BREND_MODEL_CAR_AUTO_PARTS();
+    },
+
+    components: {
+      AutoPartsListColumnPrice,
+      AutoPartsListColumnDefault,
+      AutoPartsListColumnImages,
+      AutoPartsListColumnActions,
+      AutoPartsListColumnStatus
     },
 
     computed: {
@@ -416,13 +345,8 @@
       ...mapActions('autoParts', [
         'GET_AUTO_PARTS_FROM_API',
         'GET_AUTO_PARTS_TOTALS',
-        'SET_SHOW_ALL_IMAGE',
-        'GET_AUTO_PARTS_HISTORY',
-        'DELET_AUTO_PARTS_BY_API',
         'GET_TYPES_OF_AUTO_PARTS',
-        'GET_BREND_MODEL_CAR_AUTO_PARTS',
-        'CHANGE_AUTO_PARTS_STATUS',
-        'CHANGE_AUTO_PARTS_PRICE'
+        'GET_BREND_MODEL_CAR_AUTO_PARTS'
       ]),
 
       customLabelTypes({ name }) {
@@ -431,22 +355,6 @@
 
       customLabelModelBrand({ name }) {
         return name;
-      },
-
-      setEditThisColumnOnList() {
-        this.columnEdit = !this.columnEdit;
-      },
-
-      setPriceAutoParts(id, priceUSD, i) {
-        let param = {
-          id: id,
-          priceUSD: priceUSD,
-          index: i
-        };
-
-        if(priceUSD != null && parseInt(priceUSD) != 0) {
-          this.CHANGE_AUTO_PARTS_PRICE(param);
-        }
       },
 
       setFilterOnAutoPartsPage() {
@@ -458,37 +366,6 @@
         this.param.pageNum = page;
         window.scrollTo(0, 0);
         this.GET_AUTO_PARTS_FROM_API(this.param);
-      },
-
-      getHistoryAuto(id) {
-        this.$emit('getHistoryAuto');
-        this.GET_AUTO_PARTS_HISTORY(id);
-      },
-
-      getPhotoAutoParts(id) {
-        this.$emit('getPhotoAutoParts', id);
-      },
-
-      getStatus(status) {
-        return (status == 1) ? 'Активно' : 'Неактивно';
-      },
-
-      getPrintQrCodeAutoParts(qr) {
-        this.$emit('getPrintQrCodeAutoParts', qr);
-      },
-
-      changeStatus(id, status, i) {
-        let param = {
-          id: id,
-          status: status,
-          index: i
-        };
-
-        this.CHANGE_AUTO_PARTS_STATUS(param);
-      },
-
-      showImageAll(id) {
-        this.SET_SHOW_ALL_IMAGE(id);
       },
 
       resetFilters() {
@@ -510,24 +387,12 @@
         this.GET_AUTO_PARTS_FROM_API(this.param);
         this.GET_AUTO_PARTS_TOTALS(this.param);
       },
-
-      autoPartsRemove(id, index) {
-        if(confirm("Вы действительно хотите удалить данную запчасть ?")) {
-          let param = {
-            autoPartsId: id,
-            autoPartsNumber: index
-          };
-
-          this.DELET_AUTO_PARTS_BY_API(param);
-        }
-      },
     },
 
     data() {
       return {
-        domain: DOMAIN,
         years: YEARS,
-        columnEdit: false,
+        COLUMNS,
         param: {
           pageNum: 1,
           filters: {
