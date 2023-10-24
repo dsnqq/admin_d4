@@ -40,7 +40,7 @@
                 <a
                     target="_blank"
                     class="p-2 theme-icons text-primary"
-                    :href="domain + sparePartsStatisticsItem.linkSite"
+                    :href="DOMAIN + sparePartsStatisticsItem.linkSite"
                 >
                   <i class="bx bx-show"></i>
                 </a>
@@ -56,21 +56,17 @@
             </tbody>
           </table>
         </div>
-        <div class="row">
-          <v-pagination
-              v-model="pageNum"
-              :records="sparePartsStatisticsTotal"
-              :per-page="100"
-              @paginate="setPageByTotal"
-              :options="paginationOptions"
-          ></v-pagination>
-        </div>
+        <PaginationAdmin
+            :totals="TOTALS_SPARE_PARTS_STATISTICS"
+            @setPageByTotal="setPageByTotal"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import PaginationAdmin from "@/components/UI/PaginationAdmin.vue";
   import {mapActions, mapGetters} from "vuex";
   import {DOMAIN} from "@/constants/constants";
 
@@ -82,16 +78,16 @@
       this.GET_SPARE_PARTS_STATISTICS_TOTALS();
     },
 
+    components: {
+      PaginationAdmin
+    },
+
     computed: {
       ...mapGetters('sparePartsStatistics', [
         'SPARE_PARTS_STATISTICS',
         'TOTALS_SPARE_PARTS_STATISTICS',
         'IS_UI_LOCKED',
       ]),
-
-      sparePartsStatisticsTotal() {
-        return parseInt(this.TOTALS_SPARE_PARTS_STATISTICS);
-      },
     },
 
 
@@ -103,7 +99,6 @@
 
       setPageByTotal(page) {
         this.pageNum = page;
-        window.scrollTo(0, 0);
         this.GET_SPARE_PARTS_STATISTICS(this.pageNum);
       },
 
@@ -114,14 +109,8 @@
 
     data() {
       return {
-        domain: DOMAIN,
+        DOMAIN,
         pageNum: 1,
-        paginationOptions: {
-          chunk: 5,
-          texts: {
-            count: 'Отображается с {from} по {to} (всего {count} шт.)|{count}',
-          }
-        },
       };
     }
   }

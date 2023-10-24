@@ -24,7 +24,7 @@
             >
               <td data-th="Изображение">
                 <a
-                    :href="domain + `/image/` + autoTire.images[0].imageBig"
+                    :href="DOMAIN + `/image/` + autoTire.images[0].imageBig"
                     :data-title="autoTire.name"
                     :data-lightbox="autoTire.product_id"
                     class="product-box-image"
@@ -40,7 +40,7 @@
                       v-for="(image, i) in autoTire.images"
                       :key="i"
                       :data-title="autoTire.name"
-                      :href="domain + `/image/` + image.imageBig"
+                      :href="DOMAIN + `/image/` + image.imageBig"
                       class="product-box-image--small"
                       v-show="image.imageShow"
                   >
@@ -90,7 +90,7 @@
                 <div>
                   <div class="d-flex align-items-center justify-content-center gap-2 fs-6">
                     <a
-                        :href="domain + autoTire.linkToSite"
+                        :href="DOMAIN + autoTire.linkToSite"
                         target="_blank"
                         class="text-primary"
                         title="Открыть на сайте"
@@ -122,23 +122,16 @@
           </table>
         </div>
       </div>
-      <div
-          v-if="autoTiresTotal >= 20"
-          class="row"
-      >
-        <v-pagination
-            v-model="param.pageNum"
-            :records="autoTiresTotal"
-            :per-page="20"
-            @paginate="setPageByTotal"
-            :options="paginationOptions"
-        ></v-pagination>
-      </div>
+      <PaginationAdmin
+          :totals="AUTO_TIRES_TOTALS"
+          @setPageByTotal="setPageByTotal"
+      />
     </div>
   </div>
 </template>
 
 <script>
+  import PaginationAdmin from "@/components/UI/PaginationAdmin.vue";
   import {DOMAIN} from "@/constants/constants";
   import {mapActions, mapGetters} from "vuex";
   import Jquery from 'jquery'; // eslint-disable-line no-unused-vars
@@ -152,15 +145,15 @@
       this.GET_AUTO_TIRES_TOTALS();
     },
 
+    components: {
+      PaginationAdmin,
+    },
+
     computed: {
       ...mapGetters('autoTires', [
         'AUTO_TIRES',
         'AUTO_TIRES_TOTALS'
       ]),
-
-      autoTiresTotal() {
-        return parseInt(this.AUTO_TIRES_TOTALS);
-      }
     },
 
 
@@ -175,7 +168,6 @@
 
       setPageByTotal(page) {
         this.param.pageNum = page;
-        window.scrollTo(0, 0);
         this.GET_AUTO_TIRES_FROM_API(this.param.pageNum);
       },
 
@@ -201,15 +193,9 @@
 
     data() {
       return {
-        domain: DOMAIN,
+        DOMAIN,
         param: {
           pageNum: 1,
-        },
-        paginationOptions: {
-          chunk: 5,
-          texts: {
-            count: 'Отображается с {from} по {to} (всего {count} шт.)|{count}',
-          }
         },
       };
     }

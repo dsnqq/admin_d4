@@ -6,7 +6,7 @@
             :to="{name: 'historyUsers'}"
             class="btn btn-primary"
         >
-          {{dictionary.goBack}}
+          {{DICTIONARY.goBack}}
         </router-link>
       </template>
     </BreadcrumbAdmin>
@@ -34,7 +34,7 @@
                 :key="i"
             >
               <td
-                  v-for="(c, index) in columns"
+                  v-for="(c, index) in COLUMNS_INDEX"
                   :key="index"
                   :data-th="c.title"
               >
@@ -52,21 +52,17 @@
             </tbody>
           </table>
         </div>
-        <div class="row">
-          <v-pagination
-              v-model="pageNum"
-              :records="userHistoryTotal"
-              :per-page="30"
-              @paginate="setPageByTotal"
-              :options="paginationOptions"
-          ></v-pagination>
-        </div>
+        <PaginationAdmin
+            :totals="USER_HISTORY_TOTAL"
+            @setPageByTotal="setPageByTotal"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import PaginationAdmin from "@/components/UI/PaginationAdmin.vue";
 import {COLUMNS_INDEX} from '@/components/historyUsers/constants/constants'
 import {DICTIONARY} from '@/constants/constants'
 import BreadcrumbAdmin from "@/components/BreadcrumbAdmin.vue";
@@ -77,6 +73,7 @@ export default {
 
   components: {
     BreadcrumbAdmin,
+    PaginationAdmin
   },
 
   mounted() {
@@ -89,10 +86,6 @@ export default {
       'USER_HISTORY',
       'USER_HISTORY_TOTAL'
     ]),
-
-    userHistoryTotal() {
-      return parseInt(this.USER_HISTORY_TOTAL);
-    },
   },
 
   methods: {
@@ -104,7 +97,6 @@ export default {
     setPageByTotal(page) {
       this.pageNum = page;
       this.param.page = page;
-      window.scrollTo(0, 0);
       this.GET_USER_HISTORY(this.param);
     },
   },
@@ -112,15 +104,9 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      columns: COLUMNS_INDEX,
-      dictionary: DICTIONARY,
+      COLUMNS_INDEX,
+      DICTIONARY,
       pageNum: 1,
-      paginationOptions: {
-        chunk: 5,
-        texts: {
-          count: 'Отображается с {from} по {to} (всего {count} шт.)|{count}',
-        }
-      },
       param: {
         user_id: this.$route.params.id,
         page: 1,

@@ -24,7 +24,7 @@
               <td data-th="Изображение">
                 <template v-if="autoTireArchive.images">
                   <a
-                      :href="domain + `/image/` + autoTireArchive.images[0].imageBig"
+                      :href="DOMAIN + `/image/` + autoTireArchive.images[0].imageBig"
                       :data-title="autoTireArchive.name"
                       :data-lightbox="autoTireArchive.product_id"
                       class="product-box-image"
@@ -40,7 +40,7 @@
                         v-for="(image, i) in autoTireArchive.images"
                         :key="i"
                         :data-title="autoTireArchive.name"
-                        :href="domain + `/image/` + image.imageBig"
+                        :href="DOMAIN + `/image/` + image.imageBig"
                         class="product-box-image--small"
                         v-show="image.imageShow"
                     >
@@ -140,22 +140,15 @@ export default {
 
     setPageByTotal(page) {
       this.param.pageNum = page;
-      window.scrollTo(0, 0);
       this.GET_AUTO_TIRES_ARCHIVE_FROM_API(this.param.pageNum);
     },
   },
 
   data() {
     return {
-      domain: DOMAIN,
+      DOMAIN,
       param: {
         pageNum: 1,
-      },
-      paginationOptions: {
-        chunk: 5,
-        texts: {
-          count: 'Отображается с {from} по {to} (всего {count} шт.)|{count}',
-        }
       },
     };
   }

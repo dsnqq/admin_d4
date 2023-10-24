@@ -120,7 +120,7 @@
                 <span class="m-1">от</span>
                 <v-multiselect
                     v-model="param.filters.yearStart"
-                    :options="years"
+                    :options="YEARS"
                     :selectedLabel="`Выбрано`"
                     :deselectLabel="`Клик, чтобы удалить`"
                     :selectLabel="`Клик, чтобы выбрать`"
@@ -134,7 +134,7 @@
                 <span class="m-1">до</span>
                 <v-multiselect
                     v-model="param.filters.yearLast"
-                    :options="years"
+                    :options="YEARS"
                     :selectedLabel="`Выбрано`"
                     :deselectLabel="`Клик, чтобы удалить`"
                     :selectLabel="`Клик, чтобы выбрать`"
@@ -197,7 +197,7 @@
               <td data-th="Изображение">
                 <template v-if="autoPartsArchive.images">
                   <a
-                      :href="domain + `/image/` + autoPartsArchive.images[0].imageBig"
+                      :href="DOMAIN + `/image/` + autoPartsArchive.images[0].imageBig"
                       :data-title="autoPartsArchive.autoParts.name"
                       :data-lightbox="autoPartsArchive.product_id"
                       class="product-box-image"
@@ -213,7 +213,7 @@
                         v-for="(image, index) in autoPartsArchive.images"
                         :key="index"
                         :data-title="autoPartsArchive.autoParts.name"
-                        :href="domain + `/image/` + image.imageBig"
+                        :href="DOMAIN + `/image/` + image.imageBig"
                         class="product-box-image--small"
                         v-show="image.imageShow"
                     >
@@ -276,20 +276,16 @@
           </table>
         </div>
       </div>
-      <div class="row">
-        <v-pagination
-            v-model="param.pageNum"
-            :records="autoPartsArchiveTotal"
-            :per-page="20"
-            @paginate="setPageByTotal"
-            :options="paginationOptions"
-        ></v-pagination>
-      </div>
+      <PaginationAdmin
+          :totals="AUTO_PARTS_ARCHIVE_TOTALS"
+          @setPageByTotal="setPageByTotal"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import PaginationAdmin from "@/components/UI/PaginationAdmin.vue";
 import {DOMAIN, YEARS} from "../../../constants/constants";
 import {mapActions, mapGetters} from "vuex";
 import Jquery from 'jquery'; // eslint-disable-line no-unused-vars
@@ -304,6 +300,10 @@ export default {
     this.GET_BREND_MODEL_CAR_AUTO_PARTS();
   },
 
+  components: {
+    PaginationAdmin
+  },
+
   computed: {
     ...mapGetters('autoPartsArchive', [
       'AUTO_PARTS_ARCHIVE',
@@ -311,10 +311,6 @@ export default {
       'TYPES_OF_AUTO_PARTS_ARCHIVE',
       'BREND_MODEL_CAR_AUTO_PARTS'
     ]),
-
-    autoPartsArchiveTotal() {
-      return parseInt(this.AUTO_PARTS_ARCHIVE_TOTALS);
-    }
   },
 
   methods: {
@@ -335,7 +331,6 @@ export default {
 
     setPageByTotal(page) {
       this.param.pageNum = page;
-      window.scrollTo(0, 0);
       this.GET_AUTO_PARTS_ARCHIVE_FROM_API(this.param.pageNum);
     },
 
@@ -388,8 +383,8 @@ export default {
 
   data() {
     return {
-      domain: DOMAIN,
-      years: YEARS,
+      DOMAIN,
+      YEARS,
       param: {
         pageNum: 1,
         filters: {
@@ -402,12 +397,6 @@ export default {
           yearLast: '',
           types: {},
           car: {},
-        }
-      },
-      paginationOptions: {
-        chunk: 5,
-        texts: {
-          count: 'Отображается с {from} по {to} (всего {count} шт.)|{count}',
         }
       },
     };

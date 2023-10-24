@@ -38,6 +38,8 @@
 <script>
   import {DOMAIN} from "@/constants/constants";
   import {mapActions} from "vuex";
+  import Jquery from 'jquery'; // eslint-disable-line no-unused-vars
+  import lightbox from 'lightbox2';
 
   export default {
     name: "AutoPartsListColumnImages",
@@ -63,5 +65,6 @@
 </script>
 
 <style lang="scss" scoped>
+@import "/node_modules/lightbox2/dist/css/lightbox.min.css";
 @import "./src/components/autoParts/components/style/auto-parts-list-column-images";
 </style>

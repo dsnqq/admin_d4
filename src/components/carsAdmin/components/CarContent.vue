@@ -21,24 +21,17 @@
             </table>
           </div>
         </div>
-        <div
-            v-if="this.TOTALS > 10"
-            class="row"
-        >
-          <v-pagination
-              v-model="pageNum"
-              :records="getCarsTotals"
-              :per-page="10"
-              @paginate="setPageByTotal"
-              :options="paginationOptions"
-          ></v-pagination>
-        </div>
+        <PaginationAdmin
+            :totals="TOTALS"
+            @setPageByTotal="setPageByTotal"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import PaginationAdmin from "@/components/UI/PaginationAdmin.vue";
 import CarListItem from '@/components/carsAdmin/components/CarListItem.vue';
 import CarListItemHead from "@/components/carsAdmin/components/CarListItemHead.vue";
 import {mapActions, mapGetters} from "vuex";
@@ -56,16 +49,11 @@ export default {
         'CARS',
         'TOTALS'
     ]),
-
-    getCarsTotals() {
-      return parseInt(this.TOTALS);
-    }
   },
 
   methods: {
     setPageByTotal(page) {
       this.pageNum = page;
-      window.scrollTo(0, 0);
       this.GET_CARS_FROM_API(this.pageNum);
     },
 
@@ -78,17 +66,12 @@ export default {
   components: {
     CarListItemHead,
     CarListItem,
+    PaginationAdmin
   },
 
   data() {
     return {
       pageNum: 1,
-      paginationOptions: {
-        chunk: 5,
-        texts: {
-          count: 'Отображается с {from} по {to} (всего {count} шт.)|{count}',
-        }
-      },
     };
   }
 }

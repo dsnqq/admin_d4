@@ -140,7 +140,7 @@
                 <span class="m-1">от</span>
                 <v-multiselect
                     v-model="param.filters.yearStart"
-                    :options="years"
+                    :options="YEARS"
                     :selectedLabel="`Выбрано`"
                     :deselectLabel="`Клик, чтобы удалить`"
                     :selectLabel="`Клик, чтобы выбрать`"
@@ -154,7 +154,7 @@
                 <span class="m-1">до</span>
                 <v-multiselect
                     v-model="param.filters.yearLast"
-                    :options="years"
+                    :options="YEARS"
                     :selectedLabel="`Выбрано`"
                     :deselectLabel="`Клик, чтобы удалить`"
                     :selectLabel="`Клик, чтобы выбрать`"
@@ -204,111 +204,50 @@
             </tr>
             </thead>
             <tbody>
-            <tr
-                v-for="(auto, i) in AUTO_PARTS"
-                :key="i"
-            >
-              <td data-th="Изображение">
-                <AutoPartsListColumnImages
-                  v-if="auto.images"
-                  :images="auto.images"
-                  :title="auto.autoParts.name"
-                  :index="i"
-                  :id="auto.product_id"
-                  :showAll="auto.imagesShowAllImage"
-                />
-              </td>
-              <td data-th="Марка и модель">
-                <AutoPartsListColumnDefault :content="auto.name.marka + ' ' + auto.name.model" />
-              </td>
-              <td data-th="Год">
-                <AutoPartsListColumnDefault :content="auto.year" />
-              </td>
-              <td data-th="Объём">
-                <AutoPartsListColumnDefault :content="auto.value" />
-              </td>
-              <td data-th="Тип топлива">
-                <AutoPartsListColumnDefault :content="auto.fuel + ' ' + auto.typeEngines" />
-              </td>
-              <td
-                  data-th="Название запчасти"
-                  class="productlist"
+              <tr
+                  v-for="(auto, i) in AUTO_PARTS"
+                  :key="i"
               >
-                <span class="d-flex align-items-center gap-2">
-                  <h6 class="mb-0 product-title">{{auto.autoParts.name}}</h6>
-                </span>
-              </td>
-              <td data-th="Артикул">
-                <AutoPartsListColumnDefault :content="auto.model" />
-              </td>
-              <td data-th="Цена">
-                <AutoPartsListColumnPrice
-                  :priceUSD="auto.priceUSD"
-                  :priceBYN="auto.priceBYN"
-                  :id="auto.product_id"
-                  :index="i"
-                />
-              </td>
-              <td data-th="Номер запчасти">
-                <AutoPartsListColumnDefault :content="auto.sparePartNumber" />
-              </td>
-              <td data-th="Дата создания">
-                <AutoPartsListColumnDefault :content="auto.dateAdded" />
-              </td>
-              <td data-th="Статус">
-                <AutoPartsListColumnStatus
-                  :id="auto.product_id"
-                  :index="i"
-                  :status="auto.status"
-                />
-              </td>
-              <td
-                  data-th="Описание"
-                  class="td-description"
-              >
-                <AutoPartsListColumnDefault :content="auto.description" />
-              </td>
-              <td
-                  data-th="Действия"
-                  class="text-lg-center"
-              >
-                <AutoPartsListColumnActions
-                  :id="auto.product_id"
-                  :linkToSite="auto.linkToSite"
-                  :index="i"
-                  :view="auto.view"
-                  :qrCode="auto.qrCode"
-                />
-              </td>
-            </tr>
+                <td
+                    v-for="(c, index) in COLUMNS"
+                    :key="index"
+                    :data-th="c.title"
+                    :class="c.className"
+                >
+                  <component
+                      :is="c.components"
+                      :images="auto.images"
+                      :title="auto.autoParts.name"
+                      :index="i"
+                      :id="auto.product_id"
+                      :showAll="auto.imagesShowAllImage"
+                      :content="auto[c.content]"
+                      :contentExtension="auto[c.contentExtension]"
+                      :priceUSD="auto.priceUSD"
+                      :priceBYN="auto.priceBYN"
+                      :status="auto.status"
+                      :linkToSite="auto.linkToSite"
+                      :view="auto.view"
+                  ></component>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="row">
-        <v-pagination
-            v-model="param.pageNum"
-            :records="autoPartsTotal"
-            :per-page="20"
-            @paginate="setPageByTotal"
-            :options="paginationOptions"
-        ></v-pagination>
-      </div>
+      <PaginationAdmin
+          :totals="AUTO_PARTS_TOTALS"
+          @setPageByTotal="setPageByTotal"
+      />
     </div>
   </div>
 </template>
 
 <script>
+  import PaginationAdmin from "@/components/UI/PaginationAdmin.vue";
   import {COLUMNS} from "@/components/autoParts/constants/constants";
   import {YEARS} from "@/constants/constants";
   import {mapActions, mapGetters} from "vuex";
-  import AutoPartsListColumnPrice from "@/components/autoParts/components/AutoPartsListColumnPrice.vue";
-  import AutoPartsListColumnDefault from "@/components/autoParts/components/AutoPartsListColumnDefault.vue";
-  import AutoPartsListColumnImages from "@/components/autoParts/components/AutoPartsListColumnImages.vue";
-  import AutoPartsListColumnActions from "@/components/autoParts/components/AutoPartsListColumnActions.vue";
-  import AutoPartsListColumnStatus from "@/components/autoParts/components/AutoPartsListColumnStatus.vue";
-  import Jquery from 'jquery'; // eslint-disable-line no-unused-vars
-  import lightbox from 'lightbox2';
 
   export default {
     name: "AutoPartsList",
@@ -321,11 +260,7 @@
     },
 
     components: {
-      AutoPartsListColumnPrice,
-      AutoPartsListColumnDefault,
-      AutoPartsListColumnImages,
-      AutoPartsListColumnActions,
-      AutoPartsListColumnStatus
+      PaginationAdmin
     },
 
     computed: {
@@ -335,10 +270,6 @@
         'TYPES_OF_AUTO_PARTS',
         'BREND_MODEL_CAR_AUTO_PARTS'
       ]),
-
-      autoPartsTotal() {
-        return parseInt(this.AUTO_PARTS_TOTALS);
-      }
     },
 
     methods: {
@@ -364,7 +295,6 @@
 
       setPageByTotal(page) {
         this.param.pageNum = page;
-        window.scrollTo(0, 0);
         this.GET_AUTO_PARTS_FROM_API(this.param);
       },
 
@@ -391,7 +321,7 @@
 
     data() {
       return {
-        years: YEARS,
+        YEARS,
         COLUMNS,
         param: {
           pageNum: 1,
@@ -407,21 +337,13 @@
             car: {},
           }
         },
-        paginationOptions: {
-          chunk: 5,
-          texts: {
-            count: 'Отображается с {from} по {to} (всего {count} шт.)|{count}',
-          }
-        },
       };
     }
-
   }
 </script>
 
 <style lang="scss" scoped>
 @import "./src/components/autoParts/components/style/auto-parts-list";
-@import "/node_modules/lightbox2/dist/css/lightbox.min.css";
 @import "../../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css";
 @import "@/assets/scss/table-adaptive.scss";
 </style>

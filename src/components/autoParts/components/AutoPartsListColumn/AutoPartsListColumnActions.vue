@@ -39,7 +39,7 @@
       Просмотров: {{view}}
     </div>
     <div
-        @click="getPrintQrCodeAutoParts(qrCode)"
+        @click="getPrintQrCodeAutoParts(AUTO_PARTS[index].qrCode)"
         class="btn btn-info"
     >
       Печать QR
@@ -61,16 +61,22 @@
 
 <script>
   import {DOMAIN} from "@/constants/constants";
-  import {mapActions} from "vuex";
+  import {mapActions, mapGetters} from "vuex";
 
   export default {
     name: "AutoPartsListColumnActions",
 
-    props: ['qrCode', 'id', 'linkToSite', 'index', 'view'],
+    props: ['id', 'linkToSite', 'index', 'view'],
 
     components: {
       AutoPartsHistoryModal: () => import('@/components/autoParts/components/modal/AutoPartsHistoryModal.vue'),
       AutoPartsPhotoModal: () => import("@/components/autoParts/components/modal/AutoPartsPhotoModal.vue")
+    },
+
+    computed: {
+      ...mapGetters('autoParts', [
+        'AUTO_PARTS'
+      ]),
     },
 
     methods: {

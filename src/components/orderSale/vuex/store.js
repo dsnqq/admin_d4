@@ -6,7 +6,7 @@ export default {
 
     state: {
         orders: {},
-        totals: {}
+        totals: 0
     },
     getters: {
         ORDER_SALE(state) {

@@ -42,7 +42,7 @@
                 <a
                     target="_blank"
                     class="p-2 theme-icons text-primary"
-                    :href="domain + tireStatisticsItem.linkSite"
+                    :href="DOMAIN + tireStatisticsItem.linkSite"
                 >
                   <i class="bx bx-show"></i>
                 </a>
@@ -58,21 +58,17 @@
             </tbody>
           </table>
         </div>
-        <div class="row">
-          <v-pagination
-              v-model="pageNum"
-              :records="tireStatisticsTotal"
-              :per-page="100"
-              @paginate="setPageByTotal"
-              :options="paginationOptions"
-          ></v-pagination>
-        </div>
+        <PaginationAdmin
+            :totals="TOTALS_TIRE_STATISTICS"
+            @setPageByTotal="setPageByTotal"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import PaginationAdmin from "@/components/UI/PaginationAdmin.vue";
   import {mapActions, mapGetters} from "vuex";
   import {DOMAIN} from "@/constants/constants";
 
@@ -82,6 +78,10 @@
     mounted() {
       this.GET_TIRE_STATISTICS(this.pageNum);
       this.GET_TIRE_STATISTICS_TOTALS();
+    },
+
+    components: {
+      PaginationAdmin
     },
 
     computed: {
@@ -105,7 +105,6 @@
 
       setPageByTotal(page) {
         this.pageNum = page;
-        window.scrollTo(0, 0);
         this.GET_TIRE_STATISTICS(this.pageNum);
       },
 
@@ -116,14 +115,8 @@
 
     data() {
       return {
-        domain: DOMAIN,
+        DOMAIN,
         pageNum: 1,
-        paginationOptions: {
-          chunk: 5,
-          texts: {
-            count: 'Отображается с {from} по {to} (всего {count} шт.)|{count}',
-          }
-        },
       };
     }
   }

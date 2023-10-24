@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-header text-center">
-      {{dictionary.lastOrderOnTop}}
+      {{DICTIONARY.lastOrderOnTop}}
     </div>
     <div class="card-body">
       <div class="row">
@@ -9,7 +9,7 @@
           <thead>
             <tr>
               <th
-                  v-for="(c, i) in columns"
+                  v-for="(c, i) in COLUMNS"
                   :key="i"
                   scope="col"
               >
@@ -24,7 +24,7 @@
             >
               <td
                   :data-th="c.title"
-                  v-for="(c, index) in columns"
+                  v-for="(c, index) in COLUMNS"
                   :key="index"
               >
                 <template v-if="c.type == 'default'">
@@ -58,20 +58,16 @@
           </tbody>
         </table>
       </div>
-      <div class="row">
-        <v-pagination
-            v-model="pageNum"
-            :records="orderSaleTotal"
-            :per-page="50"
-            :options="paginationOptions"
-            @paginate="setPageByTotal"
-        ></v-pagination>
-      </div>
+      <PaginationAdmin
+          :totals="ORDER_TOTALS"
+          @setPageByTotal="setPageByTotal"
+      />
     </div>
   </div>
 </template>
 
 <script>
+  import PaginationAdmin from "@/components/UI/PaginationAdmin.vue";
   import {COLUMNS} from "@/components/orderSale/constants/constants";
   import {DICTIONARY} from "@/constants/constants";
   import {mapActions, mapGetters} from "vuex";
@@ -89,12 +85,11 @@
         'ORDER_SALE',
         'ORDER_TOTALS'
       ]),
-
-      orderSaleTotal() {
-        return parseInt(this.ORDER_TOTALS);
-      },
     },
 
+    components: {
+      PaginationAdmin
+    },
 
     methods: {
       ...mapActions('orderSale', [
@@ -104,7 +99,6 @@
 
       setPageByTotal(page) {
         this.pageNum = page;
-        window.scrollTo(0, 0);
         this.GET_ORDER_SALE(this.pageNum);
       },
 
@@ -116,14 +110,8 @@
     data() {
       return {
         pageNum: 1,
-        columns: COLUMNS,
-        dictionary: DICTIONARY,
-        paginationOptions: {
-          chunk: 5,
-          texts: {
-            count: 'Отображается с {from} по {to} (всего {count} шт.)|{count}',
-          }
-        },
+        COLUMNS,
+        DICTIONARY,
       };
     }
   }
