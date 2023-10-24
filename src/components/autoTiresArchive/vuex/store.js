@@ -8,7 +8,6 @@ export default {
         autoTiresArchive: {},
         autoTiresArchiveIndex: {},
         autoTiresArchiveTotals: 0,
-        lockingPool: 0,
         autoTiresArchiveHistory: {}
     },
     getters: {
@@ -24,13 +23,10 @@ export default {
         AUTO_TIRES_ARCHIVE_HISTORY(state) {
             return state.autoTiresArchiveHistory;
         },
-        IS_UI_LOCKED(state) {
-            return state.lockingPool > 0
-        },
     },
     actions: {
         GET_AUTO_TIRES_ARCHIVE_FROM_API({commit}, param) {
-            commit('LOCK_UI');
+            this.dispatch('generalStore/LOCK_UI');
             return axios.post(
                 DOMAIN + '/index.php?route=api/auto_tires_archive/tires',
                 {
@@ -39,7 +35,7 @@ export default {
                 }
             )
                 .then((response) => {
-                    commit('UN_LOCK_UI');
+                    this.dispatch('generalStore/UN_LOCK_UI');
                     commit('SET_AUTO_TIRES_ARCHIVE_TO_STATE', response.data.autoTiresArchive);
                     return response.data.autoTiresArchive;
                 })
@@ -67,7 +63,7 @@ export default {
         },
 
         GET_AUTO_TIRES_ARCHIVE_HISTORY({commit}, id) {
-            commit('LOCK_UI');
+            this.dispatch('generalStore/LOCK_UI');
             return  axios.post(
                 DOMAIN + '/index.php?route=api/auto_tires_archive/tires/history/' + id,
                 {
@@ -75,7 +71,7 @@ export default {
                 }
             )
                 .then((response) => {
-                    commit('UN_LOCK_UI');
+                    this.dispatch('generalStore/UN_LOCK_UI');
                     commit('SET_AUTO_TIRES_ARCHIVE_HISTORY_STATE', response.data.autoTiresArchiveHistory);
                     return response.data.autoTiresArchiveHistory;
                 })
@@ -149,12 +145,6 @@ export default {
             state.autoTiresArchiveTotals = state.autoTiresArchiveTotals - 1;
             state.autoTiresArchive.splice(id, 1);
             alert("Шина восстановлена удалено!");
-        },
-        LOCK_UI: (state) => {
-            state.lockingPool++;
-        },
-        UN_LOCK_UI: (state) => {
-            state.lockingPool--;
         },
     }
 }

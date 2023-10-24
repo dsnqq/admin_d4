@@ -7,7 +7,6 @@ export default {
         tireStatistics: {},
         tireStatisticsDay: {},
         totalsTireStatistics: 0,
-        lockingPool: 0
     },
     getters: {
         TIRE_STATISTICS(state) {
@@ -19,13 +18,10 @@ export default {
         TIRE_STATISTICS_DAY(state) {
             return state.tireStatisticsDay;
         },
-        IS_UI_LOCKED(state) {
-            return state.lockingPool > 0
-        },
     },
     actions: {
         async GET_TIRE_STATISTICS({commit}, param) {
-            commit('LOCK_UI');
+            this.dispatch('generalStore/LOCK_UI');
             return axios.post(
                 DOMAIN + '/index.php?route=api/tire_statistics/index',
                 {
@@ -34,7 +30,7 @@ export default {
                 }
             )
                 .then((response) => {
-                    commit('UN_LOCK_UI');
+                    this.dispatch('generalStore/UN_LOCK_UI');
                     commit('SET_TIRE_STATISTICS_TO_STATE', response.data.tireStatistics);
                     return response.data.tireStatistics;
                 })
@@ -62,7 +58,7 @@ export default {
         },
 
         GET_TIRE_STATISTICS_DAY({commit}) {
-            commit('LOCK_UI');
+            this.dispatch('generalStore/LOCK_UI');
             return  axios.post(
                 DOMAIN + '/index.php?route=api/tire_statistics/index/day',
                 {
@@ -70,7 +66,7 @@ export default {
                 }
             )
                 .then((response) => {
-                    commit('UN_LOCK_UI');
+                    this.dispatch('generalStore/UN_LOCK_UI');
                     commit('SET_DAY_TIRE_STATISTICS', response.data.tireStatisticsDay);
                     return response.data.tireStatisticsDay;
                 })
@@ -89,12 +85,6 @@ export default {
         },
         SET_DAY_TIRE_STATISTICS: (state, tireStatisticsDay) => {
             state.tireStatisticsDay = Object.freeze(tireStatisticsDay);
-        },
-        LOCK_UI: (state) => {
-            state.lockingPool++;
-        },
-        UN_LOCK_UI: (state) => {
-            state.lockingPool--;
         },
     }
 }

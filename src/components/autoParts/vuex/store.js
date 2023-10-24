@@ -8,7 +8,6 @@ export default {
         autoParts: {},
         autoPartsIndex: {},
         autoPartsTotals: 0,
-        lockingPool: 0,
         autoPartsHistory: {},
         typesOfAutoParts: [],
         brandAndModelCar: []
@@ -38,7 +37,7 @@ export default {
     },
     actions: {
         GET_AUTO_PARTS_FROM_API({commit}, param) {
-            commit('LOCK_UI');
+            this.dispatch('generalStore/LOCK_UI');
             return axios.post(
                 DOMAIN + '/index.php?route=api/auto_parts/auto',
                 {
@@ -56,7 +55,7 @@ export default {
                 }
             )
                 .then((response) => {
-                    commit('UN_LOCK_UI');
+                    this.dispatch('generalStore/UN_LOCK_UI');
                     commit('SET_AUTO_PARTS_TO_STATE', response.data.autoParts);
                     return response.data.autoParts;
                 })
@@ -93,7 +92,7 @@ export default {
         },
 
         GET_AUTO_PARTS_HISTORY({commit}, id) {
-            commit('LOCK_UI');
+            this.dispatch('generalStore/LOCK_UI');
             return  axios.post(
                 DOMAIN + '/index.php?route=api/auto_parts/auto/history/' + id,
                 {
@@ -101,7 +100,7 @@ export default {
                 }
             )
                 .then((response) => {
-                    commit('UN_LOCK_UI');
+                    this.dispatch('generalStore/UN_LOCK_UI');
                     commit('SET_AUTO_PARTS_HISTORY_STATE', response.data.autoPartsHistory);
                     return response.data.autoPartsHistory;
                 })
@@ -314,12 +313,6 @@ export default {
         },
         SET_BREND_MODEL_CAR_AUTO_PARTS: (state, brandAndModelCar) => {
             state.brandAndModelCar = brandAndModelCar;
-        },
-        LOCK_UI: (state) => {
-            state.lockingPool++;
-        },
-        UN_LOCK_UI: (state) => {
-            state.lockingPool--;
         },
     }
 }

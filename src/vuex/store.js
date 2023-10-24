@@ -5,16 +5,28 @@ export default {
     namespaced: true,
 
     state: {
-        notification: ''
+        notification: '',
+        lockingPool: 0,
     },
 
     getters: {
         NOTIFICATION(state) {
             return state.notification;
         },
+        IS_UI_LOCKED(state) {
+            return state.lockingPool > 0
+        },
     },
 
     actions: {
+        LOCK_UI({commit}){
+            commit('LOCK_UI');
+        },
+
+        UN_LOCK_UI({commit}){
+            commit('UN_LOCK_UI');
+        },
+
         NOTIFICATION_FROM_API({commit}) {
             return axios.post(
                 DOMAIN + '/index.php?route=api/general/information/notifacation',
@@ -41,6 +53,12 @@ export default {
     mutations: {
         SET_NOTIFICATION_STATE: (state, notification) => {
             state.notification = notification;
+        },
+        LOCK_UI: (state) => {
+            state.lockingPool++;
+        },
+        UN_LOCK_UI: (state) => {
+            state.lockingPool--;
         },
     },
 }

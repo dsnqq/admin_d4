@@ -7,7 +7,6 @@ export default {
         userHistoryList: {},
         userHistory: {},
         userHistoryTotal: 0,
-        lockingPool: 0
     },
     getters: {
         USER_HISTORY_LIST(state) {
@@ -25,7 +24,7 @@ export default {
     },
     actions: {
         GET_USER_HISTORY_LIST({commit}, param) {
-            commit('LOCK_UI');
+            this.dispatch('generalStore/LOCK_UI');
             return axios.post(
                 DOMAIN + '/index.php?route=api/history_users/index',
                 {
@@ -34,7 +33,7 @@ export default {
                 }
             )
                 .then((response) => {
-                    commit('UN_LOCK_UI');
+                    this.dispatch('generalStore/UN_LOCK_UI');
                     commit('SET_USER_HISTORY_LIST', response.data.userHistoryList);
                     return response.data.userHistoryList;
                 })
@@ -44,7 +43,7 @@ export default {
                 });
         },
         GET_USER_HISTORY({commit}, param) {
-            commit('LOCK_UI');
+            this.dispatch('generalStore/LOCK_UI');
             return axios.post(
                 DOMAIN + '/index.php?route=api/history_users/index/' + param.user_id,
                 {
@@ -53,7 +52,7 @@ export default {
                 }
             )
                 .then((response) => {
-                    commit('UN_LOCK_UI');
+                    this.dispatch('generalStore/UN_LOCK_UI');
                     commit('SET_USER_HISTORY', response.data.userHistory);
                     return response.data.userHistory;
                 })
@@ -88,12 +87,6 @@ export default {
         },
         SET_USER_HISTORY_TOTAL: (state, userHistoryTotal) => {
             state.userHistoryTotal = Object.freeze(userHistoryTotal);
-        },
-        LOCK_UI: (state) => {
-            state.lockingPool++;
-        },
-        UN_LOCK_UI: (state) => {
-            state.lockingPool--;
         },
     },
 }

@@ -8,7 +8,6 @@ export default {
         autoPartsArchive: {},
         autoPartsArchiveIndex: {},
         autoPartsArchiveTotals: 0,
-        lockingPool: 0,
         autoPartsArchiveHistory: {},
         typesOfAutoPartsArchive: [],
         brandAndModelCar: []
@@ -32,9 +31,6 @@ export default {
         AUTO_PARTS_ARCHIVE_HISTORY(state) {
             return state.autoPartsArchiveHistory;
         },
-        IS_UI_LOCKED(state) {
-            return state.lockingPool > 0
-        },
     },
     actions: {
         async GET_BREND_MODEL_CAR_AUTO_PARTS({commit}) {
@@ -55,7 +51,7 @@ export default {
         },
 
         GET_AUTO_PARTS_ARCHIVE_FROM_API({commit}, param) {
-            commit('LOCK_UI');
+            this.dispatch('generalStore/LOCK_UI');
             return axios.post(
                 DOMAIN + '/index.php?route=api/auto_parts_archive/auto',
                 {
@@ -72,7 +68,7 @@ export default {
                 }
             )
                 .then((response) => {
-                    commit('UN_LOCK_UI');
+                    this.dispatch('generalStore/UN_LOCK_UI');
                     commit('SET_AUTO_PARTS_ARCHIVE_TO_STATE', response.data.autoPartsArchive);
                     return response.data.autoPartsArchive;
                 })
@@ -108,7 +104,7 @@ export default {
         },
 
         GET_AUTO_PARTS_ARCHIVE_HISTORY({commit}, id) {
-            commit('LOCK_UI');
+            this.dispatch('generalStore/LOCK_UI');
             return  axios.post(
                 DOMAIN + '/index.php?route=api/auto_parts_archive/auto/history/' + id,
                 {
@@ -116,7 +112,7 @@ export default {
                 }
             )
                 .then((response) => {
-                    commit('UN_LOCK_UI');
+                    this.dispatch('generalStore/UN_LOCK_UI');
                     commit('SET_AUTO_PARTS_ARCHIVE_HISTORY_STATE', response.data.autoPartsArchiveHistory);
                     return response.data.autoPartsArchiveHistory;
                 })
@@ -213,12 +209,6 @@ export default {
         },
         SET_BREND_MODEL_CAR_AUTO_PARTS: (state, brandAndModelCar) => {
             state.brandAndModelCar = brandAndModelCar;
-        },
-        LOCK_UI: (state) => {
-            state.lockingPool++;
-        },
-        UN_LOCK_UI: (state) => {
-            state.lockingPool--;
         },
     }
 }

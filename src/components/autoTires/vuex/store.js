@@ -8,7 +8,6 @@ export default {
         autoTires: {},
         autoTiresIndex: {},
         autoTiresTotals: 0,
-        lockingPool: 0,
         autoTiresHistory: {}
     },
     getters: {
@@ -24,13 +23,10 @@ export default {
         AUTO_TIRES_HISTORY(state) {
             return state.autoTiresHistory;
         },
-        IS_UI_LOCKED(state) {
-            return state.lockingPool > 0
-        },
     },
     actions: {
         GET_AUTO_TIRES_FROM_API({commit}, param) {
-            commit('LOCK_UI');
+            this.dispatch('generalStore/LOCK_UI');
             return axios.post(
                 DOMAIN + '/index.php?route=api/auto_tires/tires',
                 {
@@ -39,7 +35,7 @@ export default {
                 }
             )
                 .then((response) => {
-                    commit('UN_LOCK_UI');
+                    this.dispatch('generalStore/UN_LOCK_UI');
                     commit('SET_AUTO_TIRES_TO_STATE', response.data.autoTires);
                     return response.data.autoTires;
                 })
@@ -67,7 +63,7 @@ export default {
         },
 
         GET_AUTO_TIRES_HISTORY({commit}, id) {
-            commit('LOCK_UI');
+            this.dispatch('generalStore/LOCK_UI');
             return  axios.post(
                 DOMAIN + '/index.php?route=api/auto_tires/tires/history/' + id,
                 {
@@ -75,7 +71,7 @@ export default {
                 }
             )
                 .then((response) => {
-                    commit('UN_LOCK_UI');
+                    this.dispatch('generalStore/UN_LOCK_UI');
                     commit('SET_AUTO_TIRES_HISTORY_STATE', response.data.autoTiresHistory);
                     return response.data.autoTiresHistory;
                 })
@@ -149,12 +145,6 @@ export default {
             state.autoTiresTotals = state.autoTiresTotals - 1;
             state.autoTires.splice(id, 1);
             alert("Запчасть удалена удалено!");
-        },
-        LOCK_UI: (state) => {
-            state.lockingPool++;
-        },
-        UN_LOCK_UI: (state) => {
-            state.lockingPool--;
         },
     }
 }

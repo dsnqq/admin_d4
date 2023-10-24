@@ -7,7 +7,6 @@ export default {
         sparePartsStatistics: {},
         sparePartsStatisticsDay: {},
         totalsSparePartsStatistics: 0,
-        lockingPool: 0
     },
     getters: {
         SPARE_PARTS_STATISTICS(state) {
@@ -19,13 +18,10 @@ export default {
         SPARE_PARTS_STATISTICS_DAY(state) {
             return state.sparePartsStatisticsDay;
         },
-        IS_UI_LOCKED(state) {
-            return state.lockingPool > 0
-        },
     },
     actions: {
         async GET_SPARE_PARTS_STATISTICS({commit}, param) {
-            commit('LOCK_UI');
+            this.dispatch('generalStore/LOCK_UI');
             return axios.post(
                 DOMAIN + '/index.php?route=api/spare_parts_statistics/index',
                 {
@@ -34,7 +30,7 @@ export default {
                 }
             )
                 .then((response) => {
-                    commit('UN_LOCK_UI');
+                    this.dispatch('generalStore/UN_LOCK_UI');
                     commit('SET_SPARE_PARTS_STATISTICS_TO_STATE', response.data.sparePartsStatistics);
                     return response.data.sparePartsStatistics;
                 })
@@ -62,7 +58,7 @@ export default {
         },
 
         GET_SPARE_PARTS_STATISTICS_DAY({commit}) {
-            commit('LOCK_UI');
+            this.dispatch('generalStore/LOCK_UI');
             return  axios.post(
                 DOMAIN + '/index.php?route=api/spare_parts_statistics/index/day',
                 {
@@ -70,7 +66,7 @@ export default {
                 }
             )
                 .then((response) => {
-                    commit('UN_LOCK_UI');
+                    this.dispatch('generalStore/UN_LOCK_UI');
                     commit('SET_DAY_SPARE_PARTS_STATISTICS', response.data.sparePartsStatisticsDay);
                     return response.data.sparePartsStatisticsDay;
                 })
@@ -89,12 +85,6 @@ export default {
         },
         SET_DAY_SPARE_PARTS_STATISTICS: (state, sparePartsStatisticsDay) => {
             state.sparePartsStatisticsDay = Object.freeze(sparePartsStatisticsDay);
-        },
-        LOCK_UI: (state) => {
-            state.lockingPool++;
-        },
-        UN_LOCK_UI: (state) => {
-            state.lockingPool--;
         },
     }
 }
