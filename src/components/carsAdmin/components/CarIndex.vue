@@ -133,7 +133,7 @@
 </template>
 
 <script>
-  import Breadcrumb from "@/components/UI/VBreadcrumb.vue";
+  import Breadcrumb from "@/components/UI/BaseBreadcrumb.vue";
   import {mapActions, mapGetters} from "vuex";
   import {DOMAIN} from "@/constants/constants";
   import {TABLE_HEADS} from "@/components/carsAdmin/constants/constants";

@@ -29,7 +29,7 @@ export default {
   name: "AutoPartsPhotoModal",
 
   components: {
-    Modal: () => import("@/components/UI/VModal.vue"),
+    Modal: () => import("@/components/UI/BaseModal.vue"),
     vueDropzone: vue2Dropzone,
   },
 

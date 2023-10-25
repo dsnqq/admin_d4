@@ -178,7 +178,7 @@
 </template>
 
 <script>
-  import Breadcrumb from "@/components/UI/VBreadcrumb.vue";
+  import Breadcrumb from "@/components/UI/BaseBreadcrumb.vue";
   import {mapActions, mapGetters} from "vuex";
   import {STATUS, DOMAIN, YEARS, BODYS, TRANSMISSION, FUELS, TYPE_ENGINES_ALL, TYPE_ENGINES_DISEL, TYPE_ENGINES_BENZ} from "@/constants/constants";
 

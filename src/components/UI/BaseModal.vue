@@ -26,7 +26,7 @@
 
 <script>
   export default {
-    name: "VModal",
+    name: "BaseModal",
 
     methods: {
       closeModalAdmin() {

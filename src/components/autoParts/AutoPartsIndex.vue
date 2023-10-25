@@ -1,5 +1,26 @@
 <template>
   <div class="auto-parts-index">
+    <div
+        v-if="errorValidate != ''"
+        class="alert border-0 bg-light-danger alert-dismissible fade show py-2"
+    >
+      <div class="d-flex align-items-center">
+        <div class="fs-3 text-danger"><i class="bi bi-x-circle-fill"></i>
+        </div>
+        <div class="ms-3">
+          <div class="text-danger">
+            {{errorValidate}}
+          </div>
+        </div>
+      </div>
+      <button
+          @click.prevent="closeAlertMessage"
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close">
+      </button>
+    </div>
     <Breadcrumb>
       <template v-slot:buttons>
         <router-link
@@ -11,7 +32,7 @@
       </template>
     </Breadcrumb>
     <div class="card">
-      <div class="card-header py-3">
+      <div class="card-header py-3 text-center">
         Тут скоро будет больше удобных функций
       </div>
       <div class="card-body">
@@ -46,7 +67,7 @@
                   <v-multiselect
                       v-model="AUTO_PARTS_INDEX.autoPartsModelBrand"
                       :options="BREND_MODEL_CAR_AUTO_PARTS"
-                      :custom-label="customLabelModelBrand"
+                      :custom-label="customLabelNameReturn"
                       :selectedLabel="`Выбрано`"
                       :deselectLabel="`Клик, чтобы удалить`"
                       :selectLabel="`Клик, чтобы выбрать`"
@@ -57,6 +78,9 @@
                       Пусто...
                     </template>
                   </v-multiselect>
+                </div>
+                <div class="auto-parts-index-field__plus btn-primary btn">
+                  <span class="bi bi-plus-circle"></span>
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
@@ -167,7 +191,7 @@
                   <v-multiselect
                       v-model="AUTO_PARTS_INDEX.autoPartsName"
                       :options="TYPES_OF_AUTO_PARTS"
-                      :custom-label="customLabelTypes"
+                      :custom-label="customLabelNameReturn"
                       :selectedLabel="`Выбрано`"
                       :deselectLabel="`Клик, чтобы удалить`"
                       :selectLabel="`Клик, чтобы выбрать`"
@@ -281,45 +305,53 @@
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field auto-parts-index-field--is-btn">
-                <button
-                    v-if="isCreatedPage"
-                    @click.prevent="setAutoPartsFromApi"
-                    class="btn btn-primary"
-                >
-                  Добавить объявление
-                </button>
-                <button
-                    v-else
-                    @click.prevent="editAutoParts"
-                    class="btn btn-primary"
-                >
-                  Сохранить
-                </button>
-                <button
-                    class="btn btn-success"
-                >
-                  Сохранить и продолжить редактирование
-                </button>
+                <template v-if="!isCreatedPage">
+                  <button
+                      @click.prevent="editAutoParts(true)"
+                      class="btn btn-primary"
+                  >
+                    Сохранить
+                  </button>
+                  <button
+                      @click.prevent="editAutoParts(false)"
+                      class="btn btn-success"
+                  >
+                    Сохранить и продолжить редактирование
+                  </button>
+                  <a
+                      :href="domain + AUTO_PARTS_INDEX.linkToSite"
+                      target="_blank"
+                      class="btn btn-warning"
+                  >
+                    Посмотреть на сайте
+                  </a>
+                  <button
+                      @click.prevent="printQrAutoParts"
+                      class="btn btn-dark"
+                  >
+                    Печать QR
+                  </button>
+                </template>
+                <template v-else>
+                  <button
+                      @click.prevent="setAutoPartsFromApi(true)"
+                      class="btn btn-primary"
+                  >
+                    Добавить объявление
+                  </button>
+                  <button
+                      @click.prevent="setAutoPartsFromApi(false)"
+                      class="btn btn-success"
+                  >
+                    Добавить и сохранить значения
+                  </button>
+                </template>
                 <router-link
                     :to="{name: 'autoParts'}"
                     class="btn btn-info"
                 >
                     Выйти без сохранения
                 </router-link>
-                <a
-                    :href="domain + AUTO_PARTS_INDEX.linkToSite"
-                    target="_blank"
-                    class="btn btn-warning"
-                >
-                  Посмотреть на сайте
-                </a>
-                <button
-                    v-if="!isCreatedPage"
-                    @click.prevent="printQrAutoParts"
-                    class="btn btn-dark"
-                >
-                  Печать QR
-                </button>
               </div>
             </div>
           </form>
@@ -356,7 +388,7 @@
 </template>
 
 <script>
-  import Breadcrumb from "@/components/UI/VBreadcrumb.vue";
+  import Breadcrumb from "@/components/UI/BaseBreadcrumb.vue";
   import {mapActions, mapGetters} from "vuex";
   import {DOMAIN} from "@/constants/constants";
   import {STATUS, YEARS, BODYS, TRANSMISSION, FUELS, TYPE_ENGINES_ALL, TYPE_ENGINES_DISEL, TYPE_ENGINES_BENZ} from "@/constants/constants";
@@ -387,8 +419,17 @@
       ]),
 
       isCreatedPage() {
-        return this.$route.name === "autoPartsCreate";
+        let created = false;
+        if(this.$route.name === "autoPartsCreate") {
+          this.RESET_AUTO_PARTS_FOR_CREATE_PAGE();
+          created = true;
+        }
+        return created;
       },
+
+      createNameAutoPartsForBd() {
+        return this.AUTO_PARTS_INDEX.autoPartsName.name + " к " +  this.AUTO_PARTS_INDEX.autoPartsModelBrand.name.split(' >')[0] + " " + this.AUTO_PARTS_INDEX.autoPartsModelBrand.name.split('> ')[1] + " " + this.AUTO_PARTS_INDEX.year + " г.";
+      }
     },
 
     methods: {
@@ -398,20 +439,64 @@
         'GET_TYPES_OF_AUTO_PARTS',
         'EDIT_AUTO_PARTS_FROM_API',
         'SET_AUTO_PARTS_IMAGE_FROM_USER',
-        'SET_AUTO_PARTS_FROM_API'
+        'SET_AUTO_PARTS_FROM_API',
+        'RESET_AUTO_PARTS_FOR_CREATE_PAGE'
       ]),
 
       mainPhotoSetAutoParts(image){
         return this.AUTO_PARTS_INDEX.mainImage == image;
       },
 
-      setAutoPartsFromApi() {
-        let postAutoPartsInformation = {
-          autoPartsNew: this.getFormDataAboutAutoParts(),
-          autoPartsObject: this.AUTO_PARTS_INDEX
-        };
+      validateForm() {
+        this.errorValidate = "";
 
-        this.SET_AUTO_PARTS_FROM_API(postAutoPartsInformation);
+        if(!("autoPartsModelBrand" in this.AUTO_PARTS_INDEX)){
+          this.errorValidate = "Заполните поле запчасть!";
+        }
+
+        if(!("autoPartsName" in this.AUTO_PARTS_INDEX)){
+          this.errorValidate = "Заполните марку и модель!";
+        }
+
+        if(!("year" in this.AUTO_PARTS_INDEX)){
+          this.errorValidate = "Заполните поле год!";
+        }
+
+        if(!("priceUSD" in this.AUTO_PARTS_INDEX)){
+          this.errorValidate = "Заполните поле цена!";
+        }
+
+        if(this.errorValidate) {
+          window.scrollTo(0, 0);
+        }
+      },
+
+      setAutoPartsFromApi(redirect) {
+        this.validateForm();
+
+        if(!this.errorValidate) {
+          let param = {
+            redirect: redirect,
+            fields: this.getFormDataAboutAutoParts()
+          }
+
+          this.SET_AUTO_PARTS_FROM_API(param);
+          this.$refs.myVueDropzone.removeAllFiles();
+        }
+      },
+
+      editAutoParts(redirect) {
+        this.validateForm();
+
+        if(!this.errorValidate) {
+          let postAutoPartsInformation = {
+            autoParts: this.getFormDataAboutAutoParts(),
+            id: this.param.id,
+            redirect: redirect
+          };
+
+          this.EDIT_AUTO_PARTS_FROM_API(postAutoPartsInformation);
+        }
       },
 
       setThisPhotoOnMain(image) {
@@ -529,6 +614,15 @@
           xForm.append('autoPartsName', this.AUTO_PARTS_INDEX.autoPartsName.id);
         }
 
+        if(this.AUTO_PARTS_INDEX.autoPartsModelBrand.code !== undefined){
+          xForm.append('autoPartsCategoryId', this.AUTO_PARTS_INDEX.autoPartsModelBrand.code);
+        }
+
+        if(this.AUTO_PARTS_INDEX.autoPartsName.code !== undefined){
+          xForm.append('autoPartsManufacturerId', this.AUTO_PARTS_INDEX.autoPartsName.code);
+          xForm.append('autoPartsNameForBd', this.createNameAutoPartsForBd);
+        }
+
         if(this.AUTO_PARTS_INDEX.description !== undefined){
           xForm.append('description', this.AUTO_PARTS_INDEX.description);
         }
@@ -539,6 +633,8 @@
 
         if(this.AUTO_PARTS_INDEX.mainImage !== undefined) {
           xForm.append('imagesMain', this.AUTO_PARTS_INDEX.mainImage);
+        } else if(this.AUTO_PARTS_INDEX.imagesServer[0]) {
+          xForm.append('imagesMain', this.AUTO_PARTS_INDEX.imagesServer[0]);
         }
 
         return xForm;
@@ -549,21 +645,12 @@
         this.SET_AUTO_PARTS_IMAGE_FROM_USER(file);
       },
 
-      editAutoParts() {
-        let postAutoPartsInformation = {
-          autoParts: this.getFormDataAboutAutoParts(),
-          id: this.param.id
-        };
-
-        this.EDIT_AUTO_PARTS_FROM_API(postAutoPartsInformation);
-      },
-
-      customLabelTypes({ name }) {
+      customLabelNameReturn({ name }) {
         return name;
       },
 
-      customLabelModelBrand({ name }) {
-        return name;
+      closeAlertMessage() {
+        this.errorValidate = "";
       },
 
       getFuelToTypeEngines(option) {
@@ -579,6 +666,7 @@
 
     data() {
       return {
+        errorValidate: "",
         param: {
           id: this.$route.params.id
         },

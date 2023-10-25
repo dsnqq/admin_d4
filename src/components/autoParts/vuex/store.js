@@ -178,11 +178,19 @@ export default {
         },
 
         EDIT_AUTO_PARTS_FROM_API({commit}, param) {
+            if(!param.redirect) {
+                this.dispatch('generalStore/LOCK_UI');
+            }
             return axios.post(
                 DOMAIN + '/index.php?route=api/auto_parts/auto/' + param.id + '/edit',
                 param.autoParts
             )
                 .then(() => {
+                    if(param.redirect) {
+                        window.location.href = '/auto-parts';
+                        return false;
+                    }
+                    this.dispatch('generalStore/UN_LOCK_UI');
                     commit('EDIT_AUTO_PARTS_ON_STATE');
                     return param.autoParts;
                 })
@@ -198,6 +206,7 @@ export default {
         },
 
         CHANGE_AUTO_PARTS_PRICE({commit}, param) {
+            this.dispatch('generalStore/LOCK_UI');
             return axios.post(
                 DOMAIN + '/index.php?route=api/auto_parts/auto/change_price/' + param.id,
                 {
@@ -206,6 +215,7 @@ export default {
                 }
             )
             .then((response) => {
+                this.dispatch('generalStore/UN_LOCK_UI');
                 let data = {
                     priceBYN: response.data.autoPartsPriceChange.priceBYN,
                     priceUSD: response.data.autoPartsPriceChange.priceUSD,
@@ -221,25 +231,32 @@ export default {
         },
 
         SET_AUTO_PARTS_FROM_API({commit}, param) {
+            this.dispatch('generalStore/LOCK_UI');
             return axios.post(
                 DOMAIN + '/index.php?route=api/auto_parts/auto/create',
-                {
-                    key: KEYS,
-                    param: param.autoPartsNew
-                }
+                param.fields
             )
-                .then(() => {
-                    commit('ADD_AUTO_PARTS_TO_STATE', param.autoPartsObject);
-                    alert('Добавлено новая Запчасть!')
-                    return param;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    return error;
-                });
+            .then((response) => {
+                if(typeof response.data.autoPartsCreate === 'string'){
+                    alert(response.data.autoPartsCreate);
+                    return false;
+                }
+                if(param.redirect) {
+                    window.location.href = '/auto-parts';
+                    return false;
+                }
+                this.dispatch('generalStore/UN_LOCK_UI');
+                commit('ADD_AUTO_PARTS_TO_STATE');
+                return param;
+            })
+            .catch(function (error) {
+                console.log(error);
+                return error;
+            });
         },
 
         CHANGE_AUTO_PARTS_STATUS({commit}, param) {
+            this.dispatch('generalStore/LOCK_UI');
             return axios.post(
                 DOMAIN + '/index.php?route=api/auto_parts/auto/change_status/' + param.id,
                 {
@@ -247,16 +264,21 @@ export default {
                     status: param.status
                 }
             )
-                .then(() => {
-                    commit('SET_CHANGE_AUTO_PARTS_STATUS', param);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+            .then(() => {
+                this.dispatch('generalStore/UN_LOCK_UI');
+                commit('SET_CHANGE_AUTO_PARTS_STATUS', param);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         },
 
         SET_SHOW_ALL_IMAGE({commit}, id){
             commit('SHOW_ALL_IMAGE_BY_ID', id);
+        },
+
+        RESET_AUTO_PARTS_FOR_CREATE_PAGE({commit}){
+            commit('RESET_AUTO_PARTS');
         },
     },
     mutations: {
@@ -264,9 +286,11 @@ export default {
             state.autoParts = {};
             state.autoParts = autoParts;
         },
-        ADD_AUTO_PARTS_TO_STATE: (state, autoPartsIndex) => {
-            state.autoPartsIndex = autoPartsIndex;
-            console.log('Добавлена запчасть!');
+        RESET_AUTO_PARTS: (state) => {
+            state.autoPartsIndex = {};
+        },
+        ADD_AUTO_PARTS_TO_STATE: () => {
+            alert('Добавлена запчасть!');
         },
         SET_CHANGE_AUTO_PARTS_STATUS: (state, param) => {
             state.autoParts[param.index].status = !parseInt(param.status);

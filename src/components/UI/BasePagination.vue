@@ -13,7 +13,7 @@
 
 <script>
   export default {
-    name: "VPagination",
+    name: "BasePagination",
 
     props: {
       totals: Number

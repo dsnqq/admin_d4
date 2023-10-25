@@ -25,8 +25,8 @@
 <script>
 import TheHeader from "@/components/TheHeader.vue";
 import TheSidebar from "@/components/TheSidebar.vue";
-import Breadcrumb from "@/components/UI/VBreadcrumb.vue";
-import Preloader from "@/components/UI/VPreloader.vue";
+import Breadcrumb from "@/components/UI/BaseBreadcrumb.vue";
+import Preloader from "@/components/UI/BasePreloader.vue";
 
 export default {
   name: 'TheAdminContent',

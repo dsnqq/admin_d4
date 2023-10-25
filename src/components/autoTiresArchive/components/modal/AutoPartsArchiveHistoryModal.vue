@@ -35,7 +35,7 @@
     name: "AutoPartsHistoryModal",
 
     components: {
-      Modal: () => import("@/components/UI/VModal.vue"),
+      Modal: () => import("@/components/UI/BaseModal.vue"),
     },
 
     computed: {

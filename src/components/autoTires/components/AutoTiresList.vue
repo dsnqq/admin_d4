@@ -131,7 +131,7 @@
 </template>
 
 <script>
-  import Pagination from "@/components/UI/VPagination.vue";
+  import Pagination from "@/components/UI/BasePagination.vue";
   import {DOMAIN} from "@/constants/constants";
   import {mapActions, mapGetters} from "vuex";
   import Jquery from 'jquery'; // eslint-disable-line no-unused-vars

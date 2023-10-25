@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import Pagination from "@/components/UI/VPagination.vue";
+import Pagination from "@/components/UI/BasePagination.vue";
 import CarListItem from '@/components/carsAdmin/components/CarListItem.vue';
 import CarListItemHead from "@/components/carsAdmin/components/CarListItemHead.vue";
 import {mapActions, mapGetters} from "vuex";

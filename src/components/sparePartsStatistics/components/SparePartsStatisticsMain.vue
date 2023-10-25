@@ -66,7 +66,7 @@
 </template>
 
 <script>
-  import Pagination from "@/components/UI/VPagination.vue";
+  import Pagination from "@/components/UI/BasePagination.vue";
   import {mapActions, mapGetters} from "vuex";
   import {DOMAIN} from "@/constants/constants";
 

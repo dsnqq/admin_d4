@@ -62,10 +62,10 @@
 </template>
 
 <script>
-import Pagination from "@/components/UI/VPagination.vue";
+import Pagination from "@/components/UI/BasePagination.vue";
 import {COLUMNS_INDEX} from '@/components/historyUsers/constants/constants'
 import {DICTIONARY} from '@/constants/constants'
-import Breadcrumb from "@/components/UI/VBreadcrumb.vue";
+import Breadcrumb from "@/components/UI/BaseBreadcrumb.vue";
 import {mapActions, mapGetters} from "vuex";
 
 export default {

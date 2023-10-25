@@ -91,7 +91,7 @@
 
 <script>
 export default {
-  name: "VFilter",
+  name: "BaseFilter",
 
   props: {
     options: Array

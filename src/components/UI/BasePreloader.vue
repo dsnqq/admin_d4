@@ -11,7 +11,7 @@
   import generalStore from "@/vuex/store"
 
   export default {
-    name: 'VPreloader',
+    name: 'BasePreloader',
 
     computed: {
       isUiLocked: function (){

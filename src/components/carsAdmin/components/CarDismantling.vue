@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import Breadcrumb from "@/components/UI/VBreadcrumb.vue";
+import Breadcrumb from "@/components/UI/BaseBreadcrumb.vue";
 import CarContent from '@/components/carsAdmin/components/CarContent.vue';
 
 export default {

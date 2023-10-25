@@ -67,6 +67,11 @@
 .auto-parts-index-field {
   $self: &;
 
+  &__plus {
+    padding: 3px 8px;
+    margin-left: 10px;
+  }
+
   &__textarea {
     height: 120px;
     padding: 0 10px;
