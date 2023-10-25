@@ -162,21 +162,6 @@ export default {
             });
         },
 
-        DELET_AUTO_PARTS_BY_API({commit}, param) {
-            return axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts/auto/delete/' + param.autoPartsId,
-                {
-                    key: KEYS,
-                }
-            )
-                .then(() => {
-                    commit('DELETE_THIS_AUTO_PARTS', param.autoPartsNumber);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        },
-
         EDIT_AUTO_PARTS_FROM_API({commit}, param) {
             if(!param.redirect) {
                 this.dispatch('generalStore/LOCK_UI');
@@ -205,13 +190,32 @@ export default {
             return param;
         },
 
+        DELET_AUTO_PARTS_BY_API({commit}, param) {
+            this.dispatch('generalStore/LOCK_UI');
+            return axios.post(
+                DOMAIN + '/index.php?route=api/auto_parts/auto/delete/' + param.autoPartsId,
+                {
+                    key: KEYS,
+                    user_id: JSON.parse(localStorage.user).user_id
+                }
+            )
+                .then(() => {
+                    this.dispatch('generalStore/UN_LOCK_UI');
+                    commit('DELETE_THIS_AUTO_PARTS', param.autoPartsNumber);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+
         CHANGE_AUTO_PARTS_PRICE({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
                 DOMAIN + '/index.php?route=api/auto_parts/auto/change_price/' + param.id,
                 {
                     key: KEYS,
-                    price: param.priceUSD
+                    price: param.priceUSD,
+                    user_id: JSON.parse(localStorage.user).user_id
                 }
             )
             .then((response) => {
@@ -234,7 +238,7 @@ export default {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
                 DOMAIN + '/index.php?route=api/auto_parts/auto/create',
-                param.fields
+                param.fields,
             )
             .then((response) => {
                 if(typeof response.data.autoPartsCreate === 'string'){
@@ -261,7 +265,8 @@ export default {
                 DOMAIN + '/index.php?route=api/auto_parts/auto/change_status/' + param.id,
                 {
                     key: KEYS,
-                    status: param.status
+                    status: param.status,
+                    user_id: JSON.parse(localStorage.user).user_id
                 }
             )
             .then(() => {

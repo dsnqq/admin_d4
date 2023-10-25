@@ -21,9 +21,9 @@
         >
           <td data-th="Значение">{{autoPartsHistory.valueName}}</td>
           <td data-th="Дата изменения">{{autoPartsHistory.dataChange}}</td>
-          <td data-th="Старое значение">{{autoPartsHistory.valueOld}}</td>
-          <td data-th="Новое значение">{{autoPartsHistory.valueNew}}</td>
-          <td data-th="Пользователь">{{autoPartsHistory.firstName + autoPartsHistory.lastName}}</td>
+          <td data-th="Старое значение">{{renderValue(autoPartsHistory.valueOld)}}</td>
+          <td data-th="Новое значение">{{renderValue(autoPartsHistory.valueNew)}}</td>
+          <td data-th="Пользователь">{{autoPartsHistory.firstName + " " + autoPartsHistory.lastName}}</td>
         </tr>
         </tbody>
       </table>
@@ -48,6 +48,16 @@
     },
 
     methods: {
+      renderValue(data) {
+        if(data == 1) {
+          return "Активно";
+        } else if(data == 0) {
+          return "Неактивно";
+        }
+
+        return data
+      },
+
       closeHistoryModalAdmin() {
         this.$emit('closeHistoryModalAdmin');
       }

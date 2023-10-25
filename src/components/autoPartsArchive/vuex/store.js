@@ -158,13 +158,16 @@ export default {
         },
 
         RESTORE_AUTO_PARTS_ARCHIVE_BY_API({commit}, param) {
+            this.dispatch('generalStore/LOCK_UI');
             return axios.post(
                 DOMAIN + '/index.php?route=api/auto_parts_archive/auto/restore/' + param.autoPartsId,
                 {
                     key: KEYS,
+                    user_id: JSON.parse(localStorage.user).user_id
                 }
             )
                 .then(() => {
+                    this.dispatch('generalStore/UN_LOCK_UI');
                     commit('RESTORE_THIS_AUTO_PARTS_ARCHIVE', param.autoPartsNumber);
                 })
                 .catch(function (error) {

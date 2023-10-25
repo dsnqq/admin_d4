@@ -631,9 +631,11 @@
           xForm.append('images', this.AUTO_PARTS_INDEX.imagesServer);
         }
 
+        xForm.append('user_id', JSON.parse(localStorage.user).user_id);
+
         if(this.AUTO_PARTS_INDEX.mainImage !== undefined) {
           xForm.append('imagesMain', this.AUTO_PARTS_INDEX.mainImage);
-        } else if(this.AUTO_PARTS_INDEX.imagesServer[0]) {
+        } else if(this.AUTO_PARTS_INDEX.imagesServer !== undefined) {
           xForm.append('imagesMain', this.AUTO_PARTS_INDEX.imagesServer[0]);
         }
 

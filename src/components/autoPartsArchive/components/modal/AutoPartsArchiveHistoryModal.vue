@@ -23,7 +23,7 @@
           <td>{{autoPartsHistory.dataChange}}</td>
           <td>{{autoPartsHistory.valueOld}}</td>
           <td>{{autoPartsHistory.valueNew}}</td>
-          <td>{{autoPartsHistory.firstName + autoPartsHistory.lastName}}</td>
+          <td>{{autoPartsHistory.firstName + " " + autoPartsHistory.lastName}}</td>
         </tr>
         </tbody>
       </table>
