@@ -77,7 +77,7 @@
   import {DOMAIN} from "@/constants/constants";
 
   export default {
-    name: "HeaderAdmin",
+    name: "TheHeader",
 
     mounted() {
       this.NOTIFICATION_FROM_API();

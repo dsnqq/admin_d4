@@ -122,7 +122,7 @@
           </table>
         </div>
       </div>
-      <PaginationAdmin
+      <Pagination
           :totals="AUTO_TIRES_TOTALS"
           @setPageByTotal="setPageByTotal"
       />
@@ -131,7 +131,7 @@
 </template>
 
 <script>
-  import PaginationAdmin from "@/components/UI/PaginationAdmin.vue";
+  import Pagination from "@/components/UI/VPagination.vue";
   import {DOMAIN} from "@/constants/constants";
   import {mapActions, mapGetters} from "vuex";
   import Jquery from 'jquery'; // eslint-disable-line no-unused-vars
@@ -146,7 +146,7 @@
     },
 
     components: {
-      PaginationAdmin,
+      Pagination,
     },
 
     computed: {

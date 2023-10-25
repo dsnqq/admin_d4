@@ -39,6 +39,6 @@
 
 <script>
   export default {
-    name: "NotFound",
+    name: "TheNotFound",
   }
 </script>

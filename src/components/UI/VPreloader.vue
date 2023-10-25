@@ -11,7 +11,7 @@
   import generalStore from "@/vuex/store"
 
   export default {
-    name: 'PreloaderAdmin',
+    name: 'VPreloader',
 
     computed: {
       isUiLocked: function (){
@@ -26,5 +26,5 @@
 </script>
 
 <style lang="scss" scoped>
-@import "./src/components/UI/style/preloader-admin";
+@import "./src/components/UI/style/v-preloader";
 </style>

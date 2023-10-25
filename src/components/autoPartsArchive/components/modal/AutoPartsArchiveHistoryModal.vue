@@ -1,5 +1,5 @@
 <template>
-  <ModalAdmin
+  <Modal
       @closeModalAdmin="closeModalAdmin"
   >
     <template v-slot:header>История запчасти</template>
@@ -28,7 +28,7 @@
         </tbody>
       </table>
     </template>
-  </ModalAdmin>
+  </Modal>
 </template>
 
 <script>
@@ -38,7 +38,7 @@
     name: "AutoPartsHistoryModal",
 
     components: {
-      ModalAdmin: () => import("@/components/UI/ModalAdmin.vue"),
+      Modal: () => import("@/components/UI/VModal.vue"),
     },
 
     computed: {

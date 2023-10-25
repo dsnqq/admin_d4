@@ -56,7 +56,7 @@
             </tbody>
           </table>
         </div>
-        <PaginationAdmin
+        <Pagination
             :totals="TOTALS_SPARE_PARTS_STATISTICS"
             @setPageByTotal="setPageByTotal"
         />
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-  import PaginationAdmin from "@/components/UI/PaginationAdmin.vue";
+  import Pagination from "@/components/UI/VPagination.vue";
   import {mapActions, mapGetters} from "vuex";
   import {DOMAIN} from "@/constants/constants";
 
@@ -79,7 +79,7 @@
     },
 
     components: {
-      PaginationAdmin
+      Pagination
     },
 
     computed: {

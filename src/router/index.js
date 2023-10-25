@@ -133,7 +133,7 @@ const routes = [
         meta: {
             title: 'Здесь ничего нет',
         },
-        component: () => import('../components/NotFound.vue'),
+        component: () => import('../components/TheNotFound.vue'),
     },
 ];
 

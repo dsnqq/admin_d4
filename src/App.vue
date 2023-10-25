@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <AdminContent v-if="loginUserChecked"/>
+    <TheAdminContent v-if="loginUserChecked"/>
     <AuthAdmin v-else/>
   </div>
 </template>
 
 <script>
 import AuthAdmin from "@/components/authAdmin/AuthAdmin.vue";
-import AdminContent from "@/components/AdminContent.vue";
+import TheAdminContent from "@/components/TheAdminContent.vue";
 
 export default {
   name: 'App',
@@ -21,7 +21,7 @@ export default {
   },
 
   components: {
-    AdminContent,
+    TheAdminContent,
     AuthAdmin
   }
 }

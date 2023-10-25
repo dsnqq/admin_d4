@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BreadcrumbAdmin>
+    <Breadcrumb>
       <template v-slot:buttons>
         <router-link
             :to="{name: 'carCreate'}"
@@ -11,7 +11,7 @@
           </button>
         </router-link>
       </template>
-    </BreadcrumbAdmin>
+    </Breadcrumb>
     <div class="app-car-dismantling">
       <div class="app-car-dismantling__car car">
         <CarContent
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import BreadcrumbAdmin from "@/components/BreadcrumbAdmin.vue";
+import Breadcrumb from "@/components/UI/VBreadcrumb.vue";
 import CarContent from '@/components/carsAdmin/components/CarContent.vue';
 
 export default {
@@ -31,7 +31,7 @@ export default {
 
   components: {
     CarContent,
-    BreadcrumbAdmin,
+    Breadcrumb,
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <ModalAdmin
+  <Modal
       @closeModalAdmin="closePhotoModalAdmin"
   >
     <template v-slot:header>Добавить фото</template>
@@ -17,7 +17,7 @@
         Загрузить изображения
       </button>
     </template>
-  </ModalAdmin>
+  </Modal>
 </template>
 
 <script>
@@ -27,7 +27,7 @@ export default {
   name: "AutoPartsPhotoModal",
 
   components: {
-    ModalAdmin: () => import("@/components/UI/ModalAdmin.vue"),
+    Modal: () => import("@/components/UI/VModal.vue"),
     vueDropzone: vue2Dropzone,
   },
 

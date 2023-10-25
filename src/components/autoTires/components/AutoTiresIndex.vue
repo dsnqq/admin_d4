@@ -1,6 +1,6 @@
 <template>
   <div class="auto-parts-index">
-    <BreadcrumbAdmin>
+    <Breadcrumb>
       <template v-slot:buttons>
         <router-link
             :to="{name: 'autoParts'}"
@@ -9,7 +9,7 @@
           Вернуться назад
         </router-link>
       </template>
-    </BreadcrumbAdmin>
+    </Breadcrumb>
     <div class="card">
       <div class="card-header py-3">
         шапочка
@@ -178,7 +178,7 @@
 </template>
 
 <script>
-  import BreadcrumbAdmin from "@/components/BreadcrumbAdmin.vue";
+  import Breadcrumb from "@/components/UI/VBreadcrumb.vue";
   import {mapActions, mapGetters} from "vuex";
   import {STATUS, DOMAIN, YEARS, BODYS, TRANSMISSION, FUELS, TYPE_ENGINES_ALL, TYPE_ENGINES_DISEL, TYPE_ENGINES_BENZ} from "@/constants/constants";
 
@@ -186,7 +186,7 @@
     name: "AutoParstIndex",
 
     components: {
-      BreadcrumbAdmin
+      Breadcrumb
     },
 
     mounted() {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BreadcrumbAdmin>
+    <Breadcrumb>
       <template v-slot:buttons>
         <router-link
             :to="{name: 'historyUsers'}"
@@ -9,7 +9,7 @@
           {{DICTIONARY.goBack}}
         </router-link>
       </template>
-    </BreadcrumbAdmin>
+    </Breadcrumb>
     <hr>
     <div class="card">
       <div class="card-body">
@@ -52,7 +52,7 @@
             </tbody>
           </table>
         </div>
-        <PaginationAdmin
+        <Pagination
             :totals="USER_HISTORY_TOTAL"
             @setPageByTotal="setPageByTotal"
         />
@@ -62,18 +62,18 @@
 </template>
 
 <script>
-import PaginationAdmin from "@/components/UI/PaginationAdmin.vue";
+import Pagination from "@/components/UI/VPagination.vue";
 import {COLUMNS_INDEX} from '@/components/historyUsers/constants/constants'
 import {DICTIONARY} from '@/constants/constants'
-import BreadcrumbAdmin from "@/components/BreadcrumbAdmin.vue";
+import Breadcrumb from "@/components/UI/VBreadcrumb.vue";
 import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "HistoryUsersIndex",
 
   components: {
-    BreadcrumbAdmin,
-    PaginationAdmin
+    Breadcrumb,
+    Pagination
   },
 
   mounted() {

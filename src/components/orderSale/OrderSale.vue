@@ -67,7 +67,7 @@
 </template>
 
 <script>
-  import PaginationAdmin from "@/components/UI/PaginationAdmin.vue";
+  import Pagination from "@/components/UI/VPagination.vue";
   import {COLUMNS} from "@/components/orderSale/constants/constants";
   import {DICTIONARY} from "@/constants/constants";
   import {mapActions, mapGetters} from "vuex";

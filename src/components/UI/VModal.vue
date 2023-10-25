@@ -26,7 +26,7 @@
 
 <script>
   export default {
-    name: "ModalAdmin",
+    name: "VModal",
 
     methods: {
       closeModalAdmin() {
@@ -37,5 +37,5 @@
 </script>
 
 <style lang="scss" scoped>
-@import "./src/components/UI/style/modal-admin";
+@import "./src/components/UI/style/v-modal";
 </style>

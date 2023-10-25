@@ -235,7 +235,7 @@
           </table>
         </div>
       </div>
-      <PaginationAdmin
+      <Pagination
           :totals="AUTO_PARTS_TOTALS"
           @setPageByTotal="setPageByTotal"
       />
@@ -244,7 +244,7 @@
 </template>
 
 <script>
-  import PaginationAdmin from "@/components/UI/PaginationAdmin.vue";
+  import Pagination from "@/components/UI/VPagination.vue";
   import {COLUMNS} from "@/components/autoParts/constants/constants";
   import {YEARS} from "@/constants/constants";
   import {mapActions, mapGetters} from "vuex";
@@ -260,7 +260,7 @@
     },
 
     components: {
-      PaginationAdmin
+      Pagination
     },
 
     computed: {

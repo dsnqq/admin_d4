@@ -4,16 +4,16 @@
         :class="{'toggled' : this.menu}"
         class="wrapper"
     >
-      <HeaderAdmin
+      <TheHeader
           @leftMenuMobileShow="leftMenuMobileShow"
       />
-      <SidebarAdmin
+      <TheSidebar
         @menuSideBarClosed="menuSideBarClosed"
       />
 
       <main class="page-content">
-        <PreloaderAdmin />
-        <BreadcrumbAdmin
+        <Preloader />
+        <Breadcrumb
             v-if="getBreadcrumbBool"
         />
         <router-view></router-view>
@@ -23,19 +23,19 @@
 </template>
 
 <script>
-import HeaderAdmin from "@/components/HeaderAdmin.vue";
-import SidebarAdmin from "@/components/SidebarAdmin.vue";
-import BreadcrumbAdmin from "@/components/BreadcrumbAdmin.vue";
-import PreloaderAdmin from "@/components/UI/PreloaderAdmin.vue";
+import TheHeader from "@/components/TheHeader.vue";
+import TheSidebar from "@/components/TheSidebar.vue";
+import Breadcrumb from "@/components/UI/VBreadcrumb.vue";
+import Preloader from "@/components/UI/VPreloader.vue";
 
 export default {
-  name: 'AdminContent',
+  name: 'TheAdminContent',
 
   components: {
-    HeaderAdmin,
-    SidebarAdmin,
-    BreadcrumbAdmin,
-    PreloaderAdmin,
+    TheHeader,
+    TheSidebar,
+    Breadcrumb,
+    Preloader,
   },
 
   computed: {

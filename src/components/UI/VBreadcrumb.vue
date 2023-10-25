@@ -28,7 +28,7 @@
 
 <script>
   export default {
-    name: "BreadcrumbAdmin",
+    name: "VBreadcrumb",
   }
 </script>
 

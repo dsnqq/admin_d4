@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BreadcrumbAdmin>
+    <Breadcrumb>
       <template v-slot:buttons>
         <router-link
             :to="{name: 'carsAdmin'}"
@@ -9,7 +9,7 @@
           Вернуться назад
         </router-link>
       </template>
-    </BreadcrumbAdmin>
+    </Breadcrumb>
     <div class="card">
       <div class="card-body">
         <form>
@@ -133,7 +133,7 @@
 </template>
 
 <script>
-  import BreadcrumbAdmin from "@/components/BreadcrumbAdmin.vue";
+  import Breadcrumb from "@/components/UI/VBreadcrumb.vue";
   import {mapActions, mapGetters} from "vuex";
   import {DOMAIN} from "@/constants/constants";
   import {TABLE_HEADS} from "@/components/carsAdmin/constants/constants";
@@ -144,7 +144,7 @@
 
     components: {
       vueDropzone: vue2Dropzone,
-      BreadcrumbAdmin
+      Breadcrumb
     },
 
     mounted() {

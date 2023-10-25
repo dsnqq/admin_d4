@@ -21,7 +21,7 @@
             </table>
           </div>
         </div>
-        <PaginationAdmin
+        <Pagination
             :totals="TOTALS"
             @setPageByTotal="setPageByTotal"
         />
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import PaginationAdmin from "@/components/UI/PaginationAdmin.vue";
+import Pagination from "@/components/UI/VPagination.vue";
 import CarListItem from '@/components/carsAdmin/components/CarListItem.vue';
 import CarListItemHead from "@/components/carsAdmin/components/CarListItemHead.vue";
 import {mapActions, mapGetters} from "vuex";
@@ -66,7 +66,7 @@ export default {
   components: {
     CarListItemHead,
     CarListItem,
-    PaginationAdmin
+    Pagination
   },
 
   data() {
