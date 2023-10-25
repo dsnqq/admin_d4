@@ -15,7 +15,7 @@ const routes = [
         meta: {
             title: 'Автозапчасти',
         },
-        component: () => import('../components/autoParts/AutoPartsAdmin.vue'),
+        component: () => import('../components/autoParts/AutoPartsList.vue'),
     },
     {
         path: '/auto-parts/create',
@@ -23,7 +23,7 @@ const routes = [
         meta: {
             title: 'Добавить автозапчасть',
         },
-        component: () => import('../components/autoParts/AutoPartsAdmin.vue'),
+        component: () => import('../components/autoParts/AutoPartsIndex.vue'),
     },
     {
         path: '/auto/:id',
@@ -32,7 +32,7 @@ const routes = [
             title: 'Автозапчасть',
         },
         props: true,
-        component: () => import('../components/autoParts/components/AutoPartsIndex.vue'),
+        component: () => import('../components/autoParts/AutoPartsIndex.vue'),
     },
     {
         path: '/auto-parts-archive',

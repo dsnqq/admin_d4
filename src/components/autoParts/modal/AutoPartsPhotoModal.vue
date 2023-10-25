@@ -2,7 +2,9 @@
   <Modal
       @closeModalAdmin="closePhotoModalAdmin"
   >
-    <template v-slot:header>Добавить фото</template>
+    <template v-slot:header>
+      Добавить фото
+    </template>
     <template>
       <vue-dropzone
           v-on:vdropzone-sending="sendingEvent"

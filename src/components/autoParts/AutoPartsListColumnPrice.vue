@@ -72,5 +72,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "./src/components/autoParts/components/style/auto-parts-list-column-price";
+@import "./src/components/autoParts/style/auto-parts-list-column-price";
 </style>

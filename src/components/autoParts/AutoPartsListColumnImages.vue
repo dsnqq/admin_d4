@@ -66,5 +66,5 @@
 
 <style lang="scss" scoped>
 @import "/node_modules/lightbox2/dist/css/lightbox.min.css";
-@import "./src/components/autoParts/components/style/auto-parts-list-column-images";
+@import "./src/components/autoParts/style/auto-parts-list-column-images";
 </style>

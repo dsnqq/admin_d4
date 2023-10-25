@@ -240,7 +240,7 @@
 </script>
 
 <style lang="scss" scoped>
-@import "./src/components/autoParts/components/style/auto-parts-list";
-@import "../../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css";
+@import "./src/components/autoParts/style/auto-parts-list";
+@import "../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css";
 @import "@/assets/scss/table-adaptive.scss";
 </style>

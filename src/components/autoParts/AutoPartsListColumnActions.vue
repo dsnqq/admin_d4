@@ -69,8 +69,8 @@
     props: ['id', 'linkToSite', 'index', 'view'],
 
     components: {
-      AutoPartsHistoryModal: () => import('@/components/autoParts/components/modal/AutoPartsHistoryModal.vue'),
-      AutoPartsPhotoModal: () => import("@/components/autoParts/components/modal/AutoPartsPhotoModal.vue")
+      AutoPartsHistoryModal: () => import('@/components/autoParts/modal/AutoPartsHistoryModal.vue'),
+      AutoPartsPhotoModal: () => import("@/components/autoParts/modal/AutoPartsPhotoModal.vue")
     },
 
     computed: {
@@ -131,5 +131,5 @@
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/autoParts/components/style/auto-parts-list-column-actions.scss"
+@import "@/components/autoParts/style/auto-parts-list-column-actions.scss"
 </style>

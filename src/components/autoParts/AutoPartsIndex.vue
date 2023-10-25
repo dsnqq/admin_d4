@@ -613,6 +613,6 @@
 
 <style scoped lang="sass">
 @import "vue2-dropzone/dist/vue2Dropzone.min.css"
-@import "../../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css"
-@import "@/components/autoParts/components/style/auto-parts-index.scss"
+@import "../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css"
+@import "@/components/autoParts/style/auto-parts-index.scss"
 </style>
