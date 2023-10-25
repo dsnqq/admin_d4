@@ -62,7 +62,7 @@
 </template>
 
 <script>
-  import Filters from "@/components/autoParts/components/UI/VFilters.vue";
+  import Filters from "@/components/UI/VFilters.vue";
   import Pagination from "@/components/UI/VPagination.vue";
   import {COLUMNS} from "@/components/autoParts/constants/constants";
   import {YEARS} from "@/constants/constants";
