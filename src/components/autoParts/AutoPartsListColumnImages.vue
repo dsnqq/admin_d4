@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="auto-parts-list-column-images">
     <a
         :href="DOMAIN + `/image/` + images[0].imageBig"
         :data-title="title"

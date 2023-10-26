@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="auto-parts-list-column-price">
     <div class="price-table">
       <template v-if="!columnEdit">
         {{priceUSD}} $

@@ -2,6 +2,7 @@ export const COLUMNS = [
     {
         title: "Изображение",
         components: () => import("@/components/autoParts/AutoPartsListColumnImages.vue"),
+        className: "auto-parts-list-column-images"
     },
     {
         title: "Марка и модель",
@@ -62,6 +63,6 @@ export const COLUMNS = [
     {
         title: "Действия",
         components: () => import("@/components/autoParts/AutoPartsListColumnActions.vue"),
-        className: "text-lg-center"
+        className: "text-xxl-center"
     },
 ]

@@ -35,6 +35,11 @@ $breakpoint-alpha: 1570px;
       min-width: 107px;
       display: inline-block;
 
+      @media (max-width: $breakpoint-alpha) {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
       @media (min-width: $breakpoint-alpha) {
         display: none;
       }

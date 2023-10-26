@@ -21,7 +21,7 @@
               </th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="card-body__grid">
               <tr
                   v-for="(auto, i) in AUTO_PARTS"
                   :key="i"

@@ -1,6 +1,6 @@
 <template>
-    <span class="d-flex align-items-center gap-2">
-      <h6 class="mb-0 product-title">{{title}}</h6>
+    <span class="auto-parts-list-column-title d-flex align-items-center gap-2">
+      <span class="mb-0 product-title">{{title}}</span>
     </span>
 </template>
 

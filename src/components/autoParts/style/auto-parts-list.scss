@@ -4,6 +4,7 @@
   white-space: normal;
   @media screen and (max-width: 1570px) {
     max-width: 100%;
+    font-size: 14px;
   }
 }
 
@@ -19,6 +20,28 @@
     @media screen and (max-width: 1570px) {
       font-size: 12px;
       max-width: 100%;
+    }
+  }
+}
+
+.card-body {
+  &__grid {
+    @media screen and (max-width: 1570px) and (min-width: 1024px) {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-column-gap: 20px;
+    }
+
+    .auto-parts-list-column-images {
+      @media screen and (max-width: 1570px) and (min-width: 1024px) {
+        height: 170px;
+        overflow: hidden;
+        align-items: flex-start;
+
+        &::before {
+          align-self: center;
+        }
+      }
     }
   }
 }
