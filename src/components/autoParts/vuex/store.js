@@ -278,6 +278,24 @@ export default {
             });
         },
 
+        SET_AUTO_PARTS_IMAGE_FROM_LIST({commit}, param) {
+            this.dispatch('generalStore/LOCK_UI');
+            return axios.post(
+                DOMAIN + '/index.php?route=api/auto_parts/auto/add_images/' + param.autoPartsId,
+                {
+                    key: KEYS,
+                    images: param.images.toString()
+                }
+            )
+                .then(() => {
+                    this.dispatch('generalStore/UN_LOCK_UI');
+                    commit('ADD_AUTO_PARTS_IMAGE_FROM_LIST');
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+
         SET_SHOW_ALL_IMAGE({commit}, id){
             commit('SHOW_ALL_IMAGE_BY_ID', id);
         },
@@ -287,6 +305,9 @@ export default {
         },
     },
     mutations: {
+        ADD_AUTO_PARTS_IMAGE_FROM_LIST: () => {
+          alert('Изображения добавлены!');
+        },
         SET_AUTO_PARTS_TO_STATE: (state, autoParts) => {
             state.autoParts = {};
             state.autoParts = autoParts;

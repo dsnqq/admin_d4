@@ -7,7 +7,6 @@
     </template>
     <template>
       <vue-dropzone
-          v-on:vdropzone-sending="sendingEvent"
           :options="dropzoneOptions"
           ref="myVueDropzone"
           id="dropzone"
@@ -23,6 +22,7 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
 import vue2Dropzone from 'vue2-dropzone'
 
 export default {
@@ -33,26 +33,42 @@ export default {
     vueDropzone: vue2Dropzone,
   },
 
+  props: ["autoPartsId"],
+
   methods: {
+    ...mapActions('autoParts', [
+      'SET_AUTO_PARTS_IMAGE_FROM_LIST',
+    ]),
+
     closePhotoModalAdmin() {
       this.$emit('closePhotoModalAdmin');
     },
 
-    sendingEvent(file) {
-      console.log(file);
-      this.$emit('closePhotoModalAdmin');
-      //this.SET_CAR_IMAGE_FROM_USER(file);
-    },
-
     sendingDropzonePhoto() {
       this.$refs.myVueDropzone.processQueue();
+      let allFilesPhotoForSend = this.$refs.myVueDropzone.getUploadingFiles();
+
+      for (let i = 0; i < allFilesPhotoForSend.length; i++) {
+        this.imageServer.push(allFilesPhotoForSend[i].upload.filename);
+      }
+
+      let params = {
+        images: this.imageServer,
+        autoPartsId: this.$props.autoPartsId
+      };
+
+      this.SET_AUTO_PARTS_IMAGE_FROM_LIST(params);
+      this.$refs.myVueDropzone.removeAllFiles();
+
+      this.$emit('closePhotoModalAdmin');
     },
   },
 
   data() {
     return {
+      imageServer: [],
       dropzoneOptions: {
-        url: 'https://d4.by/upload.php',
+        url: '/upload.php',
         thumbnailWidth: 150,
         thumbnailHeight: 150,
         maxFilesize: 2500,
@@ -65,7 +81,7 @@ export default {
         renameFile: function (file) {
           let newName = new Date().getTime() + '_' + file.name;
           return newName;
-        }
+        },
       },
     };
   }

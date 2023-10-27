@@ -51,6 +51,7 @@
     <AutoPartsPhotoModal
         @closePhotoModalAdmin="closePhotoModalAdmin"
         v-if="modalPhotoAdminShow"
+        :autoPartsId="id"
     />
     <iframe
         name="autoPartsQrCode"

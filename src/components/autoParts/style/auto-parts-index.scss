@@ -9,12 +9,25 @@
 
 .auto-parts-index-wrapp {
   display: grid;
+
+  &__auto-parts {
+    border-bottom: 1px solid hsl(0, 0%, 80%);
+
+    .auto-parts-index-field {
+      border-bottom: 0 !important;
+    }
+  }
 }
 
 .auto-parts-index-field {
   display: flex;
   align-items: center;
   padding: 10px 0;
+
+  &__controll {
+    display: flex;
+  }
+
   @media screen and (max-width: 1024px) {
     display: grid;
   }

@@ -58,7 +58,7 @@
           </tbody>
         </table>
       </div>
-      <PaginationAdmin
+      <Pagination
           :totals="ORDER_TOTALS"
           @setPageByTotal="setPageByTotal"
       />
@@ -88,7 +88,7 @@
     },
 
     components: {
-      PaginationAdmin
+      Pagination
     },
 
     methods: {

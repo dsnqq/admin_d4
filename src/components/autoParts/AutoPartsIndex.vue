@@ -59,28 +59,63 @@
                   </v-multiselect>
                 </div>
               </div>
-              <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label auto-parts-index-field__label--is-required">
-                  Марка и модель:
-                </label>
-                <div class="auto-parts-index-field__wrap">
-                  <v-multiselect
-                      v-model="AUTO_PARTS_INDEX.autoPartsModelBrand"
-                      :options="BREND_MODEL_CAR_AUTO_PARTS"
-                      :custom-label="customLabelNameReturn"
-                      :selectedLabel="`Выбрано`"
-                      :deselectLabel="`Клик, чтобы удалить`"
-                      :selectLabel="`Клик, чтобы выбрать`"
-                      :placeholder="`Марка и Модель`"
-                      class="auto-parts-index-field__select"
-                  >
-                    <template v-slot:noResult>
-                      Пусто...
-                    </template>
-                  </v-multiselect>
-                </div>
-                <div class="auto-parts-index-field__plus btn-primary btn">
-                  <span class="bi bi-plus-circle"></span>
+              <div class="auto-parts-index-wrapp__auto-parts">
+                <div
+                    v-for="(countAutoParts, i) in countAutoPartsAdd"
+                    :key="i"
+                    class="auto-parts-index-wrapp__field auto-parts-index-field"
+                >
+                  <label class="auto-parts-index-field__label auto-parts-index-field__label--is-required">
+                    Марка и модель:
+                  </label>
+                  <div class="auto-parts-index-field__wrap">
+                    <v-multiselect
+                        v-if="isCreatedPage"
+                        v-model="autoPartsModelBrands[i]"
+                        :options="BREND_MODEL_CAR_AUTO_PARTS"
+                        :custom-label="customLabelNameReturn"
+                        :selectedLabel="`Выбрано`"
+                        :deselectLabel="`Клик, чтобы удалить`"
+                        :selectLabel="`Клик, чтобы выбрать`"
+                        :placeholder="`Марка и Модель`"
+                        class="auto-parts-index-field__select"
+                    >
+                      <template v-slot:noResult>
+                        Пусто...
+                      </template>
+                    </v-multiselect>
+                    <v-multiselect
+                        v-else
+                        v-model="AUTO_PARTS_INDEX.autoPartsModelBrand"
+                        :options="BREND_MODEL_CAR_AUTO_PARTS"
+                        :custom-label="customLabelNameReturn"
+                        :selectedLabel="`Выбрано`"
+                        :deselectLabel="`Клик, чтобы удалить`"
+                        :selectLabel="`Клик, чтобы выбрать`"
+                        :placeholder="`Марка и Модель`"
+                        class="auto-parts-index-field__select"
+                    >
+                      <template v-slot:noResult>
+                        Пусто...
+                      </template>
+                    </v-multiselect>
+                  </div>
+                  <div class="auto-parts-index-field__controll">
+                    <div
+                        v-if="isAddAutoPartsMore(i)"
+                        @click="addAutoPartsMore"
+                        class="auto-parts-index-field__plus btn-primary btn"
+                    >
+                      <span class="bi bi-plus-circle"></span>
+                    </div>
+                    <div
+                        v-if="isRemoveAutoPartsMore(i)"
+                        @click="removeAutoPartsMore"
+                        class="auto-parts-index-field__plus btn-danger btn"
+                    >
+                      <span class="bi bi-x-circle"></span>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
@@ -426,10 +461,6 @@
         }
         return created;
       },
-
-      createNameAutoPartsForBd() {
-        return this.AUTO_PARTS_INDEX.autoPartsName.name + " к " +  this.AUTO_PARTS_INDEX.autoPartsModelBrand.name.split(' >')[0] + " " + this.AUTO_PARTS_INDEX.autoPartsModelBrand.name.split('> ')[1] + " " + this.AUTO_PARTS_INDEX.year + " г.";
-      }
     },
 
     methods: {
@@ -443,6 +474,18 @@
         'RESET_AUTO_PARTS_FOR_CREATE_PAGE'
       ]),
 
+      createNameAutoPartsForBd() {
+          return this.AUTO_PARTS_INDEX.autoPartsName.name + " к " + this.AUTO_PARTS_INDEX.autoPartsModelBrand.name.split(' >')[0] + " " + this.AUTO_PARTS_INDEX.autoPartsModelBrand.name.split('> ')[1] + " " + this.AUTO_PARTS_INDEX.year + " г.";
+      },
+
+      isAddAutoPartsMore(i) {
+        return this.isCreatedPage && (i + 1 == this.countAutoPartsAdd);
+      },
+
+      isRemoveAutoPartsMore(i) {
+        return this.isCreatedPage && (i + 1 == this.countAutoPartsAdd) && i != 0;
+      },
+
       mainPhotoSetAutoParts(image){
         return this.AUTO_PARTS_INDEX.mainImage == image;
       },
@@ -450,7 +493,11 @@
       validateForm() {
         this.errorValidate = "";
 
-        if(!("autoPartsModelBrand" in this.AUTO_PARTS_INDEX)){
+        if(!("autoPartsModelBrand" in this.AUTO_PARTS_INDEX) && this.countAutoPartsAdd == 1 && !this.isCreatedPage){
+          this.errorValidate = "Заполните поле запчасть!";
+        }
+
+        if(this.isCreatedPage && this.autoPartsModelBrands[this.countAutoPartsAdd-1] == undefined){
           this.errorValidate = "Заполните поле запчасть!";
         }
 
@@ -611,20 +658,42 @@
         }
 
         if(this.AUTO_PARTS_INDEX.autoPartsName !== undefined){
-          xForm.append('autoPartsName', this.AUTO_PARTS_INDEX.autoPartsName.id);
+          xForm.append('autoPartsName', this.AUTO_PARTS_INDEX.autoPartsName.code);
         }
 
-        if(this.AUTO_PARTS_INDEX.autoPartsModelBrand.code !== undefined){
+        if("autoPartsModelBrand" in this.AUTO_PARTS_INDEX) {
           xForm.append('autoPartsCategoryId', this.AUTO_PARTS_INDEX.autoPartsModelBrand.code);
         }
 
-        if(this.AUTO_PARTS_INDEX.autoPartsName.code !== undefined){
+        if(this.AUTO_PARTS_INDEX.autoPartsName.code !== undefined && this.countAutoPartsAdd == 1 && !this.isCreatedPage){
           xForm.append('autoPartsManufacturerId', this.AUTO_PARTS_INDEX.autoPartsName.code);
-          xForm.append('autoPartsNameForBd', this.createNameAutoPartsForBd);
+          xForm.append('autoPartsNameForBd', this.createNameAutoPartsForBd());
+        }
+
+        if(this.AUTO_PARTS_INDEX.autoPartsName.code !== undefined && this.countAutoPartsAdd == 1 && this.isCreatedPage){
+          xForm.append('autoPartsManufacturerId', this.AUTO_PARTS_INDEX.autoPartsName.code);
+
+          for(let i = 1;this.autoPartsModelBrands.length >= i ;i++) {
+            xForm.append('autoPartsNameForBd[]', this.AUTO_PARTS_INDEX.autoPartsName.name + " к " + this.autoPartsModelBrands[i-1].name.split(' >')[0] + " " + this.autoPartsModelBrands[i-1].name.split('> ')[1] + " " + this.AUTO_PARTS_INDEX.year + " г.");
+          }
+        }
+
+        if(this.AUTO_PARTS_INDEX.autoPartsName.code !== undefined && this.countAutoPartsAdd > 1 && this.isCreatedPage){
+          xForm.append('autoPartsManufacturerId', this.AUTO_PARTS_INDEX.autoPartsName.code);
+
+          for(let i = 1;this.autoPartsModelBrands.length >= i ;i++) {
+            xForm.append('autoPartsNameForBd[]', this.AUTO_PARTS_INDEX.autoPartsName.name + " к " + this.autoPartsModelBrands[i-1].name.split(' >')[0] + " " + this.autoPartsModelBrands[i-1].name.split('> ')[1] + " " + this.AUTO_PARTS_INDEX.year + " г.");
+          }
         }
 
         if(this.AUTO_PARTS_INDEX.description !== undefined){
           xForm.append('description', this.AUTO_PARTS_INDEX.description);
+        }
+
+        if(this.autoPartsModelBrands.length != 0 && this.isCreatedPage){
+          for(let i = 1;this.autoPartsModelBrands.length >= i ;i++) {
+            xForm.append('autoPartsModelBrandsObject[]', this.autoPartsModelBrands[i-1].code);
+          }
         }
 
         if(this.AUTO_PARTS_INDEX.imagesServer !== undefined) {
@@ -663,6 +732,14 @@
         } else {
           this.typeEngines = TYPE_ENGINES_ALL;
         }
+      },
+
+      addAutoPartsMore() {
+        this.countAutoPartsAdd++;
+      },
+
+      removeAutoPartsMore() {
+        this.countAutoPartsAdd--;
       }
     },
 
@@ -673,6 +750,8 @@
           id: this.$route.params.id
         },
         showModal: false,
+        countAutoPartsAdd: 1,
+        autoPartsModelBrands: [],
         domain: DOMAIN,
         STATUS,
         YEARS,
