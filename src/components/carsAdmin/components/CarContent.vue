@@ -3,8 +3,8 @@
     <div class="card">
       <div class="card-body">
         <div class="row">
-          <div class="table-responsive">
-            <table class="table align-middle table-striped rwd-table">
+          <div>
+            <table class="table align-middle table-striped table-border-1 rwd-table middle-responsive">
               <thead>
                 <CarListItemHead
                     class="car-list__head"
