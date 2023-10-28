@@ -42,7 +42,6 @@ export default {
     getBreadcrumbBool() {
       let noBreadcrumbAdmin = [
           'historyUsersIndex',
-          'carsAdmin',
           'carDetail',
           'carCreate',
           'autoPartsDetail',

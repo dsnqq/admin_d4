@@ -64,7 +64,7 @@ const routes = [
         meta: {
             title: 'Авто в разборе',
         },
-        component: () => import('../components/carsAdmin/CarsAdmin.vue'),
+        component: () => import('../components/carsAdmin/CarContent.vue'),
     },
     {
         path: '/car/:id',
@@ -72,7 +72,7 @@ const routes = [
         meta: {
             title: 'Авто в разборе',
         },
-        component: () => import('../components/carsAdmin/CarsAdmin.vue'),
+        component: () => import('../components/carsAdmin/CarIndex.vue'),
     },
     {
         path: '/car/create',
@@ -80,7 +80,7 @@ const routes = [
         meta: {
             title: 'Добавление авто',
         },
-        component: () => import('../components/carsAdmin/CarsAdmin.vue'),
+        component: () => import('../components/carsAdmin/CarIndex.vue'),
     },
     {
         path: '/tire-statistics',

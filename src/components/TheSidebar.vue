@@ -63,6 +63,7 @@
           {title: 'Добавить запчасть', component: 'autoPartsCreate', icon: 'bi-plus-square'},
           {title: 'История пользователей', component: 'historyUsers', icon: 'bi-journal-text'},
           {title: 'Авто в разборе', component: 'carsAdmin', icon: 'bi-wrench'},
+          {title: 'Добавить авто в разборе', component: 'carCreate', icon: 'bi-wrench'},
           {title: 'Мои шины', component: 'autoTires', icon: 'bi-vinyl'},
           {title: 'Архив Шин', component: 'autoTiresArchive', icon: 'bi-archive'},
           {title: 'Добавить шину', component: '', icon: 'bi-plus-square'},

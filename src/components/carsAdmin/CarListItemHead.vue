@@ -23,5 +23,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "@/components/carsAdmin/components/style/car-list-item-head.scss";
+@import "@/components/carsAdmin/style/car-list-item-head.scss";
 </style>

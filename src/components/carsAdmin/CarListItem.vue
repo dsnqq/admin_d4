@@ -13,7 +13,7 @@
 
 <script>
   import {LIST_ITEM_COLUMN} from '@/components/carsAdmin/constants/constants';
-  import CarListItemColumn from "@/components/carsAdmin/components/CarListItemColumn.vue";
+  import CarListItemColumn from "@/components/carsAdmin/CarListItemColumn.vue";
 
   export default {
     name: "CarListItem",

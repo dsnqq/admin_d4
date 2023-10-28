@@ -10,7 +10,6 @@ export const LIST_ITEM_COLUMN = [
     "typePower",
     "volume",
     "power",
-    "aboutPower",
     "body",
     "color",
     "action"
@@ -87,13 +86,6 @@ export const TABLE_HEADS = [
         name: "Маркировка двигателя",
         index: true,
         login: "power",
-        type: "input",
-    },
-    {
-        id: 10,
-        name: "Особенности двигателя",
-        index: true,
-        login: "aboutPower",
         type: "input",
     },
     {

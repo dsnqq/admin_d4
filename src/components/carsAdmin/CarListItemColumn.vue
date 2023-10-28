@@ -1,7 +1,7 @@
 <template>
   <td
       :data-th="TABLE_HEADS[num].name"
-      class="car-list-wrapper-column"
+      class=""
   >
     <template v-if="this.name === 'images'">
       <div
@@ -162,6 +162,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "@/components/carsAdmin/components/style/car-list-item.scss";
-@import "../../../../node_modules/lightbox2/dist/css/lightbox.min.css";
+@import "@/components/carsAdmin/style/car-list-item.scss";
+@import "../../../node_modules/lightbox2/dist/css/lightbox.min.css";
 </style>

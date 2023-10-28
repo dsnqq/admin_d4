@@ -20,7 +20,9 @@
                 :class="{'car-index-wrapp__field car-index-field': fieldItem.index}"
             >
               <template v-if="fieldItem.index">
-                <label for="car" class="car-index-field__label">{{fieldItem.name}}</label>
+                <label for="car" class="car-index-field__label">
+                  {{fieldItem.name}}
+                </label>
                 <div class="car-index-field__wrap">
                   <template v-if="fieldItem.type === 'input'">
                     <input
@@ -36,21 +38,45 @@
                         v-if="fieldItem.options"
                         v-model="CAR[fieldItem.login]"
                         :options="fieldItem.options"
-                        class="car-index-field__select"
-                    ></v-multiselect>
+                        :selectedLabel="`Выбрано`"
+                        :deselectLabel="`Клик, чтобы удалить`"
+                        :selectLabel="`Клик, чтобы выбрать`"
+                        :placeholder="fieldItem.name"
+                        class="auto-parts-index-field__select"
+                    >
+                      <template v-slot:noResult>
+                        Пусто...
+                      </template>
+                    </v-multiselect>
                     <v-multiselect
                         v-else-if="fieldItem.optionsMarka"
                         v-model="CAR[fieldItem.login]"
                         :options="MARKA"
                         @input="getModelByMarkaApi"
-                        class="car-index-field__select"
-                    ></v-multiselect>
+                        :selectedLabel="`Выбрано`"
+                        :deselectLabel="`Клик, чтобы удалить`"
+                        :selectLabel="`Клик, чтобы выбрать`"
+                        :placeholder="fieldItem.name"
+                        class="auto-parts-index-field__select"
+                    >
+                      <template v-slot:noResult>
+                        Пусто...
+                      </template>
+                    </v-multiselect>
                     <v-multiselect
                         v-else-if="fieldItem.optionsModel"
                         v-model="CAR[fieldItem.login]"
                         :options="MODEL"
-                        class="car-index-field__select"
-                    ></v-multiselect>
+                        :selectedLabel="`Выбрано`"
+                        :deselectLabel="`Клик, чтобы удалить`"
+                        :selectLabel="`Клик, чтобы выбрать`"
+                        :placeholder="fieldItem.name"
+                        class="auto-parts-index-field__select"
+                    >
+                      <template v-slot:noResult>
+                        Пусто...
+                      </template>
+                    </v-multiselect>
                   </template>
                 </div>
               </template>
@@ -72,14 +98,18 @@
                       <div
                           @click="removeImgDop(index)"
                           class="car-index-photo-item__del"
-                      >Удалить</div>
+                      >
+                        Удалить
+                      </div>
                     </div>
                   </template>
                 </div>
                 <button
                     @click.prevent="modalCarPhotoFade"
                     class="car-index-field-wrap__btn btn btn-primary"
-                >Добавить фото</button>
+                >
+                  Добавить фото
+                </button>
               </div>
             </div>
             <div class="car-index-wrapp__field car-index-field car-index-field--is-btn">
@@ -87,12 +117,16 @@
                   v-if="isCreatedPage"
                   @click.prevent="setCarFromApi"
                   class="btn btn-primary"
-              >Добавить объявление</button>
+              >
+                Добавить объявление
+              </button>
               <button
                   v-if="isEditPage"
                   @click.prevent="editCar"
                   class="btn btn-success"
-              >Сохранить и продолжить редактирование</button>
+              >
+                Сохранить и продолжить редактирование
+              </button>
               <router-link
                   :to="{name: 'carsAdmin'}"
                   class="btn btn-info"
@@ -108,7 +142,10 @@
             <div class="modal-wrapper">
               <div class="modal-container">
                 <div class="modal-body">
-                  <button class="modal-default-button" @click.prevent="modalCarPhotoFade">
+                  <button
+                      @click.prevent="modalCarPhotoFade"
+                      class="modal-default-button"
+                  >
                     X
                   </button>
                   <vue-dropzone
@@ -302,5 +339,6 @@
 
 <style scoped lang="sass">
 @import "vue2-dropzone/dist/vue2Dropzone.min.css"
-@import "@/components/carsAdmin/components/style/car-index.scss"
+@import "@/components/carsAdmin/style/car-index.scss"
+@import "../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css"
 </style>
