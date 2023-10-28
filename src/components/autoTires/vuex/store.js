@@ -81,6 +81,24 @@ export default {
                 });
         },
 
+        CHANGE_AUTO_TIRES_STATUS({commit}, param) {
+            this.dispatch('generalStore/LOCK_UI');
+            return axios.post(
+                DOMAIN + '/index.php?route=api/auto_tires/tires/change_status/' + param.id,
+                {
+                    key: KEYS,
+                    status: param.status
+                }
+            )
+                .then(() => {
+                    this.dispatch('generalStore/UN_LOCK_UI');
+                    commit('SET_CHANGE_AUTO_TIRES_STATUS', param);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+
         GET_AUTO_TIRES_INDEX({commit}, param) {
             return  axios.post(
                 DOMAIN + '/index.php?route=api/auto_tires/tires/index/' + param.id,
@@ -96,6 +114,24 @@ export default {
                 .catch(function (error) {
                     console.log(error);
                     return error;
+                });
+        },
+
+        SET_AUTO_TIRES_IMAGE_FROM_LIST({commit}, param) {
+            this.dispatch('generalStore/LOCK_UI');
+            return axios.post(
+                DOMAIN + '/index.php?route=api/auto_tires/tires/add_images/' + param.autoPartsId,
+                {
+                    key: KEYS,
+                    images: param.images.toString()
+                }
+            )
+                .then(() => {
+                    this.dispatch('generalStore/UN_LOCK_UI');
+                    commit('ADD_AUTO_TIRES_IMAGE_FROM_LIST');
+                })
+                .catch(function (error) {
+                    console.log(error);
                 });
         },
 
@@ -119,6 +155,9 @@ export default {
         },
     },
     mutations: {
+        ADD_AUTO_TIRES_IMAGE_FROM_LIST: () => {
+            alert('Изображения добавлены!');
+        },
         SET_AUTO_TIRES_TO_STATE: (state, autoTires) => {
             state.autoTires = {};
             state.autoTires = autoTires;
@@ -128,6 +167,9 @@ export default {
         },
         SET_AUTO_TIRES_INDEX_STATE: (state, autoTiresIndex) => {
             state.autoTiresIndex = autoTiresIndex;
+        },
+        SET_CHANGE_AUTO_TIRES_STATUS: (state, param) => {
+            state.autoTires[param.index].status = !parseInt(param.status);
         },
         SHOW_ALL_IMAGE_BY_ID: (state, id) => {
             if(!state.autoTires[id].imagesShowAllImage) {

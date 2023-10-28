@@ -117,7 +117,7 @@ const routes = [
         meta: {
             title: 'Шины',
         },
-        component: () => import('../components/autoTires/AutoTires.vue'),
+        component: () => import('../components/autoTires/AutoTiresList.vue'),
     },
     {
         path: '/auto-tires-archive',
