@@ -85,8 +85,7 @@
     computed: {
       ...mapGetters('sparePartsStatistics', [
         'SPARE_PARTS_STATISTICS',
-        'TOTALS_SPARE_PARTS_STATISTICS',
-        'IS_UI_LOCKED',
+        'TOTALS_SPARE_PARTS_STATISTICS'
       ]),
     },
 

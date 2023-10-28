@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h6 class="mb-0 text-uppercase">Статистика просмотров шин</h6>
+    <h6 class="mb-0 text-uppercase">
+      Статистика просмотров шин
+    </h6>
     <hr>
     <div class="card">
       <div class="card-body">
@@ -87,13 +89,8 @@
     computed: {
       ...mapGetters('tireStatistics', [
         'TIRE_STATISTICS',
-        'TOTALS_TIRE_STATISTICS',
-        'IS_UI_LOCKED',
+        'TOTALS_TIRE_STATISTICS'
       ]),
-
-      tireStatisticsTotal() {
-        return parseInt(this.TOTALS_TIRE_STATISTICS);
-      },
     },
 
 

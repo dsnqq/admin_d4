@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h6 class="mb-0 text-uppercase">Статистика по датам</h6>
+    <h6 class="mb-0 text-uppercase">
+      Статистика по датам
+    </h6>
     <hr>
     <div class="card">
       <div class="card-body">
