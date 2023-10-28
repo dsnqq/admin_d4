@@ -12,7 +12,7 @@
           </div>
           <div
               class="card-filter-item__form card-filter-item"
-              :class="p.className"
+              :class="classObject(p.className, Array.isArray(p))"
           >
             <template v-if="Array.isArray(p)">
               <div
@@ -98,6 +98,13 @@ export default {
   },
 
   methods: {
+    classObject(className, bool) {
+      return {
+        className,
+        'card-filter-item--is-mobile-flex': bool
+      }
+    },
+
     customLabelNameReturn({ name }) {
       return name;
     },

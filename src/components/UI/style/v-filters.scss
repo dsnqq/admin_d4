@@ -44,6 +44,15 @@
     display: flex;
     align-items: center;
     flex-grow: 1;
+    @media screen and (max-width: 560px) {
+      margin-bottom: 10px;
+    }
+  }
+
+  &--is-mobile-flex {
+    @media screen and (max-width: 560px) {
+      display: flex !important;
+    }
   }
 
   @media screen and (max-width: 560px) {
