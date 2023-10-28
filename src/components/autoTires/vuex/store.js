@@ -135,6 +135,31 @@ export default {
                 });
         },
 
+        CHANGE_AUTO_TIRES_PRICE({commit}, param) {
+            this.dispatch('generalStore/LOCK_UI');
+            return axios.post(
+                DOMAIN + '/index.php?route=api/auto_tires/tires/change_price/' + param.id,
+                {
+                    key: KEYS,
+                    price: param.priceUSD
+                }
+            )
+                .then((response) => {
+                    this.dispatch('generalStore/UN_LOCK_UI');
+                    let data = {
+                        priceBYN: response.data.autoTiresPriceChange.priceBYN,
+                        priceUSD: response.data.autoTiresPriceChange.priceUSD,
+                        index: param.index,
+                    }
+
+                    commit('SET_CHANGE_AUTO_TIRES_PRICE', data);
+                    return data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+
         DELET_AUTO_TIRES_BY_API({commit}, param) {
             return axios.post(
                 DOMAIN + '/index.php?route=api/auto_tires/tires/delete/' + param.autoTiresId,
@@ -167,6 +192,10 @@ export default {
         },
         SET_AUTO_TIRES_INDEX_STATE: (state, autoTiresIndex) => {
             state.autoTiresIndex = autoTiresIndex;
+        },
+        SET_CHANGE_AUTO_TIRES_PRICE: (state, param) => {
+            state.autoTires[param.index].priceUSD = param.priceUSD;
+            state.autoTires[param.index].priceBYN = param.priceBYN;
         },
         SET_CHANGE_AUTO_TIRES_STATUS: (state, param) => {
             state.autoTires[param.index].status = !parseInt(param.status);

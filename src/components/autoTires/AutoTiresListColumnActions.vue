@@ -1,5 +1,5 @@
 <template>
-  <div class="auto-parts-list-column-actions">
+  <div class="auto-tires-list-column-actions">
     <div class="d-flex align-items-center justify-content-center gap-2 fs-6">
       <a
           :href="DOMAIN + linkToSite"
@@ -17,7 +17,7 @@
         <i class="bi bi-pencil-fill"></i>
       </router-link>
       <a
-          @click="getPhotoAutoParts()"
+          @click="getPhotoAutoTires()"
           class="text-primary cursor-pointer"
       >
         <i class="bi bi-camera"></i>
@@ -30,7 +30,7 @@
       </a>
     </div>
     <div
-        @click="getPrintQrCodeAutoParts(AUTO_TIRES[index].qrCode)"
+        @click="getPrintQrCodeAutoTires(AUTO_TIRES[index].qrCode)"
         class="btn btn-info"
     >
       Печать QR
@@ -42,7 +42,7 @@
     />
     <iframe
         name="autoPartsQrCode"
-        class="auto-parts-list-column-actions__iframe"
+        class="auto-tires-list-column-actions__iframe"
     ></iframe>
   </div>
 </template>
@@ -71,13 +71,13 @@
         'DELET_AUTO_TIRES_BY_API'
       ]),
 
-      getPrintQrCodeAutoParts(qr) {
+      getPrintQrCodeAutoTires(qr) {
         let isIframe = window.frames['autoPartsQrCode'];
         isIframe.document.write(qr);
         isIframe.document.close();
       },
 
-      getPhotoAutoParts() {
+      getPhotoAutoTires() {
         this.modalPhotoAdminShow = true;
       },
 
@@ -108,5 +108,5 @@
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/autoParts/style/auto-parts-list-column-actions.scss"
+@import "@/components/autoTires/style/auto-tires-list-column-actions.scss"
 </style>

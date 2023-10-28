@@ -1,5 +1,5 @@
 <template>
-  <div class="auto-parts-list-column-images">
+  <div class="auto-tires-list-column-images">
     <a
         :href="DOMAIN + `/image/` + images[0].imageBig"
         :data-title="title"
@@ -66,5 +66,5 @@
 
 <style lang="scss" scoped>
 @import "/node_modules/lightbox2/dist/css/lightbox.min.css";
-@import "./src/components/autoParts/style/auto-parts-list-column-images";
+@import "./src/components/autoTires/style/auto-tires-list-column-images";
 </style>
