@@ -65,8 +65,8 @@
           {title: 'Авто в разборе', component: 'carsAdmin', icon: 'bi-wrench'},
           {title: 'Добавить авто в разборе', component: 'carCreate', icon: 'bi-wrench'},
           {title: 'Мои шины', component: 'autoTires', icon: 'bi-vinyl'},
-          {title: 'Архив Шин', component: 'autoTiresArchive', icon: 'bi-archive'},
-          {title: 'Добавить шину', component: 'autoTiresCreate', icon: 'bi-plus-square'},
+          /*{title: 'Архив Шин', component: 'autoTiresArchive', icon: 'bi-archive'},
+          {title: 'Добавить шину', component: 'autoTiresCreate', icon: 'bi-plus-square'},*/
           {title: 'Статистика шин', component: 'tireStatistics', icon: 'bi-info-square-fill'},
           {title: 'Статистика З/Ч', component: 'sparePartsStatistics', icon: 'bi-info-square-fill'},
         ]

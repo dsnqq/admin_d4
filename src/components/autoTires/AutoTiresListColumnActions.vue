@@ -9,13 +9,14 @@
       >
         <i class="bi bi-eye-fill"></i>
       </a>
+      <!---
       <router-link
           :to="`/auto-tires/${id}`"
           class="text-warning"
           title="Редактировать"
       >
         <i class="bi bi-pencil-fill"></i>
-      </router-link>
+      </router-link>-->
       <a
           @click="getPhotoAutoTires()"
           class="text-primary cursor-pointer"
