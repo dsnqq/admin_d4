@@ -174,8 +174,6 @@
       ]),
 
       setFilterOnAutoPartsPage(param) {
-        console.log(param)
-
         this.param.filters.car = (param.car != undefined) ? param.car : {};
         this.param.filters.types = (param.types != undefined) ? param.types : {};
         this.param.filters.yearLast = (param.yearLast != undefined) ? param.yearLast : '';
@@ -241,6 +239,5 @@
 
 <style lang="scss" scoped>
 @import "./src/components/autoParts/style/auto-parts-list";
-@import "../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css";
 @import "@/assets/scss/table-adaptive.scss";
 </style>

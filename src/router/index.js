@@ -40,7 +40,7 @@ const routes = [
         meta: {
             title: 'Архив автозапчастей',
         },
-        component: () => import('../components/autoPartsArchive/AutoPartsArchive.vue'),
+        component: () => import('../components/autoPartsArchive/AutoPartsArchiveList.vue'),
     },
     {
         path: '/history-users',
