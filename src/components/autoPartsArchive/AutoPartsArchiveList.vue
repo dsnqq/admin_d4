@@ -171,7 +171,7 @@ export default {
 
     setPageByTotal(page) {
       this.param.pageNum = page;
-      this.GET_AUTO_PARTS_ARCHIVE_FROM_API(this.param.pageNum);
+      this.GET_AUTO_PARTS_ARCHIVE_FROM_API(this.param);
     },
 
     setFilterOnAutoPartsPage(param) {

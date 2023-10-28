@@ -25,9 +25,6 @@ export default {
         AUTO_PARTS_ARCHIVE_TOTALS(state) {
             return state.autoPartsArchiveTotals;
         },
-        AUTO_PARTS_ARCHIVE_INDEX(state) {
-            return state.autoPartsArchiveIndex;
-        },
         AUTO_PARTS_ARCHIVE_HISTORY(state) {
             return state.autoPartsArchiveHistory;
         },
@@ -139,24 +136,6 @@ export default {
                 });
         },
 
-        GET_AUTO_PARTS_ARCHIVE_INDEX({commit}, param) {
-            return  axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts_archive/auto/index/' + param.id,
-                {
-                    key: KEYS,
-                    param: param
-                }
-            )
-                .then((response) => {
-                    commit('SET_AUTO_PARTS_ARCHIVE_INDEX_STATE', response.data.autoPartsArchiveIndex);
-                    return response.data.autoPartsArchiveIndex;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    return error;
-                });
-        },
-
         RESTORE_AUTO_PARTS_ARCHIVE_BY_API({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
@@ -189,9 +168,6 @@ export default {
         },
         SET_TYPES_OF_AUTO_PARTS_STATE: (state, typesOfAutoPartsArchive) => {
             state.typesOfAutoPartsArchive = typesOfAutoPartsArchive;
-        },
-        SET_AUTO_PARTS_ARCHIVE_INDEX_STATE: (state, autoPartsArchiveIndex) => {
-            state.autoPartsArchiveIndex = autoPartsArchiveIndex;
         },
         SHOW_ALL_IMAGE_BY_ID: (state, id) => {
             if(!state.autoPartsArchive[id].imagesShowAllImage) {
