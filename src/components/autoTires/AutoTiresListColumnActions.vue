@@ -10,7 +10,7 @@
         <i class="bi bi-eye-fill"></i>
       </a>
       <router-link
-          :to="`/tire/${id}`"
+          :to="`/auto-tires/${id}`"
           class="text-warning"
           title="Редактировать"
       >

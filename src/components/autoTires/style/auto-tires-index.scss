@@ -1,13 +1,40 @@
-.auto-parts-index-wrapp {
-  display: grid;
+.auto-parts-index {
+  &__iframe {
+    width: 0;
+    height: 0;
+    border: 0;
+    color: hsl(0, 0%, 100%);
+  }
 }
 
-.auto-parts-index-field {
+.auto-tires-index-wrapp {
+  display: grid;
+
+  &__auto-parts {
+    border-bottom: 1px solid hsl(0, 0%, 80%);
+
+    .auto-tires-index-field {
+      border-bottom: 0 !important;
+    }
+  }
+}
+
+.auto-tires-index-field {
   display: flex;
   align-items: center;
   padding: 10px 0;
 
+  &__controll {
+    display: flex;
+  }
+
+  @media screen and (max-width: 1024px) {
+    display: grid;
+  }
+
   &--is-btn {
+    grid-gap: 10px;
+
     .btn {
       margin-right: 10px;
       margin-left: 10px;
@@ -34,6 +61,10 @@
     box-sizing: border-box;
     font-size: 14px;
     font-weight: bold;
+    @media screen and (max-width: 1024px) {
+      padding: 0 0 5px;
+      min-width: 100%;
+    }
 
     &--is-required {
       &::after {
@@ -46,8 +77,13 @@
   }
 }
 
-.auto-parts-index-field {
+.auto-tires-index-field {
   $self: &;
+
+  &__plus {
+    padding: 3px 8px;
+    margin-left: 10px;
+  }
 
   &__textarea {
     height: 120px;
@@ -55,55 +91,49 @@
     box-sizing: border-box;
     outline: none;
     border-radius: 3px;
-    min-width: 300px;
     border: 1px solid hsl(0, 0%, 73%);
     resize: none;
+    width: 100%;
   }
 
   &__wrap {
+
     &--is-flex {
-      display: flex;
-
-      #{$self}__input,
-      #{$self}__select {
-        margin-right: 10px;
-      }
+      display: grid;
+      grid-gap: 10px;
     }
-  }
+    &--is-three {
+      grid-template-columns: repeat(3, 1fr);
+    }
 
-  &__back {
-    text-decoration: none;
-    font-size: 14px;
-    margin-left: 15px;
-    font-weight: bold;
-    color: #000000;
-    color: red;
-    border-bottom: 1px solid;
-
-    &:hover {
-      border-color: transparent;
+    &--is-too {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 
   &__input {
-    min-width: 300px;
+    width: 100%;
   }
 }
 
-.auto-parts-index-field-wrap {
+.auto-tires-index-field-wrap {
   &__btn {
     margin-top: 10px;
   }
 }
 
-.auto-parts-index-photo-list {
+.auto-tires-index-photo-list {
   display: flex;
+  flex-wrap: wrap;
+  margin: -5px;
+
+  &__item {
+    margin: 5px;
+  }
 }
 
-.auto-parts-index-photo-item {
+.auto-tires-index-photo-item {
   $self: &;
-
-  margin-right: 20px;
 
   &__del {
     text-align: center;
@@ -115,7 +145,8 @@
     text-decoration: none;
     margin-top: 5px;
 
-    &:hover {
+    &:hover,
+    &--is-active {
       color: hsl(0, 0%, 100%);
       background: hsl(208, 77%, 47%);
       border-color: hsl(208, 77%, 47%);

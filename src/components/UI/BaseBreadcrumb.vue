@@ -1,6 +1,11 @@
 <template>
   <div class="page-breadcrumb d-flex align-items-center mb-3">
-    <div class="breadcrumb-title pe-3">{{ $route.meta.title }}</div>
+    <router-link
+        :to="{name: 'dashboardAdmin'}"
+        class="breadcrumb-title"
+    >
+      Главная панель
+    </router-link>
     <div class="ps-3 page-breadcrumb__links">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb mb-0 p-0">
