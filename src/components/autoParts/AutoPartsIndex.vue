@@ -232,12 +232,131 @@
                       :selectLabel="`Клик, чтобы выбрать`"
                       :placeholder="`Запчасть`"
                       class="auto-parts-index-field__select"
+                      @select="dopFieldsSearch"
                   >
                     <template v-slot:noResult>
                       Пусто...
                     </template>
                   </v-multiselect>
                 </div>
+              </div>
+              <div
+                  v-if="dopFieldsForCastDiskDrive"
+              >
+                <div class="auto-parts-index-wrapp__field auto-parts-index-field">
+                  <label class="auto-parts-index-field__label">
+                    Диаметр R, дюймы:
+                  </label>
+                  <div class="auto-parts-index-field__wrap">
+                    <v-multiselect
+                        v-model="AUTO_PARTS_INDEX.wheelDiameterR"
+                        :options="WHEEL_DIAMETER_R"
+                        :selectedLabel="`Выбрано`"
+                        :deselectLabel="`Клик, чтобы удалить`"
+                        :selectLabel="`Клик, чтобы выбрать`"
+                        :placeholder="`Диаметр R`"
+                        class="auto-parts-index-field__select"
+                    >
+                      <template v-slot:noResult>
+                        Пусто...
+                      </template>
+                    </v-multiselect>
+                  </div>
+                </div>
+                <div class="auto-parts-index-wrapp__field auto-parts-index-field">
+                  <label class="auto-parts-index-field__label">
+                    Ширина J, дюймы:
+                  </label>
+                  <div class="auto-parts-index-field__wrap">
+                    <v-multiselect
+                        v-model="AUTO_PARTS_INDEX.wheelWidthJ"
+                        :options="WHEEL_WIDTH_J"
+                        :selectedLabel="`Выбрано`"
+                        :deselectLabel="`Клик, чтобы удалить`"
+                        :selectLabel="`Клик, чтобы выбрать`"
+                        :placeholder="`Ширина J`"
+                        class="auto-parts-index-field__select"
+                    >
+                      <template v-slot:noResult>
+                        Пусто...
+                      </template>
+                    </v-multiselect>
+                  </div>
+                </div>
+                <div class="auto-parts-index-wrapp__field auto-parts-index-field">
+                  <label class="auto-parts-index-field__label">
+                    Кол-во отверстий:
+                  </label>
+                  <div class="auto-parts-index-field__wrap">
+                    <v-multiselect
+                        v-model="AUTO_PARTS_INDEX.numberOfHoles"
+                        :options="NUMBER_OF_HOLES"
+                        :selectedLabel="`Выбрано`"
+                        :deselectLabel="`Клик, чтобы удалить`"
+                        :selectLabel="`Клик, чтобы выбрать`"
+                        :placeholder="`Кол-во отверстий`"
+                        class="auto-parts-index-field__select"
+                    >
+                      <template v-slot:noResult>
+                        Пусто...
+                      </template>
+                    </v-multiselect>
+                  </div>
+                </div>
+                <div class="auto-parts-index-wrapp__field auto-parts-index-field">
+                  <label class="auto-parts-index-field__label">
+                    Расстояние между<br>отверстиями PCD, мм:
+                  </label>
+                  <div class="auto-parts-index-field__wrap">
+                    <v-multiselect
+                        v-model="AUTO_PARTS_INDEX.pcd"
+                        :options="PCD"
+                        :selectedLabel="`Выбрано`"
+                        :deselectLabel="`Клик, чтобы удалить`"
+                        :selectLabel="`Клик, чтобы выбрать`"
+                        :placeholder="`Расстояние между отверстиями`"
+                        class="auto-parts-index-field__select"
+                    >
+                      <template v-slot:noResult>
+                        Пусто...
+                      </template>
+                    </v-multiselect>
+                  </div>
+                </div>
+                <div class="auto-parts-index-wrapp__field auto-parts-index-field">
+                  <label class="auto-parts-index-field__label">
+                    Вылет ET, мм:
+                  </label>
+                  <div class="auto-parts-index-field__wrap">
+                    <input
+                        v-model="AUTO_PARTS_INDEX.departureE"
+                        type="text"
+                        placeholder="Вылет ET, мм"
+                        class="auto-parts-index-field__input"
+                    />
+                  </div>
+                </div>
+                <div class="auto-parts-index-wrapp__field auto-parts-index-field">
+                  <label class="auto-parts-index-field__label">
+                    Диаметр центрального<br>отверстия DIA, мм:
+                  </label>
+                  <div class="auto-parts-index-field__wrap">
+                    <v-multiselect
+                        v-model="AUTO_PARTS_INDEX.diameter"
+                        :options="DIAMETER"
+                        :selectedLabel="`Выбрано`"
+                        :deselectLabel="`Клик, чтобы удалить`"
+                        :selectLabel="`Клик, чтобы выбрать`"
+                        :placeholder="`Расстояние между отверстиями`"
+                        class="auto-parts-index-field__select"
+                    >
+                      <template v-slot:noResult>
+                        Пусто...
+                      </template>
+                    </v-multiselect>
+                  </div>
+                </div>
+                <div class="auto-parts-index-wrapp__field auto-parts-index-field"></div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
                 <label class="auto-parts-index-field__label">
@@ -301,6 +420,55 @@
                       placeholder="Видео"
                       class="auto-parts-index-field__input"
                   >
+                </div>
+              </div>
+              <div
+                  @click="toggleDopFields"
+                  class="auto-parts-index-wrapp__field auto-parts-index-field"
+                >
+                <label class="auto-parts-index-field__label cursor-pointer color-blue">
+                  Дополнительные поля (<span v-html="!dopFields ? 'Показать' : 'Скрыть'"></span>)
+                </label>
+              </div>
+              <div v-show="dopFields">
+                <div class="auto-parts-index-wrapp__field auto-parts-index-field">
+                  <label class="auto-parts-index-field__label">
+                    Имя для связи:
+                  </label>
+                  <div class="auto-parts-index-field__wrap">
+                    <input
+                        v-model="AUTO_PARTS_INDEX.firstname"
+                        type="text"
+                        placeholder="Имя для связи"
+                        class="auto-parts-index-field__input"
+                    >
+                  </div>
+                </div>
+                <div class="auto-parts-index-wrapp__field auto-parts-index-field">
+                  <label class="auto-parts-index-field__label">
+                    Складская информация:
+                  </label>
+                  <div class="auto-parts-index-field__wrap">
+                    <input
+                        v-model="AUTO_PARTS_INDEX.stock"
+                        type="text"
+                        placeholder="Складская информация"
+                        class="auto-parts-index-field__input"
+                    >
+                  </div>
+                </div>
+                <div class="auto-parts-index-wrapp__field auto-parts-index-field">
+                  <label class="auto-parts-index-field__label">
+                    Телефон, если другой:
+                  </label>
+                  <div class="auto-parts-index-field__wrap">
+                    <input
+                        v-model="AUTO_PARTS_INDEX.telephone"
+                        type="text"
+                        placeholder="Телефон, если другой"
+                        class="auto-parts-index-field__input"
+                    >
+                  </div>
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
@@ -426,7 +594,7 @@
   import Breadcrumb from "@/components/UI/BaseBreadcrumb.vue";
   import {mapActions, mapGetters} from "vuex";
   import {DOMAIN} from "@/constants/constants";
-  import {STATUS, YEARS, BODYS, TRANSMISSION, FUELS, TYPE_ENGINES_ALL, TYPE_ENGINES_DISEL, TYPE_ENGINES_BENZ} from "@/constants/constants";
+  import {STATUS, YEARS, BODYS, TRANSMISSION, FUELS, TYPE_ENGINES_ALL, TYPE_ENGINES_DISEL, TYPE_ENGINES_BENZ, WHEEL_DIAMETER_R, WHEEL_WIDTH_J, NUMBER_OF_HOLES, PCD, DIAMETER} from "@/constants/constants";
   import vue2Dropzone from 'vue2-dropzone';
 
   export default {
@@ -444,6 +612,10 @@
 
       this.GET_BREND_MODEL_CAR_AUTO_PARTS();
       this.GET_TYPES_OF_AUTO_PARTS();
+    },
+
+    created() {
+      this.dopFieldsSearch(this.AUTO_PARTS_INDEX.autoPartsName);
     },
 
     computed: {
@@ -473,6 +645,14 @@
         'SET_AUTO_PARTS_FROM_API',
         'RESET_AUTO_PARTS_FOR_CREATE_PAGE'
       ]),
+
+      dopFieldsSearch(select) {
+        if(select.code == 257 || select.code == 262) {
+          this.dopFieldsForCastDiskDrive = true;
+        } else {
+          this.dopFieldsForCastDiskDrive = false;
+        }
+      },
 
       createNameAutoPartsForBd() {
           return this.AUTO_PARTS_INDEX.autoPartsName.name + " к " + this.AUTO_PARTS_INDEX.autoPartsModelBrand.name.split(' >')[0] + " " + this.AUTO_PARTS_INDEX.autoPartsModelBrand.name.split('> ')[1] + " " + this.AUTO_PARTS_INDEX.year + " г.";
@@ -548,6 +728,10 @@
 
       setThisPhotoOnMain(image) {
         this.AUTO_PARTS_INDEX.mainImage = image;
+      },
+
+      toggleDopFields() {
+        this.dopFields = !this.dopFields;
       },
 
       removeImgDop(index) {
@@ -641,6 +825,18 @@
           xForm.append('departureE', this.AUTO_PARTS_INDEX.departureE);
         }
 
+        if(this.AUTO_PARTS_INDEX.firstname !== undefined){
+          xForm.append('firstname', this.AUTO_PARTS_INDEX.firstname);
+        }
+
+        if(this.AUTO_PARTS_INDEX.stock !== undefined){
+          xForm.append('stock', this.AUTO_PARTS_INDEX.stock);
+        }
+
+        if(this.AUTO_PARTS_INDEX.telephone !== undefined){
+          xForm.append('telephone', this.AUTO_PARTS_INDEX.telephone);
+        }
+
         if(this.AUTO_PARTS_INDEX.departureE !== undefined){
           xForm.append('departureE', this.AUTO_PARTS_INDEX.departureE);
         }
@@ -659,6 +855,10 @@
 
         if(this.AUTO_PARTS_INDEX.autoPartsName !== undefined){
           xForm.append('autoPartsName', this.AUTO_PARTS_INDEX.autoPartsName.code);
+        }
+
+        if(this.AUTO_PARTS_INDEX.diameter !== undefined){
+          xForm.append('diameter', this.AUTO_PARTS_INDEX.diameter);
         }
 
         if("autoPartsModelBrand" in this.AUTO_PARTS_INDEX) {
@@ -745,7 +945,9 @@
 
     data() {
       return {
+        dopFieldsForCastDiskDrive: false,
         errorValidate: "",
+        dopFields: false,
         param: {
           id: this.$route.params.id
         },
@@ -758,6 +960,11 @@
         BODYS,
         TRANSMISSION,
         FUELS,
+        WHEEL_DIAMETER_R,
+        WHEEL_WIDTH_J,
+        NUMBER_OF_HOLES,
+        PCD,
+        DIAMETER,
         typeEngines: TYPE_ENGINES_ALL,
         dropzoneOptions: {
           url: '/upload.php',
