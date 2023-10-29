@@ -42,7 +42,7 @@
         @click="getPrintQrCodeAutoParts(AUTO_PARTS[index].qrCode)"
         class="btn btn-info"
     >
-      Печать QR
+      <span class="mobile-block-hidden">Печать</span> QR
     </div>
     <AutoPartsHistoryModal
         @closeHistoryModalAdmin="closeHistoryModalAdmin"

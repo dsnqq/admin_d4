@@ -128,3 +128,9 @@ body {
 .color-blue {
   color: hsl(216, 98%, 52%);
 }
+
+.mobile-block-hidden {
+  @media screen and (max-width: 560px) {
+    display: none;
+  }
+}

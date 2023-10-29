@@ -32,9 +32,6 @@
       </template>
     </Breadcrumb>
     <div class="card">
-      <div class="card-header py-3 text-center">
-        Тут скоро будет больше удобных функций
-      </div>
       <div class="card-body">
         <div class="row">
           <form>

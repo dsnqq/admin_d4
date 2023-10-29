@@ -111,6 +111,7 @@ export default {
         },
 
         GET_AUTO_PARTS_INDEX({commit}, param) {
+            this.dispatch('generalStore/LOCK_UI');
             return  axios.post(
                 DOMAIN + '/index.php?route=api/auto_parts/auto/index/' + param.id,
                 {
@@ -119,6 +120,8 @@ export default {
                 }
             )
                 .then((response) => {
+                    this.dispatch('generalStore/UN_LOCK_UI');
+                    window.scrollTo(0, 0);
                     commit('SET_AUTO_PARTS_INDEX_STATE', response.data.autoPartsIndex);
                     return response.data.autoPartsIndex;
                 })

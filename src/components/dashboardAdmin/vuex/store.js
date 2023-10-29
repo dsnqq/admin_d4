@@ -13,7 +13,8 @@ export default {
         },
     },
     actions: {
-        GET_DASHBOARD_INFORMATION({commit}) {
+        GET_DASHBOARD_INFORMATION({commit}) { 
+            this.dispatch('generalStore/LOCK_UI');
             return axios.post(
                 DOMAIN + '/index.php?route=api/dashboard_admin/index',
                 {
@@ -21,6 +22,7 @@ export default {
                 }
             )
                 .then((response) => {
+                    this.dispatch('generalStore/UN_LOCK_UI');
                     commit('SET_DASHBOARD_INFORMATION', response.data.dashboardInformations);
                     return response.data.dashboardInformations;
                 })
