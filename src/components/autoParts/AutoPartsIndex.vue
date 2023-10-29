@@ -612,7 +612,9 @@
     },
 
     created() {
-      this.dopFieldsSearch(this.AUTO_PARTS_INDEX.autoPartsName);
+      if(!this.isCreatedPage) {
+        this.dopFieldsSearch(this.AUTO_PARTS_INDEX.autoPartsName);
+      }
     },
 
     computed: {
