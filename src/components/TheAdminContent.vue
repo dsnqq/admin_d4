@@ -18,6 +18,13 @@
         />
         <router-view></router-view>
       </main>
+      <transition name="fade">
+        <div
+          v-if="buttonShow"
+          @click="arrowButtonGoTop"
+          class="btn-up"
+        ></div>
+      </transition>
     </div>
   </div>
 </template>
@@ -30,6 +37,11 @@ import Preloader from "@/components/UI/BasePreloader.vue";
 
 export default {
   name: 'TheAdminContent',
+
+  mounted: function () {
+    this.checkScrollPosition();
+    window.addEventListener('scroll', this.checkScrollPosition);
+  },
 
   components: {
     TheHeader,
@@ -55,6 +67,17 @@ export default {
   },
 
   methods: {
+    checkScrollPosition() {
+      this.buttonShow = window.pageYOffset > 200;
+    },
+
+    arrowButtonGoTop() {
+      scroll({
+        top: 0,
+        behavior: "smooth"
+      });
+    },
+
     leftMenuMobileShow(menu) {
       this.menu = menu;
     },
@@ -72,6 +95,7 @@ export default {
 
   data() {
     return {
+      buttonShow: false,
       menu: false
     }
   }

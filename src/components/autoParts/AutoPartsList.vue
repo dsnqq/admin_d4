@@ -237,6 +237,28 @@
   }
 </script>
 
+<style lang="scss">
+@media screen and (max-width: 560px) {
+  .card-filter__rows {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+  }
+  .card-filter-item__label {
+    min-width:100% !important;
+  }
+  .card-filter__item:nth-child(1) { grid-area: 1 / 1 / 2 / 3; }
+  .card-filter__item:nth-child(2) { grid-area: 2 / 1 / 3 / 3; }
+  .card-filter__item:nth-child(3) { grid-area: 3 / 1 / 4 / 3; }
+  .card-filter__item:nth-child(4) { grid-area: 4 / 1 / 5 / 2; }
+  .card-filter__item:nth-child(5) { grid-area: 4 / 2 / 5 / 3; }
+  .card-filter__item:nth-child(6) { grid-area: 5 / 1 / 6 / 2; }
+  .card-filter__item:nth-child(7) { grid-area: 5 / 2 / 6 / 3; }
+  .card-filter__item:nth-child(8) { grid-area: 6 / 1 / 7 / 3; }
+}
+</style>
 <style lang="scss" scoped>
 @import "./src/components/autoParts/style/auto-parts-list";
 @import "@/assets/scss/table-adaptive.scss";

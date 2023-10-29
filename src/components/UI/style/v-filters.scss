@@ -21,6 +21,9 @@
     padding: 0 30px;
     margin-top: 15px;
 
+    @media screen and (max-width: 560px) {
+      margin-top: 5px;
+    }
     .btn:not(:first-child) {
       margin-left: 10px;
     }

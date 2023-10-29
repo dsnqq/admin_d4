@@ -4,10 +4,16 @@
       display: none !important;
     }
   }
+  @media (max-width: 560px) {
+    margin-bottom: 5px !important;
+  }
 }
 
 .breadcrumb-title {
   font-size: 18px;
   border-right: none;
   padding: 0;
+  @media (max-width: 560px) {
+    font-size: 12px;
+  }
 }

@@ -4,10 +4,20 @@
   }
 }
 
-.top-header .navbar .top-navbar-right .nav-link {
-  @media screen and (max-width: 1024px) {
-    font-size: 16px;
-    padding: 0;
+.top-header .navbar {
+  .mobile-toggle-icon {
+    @media screen and (max-width: 560px) {
+      padding: 10px;
+    }
+  }
+  @media screen and (max-width: 560px) {
+    padding: 0 !important;
+  }
+  .top-navbar-right .nav-link {
+    @media screen and (max-width: 1024px) {
+      font-size: 16px;
+      padding: 0;
+    }
   }
 }
 

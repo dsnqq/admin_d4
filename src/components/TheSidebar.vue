@@ -28,7 +28,9 @@
           v-for="link in links"
           :key="link.index"
       >
-        <router-link :to="{name: link.component}">
+        <router-link
+          :to="{name: link.component}"
+        >
           <div class="parent-icon">
             <i
                 class="bi"
@@ -61,7 +63,7 @@
           {title: 'Мои запчасти', component: 'autoParts', icon: 'bi-basket2-fill'},
           {title: 'Архив Запчастей', component: 'autoPartsArchive', icon: 'bi-archive'},
           {title: 'Добавить запчасть', component: 'autoPartsCreate', icon: 'bi-plus-square'},
-          {title: 'История пользователей', component: 'historyUsers', icon: 'bi-journal-text'},
+          /*{title: 'История пользователей', component: 'historyUsers', icon: 'bi-journal-text'},*/
           {title: 'Авто в разборе', component: 'carsAdmin', icon: 'bi-wrench'},
           {title: 'Добавить авто в разборе', component: 'carCreate', icon: 'bi-wrench'},
           {title: 'Мои шины', component: 'autoTires', icon: 'bi-vinyl'},
