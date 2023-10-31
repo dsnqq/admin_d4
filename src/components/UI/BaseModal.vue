@@ -37,5 +37,5 @@
 </script>
 
 <style lang="scss" scoped>
-@import "./src/components/UI/style/v-modal";
+@import "./src/components/UI/style/base-modal";
 </style>

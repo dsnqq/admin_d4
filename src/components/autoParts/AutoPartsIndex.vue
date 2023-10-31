@@ -611,12 +611,6 @@
       this.GET_TYPES_OF_AUTO_PARTS();
     },
 
-    created() {
-      if(!this.isCreatedPage) {
-        this.dopFieldsSearch(this.AUTO_PARTS_INDEX.autoPartsName);
-      }
-    },
-
     computed: {
       ...mapGetters('autoParts', [
           'AUTO_PARTS_INDEX',

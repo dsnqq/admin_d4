@@ -1,0 +1,29 @@
+.page-breadcrumb {
+  .breadcrumb li.breadcrumb-item {
+    @media (max-width: 1024px) {
+      font-size: 12px;
+    }
+
+    & +.breadcrumb-item::before {
+      position: relative;
+      font-size: 9px;
+      top: 3px;
+    }
+  }
+  @media (max-width: 1024px) {
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 560px) {
+    margin-bottom: 5px !important;
+  }
+}
+
+.breadcrumb-title {
+  font-size: 18px;
+  border-right: none;
+  padding: 0;
+  @media (max-width: 1024px) {
+    font-size: 12px;
+  }
+}

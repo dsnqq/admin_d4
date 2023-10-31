@@ -38,5 +38,5 @@
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/style/breadcrumb-admin.scss";
+@import "@/components/UI/style/base-breadcrumb.scss";
 </style>

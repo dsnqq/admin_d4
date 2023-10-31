@@ -28,8 +28,9 @@
           v-for="link in links"
           :key="link.index"
       >
-        <router-link
-          :to="{name: link.component}"
+        <a
+           v-if="checkPermissions(link.permissions)"
+           @click.prevent="linkToComponent(link.component)"
         >
           <div class="parent-icon">
             <i
@@ -40,7 +41,7 @@
           <div class="menu-title">
             {{ link.title }}
           </div>
-        </router-link>
+        </a>
       </li>
     </ul>
   </aside>
@@ -53,24 +54,33 @@
     methods: {
       menuSideBarClosed() {
         this.$emit("menuSideBarClosed");
+      },
+
+      checkPermissions(p) {
+        return p.includes(parseInt(JSON.parse(localStorage.user).user_id)) || p.length == 0;
+      },
+
+      linkToComponent(linkComponent) {
+        this.$router.push({ name: linkComponent }).catch(()=>{});
+        this.$emit("menuSideBarClosed");
       }
     },
 
     data() {
       return {
         links: [
-          {title: 'Главная панель', component: 'dashboardAdmin', icon: 'bi-house-fill'},
-          {title: 'Мои запчасти', component: 'autoParts', icon: 'bi-basket2-fill'},
-          {title: 'Архив Запчастей', component: 'autoPartsArchive', icon: 'bi-archive'},
-          {title: 'Добавить запчасть', component: 'autoPartsCreate', icon: 'bi-plus-square'},
-          /*{title: 'История пользователей', component: 'historyUsers', icon: 'bi-journal-text'},*/
-          {title: 'Авто в разборе', component: 'carsAdmin', icon: 'bi-wrench'},
-          {title: 'Добавить авто в разборе', component: 'carCreate', icon: 'bi-wrench'},
-          {title: 'Мои шины', component: 'autoTires', icon: 'bi-vinyl'},
-          /*{title: 'Архив Шин', component: 'autoTiresArchive', icon: 'bi-archive'},
-          {title: 'Добавить шину', component: 'autoTiresCreate', icon: 'bi-plus-square'},*/
-          {title: 'Статистика шин', component: 'tireStatistics', icon: 'bi-info-square-fill'},
-          {title: 'Статистика З/Ч', component: 'sparePartsStatistics', icon: 'bi-info-square-fill'},
+          {title: 'Главная панель', component: 'dashboardAdmin', icon: 'bi-house-fill', permissions: []},
+          {title: 'Мои запчасти', component: 'autoParts', icon: 'bi-basket2-fill', permissions: []},
+          {title: 'Архив Запчастей', component: 'autoPartsArchive', icon: 'bi-archive', permissions: []},
+          {title: 'Добавить запчасть', component: 'autoPartsCreate', icon: 'bi-plus-square', permissions: []},
+          {title: 'История пользователей', component: 'historyUsers', icon: 'bi-journal-text', permissions: [7,8,22,2]},
+          {title: 'Авто в разборе', component: 'carsAdmin', icon: 'bi-wrench', permissions: []},
+          {title: 'Добавить авто в разборе', component: 'carCreate', icon: 'bi-wrench', permissions: []},
+          {title: 'Мои шины', component: 'autoTires', icon: 'bi-vinyl', permissions: []},
+          {title: 'Архив Шин', component: 'autoTiresArchive', icon: 'bi-archive', permissions: []},
+          {title: 'Добавить шину', component: 'autoTiresCreate', icon: 'bi-plus-square', permissions: [7,8,22,2]},
+          {title: 'Статистика шин', component: 'tireStatistics', icon: 'bi-info-square-fill', permissions: [7,8,22,2]},
+          {title: 'Статистика З/Ч', component: 'sparePartsStatistics', icon: 'bi-info-square-fill', permissions: [7,8,22,2]},
         ]
       }
     }

@@ -26,5 +26,5 @@
 </script>
 
 <style lang="scss" scoped>
-@import "./src/components/UI/style/v-preloader";
+@import "./src/components/UI/style/base-preloader";
 </style>

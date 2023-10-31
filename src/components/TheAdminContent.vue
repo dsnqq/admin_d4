@@ -23,7 +23,9 @@
           v-if="buttonShow"
           @click="arrowButtonGoTop"
           class="btn-up"
-        ></div>
+        >
+          <i class="bi bi-arrow-up-short"></i>
+        </div>
       </transition>
     </div>
   </div>

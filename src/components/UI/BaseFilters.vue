@@ -132,6 +132,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/UI/style/v-filters.scss";
+@import "@/components/UI/style/base-filters.scss";
 @import "../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css";
 </style>

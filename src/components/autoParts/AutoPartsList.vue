@@ -57,11 +57,15 @@
           :totals="AUTO_PARTS_TOTALS"
           @setPageByTotal="setPageByTotal"
       />
+      <BaseButtonFixedAdd
+         component="autoPartsCreate"
+      />
     </div>
   </div>
 </template>
 
 <script>
+  import BaseButtonFixedAdd from "@/components/UI/BaseButtonFixedAdd.vue";
   import Filters from "@/components/UI/BaseFilters.vue";
   import Pagination from "@/components/UI/BasePagination.vue";
   import {COLUMNS} from "@/components/autoParts/constants/constants";
@@ -80,7 +84,8 @@
 
     components: {
       Pagination,
-      Filters
+      Filters,
+      BaseButtonFixedAdd
     },
 
     computed: {
