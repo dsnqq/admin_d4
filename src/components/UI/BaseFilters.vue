@@ -26,8 +26,6 @@
                 <v-multiselect
                     v-model="parameters[j.vModel]"
                     :options="j.params"
-                    :track-by="j.vModel"
-                    :label="j.vModel"
                     :selectedLabel="``"
                     :deselectLabel="`Клик, чтобы удалить`"
                     :selectLabel="`Клик, чтобы выбрать`"
@@ -45,8 +43,6 @@
                 v-if="p.type == 'select'"
                 v-model="parameters[p.vModel]"
                 :options="p.params"
-                :track-by="p.vModel"
-                :label="p.vModel"
                 :custom-label="(p.customLabel == 'name') ? customLabelNameReturn : customLabelReturn"
                 :selectedLabel="``"
                 :deselectLabel="`Клик, чтобы удалить`"
@@ -103,7 +99,7 @@ export default {
   },
 
   mounted() {
-    if(this.$props.storageCache !== null) {
+    /*if(this.$props.storageCache !== null) {
       let localCacheFilters = this.$props.storageCache;
 
       if (localCacheFilters.length !== 0 && localCacheFilters !== undefined) {
@@ -117,7 +113,7 @@ export default {
         this.parameters['yearLast'] = (localCacheFilters.yearLast) ? localCacheFilters.yearLast : '';
         this.parameters['car'] = (localCacheFilters.car) ? localCacheFilters.car : {};
       }
-    }
+    }*/
   },
 
   methods: {
