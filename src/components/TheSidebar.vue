@@ -31,6 +31,7 @@
         <a
            v-if="checkPermissions(link.permissions)"
            @click.prevent="linkToComponent(link.component)"
+           class="cursor-pointer"
         >
           <div class="parent-icon">
             <i
