@@ -21,7 +21,7 @@ const routes = [
         path: '/auto-parts/create',
         name: 'autoPartsCreate',
         meta: {
-            title: 'Добавить автозапчасть',
+            title: 'Добавить З/Ч',
         },
         component: () => import('../components/autoParts/AutoPartsIndex.vue'),
     },

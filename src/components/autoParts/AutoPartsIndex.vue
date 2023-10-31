@@ -498,7 +498,7 @@
                   </div>
                   <button
                       @click.prevent="modalCarPhotoFade"
-                      class="auto-parts-index-field-wrap__btn btn btn-primary"
+                      class="auto-parts-index-field-wrap__btn btn btn-dark"
                   >
                     Добавить фото
                   </button>
@@ -605,6 +605,10 @@
     mounted() {
       if(!this.isCreatedPage) {
         this.GET_AUTO_PARTS_INDEX(this.param);
+      }
+
+      if(this.isCreatedPage) {
+        this.AUTO_PARTS_INDEX.status = "Активно";
       }
 
       this.GET_BREND_MODEL_CAR_AUTO_PARTS();
