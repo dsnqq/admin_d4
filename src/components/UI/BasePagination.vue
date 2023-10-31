@@ -16,7 +16,18 @@
     name: "BasePagination",
 
     props: {
-      totals: Number
+      totals: Number,
+      storageCache: Object
+    },
+
+    mounted() {
+      if(this.$props.storageCache !== null) {
+        let localCacheFilters = this.$props.storageCache;
+
+        if (localCacheFilters.length !== 0) {
+          this.pageNum = (localCacheFilters.page) ? localCacheFilters.page : 1;
+        }
+      }
     },
 
     methods: {

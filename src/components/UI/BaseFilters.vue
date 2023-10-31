@@ -26,7 +26,9 @@
                 <v-multiselect
                     v-model="parameters[j.vModel]"
                     :options="j.params"
-                    :selectedLabel="`Выбрано`"
+                    :track-by="j.vModel"
+                    :label="j.vModel"
+                    :selectedLabel="``"
                     :deselectLabel="`Клик, чтобы удалить`"
                     :selectLabel="`Клик, чтобы выбрать`"
                     :placeholder="j.title"
@@ -43,8 +45,10 @@
                 v-if="p.type == 'select'"
                 v-model="parameters[p.vModel]"
                 :options="p.params"
+                :track-by="p.vModel"
+                :label="p.vModel"
                 :custom-label="(p.customLabel == 'name') ? customLabelNameReturn : customLabelReturn"
-                :selectedLabel="`Выбрано`"
+                :selectedLabel="``"
                 :deselectLabel="`Клик, чтобы удалить`"
                 :selectLabel="`Клик, чтобы выбрать`"
                 :placeholder="p.title"
@@ -94,7 +98,26 @@ export default {
   name: "BaseFilter",
 
   props: {
-    options: Array
+    options: Array,
+    storageCache: Object
+  },
+
+  mounted() {
+    if(this.$props.storageCache !== null) {
+      let localCacheFilters = this.$props.storageCache;
+
+      if (localCacheFilters.length !== 0 && localCacheFilters !== undefined) {
+        this.parameters['types'] = (localCacheFilters.types) ? localCacheFilters.types : {};
+        this.parameters['sparePartNumber'] = (localCacheFilters.sparePartNumber) ? localCacheFilters.sparePartNumber : '';
+        this.parameters['model'] = (localCacheFilters.model) ? localCacheFilters.model : '';
+        this.parameters['status'] = (localCacheFilters.status) ? localCacheFilters.status : 'Все объявления';
+        this.parameters['fuel'] = (localCacheFilters.fuel) ? localCacheFilters.fuel : 'Не выбрано';
+        this.parameters['value'] = (localCacheFilters.value) ? localCacheFilters.value : '';
+        this.parameters['yearStart'] = (localCacheFilters.yearStart) ? localCacheFilters.yearStart : '';
+        this.parameters['yearLast'] = (localCacheFilters.yearLast) ? localCacheFilters.yearLast : '';
+        this.parameters['car'] = (localCacheFilters.car) ? localCacheFilters.car : {};
+      }
+    }
   },
 
   methods: {

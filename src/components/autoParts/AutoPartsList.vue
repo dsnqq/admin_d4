@@ -3,6 +3,7 @@
     <div class="card-header py-2">
       <Filters
         :options="optionsFilters"
+        :storageCache="storageCache"
         @setFilterOnAutoPartsPage="setFilterOnAutoPartsPage"
         @resetFilters="resetFilters"
       />
@@ -55,6 +56,7 @@
       </div>
       <Pagination
           :totals="AUTO_PARTS_TOTALS"
+          :storageCache="storageCache"
           @setPageByTotal="setPageByTotal"
       />
       <BaseButtonFixedAdd
@@ -76,6 +78,25 @@
     name: "AutoPartsList",
 
     mounted() {
+      if(localStorage.getItem('localCacheFilters') !== null) {
+        let localCacheFilters = JSON.parse(localStorage.localCacheFilters);
+
+        if (localCacheFilters.length !== 0) {
+          this.param.pageNum = (localCacheFilters.page) ? localCacheFilters.page : 1;
+          this.param.filters.types = (localCacheFilters.types) ? localCacheFilters.types : {};
+          this.param.filters.sparePartNumber = (localCacheFilters.sparePartNumber) ? localCacheFilters.sparePartNumber : '';
+          this.param.filters.model = (localCacheFilters.model) ? localCacheFilters.model : '';
+          this.param.filters.status = (localCacheFilters.status) ? localCacheFilters.status : 'Все объявления';
+          this.param.filters.fuel = (localCacheFilters.fuel) ? localCacheFilters.fuel : 'Не выбрано';
+          this.param.filters.value = (localCacheFilters.value) ? localCacheFilters.value : '';
+          this.param.filters.yearStart = (localCacheFilters.yearStart) ? localCacheFilters.yearStart : '';
+          this.param.filters.yearLast = (localCacheFilters.yearLast) ? localCacheFilters.yearLast : '';
+          this.param.filters.types = (localCacheFilters.types) ? localCacheFilters.types : {};
+          this.param.filters.car = (localCacheFilters.car) ? localCacheFilters.car : {};
+
+        }
+      }
+
       this.GET_AUTO_PARTS_FROM_API(this.param);
       this.GET_AUTO_PARTS_TOTALS(this.param);
       this.GET_TYPES_OF_AUTO_PARTS();
@@ -95,6 +116,14 @@
         'TYPES_OF_AUTO_PARTS',
         'BREND_MODEL_CAR_AUTO_PARTS'
       ]),
+
+      storageCache() {
+        if(localStorage.getItem('localCacheFilters') !== null) {
+          return JSON.parse(localStorage.localCacheFilters);
+        } else {
+          return {};
+        }
+      },
 
       optionsFilters() {
         return [
@@ -179,6 +208,22 @@
       ]),
 
       setFilterOnAutoPartsPage(param) {
+        let localCacheFilters = {
+          page: this.param.pageNum,
+          car: param.car,
+          types: param.types,
+          yearLast: param.yearLast,
+          yearStart: param.yearStart,
+          sparePartNumber: param.sparePartNumber,
+          model: param.model,
+          status: param.status,
+          fuel: param.fuel,
+          value: param.value
+        }
+
+        localStorage.localCacheFilters = JSON.stringify(localCacheFilters);
+
+        this.param.pageNum = (localCacheFilters.page) ? localCacheFilters.page : 1;
         this.param.filters.car = (param.car != undefined) ? param.car : {};
         this.param.filters.types = (param.types != undefined) ? param.types : {};
         this.param.filters.yearLast = (param.yearLast != undefined) ? param.yearLast : '';
@@ -195,10 +240,18 @@
 
       setPageByTotal(page) {
         this.param.pageNum = page;
+
+        let localCacheFilters = {
+          page: page,
+        }
+        localStorage.localCacheFilters = JSON.stringify(localCacheFilters);
+
         this.GET_AUTO_PARTS_FROM_API(this.param);
       },
 
       resetFilters() {
+        localStorage.removeItem("localCacheFilters");
+
         this.param = {
             pageNum: this.param.pageNum,
             filters: {
@@ -242,26 +295,27 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @media screen and (max-width: 560px) {
-  .card-filter__rows {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
-  }
-  .card-filter-item__label {
-    min-width:100% !important;
-  }
-  .card-filter__item:nth-child(1) { grid-area: 1 / 1 / 2 / 3; }
-  .card-filter__item:nth-child(2) { grid-area: 2 / 1 / 3 / 3; }
-  .card-filter__item:nth-child(3) { grid-area: 3 / 1 / 4 / 3; }
-  .card-filter__item:nth-child(4) { grid-area: 4 / 1 / 5 / 2; }
-  .card-filter__item:nth-child(5) { grid-area: 4 / 2 / 5 / 3; }
-  .card-filter__item:nth-child(6) { grid-area: 5 / 1 / 6 / 2; }
-  .card-filter__item:nth-child(7) { grid-area: 5 / 2 / 6 / 3; }
-  .card-filter__item:nth-child(8) { grid-area: 6 / 1 / 7 / 3; }
+
+    ::v-deep .card-filter__rows {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(6, 1fr);
+      grid-column-gap: 10px;
+      grid-row-gap: 0px;
+    }
+    ::v-deep .card-filter-item__label {
+      min-width:100% !important;
+    }
+    ::v-deep .card-filter__item:nth-child(1) { grid-area: 1 / 1 / 2 / 3; }
+    ::v-deep .card-filter__item:nth-child(2) { grid-area: 2 / 1 / 3 / 3; }
+    ::v-deep .card-filter__item:nth-child(3) { grid-area: 3 / 1 / 4 / 3; }
+    ::v-deep .card-filter__item:nth-child(4) { grid-area: 4 / 1 / 5 / 2; }
+    ::v-deep .card-filter__item:nth-child(5) { grid-area: 4 / 2 / 5 / 3; }
+    ::v-deep .card-filter__item:nth-child(6) { grid-area: 5 / 1 / 6 / 2; }
+    ::v-deep .card-filter__item:nth-child(7) { grid-area: 5 / 2 / 6 / 3; }
+    ::v-deep .card-filter__item:nth-child(8) { grid-area: 6 / 1 / 7 / 3; }
 }
 </style>
 <style lang="scss" scoped>
