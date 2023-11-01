@@ -65,4 +65,4 @@ export const COLUMNS = [
         components: () => import("@/components/autoParts/AutoPartsListColumnActions.vue"),
         className: "text-xxl-center"
     },
-]
+];

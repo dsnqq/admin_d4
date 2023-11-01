@@ -434,55 +434,16 @@
                   </button>
                 </div>
               </div>
-              <div class="auto-parts-index-wrapp__field auto-parts-index-field auto-parts-index-field--is-btn">
-                <template v-if="!isCreatedPage">
-                  <button
-                      @click.prevent="editAutoParts(true)"
-                      class="btn btn-primary"
-                  >
-                    Сохранить
-                  </button>
-                  <button
-                      @click.prevent="editAutoParts(false)"
-                      class="btn btn-success"
-                  >
-                    Сохранить и продолжить редактирование
-                  </button>
-                  <a
-                      :href="domain + AUTO_PARTS_INDEX.linkToSite"
-                      target="_blank"
-                      class="btn btn-warning"
-                  >
-                    Посмотреть на сайте
-                  </a>
-                  <button
-                      @click.prevent="printQrAutoParts"
-                      class="btn btn-dark"
-                  >
-                    Печать QR
-                  </button>
-                </template>
-                <template v-else>
-                  <button
-                      @click.prevent="setAutoPartsFromApi(true)"
-                      class="btn btn-primary"
-                  >
-                    Добавить объявление
-                  </button>
-                  <button
-                      @click.prevent="setAutoPartsFromApi(false)"
-                      class="btn btn-success"
-                  >
-                    Добавить и сохранить значения
-                  </button>
-                </template>
-                <router-link
-                    :to="{name: 'autoParts'}"
-                    class="btn btn-info"
-                >
-                    Выйти без сохранения
-                </router-link>
-              </div>
+                <AutoPartsIndexButtonsEdit
+                   v-if="!isCreatedPage"
+                   @editAutoParts="editAutoParts"
+                   :qrCode="AUTO_PARTS_INDEX.qrCode"
+                  :linkToSite="AUTO_PARTS_INDEX.linkToSite"
+                />
+                <AutoPartsIndexButtonsCreate
+                  v-else
+                  @editAutoParts="setAutoPartsFromApi"
+                />
             </div>
           </form>
         </div>
@@ -513,16 +474,16 @@
         </div>
       </div>
     </div>
-    <iframe name="autoPartsQrCode" class="auto-parts-index__iframe"></iframe>
   </div>
 </template>
 
 <script>
+  import AutoPartsIndexButtonsCreate from "@/components/autoParts/AutoPartsIndexButtonsCreate.vue";
+  import AutoPartsIndexButtonsEdit from "@/components/autoParts/AutoPartsIndexButtonsEdit.vue";
   import BaseMultiselect from "@/components/UI/BaseMultiselect.vue";
   import Breadcrumb from "@/components/UI/BaseBreadcrumb.vue";
   import {mapActions, mapGetters} from "vuex";
-  import {DOMAIN} from "@/constants/constants";
-  import {STATUS, YEARS, BODYS, TRANSMISSION, FUELS, TYPE_ENGINES_ALL, TYPE_ENGINES_DISEL, TYPE_ENGINES_BENZ, WHEEL_DIAMETER_R, WHEEL_WIDTH_J, NUMBER_OF_HOLES, PCD, DIAMETER} from "@/constants/constants";
+  import {DOMAIN, STATUS, YEARS, BODYS, TRANSMISSION, FUELS, TYPE_ENGINES_ALL, TYPE_ENGINES_DISEL, TYPE_ENGINES_BENZ, WHEEL_DIAMETER_R, WHEEL_WIDTH_J, NUMBER_OF_HOLES, PCD, DIAMETER} from "@/constants/constants";
   import vue2Dropzone from 'vue2-dropzone';
 
   export default {
@@ -532,6 +493,8 @@
       Breadcrumb,
       vueDropzone: vue2Dropzone,
       BaseMultiselect,
+      AutoPartsIndexButtonsEdit,
+      AutoPartsIndexButtonsCreate
     },
 
     mounted() {
@@ -686,12 +649,6 @@
 
       modalCarPhotoFade() {
         this.showModal = !this.showModal;
-      },
-
-      printQrAutoParts() {
-        let isIframe = window.frames['autoPartsQrCode'];
-        isIframe.document.write(this.AUTO_PARTS_INDEX.qrCode);
-        isIframe.document.close();
       },
 
       getFormDataAboutAutoParts() {
