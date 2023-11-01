@@ -257,19 +257,12 @@
                     />
                   </div>
                 </div>
-                <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                  <label class="auto-parts-index-field__label">
-                    Вылет ET, мм:
-                  </label>
-                  <div class="auto-parts-index-field__wrap">
-                    <input
-                        v-model="AUTO_PARTS_INDEX.departureE"
-                        type="text"
-                        placeholder="Вылет ET, мм"
-                        class="auto-parts-index-field__input"
-                    />
-                  </div>
-                </div>
+                <AutoPartsIndexField
+                    v-model="AUTO_PARTS_INDEX.departureE"
+                    title="Вылет ET, мм"
+                    placeholder="Вылет ET, мм"
+                    class="auto-parts-index-wrapp__field"
+                />
                 <div class="auto-parts-index-wrapp__field auto-parts-index-field">
                   <label class="auto-parts-index-field__label">
                     Диаметр центрального<br>отверстия DIA, мм:
@@ -297,58 +290,29 @@
                   ></textarea>
                 </div>
               </div>
-              <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label">
-                  Артикул (ext_id автоматически):
-                </label>
-                <div class="auto-parts-index-field__wrap">
-                  <input
-                      v-model="AUTO_PARTS_INDEX.model"
-                      type="text"
-                      placeholder="Артикул"
-                      class="auto-parts-index-field__input"
-                  >
-                </div>
-              </div>
-              <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label">
-                  Номер запчасти:
-                </label>
-                <div class="auto-parts-index-field__wrap">
-                  <input
-                      v-model="AUTO_PARTS_INDEX.sparePartNumber"
-                      type="text"
-                      placeholder="Номер запчасти"
-                      class="auto-parts-index-field__input"
-                  >
-                </div>
-              </div>
-              <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label auto-parts-index-field__label--is-required">
-                  Цена в долларах:
-                </label>
-                <div class="auto-parts-index-field__wrap">
-                  <input
-                      v-model="AUTO_PARTS_INDEX.priceUSD"
-                      type="number"
-                      placeholder="Цена в долларах"
-                      class="auto-parts-index-field__input"
-                  >
-                </div>
-              </div>
-              <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label">
-                  Код видео с youtube.com:
-                </label>
-                <div class="auto-parts-index-field__wrap">
-                  <input
-                      v-model="AUTO_PARTS_INDEX.youtube"
-                      type="text"
-                      placeholder="Видео"
-                      class="auto-parts-index-field__input"
-                  >
-                </div>
-              </div>
+              <AutoPartsIndexField
+                  v-model="AUTO_PARTS_INDEX.model"
+                  title="Артикул (ext_id автоматически)"
+                  placeholder="Артикул"
+                  class="auto-parts-index-wrapp__field"
+              />
+              <AutoPartsIndexField
+                  v-model="AUTO_PARTS_INDEX.sparePartNumber"
+                  title="Номер запчасти"
+                  class="auto-parts-index-wrapp__field"
+              />
+              <AutoPartsIndexField
+                  v-model="AUTO_PARTS_INDEX.priceUSD"
+                  title="Цена в долларах"
+                  required
+                  class="auto-parts-index-wrapp__field"
+              />
+              <AutoPartsIndexField
+                  v-model="AUTO_PARTS_INDEX.youtube"
+                  title="Код видео с youtube.com"
+                  placeholder="Видео"
+                  class="auto-parts-index-wrapp__field"
+              />
               <div
                   @click="toggleDopFields"
                   class="auto-parts-index-wrapp__field auto-parts-index-field"
@@ -358,45 +322,21 @@
                 </label>
               </div>
               <div v-show="dopFields">
-                <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                  <label class="auto-parts-index-field__label">
-                    Имя для связи:
-                  </label>
-                  <div class="auto-parts-index-field__wrap">
-                    <input
-                        v-model="AUTO_PARTS_INDEX.firstname"
-                        type="text"
-                        placeholder="Имя для связи"
-                        class="auto-parts-index-field__input"
-                    >
-                  </div>
-                </div>
-                <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                  <label class="auto-parts-index-field__label">
-                    Складская информация:
-                  </label>
-                  <div class="auto-parts-index-field__wrap">
-                    <input
-                        v-model="AUTO_PARTS_INDEX.stock"
-                        type="text"
-                        placeholder="Складская информация"
-                        class="auto-parts-index-field__input"
-                    >
-                  </div>
-                </div>
-                <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                  <label class="auto-parts-index-field__label">
-                    Телефон, если другой:
-                  </label>
-                  <div class="auto-parts-index-field__wrap">
-                    <input
-                        v-model="AUTO_PARTS_INDEX.telephone"
-                        type="text"
-                        placeholder="Телефон, если другой"
-                        class="auto-parts-index-field__input"
-                    >
-                  </div>
-                </div>
+                <AutoPartsIndexField
+                    v-model="AUTO_PARTS_INDEX.firstname"
+                    title="Имя для связи"
+                    class="auto-parts-index-wrapp__field"
+                />
+                <AutoPartsIndexField
+                    v-model="AUTO_PARTS_INDEX.stock"
+                    title="Складская информация"
+                    class="auto-parts-index-wrapp__field"
+                />
+                <AutoPartsIndexField
+                    v-model="AUTO_PARTS_INDEX.telephone"
+                    title="Телефон, если другой"
+                    class="auto-parts-index-wrapp__field"
+                />
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
                 <label class="auto-parts-index-field__label">
@@ -478,6 +418,7 @@
 </template>
 
 <script>
+  import AutoPartsIndexField from "@/components/autoParts/AutoPartsIndexField.vue";
   import AutoPartsIndexButtonsCreate from "@/components/autoParts/AutoPartsIndexButtonsCreate.vue";
   import AutoPartsIndexButtonsEdit from "@/components/autoParts/AutoPartsIndexButtonsEdit.vue";
   import BaseMultiselect from "@/components/UI/BaseMultiselect.vue";
@@ -494,7 +435,8 @@
       vueDropzone: vue2Dropzone,
       BaseMultiselect,
       AutoPartsIndexButtonsEdit,
-      AutoPartsIndexButtonsCreate
+      AutoPartsIndexButtonsCreate,
+      AutoPartsIndexField
     },
 
     mounted() {
