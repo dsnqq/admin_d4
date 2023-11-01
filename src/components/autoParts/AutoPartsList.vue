@@ -3,7 +3,6 @@
     <div class="card-header py-2">
       <Filters
         :options="optionsFilters"
-        :storageCache="storageCache"
         @setFilterOnAutoPartsPage="setFilterOnAutoPartsPage"
         @resetFilters="resetFilters"
       />
@@ -78,25 +77,6 @@
     name: "AutoPartsList",
 
     mounted() {
-      if(localStorage.getItem('localCacheFilters') !== null) {
-        let localCacheFilters = JSON.parse(localStorage.localCacheFilters);
-
-        if (localCacheFilters.length !== 0) {
-          this.param.pageNum = (localCacheFilters.page) ? localCacheFilters.page : 1;
-          this.param.filters.types = (localCacheFilters.types) ? localCacheFilters.types : {};
-          this.param.filters.sparePartNumber = (localCacheFilters.sparePartNumber) ? localCacheFilters.sparePartNumber : '';
-          this.param.filters.model = (localCacheFilters.model) ? localCacheFilters.model : '';
-          this.param.filters.status = (localCacheFilters.status) ? localCacheFilters.status : 'Все объявления';
-          this.param.filters.fuel = (localCacheFilters.fuel) ? localCacheFilters.fuel : 'Не выбрано';
-          this.param.filters.value = (localCacheFilters.value) ? localCacheFilters.value : '';
-          this.param.filters.yearStart = (localCacheFilters.yearStart) ? localCacheFilters.yearStart : '';
-          this.param.filters.yearLast = (localCacheFilters.yearLast) ? localCacheFilters.yearLast : '';
-          this.param.filters.types = (localCacheFilters.types) ? localCacheFilters.types : {};
-          this.param.filters.car = (localCacheFilters.car) ? localCacheFilters.car : {};
-
-        }
-      }
-
       this.GET_AUTO_PARTS_FROM_API(this.param);
       this.GET_AUTO_PARTS_TOTALS(this.param);
       this.GET_TYPES_OF_AUTO_PARTS();
@@ -208,22 +188,6 @@
       ]),
 
       setFilterOnAutoPartsPage(param) {
-        let localCacheFilters = {
-          page: this.param.pageNum,
-          car: param.car,
-          types: param.types,
-          yearLast: param.yearLast,
-          yearStart: param.yearStart,
-          sparePartNumber: param.sparePartNumber,
-          model: param.model,
-          status: param.status,
-          fuel: param.fuel,
-          value: param.value
-        }
-
-        localStorage.localCacheFilters = JSON.stringify(localCacheFilters);
-
-        this.param.pageNum = (localCacheFilters.page) ? localCacheFilters.page : 1;
         this.param.filters.car = (param.car != undefined) ? param.car : {};
         this.param.filters.types = (param.types != undefined) ? param.types : {};
         this.param.filters.yearLast = (param.yearLast != undefined) ? param.yearLast : '';
@@ -240,18 +204,10 @@
 
       setPageByTotal(page) {
         this.param.pageNum = page;
-
-        let localCacheFilters = {
-          page: page,
-        }
-        localStorage.localCacheFilters = JSON.stringify(localCacheFilters);
-
         this.GET_AUTO_PARTS_FROM_API(this.param);
       },
 
       resetFilters() {
-        localStorage.removeItem("localCacheFilters");
-
         this.param = {
             pageNum: this.param.pageNum,
             filters: {

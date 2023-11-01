@@ -23,37 +23,25 @@
                 <span class="m-1">
                   {{j.textLabel}}
                 </span>
-                <v-multiselect
+                <BaseMultiselect
                     v-model="parameters[j.vModel]"
                     :options="j.params"
-                    :selectedLabel="``"
-                    :deselectLabel="`Клик, чтобы удалить`"
-                    :selectLabel="`Клик, чтобы выбрать`"
+                    :id="j.vModel"
                     :placeholder="j.title"
                     class="card-filter-item__select card-filter-item__select--is-year"
-                >
-                  <template v-slot:noResult>
-                    Пусто...
-                  </template>
-                </v-multiselect>
+                />
               </div>
             </template>
             <template v-else>
-            <v-multiselect
-                v-if="p.type == 'select'"
-                v-model="parameters[p.vModel]"
-                :options="p.params"
-                :custom-label="(p.customLabel == 'name') ? customLabelNameReturn : customLabelReturn"
-                :selectedLabel="``"
-                :deselectLabel="`Клик, чтобы удалить`"
-                :selectLabel="`Клик, чтобы выбрать`"
-                :placeholder="p.title"
-                class="card-filter-item__select"
-            >
-              <template v-slot:noResult>
-                Пусто...
-              </template>
-            </v-multiselect>
+              <BaseMultiselect
+                  v-if="p.type == 'select'"
+                  :options="p.params"
+                  v-model="parameters[p.vModel]"
+                  :id="p.vModel"
+                  :customLabel="p.customLabel"
+                  :placeholder="p.title"
+                  class="card-filter-item__select"
+              />
             <input
                 v-else-if="p.type == 'input'"
                 v-model="parameters[p.vModel]"
@@ -90,30 +78,17 @@
 </template>
 
 <script>
+import BaseMultiselect from "@/components/UI/BaseMultiselect.vue";
+
 export default {
   name: "BaseFilter",
 
   props: {
-    options: Array,
-    storageCache: Object
+    options: Array
   },
 
-  mounted() {
-    /*if(this.$props.storageCache !== null) {
-      let localCacheFilters = this.$props.storageCache;
-
-      if (localCacheFilters.length !== 0 && localCacheFilters !== undefined) {
-        this.parameters['types'] = (localCacheFilters.types) ? localCacheFilters.types : {};
-        this.parameters['sparePartNumber'] = (localCacheFilters.sparePartNumber) ? localCacheFilters.sparePartNumber : '';
-        this.parameters['model'] = (localCacheFilters.model) ? localCacheFilters.model : '';
-        this.parameters['status'] = (localCacheFilters.status) ? localCacheFilters.status : 'Все объявления';
-        this.parameters['fuel'] = (localCacheFilters.fuel) ? localCacheFilters.fuel : 'Не выбрано';
-        this.parameters['value'] = (localCacheFilters.value) ? localCacheFilters.value : '';
-        this.parameters['yearStart'] = (localCacheFilters.yearStart) ? localCacheFilters.yearStart : '';
-        this.parameters['yearLast'] = (localCacheFilters.yearLast) ? localCacheFilters.yearLast : '';
-        this.parameters['car'] = (localCacheFilters.car) ? localCacheFilters.car : {};
-      }
-    }*/
+  components: {
+    BaseMultiselect
   },
 
   methods: {
@@ -122,14 +97,6 @@ export default {
         className,
         'card-filter-item--is-mobile-flex': bool
       }
-    },
-
-    customLabelNameReturn({ name }) {
-      return name;
-    },
-
-    customLabelReturn(data) {
-      return data;
     },
 
     setFilterOnAutoPartsPage() {
