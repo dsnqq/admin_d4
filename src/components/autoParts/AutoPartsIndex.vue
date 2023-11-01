@@ -41,19 +41,12 @@
                   Статус:
                 </label>
                 <div class="auto-parts-index-field__wrap">
-                  <v-multiselect
+                  <BaseMultiselect
                       v-model="AUTO_PARTS_INDEX.status"
                       :options="STATUS"
-                      :selectedLabel="`Выбрано`"
-                      :deselectLabel="`Клик, чтобы удалить`"
-                      :selectLabel="`Клик, чтобы выбрать`"
-                      :placeholder="`Статус`"
+                      id="status"
                       class="auto-parts-index-field__select"
-                  >
-                    <template v-slot:noResult>
-                      Пусто...
-                    </template>
-                  </v-multiselect>
+                  />
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__auto-parts">
@@ -66,36 +59,22 @@
                     Марка и модель:
                   </label>
                   <div class="auto-parts-index-field__wrap">
-                    <v-multiselect
+                    <BaseMultiselect
                         v-if="isCreatedPage"
                         v-model="autoPartsModelBrands[i]"
                         :options="BREND_MODEL_CAR_AUTO_PARTS"
-                        :custom-label="customLabelNameReturn"
-                        :selectedLabel="`Выбрано`"
-                        :deselectLabel="`Клик, чтобы удалить`"
-                        :selectLabel="`Клик, чтобы выбрать`"
-                        :placeholder="`Марка и Модель`"
+                        customLabel="name"
+                        id="autoPartsModelBrands"
                         class="auto-parts-index-field__select"
-                    >
-                      <template v-slot:noResult>
-                        Пусто...
-                      </template>
-                    </v-multiselect>
-                    <v-multiselect
+                    />
+                    <BaseMultiselect
                         v-else
                         v-model="AUTO_PARTS_INDEX.autoPartsModelBrand"
                         :options="BREND_MODEL_CAR_AUTO_PARTS"
-                        :custom-label="customLabelNameReturn"
-                        :selectedLabel="`Выбрано`"
-                        :deselectLabel="`Клик, чтобы удалить`"
-                        :selectLabel="`Клик, чтобы выбрать`"
-                        :placeholder="`Марка и Модель`"
+                        customLabel="name"
+                        id="autoPartsModelBrands"
                         class="auto-parts-index-field__select"
-                    >
-                      <template v-slot:noResult>
-                        Пусто...
-                      </template>
-                    </v-multiselect>
+                    />
                   </div>
                   <div class="auto-parts-index-field__controll">
                     <div
@@ -187,32 +166,18 @@
                   Тип кузова и коробка:
                 </label>
                 <div class="auto-parts-index-field__wrap auto-parts-index-field__wrap--is-flex auto-parts-index-field__wrap--is-too">
-                  <v-multiselect
+                  <BaseMultiselect
                       v-model="AUTO_PARTS_INDEX.typeBody"
                       :options="BODYS"
-                      :selectedLabel="`Выбрано`"
-                      :deselectLabel="`Клик, чтобы удалить`"
-                      :selectLabel="`Клик, чтобы выбрать`"
-                      :placeholder="`Кузов`"
+                      id="typeBody"
                       class="auto-parts-index-field__select"
-                  >
-                    <template v-slot:noResult>
-                      Пусто...
-                    </template>
-                  </v-multiselect>
-                  <v-multiselect
+                  />
+                  <BaseMultiselect
                       v-model="AUTO_PARTS_INDEX.transmission"
                       :options="TRANSMISSION"
-                      :selectedLabel="`Выбрано`"
-                      :deselectLabel="`Клик, чтобы удалить`"
-                      :selectLabel="`Клик, чтобы выбрать`"
-                      :placeholder="`Коробка`"
+                      id="transmission"
                       class="auto-parts-index-field__select"
-                  >
-                    <template v-slot:noResult>
-                      Пусто...
-                    </template>
-                  </v-multiselect>
+                  />
                 </div>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
@@ -245,19 +210,12 @@
                     Диаметр R, дюймы:
                   </label>
                   <div class="auto-parts-index-field__wrap">
-                    <v-multiselect
+                    <BaseMultiselect
                         v-model="AUTO_PARTS_INDEX.wheelDiameterR"
                         :options="WHEEL_DIAMETER_R"
-                        :selectedLabel="`Выбрано`"
-                        :deselectLabel="`Клик, чтобы удалить`"
-                        :selectLabel="`Клик, чтобы выбрать`"
-                        :placeholder="`Диаметр R`"
+                        id="wheelDiameterR"
                         class="auto-parts-index-field__select"
-                    >
-                      <template v-slot:noResult>
-                        Пусто...
-                      </template>
-                    </v-multiselect>
+                    />
                   </div>
                 </div>
                 <div class="auto-parts-index-wrapp__field auto-parts-index-field">
@@ -265,19 +223,12 @@
                     Ширина J, дюймы:
                   </label>
                   <div class="auto-parts-index-field__wrap">
-                    <v-multiselect
+                    <BaseMultiselect
                         v-model="AUTO_PARTS_INDEX.wheelWidthJ"
                         :options="WHEEL_WIDTH_J"
-                        :selectedLabel="`Выбрано`"
-                        :deselectLabel="`Клик, чтобы удалить`"
-                        :selectLabel="`Клик, чтобы выбрать`"
-                        :placeholder="`Ширина J`"
+                        id="wheelWidthJ"
                         class="auto-parts-index-field__select"
-                    >
-                      <template v-slot:noResult>
-                        Пусто...
-                      </template>
-                    </v-multiselect>
+                    />
                   </div>
                 </div>
                 <div class="auto-parts-index-wrapp__field auto-parts-index-field">
@@ -285,19 +236,12 @@
                     Кол-во отверстий:
                   </label>
                   <div class="auto-parts-index-field__wrap">
-                    <v-multiselect
+                    <BaseMultiselect
                         v-model="AUTO_PARTS_INDEX.numberOfHoles"
                         :options="NUMBER_OF_HOLES"
-                        :selectedLabel="`Выбрано`"
-                        :deselectLabel="`Клик, чтобы удалить`"
-                        :selectLabel="`Клик, чтобы выбрать`"
-                        :placeholder="`Кол-во отверстий`"
+                        id="numberOfHoles"
                         class="auto-parts-index-field__select"
-                    >
-                      <template v-slot:noResult>
-                        Пусто...
-                      </template>
-                    </v-multiselect>
+                    />
                   </div>
                 </div>
                 <div class="auto-parts-index-wrapp__field auto-parts-index-field">
@@ -305,19 +249,12 @@
                     Расстояние между<br>отверстиями PCD, мм:
                   </label>
                   <div class="auto-parts-index-field__wrap">
-                    <v-multiselect
+                    <BaseMultiselect
                         v-model="AUTO_PARTS_INDEX.pcd"
                         :options="PCD"
-                        :selectedLabel="`Выбрано`"
-                        :deselectLabel="`Клик, чтобы удалить`"
-                        :selectLabel="`Клик, чтобы выбрать`"
-                        :placeholder="`Расстояние между отверстиями`"
+                        id="pcd"
                         class="auto-parts-index-field__select"
-                    >
-                      <template v-slot:noResult>
-                        Пусто...
-                      </template>
-                    </v-multiselect>
+                    />
                   </div>
                 </div>
                 <div class="auto-parts-index-wrapp__field auto-parts-index-field">
@@ -338,19 +275,12 @@
                     Диаметр центрального<br>отверстия DIA, мм:
                   </label>
                   <div class="auto-parts-index-field__wrap">
-                    <v-multiselect
+                    <BaseMultiselect
                         v-model="AUTO_PARTS_INDEX.diameter"
                         :options="DIAMETER"
-                        :selectedLabel="`Выбрано`"
-                        :deselectLabel="`Клик, чтобы удалить`"
-                        :selectLabel="`Клик, чтобы выбрать`"
-                        :placeholder="`Расстояние между отверстиями`"
+                        id="diameter"
                         class="auto-parts-index-field__select"
-                    >
-                      <template v-slot:noResult>
-                        Пусто...
-                      </template>
-                    </v-multiselect>
+                    />
                   </div>
                 </div>
                 <div class="auto-parts-index-wrapp__field auto-parts-index-field"></div>
@@ -588,6 +518,7 @@
 </template>
 
 <script>
+  import BaseMultiselect from "@/components/UI/BaseMultiselect.vue";
   import Breadcrumb from "@/components/UI/BaseBreadcrumb.vue";
   import {mapActions, mapGetters} from "vuex";
   import {DOMAIN} from "@/constants/constants";
@@ -600,6 +531,7 @@
     components: {
       Breadcrumb,
       vueDropzone: vue2Dropzone,
+      BaseMultiselect,
     },
 
     mounted() {
