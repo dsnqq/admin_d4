@@ -4,16 +4,15 @@
         class="auto-parts-index-field__label"
         :class="{'auto-parts-index-field__label--is-required' : required}"
     >
-      {{title}}:
+      {{label}}:
     </label>
-    <div class="auto-parts-index-field__wrap">
-      <input
-          v-model="model"
-          :type="(type) ? type : 'text'"
-          :placeholder="(placeholder) ? placeholder : title"
-          class="auto-parts-index-field__input"
-      >
+    <div
+        class="auto-parts-index-field__wrap"
+        :class="className"
+    >
+      <slot></slot>
     </div>
+    <slot name="additional"></slot>
   </div>
 </template>
 
@@ -27,44 +26,19 @@
     },
 
     props: {
-      title: {
+      className: {
         type: String
       },
 
-      placeholder: {
+      label: {
         type: String
-      },
-
-      type: {
-        type: String
-      },
-
-      value: {
-        type: [Number, Array, String, Object],
-        required: false,
-        default: () => null,
       },
 
       required: {
         type: Boolean,
         default: false
       }
-    },
-
-    computed: {
-      model: {
-        get() {
-          return this.value;
-        },
-
-        set(val) {
-          this.$emit(
-              'input',
-              val
-          )
-        },
-      },
-    },
+    }
   }
 </script>
 

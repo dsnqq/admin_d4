@@ -1,26 +1,10 @@
 <template>
   <div class="auto-parts-index">
-    <div
+    <BaseAlert
         v-if="errorValidate != ''"
-        class="alert border-0 bg-light-danger alert-dismissible fade show py-2"
-    >
-      <div class="d-flex align-items-center">
-        <div class="fs-3 text-danger"><i class="bi bi-x-circle-fill"></i>
-        </div>
-        <div class="ms-3">
-          <div class="text-danger">
-            {{errorValidate}}
-          </div>
-        </div>
-      </div>
-      <button
-          @click.prevent="closeAlertMessage"
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="alert"
-          aria-label="Close">
-      </button>
-    </div>
+        :errorValidate="errorValidate"
+        @closeAlertMessage="closeAlertMessage"
+    />
     <Breadcrumb>
       <template v-slot:buttons>
         <router-link
@@ -36,283 +20,291 @@
         <div class="row">
           <form>
             <div class="auto-parts-index__wrapp auto-parts-index-wrapp">
-              <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label">
-                  Статус:
-                </label>
-                <div class="auto-parts-index-field__wrap">
-                  <BaseMultiselect
-                      v-model="AUTO_PARTS_INDEX.status"
-                      :options="STATUS"
-                      id="status"
-                      class="auto-parts-index-field__select"
-                  />
-                </div>
-              </div>
+              <AutoPartsIndexField
+                  label="Статус"
+                  class="auto-parts-index-wrapp__field"
+              >
+                <BaseMultiselect
+                    v-model="AUTO_PARTS_INDEX.status"
+                    :options="STATUS"
+                    id="status"
+                    class="auto-parts-index-field__select"
+                />
+              </AutoPartsIndexField>
               <div class="auto-parts-index-wrapp__auto-parts">
-                <div
+                <AutoPartsIndexField
                     v-for="(countAutoParts, i) in countAutoPartsAdd"
                     :key="i"
-                    class="auto-parts-index-wrapp__field auto-parts-index-field"
+                    label="Марка и модель"
+                    class="auto-parts-index-wrapp__field"
                 >
-                  <label class="auto-parts-index-field__label auto-parts-index-field__label--is-required">
-                    Марка и модель:
-                  </label>
-                  <div class="auto-parts-index-field__wrap">
-                    <BaseMultiselect
-                        v-if="isCreatedPage"
-                        v-model="autoPartsModelBrands[i]"
-                        :options="BREND_MODEL_CAR_AUTO_PARTS"
-                        customLabel="name"
-                        id="autoPartsModelBrands"
-                        class="auto-parts-index-field__select"
-                    />
-                    <BaseMultiselect
-                        v-else
-                        v-model="AUTO_PARTS_INDEX.autoPartsModelBrand"
-                        :options="BREND_MODEL_CAR_AUTO_PARTS"
-                        customLabel="name"
-                        id="autoPartsModelBrands"
-                        class="auto-parts-index-field__select"
-                    />
-                  </div>
-                  <div class="auto-parts-index-field__controll">
-                    <div
-                        v-if="isAddAutoPartsMore(i)"
-                        @click="addAutoPartsMore"
-                        class="auto-parts-index-field__plus btn-primary btn"
-                    >
-                      <span class="bi bi-plus-circle"></span>
-                    </div>
-                    <div
-                        v-if="isRemoveAutoPartsMore(i)"
-                        @click="removeAutoPartsMore"
-                        class="auto-parts-index-field__plus btn-danger btn"
-                    >
-                      <span class="bi bi-x-circle"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label auto-parts-index-field__label--is-required">
-                  Год:
-                </label>
-                <div class="auto-parts-index-field__wrap auto-parts-index-field__wrap--is-flex auto-parts-index-field__wrap--is-too">
-                  <v-multiselect
-                      v-model="AUTO_PARTS_INDEX.year"
-                      :options="YEARS"
-                      :selectedLabel="`Выбрано`"
-                      :deselectLabel="`Клик, чтобы удалить`"
-                      :selectLabel="`Клик, чтобы выбрать`"
-                      :placeholder="`Год`"
-                      @select="getFuelToTypeEngines"
-                      class="auto-parts-index-field__select"
-                  >
-                    <template v-slot:noResult>
-                      Пусто...
-                    </template>
-                  </v-multiselect>
-                  <input
-                      v-model="AUTO_PARTS_INDEX.modification"
-                      type="text"
-                      placeholder="Модификация"
-                      class="auto-parts-index-field__input"
-                  />
-                </div>
-              </div>
-              <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label">
-                  Объем (л), топливо и тип:
-                </label>
-                <div class="auto-parts-index-field__wrap auto-parts-index-field__wrap--is-flex auto-parts-index-field__wrap--is-three">
-                  <input
-                      v-model="AUTO_PARTS_INDEX.value"
-                      type="text"
-                      placeholder="Объём"
-                      class="auto-parts-index-field__input"
-                  />
-                  <v-multiselect
-                      v-model="AUTO_PARTS_INDEX.fuel"
-                      :options="FUELS"
-                      :selectedLabel="`Выбрано`"
-                      :deselectLabel="`Клик, чтобы удалить`"
-                      :selectLabel="`Клик, чтобы выбрать`"
-                      :placeholder="`Топливо`"
-                      @select="getFuelToTypeEngines"
-                      class="auto-parts-index-field__select"
-                  >
-                    <template v-slot:noResult>
-                      Пусто...
-                    </template>
-                  </v-multiselect>
-                  <v-multiselect
-                      v-model="AUTO_PARTS_INDEX.typeEngines"
-                      :options="this.typeEngines"
-                      :selectedLabel="`Выбрано`"
-                      :deselectLabel="`Клик, чтобы удалить`"
-                      :selectLabel="`Клик, чтобы выбрать`"
-                      :placeholder="`Тип`"
-                      class="auto-parts-index-field__select"
-                  >
-                    <template v-slot:noResult>
-                      Пусто...
-                    </template>
-                  </v-multiselect>
-                </div>
-              </div>
-              <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label">
-                  Тип кузова и коробка:
-                </label>
-                <div class="auto-parts-index-field__wrap auto-parts-index-field__wrap--is-flex auto-parts-index-field__wrap--is-too">
                   <BaseMultiselect
-                      v-model="AUTO_PARTS_INDEX.typeBody"
-                      :options="BODYS"
-                      id="typeBody"
+                      v-if="isCreatedPage"
+                      v-model="autoPartsModelBrands[i]"
+                      :options="BREND_MODEL_CAR_AUTO_PARTS"
+                      customLabel="name"
+                      id="autoPartsModelBrands"
                       class="auto-parts-index-field__select"
                   />
                   <BaseMultiselect
-                      v-model="AUTO_PARTS_INDEX.transmission"
-                      :options="TRANSMISSION"
-                      id="transmission"
+                      v-else
+                      v-model="AUTO_PARTS_INDEX.autoPartsModelBrand"
+                      :options="BREND_MODEL_CAR_AUTO_PARTS"
+                      customLabel="name"
+                      id="autoPartsModelBrands"
                       class="auto-parts-index-field__select"
                   />
-                </div>
+                  <template v-slot:additional>
+                    <div class="auto-parts-index-field__controll">
+                      <div
+                          v-if="isAddAutoPartsMore(i)"
+                          @click="addAutoPartsMore"
+                          class="auto-parts-index-field__plus btn-primary btn"
+                      >
+                        <span class="bi bi-plus-circle"></span>
+                      </div>
+                      <div
+                          v-if="isRemoveAutoPartsMore(i)"
+                          @click="removeAutoPartsMore"
+                          class="auto-parts-index-field__plus btn-danger btn"
+                      >
+                        <span class="bi bi-x-circle"></span>
+                      </div>
+                    </div>
+                  </template>
+                </AutoPartsIndexField>
               </div>
-              <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label auto-parts-index-field__label--is-required">
-                  Запчасть:
-                </label>
-                <div class="auto-parts-index-field__wrap">
-                  <v-multiselect
-                      v-model="AUTO_PARTS_INDEX.autoPartsName"
-                      :options="TYPES_OF_AUTO_PARTS"
-                      :custom-label="customLabelNameReturn"
-                      :selectedLabel="`Выбрано`"
-                      :deselectLabel="`Клик, чтобы удалить`"
-                      :selectLabel="`Клик, чтобы выбрать`"
-                      :placeholder="`Запчасть`"
-                      class="auto-parts-index-field__select"
-                      @select="dopFieldsSearch"
-                  >
-                    <template v-slot:noResult>
-                      Пусто...
-                    </template>
-                  </v-multiselect>
-                </div>
-              </div>
+              <AutoPartsIndexField
+                  label="Год"
+                  class="auto-parts-index-wrapp__field"
+                  className="auto-parts-index-field__wrap--is-flex auto-parts-index-field__wrap--is-too"
+                  required
+              >
+                <v-multiselect
+                    v-model="AUTO_PARTS_INDEX.year"
+                    :options="YEARS"
+                    :selectedLabel="`Выбрано`"
+                    :deselectLabel="`Клик, чтобы удалить`"
+                    :selectLabel="`Клик, чтобы выбрать`"
+                    :placeholder="`Год`"
+                    @select="getFuelToTypeEngines"
+                    class="auto-parts-index-field__select"
+                >
+                  <template v-slot:noResult>
+                    Пусто...
+                  </template>
+                </v-multiselect>
+                <input
+                    v-model="AUTO_PARTS_INDEX.modification"
+                    type="text"
+                    placeholder="Модификация"
+                    class="auto-parts-index-field__input"
+                />
+              </AutoPartsIndexField>
+              <AutoPartsIndexField
+                  label="Объем (л), топливо и тип"
+                  class="auto-parts-index-wrapp__field"
+                  className="auto-parts-index-field__wrap--is-flex auto-parts-index-field__wrap--is-three"
+              >
+                <input
+                    v-model="AUTO_PARTS_INDEX.value"
+                    type="text"
+                    placeholder="Объём"
+                    class="auto-parts-index-field__input"
+                />
+                <v-multiselect
+                    v-model="AUTO_PARTS_INDEX.fuel"
+                    :options="FUELS"
+                    :selectedLabel="`Выбрано`"
+                    :deselectLabel="`Клик, чтобы удалить`"
+                    :selectLabel="`Клик, чтобы выбрать`"
+                    :placeholder="`Топливо`"
+                    @select="getFuelToTypeEngines"
+                    class="auto-parts-index-field__select"
+                >
+                  <template v-slot:noResult>
+                    Пусто...
+                  </template>
+                </v-multiselect>
+                <v-multiselect
+                    v-model="AUTO_PARTS_INDEX.typeEngines"
+                    :options="this.typeEngines"
+                    :selectedLabel="`Выбрано`"
+                    :deselectLabel="`Клик, чтобы удалить`"
+                    :selectLabel="`Клик, чтобы выбрать`"
+                    :placeholder="`Тип`"
+                    class="auto-parts-index-field__select"
+                >
+                  <template v-slot:noResult>
+                    Пусто...
+                  </template>
+                </v-multiselect>
+              </AutoPartsIndexField>
+              <AutoPartsIndexField
+                  label="Тип кузова и коробка"
+                  class="auto-parts-index-wrapp__field"
+                  className="auto-parts-index-field__wrap--is-flex auto-parts-index-field__wrap--is-too"
+              >
+                <BaseMultiselect
+                    v-model="AUTO_PARTS_INDEX.typeBody"
+                    :options="BODYS"
+                    id="typeBody"
+                    class="auto-parts-index-field__select"
+                />
+                <BaseMultiselect
+                    v-model="AUTO_PARTS_INDEX.transmission"
+                    :options="TRANSMISSION"
+                    id="transmission"
+                    class="auto-parts-index-field__select"
+                />
+              </AutoPartsIndexField>
+              <AutoPartsIndexField
+                  label="Запчасть"
+                  class="auto-parts-index-wrapp__field"
+                  required
+              >
+                <v-multiselect
+                    v-model="AUTO_PARTS_INDEX.autoPartsName"
+                    :options="TYPES_OF_AUTO_PARTS"
+                    :custom-label="customLabelNameReturn"
+                    :selectedLabel="`Выбрано`"
+                    :deselectLabel="`Клик, чтобы удалить`"
+                    :selectLabel="`Клик, чтобы выбрать`"
+                    :placeholder="`Запчасть`"
+                    class="auto-parts-index-field__select"
+                    @select="dopFieldsSearch"
+                >
+                  <template v-slot:noResult>
+                    Пусто...
+                  </template>
+                </v-multiselect>
+              </AutoPartsIndexField>
               <div
                   v-if="dopFieldsForCastDiskDrive"
               >
-                <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                  <label class="auto-parts-index-field__label">
-                    Диаметр R, дюймы:
-                  </label>
-                  <div class="auto-parts-index-field__wrap">
-                    <BaseMultiselect
-                        v-model="AUTO_PARTS_INDEX.wheelDiameterR"
-                        :options="WHEEL_DIAMETER_R"
-                        id="wheelDiameterR"
-                        class="auto-parts-index-field__select"
-                    />
-                  </div>
-                </div>
-                <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                  <label class="auto-parts-index-field__label">
-                    Ширина J, дюймы:
-                  </label>
-                  <div class="auto-parts-index-field__wrap">
-                    <BaseMultiselect
-                        v-model="AUTO_PARTS_INDEX.wheelWidthJ"
-                        :options="WHEEL_WIDTH_J"
-                        id="wheelWidthJ"
-                        class="auto-parts-index-field__select"
-                    />
-                  </div>
-                </div>
-                <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                  <label class="auto-parts-index-field__label">
-                    Кол-во отверстий:
-                  </label>
-                  <div class="auto-parts-index-field__wrap">
-                    <BaseMultiselect
-                        v-model="AUTO_PARTS_INDEX.numberOfHoles"
-                        :options="NUMBER_OF_HOLES"
-                        id="numberOfHoles"
-                        class="auto-parts-index-field__select"
-                    />
-                  </div>
-                </div>
-                <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                  <label class="auto-parts-index-field__label">
-                    Расстояние между<br>отверстиями PCD, мм:
-                  </label>
-                  <div class="auto-parts-index-field__wrap">
-                    <BaseMultiselect
-                        v-model="AUTO_PARTS_INDEX.pcd"
-                        :options="PCD"
-                        id="pcd"
-                        class="auto-parts-index-field__select"
-                    />
-                  </div>
-                </div>
                 <AutoPartsIndexField
-                    v-model="AUTO_PARTS_INDEX.departureE"
-                    title="Вылет ET, мм"
-                    placeholder="Вылет ET, мм"
+                    label="Диаметр R, дюймы"
                     class="auto-parts-index-wrapp__field"
-                />
-                <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                  <label class="auto-parts-index-field__label">
-                    Диаметр центрального<br>отверстия DIA, мм:
-                  </label>
-                  <div class="auto-parts-index-field__wrap">
-                    <BaseMultiselect
-                        v-model="AUTO_PARTS_INDEX.diameter"
-                        :options="DIAMETER"
-                        id="diameter"
-                        class="auto-parts-index-field__select"
-                    />
-                  </div>
-                </div>
+                >
+                  <BaseMultiselect
+                      v-model="AUTO_PARTS_INDEX.wheelDiameterR"
+                      :options="WHEEL_DIAMETER_R"
+                      id="wheelDiameterR"
+                      class="auto-parts-index-field__select"
+                  />
+                </AutoPartsIndexField>
+                <AutoPartsIndexField
+                    label="Ширина J, дюймы"
+                    class="auto-parts-index-wrapp__field"
+                >
+                  <BaseMultiselect
+                      v-model="AUTO_PARTS_INDEX.wheelWidthJ"
+                      :options="WHEEL_WIDTH_J"
+                      id="wheelWidthJ"
+                      class="auto-parts-index-field__select"
+                  />
+                </AutoPartsIndexField>
+                <AutoPartsIndexField
+                    label="Кол-во отверстий"
+                    class="auto-parts-index-wrapp__field"
+                >
+                  <BaseMultiselect
+                      v-model="AUTO_PARTS_INDEX.numberOfHoles"
+                      :options="NUMBER_OF_HOLES"
+                      id="numberOfHoles"
+                      class="auto-parts-index-field__select"
+                  />
+                </AutoPartsIndexField>
+                <AutoPartsIndexField
+                    label="Расстояние между отверстиями PCD, мм"
+                    class="auto-parts-index-wrapp__field"
+                >
+                  <BaseMultiselect
+                      v-model="AUTO_PARTS_INDEX.pcd"
+                      :options="PCD"
+                      id="pcd"
+                      class="auto-parts-index-field__select"
+                  />
+                </AutoPartsIndexField>
+                <AutoPartsIndexField
+                    label="Вылет ET, мм"
+                    class="auto-parts-index-wrapp__field"
+                >
+                  <input
+                      v-model="AUTO_PARTS_INDEX.departureE"
+                      type="text"
+                      placeholder="Вылет ET, мм"
+                      class="auto-parts-index-field__input"
+                  >
+                </AutoPartsIndexField>
+                <AutoPartsIndexField
+                    label="Диаметр центрального отверстия DIA, мм"
+                    class="auto-parts-index-wrapp__field"
+                >
+                  <BaseMultiselect
+                      v-model="AUTO_PARTS_INDEX.diameter"
+                      :options="DIAMETER"
+                      id="diameter"
+                      class="auto-parts-index-field__select"
+                  />
+                </AutoPartsIndexField>
                 <div class="auto-parts-index-wrapp__field auto-parts-index-field"></div>
               </div>
-              <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label">
-                  Описание:
-                </label>
-                <div class="auto-parts-index-field__wrap">
+              <AutoPartsIndexField
+                  label="Описание"
+                  class="auto-parts-index-wrapp__field"
+              >
                   <textarea
                       v-model="AUTO_PARTS_INDEX.description"
                       placeholder="Описание"
                       class="auto-parts-index-field__textarea"
                   ></textarea>
-                </div>
-              </div>
+              </AutoPartsIndexField>
               <AutoPartsIndexField
-                  v-model="AUTO_PARTS_INDEX.model"
-                  title="Артикул (ext_id автоматически)"
-                  placeholder="Артикул"
+                  label="Артикул (автоматически)"
                   class="auto-parts-index-wrapp__field"
-              />
+              >
+                <input
+                    v-model="AUTO_PARTS_INDEX.model"
+                    type="text"
+                    placeholder="Артикул"
+                    class="auto-parts-index-field__input"
+                >
+              </AutoPartsIndexField>
               <AutoPartsIndexField
-                  v-model="AUTO_PARTS_INDEX.sparePartNumber"
-                  title="Номер запчасти"
+                  label="Номер запчасти"
                   class="auto-parts-index-wrapp__field"
-              />
+              >
+                <input
+                    v-model="AUTO_PARTS_INDEX.sparePartNumber"
+                    type="text"
+                    placeholder="Номер запчасти"
+                    class="auto-parts-index-field__input"
+                >
+              </AutoPartsIndexField>
               <AutoPartsIndexField
-                  v-model="AUTO_PARTS_INDEX.priceUSD"
-                  title="Цена в долларах"
+                  label="Цена в долларах"
+                  class="auto-parts-index-wrapp__field"
                   required
-                  class="auto-parts-index-wrapp__field"
-              />
+              >
+                <input
+                    v-model="AUTO_PARTS_INDEX.priceUSD"
+                    type="number"
+                    placeholder="Цена"
+                    class="auto-parts-index-field__input"
+                >
+              </AutoPartsIndexField>
               <AutoPartsIndexField
-                  v-model="AUTO_PARTS_INDEX.youtube"
-                  title="Код видео с youtube.com"
-                  placeholder="Видео"
+                  label="Код видео с youtube.com"
                   class="auto-parts-index-wrapp__field"
-              />
+              >
+                <input
+                    v-model="AUTO_PARTS_INDEX.youtube"
+                    type="text"
+                    placeholder="Видео"
+                    class="auto-parts-index-field__input"
+                >
+              </AutoPartsIndexField>
               <div
                   @click="toggleDopFields"
                   class="auto-parts-index-wrapp__field auto-parts-index-field"
@@ -323,20 +315,38 @@
               </div>
               <div v-show="dopFields">
                 <AutoPartsIndexField
-                    v-model="AUTO_PARTS_INDEX.firstname"
-                    title="Имя для связи"
+                    label="Имя для связи"
                     class="auto-parts-index-wrapp__field"
-                />
+                >
+                  <input
+                      v-model="AUTO_PARTS_INDEX.firstname"
+                      type="text"
+                      placeholder="Имя для связи"
+                      class="auto-parts-index-field__input"
+                  >
+                </AutoPartsIndexField>
                 <AutoPartsIndexField
-                    v-model="AUTO_PARTS_INDEX.stock"
-                    title="Складская информация"
+                    label="Складская информация"
                     class="auto-parts-index-wrapp__field"
-                />
+                >
+                  <input
+                      v-model="AUTO_PARTS_INDEX.stock"
+                      type="text"
+                      placeholder="Складская информация"
+                      class="auto-parts-index-field__input"
+                  >
+                </AutoPartsIndexField>
                 <AutoPartsIndexField
-                    v-model="AUTO_PARTS_INDEX.telephone"
-                    title="Телефон, если другой"
+                    label="Телефон, если другой"
                     class="auto-parts-index-wrapp__field"
-                />
+                >
+                  <input
+                      v-model="AUTO_PARTS_INDEX.telephone"
+                      type="text"
+                      placeholder="Телефон, если другой"
+                      class="auto-parts-index-field__input"
+                  >
+                </AutoPartsIndexField>
               </div>
               <div class="auto-parts-index-wrapp__field auto-parts-index-field">
                 <label class="auto-parts-index-field__label">
@@ -374,53 +384,44 @@
                   </button>
                 </div>
               </div>
-                <AutoPartsIndexButtonsEdit
-                   v-if="!isCreatedPage"
-                   @editAutoParts="editAutoParts"
-                   :qrCode="AUTO_PARTS_INDEX.qrCode"
+              <component
+                  :is="getAutoPartsIndexButtonsComponent"
+                  :qrCode="AUTO_PARTS_INDEX.qrCode"
                   :linkToSite="AUTO_PARTS_INDEX.linkToSite"
-                />
-                <AutoPartsIndexButtonsCreate
-                  v-else
-                  @editAutoParts="setAutoPartsFromApi"
-                />
+                  @editAutoParts="editAutoParts"
+                  @setAutoPartsFromApi="setAutoPartsFromApi"
+              ></component>
             </div>
           </form>
         </div>
       </div>
     </div>
-    <div
-        class="modal-mask"
+    <Modal
         v-show="showModal"
+        @closeModalAdmin="modalCarPhotoFade"
     >
-      <div class="modal-wrapper">
-        <div class="modal-container">
-          <div class="modal-body">
-            <button class="modal-default-button" @click.prevent="modalCarPhotoFade">
-              X
-            </button>
-            <vue-dropzone
-                v-on:vdropzone-sending="sendingEvent"
-                :options="dropzoneOptions"
-                ref="myVueDropzone"
-                id="dropzone"
-            ></vue-dropzone>
-            <button
-                @click.prevent="sendingDropzonePhoto"
-                class="btn btn-info"
-                id="submit-all"
-            >Загрузить изображения</button>
-          </div>
-        </div>
-      </div>
-    </div>
+      <template v-slot:header>
+        Добавление фото
+      </template>
+      <template>
+        <vue-dropzone
+            v-on:vdropzone-sending="sendingEvent"
+            :options="dropzoneOptions"
+            ref="myVueDropzone"
+            id="dropzone"
+        ></vue-dropzone>
+        <button
+            @click.prevent="sendingDropzonePhoto"
+            class="btn btn-info"
+            id="submit-all"
+        >Загрузить изображения</button>
+      </template>
+    </Modal>
   </div>
 </template>
 
 <script>
   import AutoPartsIndexField from "@/components/autoParts/AutoPartsIndexField.vue";
-  import AutoPartsIndexButtonsCreate from "@/components/autoParts/AutoPartsIndexButtonsCreate.vue";
-  import AutoPartsIndexButtonsEdit from "@/components/autoParts/AutoPartsIndexButtonsEdit.vue";
   import BaseMultiselect from "@/components/UI/BaseMultiselect.vue";
   import Breadcrumb from "@/components/UI/BaseBreadcrumb.vue";
   import {mapActions, mapGetters} from "vuex";
@@ -434,18 +435,19 @@
       Breadcrumb,
       vueDropzone: vue2Dropzone,
       BaseMultiselect,
-      AutoPartsIndexButtonsEdit,
-      AutoPartsIndexButtonsCreate,
-      AutoPartsIndexField
+      AutoPartsIndexField,
+      BaseAlert: () => import("@/components/UI/BaseAlert.vue"),
+      Modal: () => import("@/components/UI/BaseModal.vue"),
+      AutoPartsIndexButtonsCreate: () => import("@/components/autoParts/AutoPartsIndexButtonsCreate.vue"),
+      AutoPartsIndexButtonsEdit: () => import("@/components/autoParts/AutoPartsIndexButtonsEdit.vue")
     },
 
     mounted() {
-      if(!this.isCreatedPage) {
-        this.GET_AUTO_PARTS_INDEX(this.param);
-      }
-
       if(this.isCreatedPage) {
+        this.RESET_AUTO_PARTS_FOR_CREATE_PAGE();
         this.AUTO_PARTS_INDEX.status = "Активно";
+      } else {
+        this.GET_AUTO_PARTS_INDEX(this.param);
       }
 
       this.GET_BREND_MODEL_CAR_AUTO_PARTS();
@@ -459,13 +461,12 @@
           'TYPES_OF_AUTO_PARTS'
       ]),
 
+      getAutoPartsIndexButtonsComponent() {
+        return (!this.isCreatedPage) ? 'AutoPartsIndexButtonsEdit' : 'AutoPartsIndexButtonsCreate';
+      },
+
       isCreatedPage() {
-        let created = false;
-        if(this.$route.name === "autoPartsCreate") {
-          this.RESET_AUTO_PARTS_FOR_CREATE_PAGE();
-          created = true;
-        }
-        return created;
+        return this.$route.name === "autoPartsCreate";
       },
     },
 
@@ -481,11 +482,7 @@
       ]),
 
       dopFieldsSearch(select) {
-        if(select.code == 257 || select.code == 262) {
-          this.dopFieldsForCastDiskDrive = true;
-        } else {
-          this.dopFieldsForCastDiskDrive = false;
-        }
+        this.dopFieldsForCastDiskDrive = (select.code == 257 || select.code == 262);
       },
 
       createNameAutoPartsForBd() {
@@ -596,8 +593,36 @@
       getFormDataAboutAutoParts() {
         let xForm = new FormData();
 
-        if(this.AUTO_PARTS_INDEX.year !== undefined){
-          xForm.append('year', this.AUTO_PARTS_INDEX.year);
+        let fieldPostToSend = [
+            'description',
+            'year',
+            'diameter',
+            'model',
+            'modification',
+            'fuel',
+            'value',
+            'youtube',
+            'transmission',
+            'typeEngines',
+            'typeBody',
+            'wheelDiameterR',
+            'wheelWidthJ',
+            'numberOfHoles',
+            'departureE',
+            'firstname',
+            'stock',
+            'telephone',
+            'sparePartNumber',
+            'pcd',
+            'priceUSD'
+        ];
+
+        for (let key in this.AUTO_PARTS_INDEX) {
+          if(this.AUTO_PARTS_INDEX[key] !== undefined) {
+            if(fieldPostToSend.includes(key)) {
+              xForm.append(key, this.AUTO_PARTS_INDEX[key]);
+            }
+          }
         }
 
         if(this.AUTO_PARTS_INDEX.status !== undefined){
@@ -605,88 +630,8 @@
           xForm.append('status', status);
         }
 
-        if(this.AUTO_PARTS_INDEX.model !== undefined){
-          xForm.append('model', this.AUTO_PARTS_INDEX.model);
-        }
-
-        if(this.AUTO_PARTS_INDEX.modification !== undefined){
-          xForm.append('modification', this.AUTO_PARTS_INDEX.modification);
-        }
-
-        if(this.AUTO_PARTS_INDEX.fuel !== undefined){
-          xForm.append('fuel', this.AUTO_PARTS_INDEX.fuel);
-        }
-
-        if(this.AUTO_PARTS_INDEX.value !== undefined){
-          xForm.append('value', this.AUTO_PARTS_INDEX.value);
-        }
-
-        if(this.AUTO_PARTS_INDEX.youtube !== undefined){
-          xForm.append('youtube', this.AUTO_PARTS_INDEX.youtube);
-        }
-
-        if(this.AUTO_PARTS_INDEX.typeEngines !== undefined){
-          xForm.append('typeEngines', this.AUTO_PARTS_INDEX.typeEngines);
-        }
-
-        if(this.AUTO_PARTS_INDEX.transmission !== undefined){
-          xForm.append('transmission', this.AUTO_PARTS_INDEX.transmission);
-        }
-
-        if(this.AUTO_PARTS_INDEX.typeBody !== undefined){
-          xForm.append('typeBody', this.AUTO_PARTS_INDEX.typeBody);
-        }
-
-        if(this.AUTO_PARTS_INDEX.wheelDiameterR !== undefined){
-          xForm.append('wheelDiameterR', this.AUTO_PARTS_INDEX.wheelDiameterR);
-        }
-
-        if(this.AUTO_PARTS_INDEX.wheelWidthJ !== undefined){
-          xForm.append('wheelWidthJ', this.AUTO_PARTS_INDEX.wheelWidthJ);
-        }
-
-        if(this.AUTO_PARTS_INDEX.numberOfHoles !== undefined){
-          xForm.append('numberOfHoles', this.AUTO_PARTS_INDEX.numberOfHoles);
-        }
-
-        if(this.AUTO_PARTS_INDEX.departureE !== undefined){
-          xForm.append('departureE', this.AUTO_PARTS_INDEX.departureE);
-        }
-
-        if(this.AUTO_PARTS_INDEX.firstname !== undefined){
-          xForm.append('firstname', this.AUTO_PARTS_INDEX.firstname);
-        }
-
-        if(this.AUTO_PARTS_INDEX.stock !== undefined){
-          xForm.append('stock', this.AUTO_PARTS_INDEX.stock);
-        }
-
-        if(this.AUTO_PARTS_INDEX.telephone !== undefined){
-          xForm.append('telephone', this.AUTO_PARTS_INDEX.telephone);
-        }
-
-        if(this.AUTO_PARTS_INDEX.departureE !== undefined){
-          xForm.append('departureE', this.AUTO_PARTS_INDEX.departureE);
-        }
-
-        if(this.AUTO_PARTS_INDEX.sparePartNumber !== undefined){
-          xForm.append('sparePartNumber', this.AUTO_PARTS_INDEX.sparePartNumber);
-        }
-
-        if(this.AUTO_PARTS_INDEX.pcd !== undefined){
-          xForm.append('pcd', this.AUTO_PARTS_INDEX.pcd);
-        }
-
-        if(this.AUTO_PARTS_INDEX.priceUSD !== undefined){
-          xForm.append('priceUSD', this.AUTO_PARTS_INDEX.priceUSD);
-        }
-
         if(this.AUTO_PARTS_INDEX.autoPartsName !== undefined){
           xForm.append('autoPartsName', this.AUTO_PARTS_INDEX.autoPartsName.code);
-        }
-
-        if(this.AUTO_PARTS_INDEX.diameter !== undefined){
-          xForm.append('diameter', this.AUTO_PARTS_INDEX.diameter);
         }
 
         if("autoPartsModelBrand" in this.AUTO_PARTS_INDEX) {
@@ -712,10 +657,6 @@
           for(let i = 1;this.autoPartsModelBrands.length >= i ;i++) {
             xForm.append('autoPartsNameForBd[]', this.AUTO_PARTS_INDEX.autoPartsName.name + " к " + this.autoPartsModelBrands[i-1].name.split(' >')[0] + " " + this.autoPartsModelBrands[i-1].name.split('> ')[1] + " " + this.AUTO_PARTS_INDEX.year + " г.");
           }
-        }
-
-        if(this.AUTO_PARTS_INDEX.description !== undefined){
-          xForm.append('description', this.AUTO_PARTS_INDEX.description);
         }
 
         if(this.autoPartsModelBrands.length != 0 && this.isCreatedPage){
