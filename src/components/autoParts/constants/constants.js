@@ -66,3 +66,27 @@ export const COLUMNS = [
         className: "text-xxl-center"
     },
 ];
+
+export const FIELD_POST_TO_SEND = [
+    'description',
+    'year',
+    'diameter',
+    'model',
+    'modification',
+    'fuel',
+    'value',
+    'youtube',
+    'transmission',
+    'typeEngines',
+    'typeBody',
+    'wheelDiameterR',
+    'wheelWidthJ',
+    'numberOfHoles',
+    'departureE',
+    'firstname',
+    'stock',
+    'telephone',
+    'sparePartNumber',
+    'pcd',
+    'priceUSD'
+];

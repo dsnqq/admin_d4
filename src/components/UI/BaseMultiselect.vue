@@ -8,6 +8,7 @@
       :deselectLabel="`Клик, чтобы удалить`"
       :selectLabel="`Клик, чтобы выбрать`"
       :placeholder="placeholder"
+      @select="select"
   >
     <template v-slot:noResult>
       Пусто...
@@ -62,6 +63,10 @@ export default {
   },
 
   methods: {
+    select(value) {
+      this.$emit("select", value);
+    },
+
     customLabelNameReturn({ name }) {
       return name;
     },
