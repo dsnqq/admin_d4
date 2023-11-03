@@ -15,8 +15,23 @@
   export default {
     name: "BasePagination",
 
+    mounted() {
+      if(this.deleteText) {
+        this.paginationOptions.texts.count = '';
+      }
+
+      if(this.countChunk) {
+        this.paginationOptions.chunk = this.$props.countChunk;
+      }
+    },
+
     props: {
-      totals: Number
+      totals: Number,
+      deleteText: Boolean,
+      countChunk: {
+        type: Number,
+        default: 5
+      }
     },
 
     methods: {

@@ -56,7 +56,9 @@
       <Pagination
           :totals="AUTO_PARTS_TOTALS"
           :storageCache="storageCache"
+          :countChunk="isMobile ? 4 : 5"
           @setPageByTotal="setPageByTotal"
+          :class="{'card-body-pagination-mobile' : isMobile}"
       />
       <BaseButtonFixedAdd
          component="autoPartsCreate"
@@ -70,11 +72,14 @@
   import Filters from "@/components/UI/BaseFilters.vue";
   import Pagination from "@/components/UI/BasePagination.vue";
   import {COLUMNS} from "@/components/autoParts/constants/constants";
+  import {mobileCheckMixin} from "@/mixins/mixins";
   import {YEARS} from "@/constants/constants";
   import {mapActions, mapGetters} from "vuex";
 
   export default {
     name: "AutoPartsList",
+
+    mixins: [mobileCheckMixin],
 
     mounted() {
       this.GET_AUTO_PARTS_FROM_API(this.param);
@@ -96,6 +101,10 @@
         'TYPES_OF_AUTO_PARTS',
         'BREND_MODEL_CAR_AUTO_PARTS'
       ]),
+
+      isMobile() {
+        return this.mobileCheck();
+      },
 
       storageCache() {
         if(localStorage.getItem('localCacheFilters') !== null) {
@@ -251,29 +260,6 @@
   }
 </script>
 
-<style lang="scss" scoped>
-@media screen and (max-width: 560px) {
-
-    ::v-deep .card-filter__rows {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(6, 1fr);
-      grid-column-gap: 10px;
-      grid-row-gap: 0px;
-    }
-    ::v-deep .card-filter-item__label {
-      min-width:100% !important;
-    }
-    ::v-deep .card-filter__item:nth-child(1) { grid-area: 1 / 1 / 2 / 3; }
-    ::v-deep .card-filter__item:nth-child(2) { grid-area: 2 / 1 / 3 / 3; }
-    ::v-deep .card-filter__item:nth-child(3) { grid-area: 3 / 1 / 4 / 3; }
-    ::v-deep .card-filter__item:nth-child(4) { grid-area: 4 / 1 / 5 / 2; }
-    ::v-deep .card-filter__item:nth-child(5) { grid-area: 4 / 2 / 5 / 3; }
-    ::v-deep .card-filter__item:nth-child(6) { grid-area: 5 / 1 / 6 / 2; }
-    ::v-deep .card-filter__item:nth-child(7) { grid-area: 5 / 2 / 6 / 3; }
-    ::v-deep .card-filter__item:nth-child(8) { grid-area: 6 / 1 / 7 / 3; }
-}
-</style>
 <style lang="scss" scoped>
 @import "./src/components/autoParts/style/auto-parts-list";
 @import "@/assets/scss/table-adaptive.scss";

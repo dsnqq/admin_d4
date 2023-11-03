@@ -56,7 +56,6 @@ export default {
             )
                 .then((response) => {
                     this.dispatch('generalStore/UN_LOCK_UI');
-                    window.scrollTo(0, 0);
                     commit('SET_AUTO_PARTS_TO_STATE', response.data.autoParts);
                     return response.data.autoParts;
                 })
@@ -122,7 +121,6 @@ export default {
             )
                 .then((response) => {
                     this.dispatch('generalStore/UN_LOCK_UI');
-                    window.scrollTo(0, 0);
                     commit('SET_AUTO_PARTS_INDEX_STATE', response.data.autoPartsIndex);
                     return response.data.autoPartsIndex;
                 })
