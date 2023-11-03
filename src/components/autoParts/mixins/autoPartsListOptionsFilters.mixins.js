@@ -1,7 +1,7 @@
 import {YEARS} from "@/constants/constants";
 import {mapActions, mapGetters} from "vuex";
 
-export let autoPartsOptionsFilters = {
+export let autoPartsListOptionsFilters = {
     mounted() {
         this.GET_TYPES_OF_AUTO_PARTS();
         this.GET_BREND_MODEL_CAR_AUTO_PARTS();

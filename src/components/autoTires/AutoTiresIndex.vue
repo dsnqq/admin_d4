@@ -27,7 +27,7 @@
             :to="{name: 'autoTires'}"
             class="btn btn-primary"
         >
-          Вернуться назад
+          Выйти
         </router-link>
       </template>
     </Breadcrumb>

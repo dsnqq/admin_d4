@@ -6,7 +6,7 @@
             :to="{name: 'carsAdmin'}"
             class="btn btn-primary"
         >
-          Вернуться назад
+          Выйти
         </router-link>
       </template>
     </Breadcrumb>

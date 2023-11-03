@@ -11,7 +11,7 @@
             :to="{name: 'autoParts'}"
             class="btn btn-primary"
         >
-          Вернуться назад
+          Выйти
         </router-link>
       </template>
     </Breadcrumb>
@@ -714,6 +714,9 @@
           thumbnailHeight: 150,
           maxFilesize: 2500,
           autoProcessQueue: false,
+          dictDefaultMessage: 'Нажмите сюда или перетащите сюда файлы для загрузки <div><span style="color: darkgrey; margin-bottom: 5px">* для выбора нескольких фото, удерживайте клавишу Ctrl</span><br/></div><br/>',
+          dictRemoveFile: 'удалить',
+          dictCancelUpload: 'отменить',
           parallelUploads: 20,
           maxThumbnailFilesize: 200,
           resizeWidth: 800,

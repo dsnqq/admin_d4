@@ -69,14 +69,14 @@
 
 <script>
   import {COLUMNS} from "@/components/autoParts/constants/constants";
-  import {autoPartsOptionsFilters} from "@/components/autoParts/mixins/autoPartsOptionsFilters.mixins";
+  import {autoPartsListOptionsFilters} from "@/components/autoParts/mixins/autoPartsListOptionsFilters.mixins";
   import {mixins} from "@/mixins/mixins";
   import {mapActions, mapGetters} from "vuex";
 
   export default {
     name: "AutoPartsList",
 
-    mixins: [mixins, autoPartsOptionsFilters],
+    mixins: [mixins, autoPartsListOptionsFilters],
 
     mounted() {
       this.GET_AUTO_PARTS_FROM_API(this.param);
