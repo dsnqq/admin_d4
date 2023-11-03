@@ -333,42 +333,41 @@
                   >
                 </AutoPartsIndexField>
               </div>
-              <div class="auto-parts-index-wrapp__field auto-parts-index-field">
-                <label class="auto-parts-index-field__label">
-                  Фото:
-                </label>
-                <div class="auto-parts-index-field__wrap auto-parts-index-field-wrap">
-                  <div class="auto-parts-index-field-wrap__photos auto-parts-index-photo-list">
-                    <template v-if="AUTO_PARTS_INDEX.images">
+              <AutoPartsIndexField
+                  label="Фото"
+                  class="auto-parts-index-wrapp__field"
+                  className="auto-parts-index-field-wrap"
+              >
+                <div class="auto-parts-index-field-wrap__photos auto-parts-index-photo-list">
+                  <template v-if="AUTO_PARTS_INDEX.images">
+                    <div
+                        v-for="(image, index) in AUTO_PARTS_INDEX.images"
+                        v-bind:key="index"
+                        class="auto-parts-index-photo-list__item auto-parts-index-photo-item"
+                    >
+                      <img
+                          :src="isImageUrlLocalOrServer(image)"
+                          class="auto-parts-index-photo-item__image"
+                      />
                       <div
-                          v-for="(image, index) in AUTO_PARTS_INDEX.images"
-                          v-bind:key="index"
-                          class="auto-parts-index-photo-list__item auto-parts-index-photo-item"
-                      >
-                        <img
-                            :src="isImageUrlLocalOrServer(image)"
-                            class="auto-parts-index-photo-item__image"
-                        />
-                        <div
-                            @click="removeImgDop(index)"
-                            class="auto-parts-index-photo-item__del"
-                        >Удалить</div>
-                        <div
-                            @click="setThisPhotoOnMain(image)"
-                            class="auto-parts-index-photo-item__del"
-                            :class="{'auto-parts-index-photo-item__del--is-active' :mainPhotoSetAutoParts(image)}"
-                        >Главное фото</div>
-                      </div>
-                    </template>
-                  </div>
-                  <button
-                      @click.prevent="modalCarPhotoFade"
-                      class="auto-parts-index-field-wrap__btn btn btn-dark"
-                  >
-                    Добавить фото
-                  </button>
+                          @click="removeImgDop(index)"
+                          class="auto-parts-index-photo-item__del"
+                      >Удалить</div>
+                      <div
+                          @click="setThisPhotoOnMain(image)"
+                          class="auto-parts-index-photo-item__del"
+                          :class="{'auto-parts-index-photo-item__del--is-active' :mainPhotoSetAutoParts(image)}"
+                      >Главное фото</div>
+                    </div>
+                  </template>
                 </div>
-              </div>
+                <button
+                    @click.prevent="modalCarPhotoFade"
+                    class="auto-parts-index-field-wrap__btn btn btn-dark"
+                >
+                  Добавить фото
+                </button>
+              </AutoPartsIndexField>
               <component
                   :is="getAutoPartsIndexButtonsComponent"
                   :qrCode="AUTO_PARTS_INDEX.qrCode"
