@@ -32,51 +32,49 @@
                     class="auto-parts-index-field__select"
                 />
               </AutoPartsIndexField>
-              <div class="auto-parts-index-wrapp__auto-parts">
-                <AutoPartsIndexField
-                    v-for="(countAutoParts, i) in countAutoPartsAdd"
-                    :key="i"
-                    label="Марка и модель"
-                    class="auto-parts-index-wrapp__field"
-                >
-                  <BaseMultiselect
-                      v-if="isCreatedPage"
-                      v-model="autoPartsModelBrands[i]"
-                      :options="BREND_MODEL_CAR_AUTO_PARTS"
-                      placeholder="Марка и модель"
-                      customLabel="name"
-                      :id="`autoPartsModelBrands` + i"
-                      class="auto-parts-index-field__select"
-                  />
-                  <BaseMultiselect
-                      v-else
-                      v-model="AUTO_PARTS_INDEX.autoPartsModelBrand"
-                      :options="BREND_MODEL_CAR_AUTO_PARTS"
-                      placeholder="Марка и модель"
-                      customLabel="name"
-                      id="autoPartsModelBrands"
-                      class="auto-parts-index-field__select"
-                  />
-                  <template v-slot:additional>
-                    <div class="auto-parts-index-field__controll">
-                      <div
-                          v-if="isAddAutoPartsMore(i)"
-                          @click="addAutoPartsMore"
-                          class="auto-parts-index-field__plus btn-primary btn"
-                      >
-                        <span class="bi bi-plus-circle"></span>
-                      </div>
-                      <div
-                          v-if="isRemoveAutoPartsMore(i)"
-                          @click="removeAutoPartsMore"
-                          class="auto-parts-index-field__plus btn-danger btn"
-                      >
-                        <span class="bi bi-x-circle"></span>
-                      </div>
+              <AutoPartsIndexField
+                  v-for="(countAutoParts, i) in countAutoPartsAdd"
+                  :key="i"
+                  label="Марка и модель"
+                  class="auto-parts-index-wrapp__field auto-parts-index-wrapp__auto-parts"
+              >
+                <BaseMultiselect
+                    v-if="isCreatedPage"
+                    v-model="autoPartsModelBrands[i]"
+                    :options="BREND_MODEL_CAR_AUTO_PARTS"
+                    placeholder="Марка и модель"
+                    customLabel="name"
+                    :id="`autoPartsModelBrands` + i"
+                    class="auto-parts-index-field__select"
+                />
+                <BaseMultiselect
+                    v-else
+                    v-model="AUTO_PARTS_INDEX.autoPartsModelBrand"
+                    :options="BREND_MODEL_CAR_AUTO_PARTS"
+                    placeholder="Марка и модель"
+                    customLabel="name"
+                    id="autoPartsModelBrands"
+                    class="auto-parts-index-field__select"
+                />
+                <template v-slot:additional>
+                  <div class="auto-parts-index-field__controll">
+                    <div
+                        v-if="isAddAutoPartsMore(i)"
+                        @click="addAutoPartsMore"
+                        class="auto-parts-index-field__plus btn-primary btn"
+                    >
+                      <span class="bi bi-plus-circle"></span>
                     </div>
-                  </template>
-                </AutoPartsIndexField>
-              </div>
+                    <div
+                        v-if="isRemoveAutoPartsMore(i)"
+                        @click="removeAutoPartsMore"
+                        class="auto-parts-index-field__plus btn-danger btn"
+                    >
+                      <span class="bi bi-x-circle"></span>
+                    </div>
+                  </div>
+                </template>
+              </AutoPartsIndexField>
               <AutoPartsIndexField
                   label="Год"
                   class="auto-parts-index-wrapp__field"
@@ -158,79 +156,28 @@
                     class="auto-parts-index-field__select"
                 />
               </AutoPartsIndexField>
-              <div
-                  v-if="dopFieldsForCastDiskDrive"
-              >
+              <div v-if="dopFieldsForCastDiskDrive">
                 <AutoPartsIndexField
-                    label="Диаметр R, дюймы"
+                    v-for="(field, index) in FIELDS_FOR_CAST_DISK_DRIVE"
+                    :key="index"
+                    :label="field.label"
                     class="auto-parts-index-wrapp__field"
                 >
                   <BaseMultiselect
-                      v-model="AUTO_PARTS_INDEX.wheelDiameterR"
-                      :options="WHEEL_DIAMETER_R"
-                      id="wheelDiameterR"
-                      placeholder="Диаметр R, дюймы"
+                      v-if="field.id"
+                      v-model="AUTO_PARTS_INDEX[field.vModel]"
+                      :options="field.options"
+                      :id="field.id"
+                      :placeholder="field.label"
                       class="auto-parts-index-field__select"
                   />
-                </AutoPartsIndexField>
-                <AutoPartsIndexField
-                    label="Ширина J, дюймы"
-                    class="auto-parts-index-wrapp__field"
-                >
-                  <BaseMultiselect
-                      v-model="AUTO_PARTS_INDEX.wheelWidthJ"
-                      :options="WHEEL_WIDTH_J"
-                      id="wheelWidthJ"
-                      placeholder="Ширина J, дюймы"
-                      class="auto-parts-index-field__select"
-                  />
-                </AutoPartsIndexField>
-                <AutoPartsIndexField
-                    label="Кол-во отверстий"
-                    class="auto-parts-index-wrapp__field"
-                >
-                  <BaseMultiselect
-                      v-model="AUTO_PARTS_INDEX.numberOfHoles"
-                      :options="NUMBER_OF_HOLES"
-                      id="numberOfHoles"
-                      placeholder="Кол-во отверстий"
-                      class="auto-parts-index-field__select"
-                  />
-                </AutoPartsIndexField>
-                <AutoPartsIndexField
-                    label="Расстояние между отверстиями PCD, мм"
-                    class="auto-parts-index-wrapp__field"
-                >
-                  <BaseMultiselect
-                      v-model="AUTO_PARTS_INDEX.pcd"
-                      :options="PCD"
-                      id="pcd"
-                      placeholder="Расстояние PCD"
-                      class="auto-parts-index-field__select"
-                  />
-                </AutoPartsIndexField>
-                <AutoPartsIndexField
-                    label="Вылет ET, мм"
-                    class="auto-parts-index-wrapp__field"
-                >
                   <input
-                      v-model="AUTO_PARTS_INDEX.departureE"
+                      v-else
+                      v-model="AUTO_PARTS_INDEX[field.vModel]"
                       type="text"
-                      placeholder="Вылет ET, мм"
+                      :placeholder="field.label"
                       class="auto-parts-index-field__input"
                   >
-                </AutoPartsIndexField>
-                <AutoPartsIndexField
-                    label="Диаметр центрального отверстия DIA, мм"
-                    class="auto-parts-index-wrapp__field"
-                >
-                  <BaseMultiselect
-                      v-model="AUTO_PARTS_INDEX.diameter"
-                      :options="DIAMETER"
-                      id="diameter"
-                      placeholder="Диаметр, DIA"
-                      class="auto-parts-index-field__select"
-                  />
                 </AutoPartsIndexField>
                 <div class="auto-parts-index-wrapp__field auto-parts-index-field"></div>
               </div>
@@ -408,9 +355,9 @@
   import BaseMultiselect from "@/components/UI/BaseMultiselect.vue";
   import Breadcrumb from "@/components/UI/BaseBreadcrumb.vue";
   import {mapActions, mapGetters} from "vuex";
-  import {DOMAIN, STATUS, YEARS, BODYS, TRANSMISSION, FUELS, TYPE_ENGINES_ALL, TYPE_ENGINES_DISEL, TYPE_ENGINES_BENZ, WHEEL_DIAMETER_R, WHEEL_WIDTH_J, NUMBER_OF_HOLES, PCD, DIAMETER} from "@/constants/constants";
+  import {DOMAIN, STATUS, YEARS, BODYS, TRANSMISSION, FUELS, TYPE_ENGINES_ALL, TYPE_ENGINES_DISEL, TYPE_ENGINES_BENZ} from "@/constants/constants";
   import vue2Dropzone from 'vue2-dropzone';
-  import {FIELD_POST_TO_SEND} from "@/components/autoParts/constants/constants";
+  import {FIELD_POST_TO_SEND, FIELDS_FOR_CAST_DISK_DRIVE} from "@/components/autoParts/constants/constants";
 
   export default {
     name: "AutoParstIndex",
@@ -715,11 +662,7 @@
         BODYS,
         TRANSMISSION,
         FUELS,
-        WHEEL_DIAMETER_R,
-        WHEEL_WIDTH_J,
-        NUMBER_OF_HOLES,
-        PCD,
-        DIAMETER,
+        FIELDS_FOR_CAST_DISK_DRIVE,
         typeEngines: TYPE_ENGINES_ALL,
         dropzoneOptions: {
           url: '/upload.php',
