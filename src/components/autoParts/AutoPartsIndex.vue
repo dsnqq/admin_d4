@@ -153,7 +153,6 @@
                     v-model="AUTO_PARTS_INDEX.autoPartsName"
                     :options="TYPES_OF_AUTO_PARTS"
                     customLabel="name"
-                    @select="dopFieldsSearch"
                     id="autoPartsName"
                     placeholder="Запчасть"
                     class="auto-parts-index-field__select"
@@ -452,11 +451,26 @@
       isCreatedPage() {
         return this.$route.name === "autoPartsCreate";
       },
+
+      autoPartsNameCode() {
+        if("autoPartsName" in this.AUTO_PARTS_INDEX) {
+          return this.$store.state.autoParts.autoPartsIndex.autoPartsName;
+        }
+      }
     },
 
     watch: {
       '$route' () {
         this.resetAutoPartsForCreatePage();
+      },
+
+      autoPartsNameCode: {
+        handler(newCode, oldCode) {
+          if((newCode !== oldCode) && ("autoPartsName" in this.AUTO_PARTS_INDEX)) {
+            this.dopFieldsSearch(newCode);
+          }
+        },
+        deep: true
       }
     },
 
