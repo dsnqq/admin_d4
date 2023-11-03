@@ -68,144 +68,50 @@
 </template>
 
 <script>
-  import BaseButtonFixedAdd from "@/components/UI/BaseButtonFixedAdd.vue";
-  import Filters from "@/components/UI/BaseFilters.vue";
-  import Pagination from "@/components/UI/BasePagination.vue";
   import {COLUMNS} from "@/components/autoParts/constants/constants";
-  import {mobileCheckMixin} from "@/mixins/mixins";
-  import {YEARS} from "@/constants/constants";
+  import {autoPartsOptionsFilters} from "@/components/autoParts/mixins/autoPartsOptionsFilters.mixins";
+  import {mixins} from "@/mixins/mixins";
   import {mapActions, mapGetters} from "vuex";
 
   export default {
     name: "AutoPartsList",
 
-    mixins: [mobileCheckMixin],
+    mixins: [mixins, autoPartsOptionsFilters],
 
     mounted() {
       this.GET_AUTO_PARTS_FROM_API(this.param);
       this.GET_AUTO_PARTS_TOTALS(this.param);
-      this.GET_TYPES_OF_AUTO_PARTS();
-      this.GET_BREND_MODEL_CAR_AUTO_PARTS();
     },
 
     components: {
-      Pagination,
-      Filters,
-      BaseButtonFixedAdd
+      Filters: () => import("@/components/UI/BaseFilters.vue"),
+      BaseButtonFixedAdd: () => import("@/components/UI/BaseButtonFixedAdd.vue"),
+      Pagination: () => import("@/components/UI/BasePagination.vue")
     },
 
     computed: {
       ...mapGetters('autoParts', [
         'AUTO_PARTS',
-        'AUTO_PARTS_TOTALS',
-        'TYPES_OF_AUTO_PARTS',
-        'BREND_MODEL_CAR_AUTO_PARTS'
+        'AUTO_PARTS_TOTALS'
       ]),
 
-      isMobile() {
-        return this.mobileCheck();
-      },
-
       storageCache() {
-        if(localStorage.getItem('localCacheFilters') !== null) {
-          return JSON.parse(localStorage.localCacheFilters);
-        } else {
-          return {};
-        }
+        return (localStorage.getItem('localCacheFilters') !== null) ? JSON.parse(localStorage.localCacheFilters) : {};
       },
-
-      optionsFilters() {
-        return [
-          {
-            title: 'Марка и Модель',
-            type: 'select',
-            vModel: "car",
-            params: this.BREND_MODEL_CAR_AUTO_PARTS,
-            className: "d-flex justify-content-sm-between align-items-center",
-            customLabel: "name"
-          },
-          {
-            title: 'Название запчасти',
-            type: 'select',
-            vModel: "types",
-            params: this.TYPES_OF_AUTO_PARTS,
-            customLabel: "name"
-          },
-          {
-            title: 'Номер запчасти',
-            type: 'input',
-            inputType: "text",
-            vModel: "sparePartNumber",
-            autocomplete: "off"
-          },
-          {
-            title: 'Артикул',
-            type: 'input',
-            inputType: "text",
-            vModel: "model",
-            autocomplete: "off"
-          },
-          {
-            title: 'Тип топлива',
-            type: 'select',
-            vModel: "fuel",
-            params: ['Не выбрано', 'дизель', 'бензин', 'гибрид', 'электро']
-          },
-          {
-            title: 'Объём',
-            type: 'input',
-            inputType: "text",
-            vModel: "value",
-            autocomplete: "off"
-          },
-          {
-            title: 'Статус',
-            type: 'select',
-            vModel: "status",
-            params: ['Все объявления', 'Активно', 'Неактивно']
-          },
-          [
-            {
-              title: 'Год',
-              textLabel: "от",
-              type: 'select',
-              vModel: "yearStart",
-              params: YEARS,
-              className: "card-filter-item__form--is-year",
-              classNameItem: "card-filter-item__select--is-year"
-            },
-            {
-              title: 'Год',
-              textLabel: "до",
-              type: 'select',
-              vModel: "yearLast",
-              params: YEARS,
-              className: "card-filter-item__form--is-year",
-              classNameItem: "card-filter-item__select--is-year"
-            }
-          ],
-        ]
-      }
     },
 
     methods: {
       ...mapActions('autoParts', [
         'GET_AUTO_PARTS_FROM_API',
-        'GET_AUTO_PARTS_TOTALS',
-        'GET_TYPES_OF_AUTO_PARTS',
-        'GET_BREND_MODEL_CAR_AUTO_PARTS'
+        'GET_AUTO_PARTS_TOTALS'
       ]),
 
       setFilterOnAutoPartsPage(param) {
-        this.param.filters.car = (param.car != undefined) ? param.car : {};
-        this.param.filters.types = (param.types != undefined) ? param.types : {};
-        this.param.filters.yearLast = (param.yearLast != undefined) ? param.yearLast : '';
-        this.param.filters.yearStart = (param.yearStart != undefined) ? param.yearStart : '';
-        this.param.filters.sparePartNumber = (param.sparePartNumber != undefined) ? param.sparePartNumber : '';
-        this.param.filters.model = (param.model != undefined) ? param.model : '';
-        this.param.filters.status = (param.status != undefined) ? param.status : 'Все объявления';
-        this.param.filters.fuel = (param.fuel != undefined) ? param.fuel : 'Не выбрано';
-        this.param.filters.value = (param.value != undefined) ? param.value : '';
+        for (let key in param) {
+          if(param[key] !== undefined) {
+            this.param.filters[key] = param[key];
+          }
+        }
 
         this.GET_AUTO_PARTS_FROM_API(this.param);
         this.GET_AUTO_PARTS_TOTALS(this.param);
@@ -239,7 +145,6 @@
 
     data() {
       return {
-        YEARS,
         COLUMNS,
         param: {
           pageNum: 1,
