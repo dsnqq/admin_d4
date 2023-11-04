@@ -1,0 +1,51 @@
+.products-on-order {
+  @media screen and (max-width: 560px) {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  ::v-deep {
+    .rwd-table td {
+      &:before {
+        width: 90px;
+        min-width: 90px;
+      }
+    }
+
+    .card-body-pagination-mobile {
+      .VuePagination {
+        margin-top: 0 !important;
+
+        &__pagination-item {
+          &:not(:is(VuePagination__pagination-item)) {
+            text-align: center;
+          }
+        }
+
+        .pagination {
+          position: fixed;
+          align-items: center;
+          bottom: 0;
+          margin-bottom: 0;
+          height: 40px;
+          left: 0;
+          right: 0;
+          background: hsl(0, 0%, 100%);
+          justify-content: center;
+          box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.18);
+        }
+
+        .page-link {
+          padding: 3px 5px;
+          border-radius: 0;
+          min-width: 26px;
+        }
+
+        nav {
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
