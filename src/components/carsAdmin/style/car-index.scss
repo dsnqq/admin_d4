@@ -170,6 +170,10 @@
     width: 200px;
     height: 200px;
     object-fit: cover;
+    @media screen and (max-width: 560px) {
+      width: 95px;
+      height: 95px;
+    }
   }
 }
 

@@ -1,0 +1,9 @@
+.dashboard-admin {
+  overflow: hidden;
+
+  &__card {
+    @media screen and (max-width: 560px) {
+      margin-bottom: 10px;
+    }
+  }
+}
