@@ -142,7 +142,7 @@ const routes = [
         meta: {
             title: 'Архив шин',
         },
-        component: () => import('../components/autoTiresArchive/AutoTiresArchive.vue'),
+        component: () => import('../components/autoTiresArchive/AutoTiresArchiveList.vue'),
     },
     {
         path: '*',

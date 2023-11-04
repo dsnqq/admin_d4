@@ -42,12 +42,12 @@
   import lightbox from 'lightbox2';
 
   export default {
-    name: "AutoPartsArchiveListColumnImages",
+    name: "AutoTiresArchiveListColumnImages",
 
     props: ['images', 'title', 'id', 'showAll', 'index'],
 
     methods: {
-      ...mapActions('autoPartsArchive', [
+      ...mapActions('autoTiresArchive', [
         'SET_SHOW_ALL_IMAGE'
       ]),
 
