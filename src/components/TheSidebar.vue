@@ -49,8 +49,12 @@
 </template>
 
 <script>
+  import {mixins} from "@/mixins/mixins";
+
   export default {
     name: "TheSidebar",
+
+    mixins: [mixins],
 
     methods: {
       menuSideBarClosed() {
@@ -63,7 +67,9 @@
 
       linkToComponent(linkComponent) {
         this.$router.push({ name: linkComponent }).catch(()=>{});
-        this.$emit("menuSideBarClosed");
+        if(this.isMobile) {
+          this.$emit("menuSideBarClosed");
+        }
       }
     },
 
