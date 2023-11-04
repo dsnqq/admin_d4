@@ -62,10 +62,20 @@ export default {
     },
   },
 
+  computed: {
+    price: {
+      get() {
+        return this.$props.priceUSD;
+      },
+      set(val) {
+        this.$props.priceUSD = val;
+      },
+    },
+  },
+
   data() {
     return {
-      columnEdit: false,
-      price: this.priceUSD
+      columnEdit: false
     }
   }
 }
