@@ -1,62 +1,61 @@
 <template>
-  <div class="card">
-    <div class="card-body">
-      <div class="row">
-        <div>
-          <table class="table align-middle table-striped table-border-1 rwd-table middle-responsive">
-            <thead>
-            <tr>
-              <th
-                  v-for="(c, index) in COLUMNS"
-                  :key="index"
-              >
-                {{c.title}}
-              </th>
-            </tr>
-            </thead>
-            <tbody class="card-body__grid">
-            <tr
-                v-for="(autoTire, i) in AUTO_TIRES"
-                :key="i"
-            >
-              <td
-                  v-for="(c, index) in COLUMNS"
-                  :key="index"
-                  :data-th="c.title"
-                  :class="c.className"
-              >
-                <component
-                    :is="c.components"
-                    :images="autoTire.images"
-                    :title="autoTire.name"
-                    :index="i"
-                    :id="autoTire.product_id"
-                    :showAll="autoTire.imagesShowAllImage"
-                    :content="autoTire[c.content]"
-                    :contentExtension="autoTire[c.contentExtension]"
-                    :priceUSD="autoTire.priceUSD"
-                    :priceBYN="autoTire.priceBYN"
-                    :status="autoTire.status"
-                    :linkToSite="autoTire.linkToSite"
-                ></component>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+  <LayoutDefault>
+    <template v-slot:tableThead>
+      <th
+          v-for="(c, index) in COLUMNS"
+          :key="index"
+      >
+        {{c.title}}
+      </th>
+    </template>
+    <template v-slot:tableTbody>
+      <tr
+          v-for="(autoTire, i) in AUTO_TIRES"
+          :key="i"
+      >
+        <td
+            v-for="(c, index) in COLUMNS"
+            :key="index"
+            :data-th="c.title"
+            :class="c.className"
+        >
+          <component
+              :is="c.components"
+              :images="autoTire.images"
+              :title="autoTire.name"
+              :index="i"
+              :id="autoTire.product_id"
+              :showAll="autoTire.imagesShowAllImage"
+              :content="autoTire[c.content]"
+              :contentExtension="autoTire[c.contentExtension]"
+              :priceUSD="autoTire.priceUSD"
+              :priceBYN="autoTire.priceBYN"
+              :status="autoTire.status"
+              :linkToSite="autoTire.linkToSite"
+          ></component>
+        </td>
+      </tr>
+    </template>
+    <template v-slot:pagination>
       <Pagination
           :totals="AUTO_TIRES_TOTALS"
+          :countChunk="isMobile ? 4 : 5"
           @setPageByTotal="setPageByTotal"
+          :class="{'card-body-pagination-mobile' : isMobile}"
       />
-    </div>
-  </div>
+      <BaseButtonFixedAdd
+          component="autoTiresCreate"
+      />
+    </template>
+  </LayoutDefault>
 </template>
 
 <script>
+  import LayoutDefault from "@/layouts/LayoutDefault.vue";
   import {COLUMNS} from "@/components/autoTires/constants/constants";
   import Pagination from "@/components/UI/BasePagination.vue";
   import {mapActions, mapGetters} from "vuex";
+  import {mixins} from "@/mixins/mixins";
 
   export default {
     name: "AutoTiresList",
@@ -66,8 +65,12 @@
       this.GET_AUTO_TIRES_TOTALS();
     },
 
+    mixins: [mixins],
+
     components: {
       Pagination,
+      LayoutDefault,
+      BaseButtonFixedAdd: () => import("@/components/UI/BaseButtonFixedAdd.vue"),
     },
 
     computed: {
@@ -104,6 +107,4 @@
 
 <style lang="scss" scoped>
 @import "@/components/autoTires/style/auto-tires-list.scss";
-@import "/node_modules/lightbox2/dist/css/lightbox.min.css";
-@import "@/assets/scss/table-adaptive.scss";
 </style>
