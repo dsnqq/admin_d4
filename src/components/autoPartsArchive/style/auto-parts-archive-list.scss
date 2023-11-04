@@ -55,15 +55,15 @@
     }
 
     .card-filter {
-      &__item {
-        &__rows {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          grid-template-rows: repeat(5, 1fr);
-          grid-column-gap: 10px;
-          grid-row-gap: 0;
-        }
+      &__rows {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-rows: repeat(5, 1fr) !important;
+        grid-column-gap: 10px !important;
+        grid-row-gap: 0 !important;
+      }
 
+      &__item {
         &:nth-child(1) {
           grid-area: 1 / 1 / 2 / 3;
         }

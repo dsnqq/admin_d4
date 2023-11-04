@@ -11,70 +11,71 @@
       </template>
     </Breadcrumb>
     <hr>
-    <div class="card">
-      <div class="card-body">
-        <div class="row">
-          <table
-              class="table table-border-1 mb-0 table-center-td rwd-table"
+    <LayoutDefault>
+      <template v-slot:tableThead>
+        <tr>
+          <th
+              v-for="(c, i) in columns"
+              :key="i"
+              scope="col"
           >
-            <thead>
-            <tr>
-              <th
-                  v-for="(c, i) in columns"
-                  :key="i"
-                  scope="col"
-              >
-                {{c.title}}
-              </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr
-                v-for="(userItem, i) in USER_HISTORY"
-                :key="i"
-            >
-              <td
-                  v-for="(c, index) in COLUMNS_INDEX"
-                  :key="index"
-                  :data-th="c.title"
-              >
-                <template v-if="c.type == 'default'">
-                  {{userItem[c.name]}}
-                </template>
-                <template v-else-if="c.type == 'image'">
-                  <img :src="userItem[c.name]" />
-                </template>
-                <template v-else-if="c.type == 'price'">
-                  {{userItem[c.name]}}<br>{{userItem[c.name2]}}
-                </template>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+            {{c.title}}
+          </th>
+        </tr>
+      </template>
+      <template v-slot:tableTbody>
+        <tr
+            v-for="(userItem, i) in USER_HISTORY"
+            :key="i"
+        >
+          <td
+              v-for="(c, index) in COLUMNS_INDEX"
+              :key="index"
+              :data-th="c.title"
+          >
+            <template v-if="c.type == 'default'">
+              {{userItem[c.name]}}
+            </template>
+            <template v-else-if="c.type == 'image'">
+              <img :src="userItem[c.name]" />
+            </template>
+            <template v-else-if="c.type == 'price'">
+              {{userItem[c.name]}}<br>{{userItem[c.name2]}}
+            </template>
+          </td>
+        </tr>
+      </template>
+      <template v-slot:pagination>
         <Pagination
             :totals="USER_HISTORY_TOTAL"
             @setPageByTotal="setPageByTotal"
+            :countChunk="isMobile ? 4 : 5"
+            :class="{'card-body-pagination-mobile' : isMobile}"
         />
-      </div>
-    </div>
+      </template>
+    </LayoutDefault>
   </div>
 </template>
 
 <script>
+import LayoutDefault from "@/layouts/LayoutDefault.vue";
 import Pagination from "@/components/UI/BasePagination.vue";
 import {COLUMNS_INDEX} from '@/components/historyUsers/constants/constants'
 import {DICTIONARY} from '@/constants/constants'
 import Breadcrumb from "@/components/UI/BaseBreadcrumb.vue";
 import {mapActions, mapGetters} from "vuex";
+import {mixins} from "@/mixins/mixins";
 
 export default {
   name: "HistoryUsersIndex",
 
   components: {
     Breadcrumb,
-    Pagination
+    Pagination,
+    LayoutDefault
   },
+
+  mixins: [mixins],
 
   mounted() {
     this.GET_USER_HISTORY(this.param);
@@ -118,5 +119,4 @@ export default {
 
 <style lang="scss" scoped>
 @import "./src/components/historyUsers/components/style/history-users-index.scss";
-@import "@/assets/scss/table-adaptive.scss";
 </style>
