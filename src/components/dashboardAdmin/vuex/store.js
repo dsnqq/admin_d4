@@ -31,8 +31,29 @@ export default {
                     return error;
                 });
         },
+
+        SET_CURRENCY_FROM_API({commit}, param) {
+            return axios.post(
+                DOMAIN + '/index.php?route=api/dashboard_admin/index/currency',
+                {
+                    currency: param.currency,
+                    value: param.value
+                }
+            )
+                .then(() => {
+                    commit('SET_CURRENCY');
+                    return param;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    return error;
+                });
+        },
     },
     mutations: {
+        SET_CURRENCY: () => {
+            alert('Курс изменен!')
+        },
         SET_DASHBOARD_INFORMATION: (state, dashboardInformations) => {
             state.dashboardInformations = Object.freeze(dashboardInformations);
         },

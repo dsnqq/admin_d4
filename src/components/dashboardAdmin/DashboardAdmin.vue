@@ -76,7 +76,27 @@
             <div class="widget-icon mx-auto mb-3 bg-light-success text-success">
               <i class="bi bi-currency-dollar"></i>
             </div>
-            <h3>{{DASHBOARD_INFORMATION.currency.USD}} <i class="bi bi-pencil text-warning"></i></h3>
+            <h3>
+              <input
+                  v-if="columnEditUSD"
+                  placeholder="Курс USD"
+                  v-model="DASHBOARD_INFORMATION.currency.USD"
+                  class="dashboard-admin__input--edits"
+                  type="text"
+              >
+              <span v-else>
+                {{DASHBOARD_INFORMATION.currency.USD}}
+              </span>
+              <i
+                  v-if="!columnEditUSD"
+                  @click="editCurrencyUSD"
+                  class="bi bi-pencil text-warning"
+              ></i>
+              <i
+                v-else
+                @click="saveCurrencyUSD"
+                class="lni lni-save p-2 text-success"></i>
+            </h3>
             <p class="mb-0">Доллар США (USD)</p>
           </div>
         </div>
@@ -87,7 +107,27 @@
             <div class="widget-icon mx-auto mb-3 bg-light-primary text-primary">
               <i class="bi bi-cash"></i>
             </div>
-            <h3>{{DASHBOARD_INFORMATION.currency.RUB}} <i class="bi bi-pencil text-warning"></i></h3>
+            <h3>
+              <input
+                  v-if="columnEditRUB"
+                  placeholder="Курс RUB"
+                  v-model="DASHBOARD_INFORMATION.currency.RUB"
+                  class="dashboard-admin__input--edits"
+                  type="text"
+              >
+              <span v-else>
+                {{DASHBOARD_INFORMATION.currency.RUB}}
+              </span>
+              <i
+                  v-if="!columnEditRUB"
+                  @click="editCurrencyRUB"
+                  class="bi bi-pencil text-warning"
+              ></i>
+              <i
+                  v-else
+                  @click="saveCurrencyRUB"
+                  class="lni lni-save p-2 text-success"></i>
+            </h3>
             <p class="mb-0">Рос. рубль (RUB)</p>
           </div>
         </div>
@@ -98,7 +138,29 @@
             <div class="widget-icon mx-auto mb-3 bg-light-orange text-orange">
               <i class="bi bi-currency-euro"></i>
             </div>
-            <h3>{{DASHBOARD_INFORMATION.currency.EUR}} <i class="bi bi-pencil text-warning"></i></h3>
+            <h3>
+              <h3>
+                <input
+                    v-if="columnEditEUR"
+                    placeholder="Курс EUR"
+                    v-model="DASHBOARD_INFORMATION.currency.EUR"
+                    class="dashboard-admin__input--edits"
+                    type="text"
+                >
+                <span v-else>
+                {{DASHBOARD_INFORMATION.currency.EUR}}
+              </span>
+                <i
+                    v-if="!columnEditEUR"
+                    @click="editCurrencyEUR"
+                    class="bi bi-pencil text-warning"
+                ></i>
+                <i
+                    v-else
+                    @click="saveCurrencyEUR"
+                    class="lni lni-save p-2 text-success"></i>
+              </h3>
+            </h3>
             <p class="mb-0">Евро (EUR)</p>
           </div>
         </div>
@@ -125,9 +187,60 @@
 
     methods: {
       ...mapActions('dashboardAdmin', [
-        'GET_DASHBOARD_INFORMATION'
+        'GET_DASHBOARD_INFORMATION',
+        'SET_CURRENCY_FROM_API'
       ]),
+
+      saveCurrencyUSD() {
+        let param = {
+          currency: "USD",
+          value: this.DASHBOARD_INFORMATION.currency.USD
+        }
+
+        this.SET_CURRENCY_FROM_API(param);
+        this.editCurrencyUSD();
+      },
+
+      saveCurrencyRUB() {
+        let param = {
+          currency: "RUB",
+          value: this.DASHBOARD_INFORMATION.currency.RUB
+        }
+
+        this.SET_CURRENCY_FROM_API(param);
+        this.editCurrencyRUB();
+      },
+
+      saveCurrencyEUR() {
+        let param = {
+          currency: "EUR",
+          value: this.DASHBOARD_INFORMATION.currency.EUR
+        }
+
+        this.SET_CURRENCY_FROM_API(param);
+        this.editCurrencyEUR();
+      },
+
+      editCurrencyUSD() {
+        this.columnEditUSD = !this.columnEditUSD;
+      },
+
+      editCurrencyRUB() {
+        this.columnEditRUB = !this.columnEditRUB;
+      },
+
+      editCurrencyEUR() {
+        this.columnEditEUR = !this.columnEditEUR;
+      }
     },
+
+    data() {
+      return {
+        columnEditUSD: false,
+        columnEditRUB: false,
+        columnEditEUR: false,
+      }
+    }
   }
 </script>
 

@@ -1,6 +1,10 @@
 .dashboard-admin {
   overflow: hidden;
 
+  &__input--edits {
+    width: 55px;
+  }
+
   &__card {
     @media screen and (max-width: 560px) {
       margin-bottom: 10px;
