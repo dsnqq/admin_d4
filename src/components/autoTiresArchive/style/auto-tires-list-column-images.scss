@@ -1,0 +1,54 @@
+.auto-tires-list-column-images {
+  .product-box-image {
+    @media screen and (max-width: 1570px) and (min-width: 1024px) {
+      width: 100px;
+    }
+  }
+}
+
+.product-box-image-flex {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 170px;
+}
+
+.product-box-image {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  cursor: pointer;
+  overflow: hidden;
+  width: 170px;
+
+  &--small {
+    max-width: 50px;
+    margin:3px;
+    cursor: pointer;
+    border: 1px solid hsl(210, 14%, 89%);
+    border-radius: 10px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  img {
+    width: 100%;
+  }
+}
+
+.product-more-photo {
+  font-size: 12px;
+  font-weight: bold;
+  color: hsl(216, 98%, 52%);
+  margin: auto;
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+
+  &:hover {
+    border-color: hsl(216, 98%, 52%);
+  }
+}

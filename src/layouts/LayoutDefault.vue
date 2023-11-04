@@ -28,5 +28,6 @@
 </script>
 
 <style lang="scss">
+@import "@/layouts/style/layout-default.scss";
 @import "@/assets/scss/table-adaptive.scss";
 </style>

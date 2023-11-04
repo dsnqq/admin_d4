@@ -1,14 +1,12 @@
 <template>
   <LayoutDefault>
     <template v-slot:tableThead>
-      <tr
-        v-for="(column, index) in COLUMNS"
-        :key="index"
-      >
-        <th>
+        <th
+            v-for="(column, index) in COLUMNS"
+            :key="index"
+        >
           {{column.title}}
         </th>
-      </tr>
     </template>
     <template v-slot:tableTbody>
       <tr
