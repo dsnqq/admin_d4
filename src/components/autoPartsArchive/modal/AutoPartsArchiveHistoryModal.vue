@@ -49,13 +49,16 @@ export default {
 
   methods: {
     renderValue(data) {
-      if(data == 1) {
-        return "Активно";
-      } else if(data == 0) {
-        return "Неактивно";
-      }
+      if(data != ""){
+        if(data == 1) {
+          return "Активно";
+        } else if(data == 0) {
+          return "Неактивно";
+        }
 
-      return data
+        return data
+      }
+      return "";
     },
 
     closeHistoryModalAdmin() {

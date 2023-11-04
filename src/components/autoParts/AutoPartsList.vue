@@ -1,58 +1,50 @@
 <template>
-  <div class="card">
-    <div class="card-header py-2">
+  <LayoutDefault>
+    <template v-slot:header>
       <Filters
-        :options="optionsFilters"
-        @setFilterOnAutoPartsPage="setFilterOnAutoPartsPage"
-        @resetFilters="resetFilters"
+          :options="optionsFilters"
+          @setFilterOnAutoPartsPage="setFilterOnAutoPartsPage"
+          @resetFilters="resetFilters"
       />
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <div>
-          <table class="table align-middle table-striped table-border-1 rwd-table middle-responsive">
-            <thead>
-            <tr>
-              <th
-                  v-for="(c, index) in COLUMNS"
-                  :key="index"
-              >
-                {{c.title}}
-              </th>
-            </tr>
-            </thead>
-            <tbody class="card-body__grid">
-              <tr
-                  v-for="(auto, i) in AUTO_PARTS"
-                  :key="i"
-              >
-                <td
-                    v-for="(c, index) in COLUMNS"
-                    :key="index"
-                    :data-th="c.title"
-                    :class="c.className"
-                >
-                  <component
-                      :is="c.components"
-                      :images="auto.images"
-                      :title="auto.autoParts.name"
-                      :index="i"
-                      :id="auto.product_id"
-                      :showAll="auto.imagesShowAllImage"
-                      :content="auto[c.content]"
-                      :contentExtension="auto[c.contentExtension]"
-                      :priceUSD="auto.priceUSD"
-                      :priceBYN="auto.priceBYN"
-                      :status="auto.status"
-                      :linkToSite="auto.linkToSite"
-                      :view="auto.view"
-                  ></component>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+    </template>
+    <template v-slot:tableThead>
+      <th
+          v-for="(c, index) in COLUMNS"
+          :key="index"
+      >
+        {{c.title}}
+      </th>
+    </template>
+    <template v-slot:tableTbody>
+      <tr
+          v-for="(auto, i) in AUTO_PARTS"
+          :key="i"
+      >
+        <td
+            v-for="(c, index) in COLUMNS"
+            :key="index"
+            :data-th="c.title"
+            :class="c.className"
+        >
+          <component
+              :is="c.components"
+              :images="auto.images"
+              :title="auto.autoParts.name"
+              :index="i"
+              :id="auto.product_id"
+              :showAll="auto.imagesShowAllImage"
+              :content="auto[c.content]"
+              :contentExtension="auto[c.contentExtension]"
+              :priceUSD="auto.priceUSD"
+              :priceBYN="auto.priceBYN"
+              :status="auto.status"
+              :linkToSite="auto.linkToSite"
+              :view="auto.view"
+          ></component>
+        </td>
+      </tr>
+    </template>
+    <template v-slot:pagination>
       <Pagination
           :totals="AUTO_PARTS_TOTALS"
           :storageCache="storageCache"
@@ -61,13 +53,14 @@
           :class="{'card-body-pagination-mobile' : isMobile}"
       />
       <BaseButtonFixedAdd
-         component="autoPartsCreate"
+          component="autoPartsCreate"
       />
-    </div>
-  </div>
+    </template>
+  </LayoutDefault>
 </template>
 
 <script>
+  import LayoutDefault from "@/layouts/LayoutDefault.vue";
   import {COLUMNS} from "@/components/autoParts/constants/constants";
   import {autoPartsListOptionsFilters} from "@/components/autoParts/mixins/autoPartsListOptionsFilters.mixins";
   import {mixins} from "@/mixins/mixins";
@@ -84,6 +77,7 @@
     },
 
     components: {
+      LayoutDefault,
       Filters: () => import("@/components/UI/BaseFilters.vue"),
       BaseButtonFixedAdd: () => import("@/components/UI/BaseButtonFixedAdd.vue"),
       Pagination: () => import("@/components/UI/BasePagination.vue")
@@ -167,5 +161,4 @@
 
 <style lang="scss" scoped>
 @import "./src/components/autoParts/style/auto-parts-list";
-@import "@/assets/scss/table-adaptive.scss";
 </style>
