@@ -16,7 +16,7 @@
         </thead>
         <tbody>
         <tr
-            v-for="(autoPartsHistory, i) in AUTO_PARTS_HISTORY"
+            v-for="(autoPartsHistory, i) in AUTO_PARTS_ARCHIVE_HISTORY"
             :key="i"
         >
           <td data-th="Значение">{{autoPartsHistory.valueName}}</td>
@@ -35,15 +35,15 @@
 import {mapGetters} from "vuex";
 
 export default {
-  name: "AutoPartsHistoryModal",
+  name: "AutoPartsArchiveHistoryModal",
 
   components: {
     Modal: () => import("@/components/UI/BaseModal.vue"),
   },
 
   computed: {
-    ...mapGetters('autoParts', [
-      'AUTO_PARTS_HISTORY'
+    ...mapGetters('autoPartsArchive', [
+      'AUTO_PARTS_ARCHIVE_HISTORY'
     ]),
   },
 
