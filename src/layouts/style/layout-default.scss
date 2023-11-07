@@ -6,7 +6,9 @@
       grid-column-gap: 20px;
     }
 
-    .auto-tires-list-column-images {
+    .auto-tires-list-column-images,
+    .auto-parts-list-column-images
+    {
       @media screen and (max-width: 1570px) and (min-width: 1024px) {
         height: 165px;
         overflow: hidden;
