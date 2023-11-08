@@ -33,7 +33,7 @@ export default {
     vueDropzone: vue2Dropzone,
   },
 
-  props: ["autoPartsId"],
+  props: ["autoTiresId"],
 
   methods: {
     ...mapActions('autoTires', [
@@ -54,7 +54,7 @@ export default {
 
       let params = {
         images: this.imageServer,
-        autoPartsId: this.$props.autoPartsId
+        autoTiresId: this.$props.autoTiresId
       };
 
       this.SET_AUTO_TIRES_IMAGE_FROM_LIST(params);
@@ -74,6 +74,9 @@ export default {
         maxFilesize: 2500,
         autoProcessQueue: false,
         parallelUploads: 20,
+        dictDefaultMessage: 'Нажмите сюда или перетащите сюда файлы для загрузки <div><span style="color: darkgrey; margin-bottom: 5px">* для выбора нескольких фото, удерживайте клавишу Ctrl</span><br/></div><br/>',
+        dictRemoveFile: 'удалить',
+        dictCancelUpload: 'отменить',
         maxThumbnailFilesize: 200,
         resizeWidth: 800,
         timeout: 180000000,

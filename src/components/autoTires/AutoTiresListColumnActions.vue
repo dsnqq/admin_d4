@@ -38,7 +38,7 @@
     <AutoTiresPhotoModal
         @closePhotoModalAdmin="closePhotoModalAdmin"
         v-if="modalPhotoAdminShow"
-        :autoPartsId="id"
+        :autoTiresId="id"
     />
     <iframe
         name="autoPartsQrCode"
@@ -108,5 +108,5 @@
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/autoTires/style/auto-tires-list-column-actions.scss"
+@import "@/components/autoTires/style/auto-tires-list-column-actions.scss";
 </style>
