@@ -62,25 +62,6 @@ export default {
                 });
         },
 
-        GET_AUTO_TIRES_HISTORY({commit}, id) {
-            this.dispatch('generalStore/LOCK_UI');
-            return  axios.post(
-                DOMAIN + '/index.php?route=api/auto_tires/tires/history/' + id,
-                {
-                    key: KEYS,
-                }
-            )
-                .then((response) => {
-                    this.dispatch('generalStore/UN_LOCK_UI');
-                    commit('SET_AUTO_TIRES_HISTORY_STATE', response.data.autoTiresHistory);
-                    return response.data.autoTiresHistory;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    return error;
-                });
-        },
-
         CHANGE_AUTO_TIRES_STATUS({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
@@ -178,10 +159,83 @@ export default {
         SET_SHOW_ALL_IMAGE({commit}, id){
             commit('SHOW_ALL_IMAGE_BY_ID', id);
         },
+
+        EDIT_AUTO_TIRES_FROM_API({commit}, param) {
+            if(!param.redirect) {
+                this.dispatch('generalStore/LOCK_UI');
+            }
+            return axios.post(
+                DOMAIN + '/index.php?route=api/auto_tires/tires/' + param.id + '/edit',
+                param.autoTires
+            )
+                .then(() => {
+                    if(param.redirect) {
+                        window.location.href = '/auto-tires';
+                        return false;
+                    }
+                    this.dispatch('generalStore/UN_LOCK_UI');
+                    commit('EDIT_AUTO_TIRES_ON_STATE');
+                    return param.autoTires;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    return error;
+                });
+        },
+
+        RESET_AUTO_TIRES_FOR_CREATE_PAGE({commit}){
+            commit('RESET_AUTO_TIRES');
+        },
+
+        SET_AUTO_TIRES_IMAGE_FROM_USER({commit}, param) {
+            commit('ADD_AUTO_TIRES_IMAGE', param);
+            return param;
+        },
+
+        SET_AUTO_TIRES_FROM_API({commit}, param) {
+            this.dispatch('generalStore/LOCK_UI');
+            return axios.post(
+                DOMAIN + '/index.php?route=api/auto_tires/tires/create',
+                param.fields,
+            )
+                .then((response) => {
+                    if(typeof response.data.autoTiresCreate === 'string'){
+                        alert(response.data.autoTiresCreate);
+                        return false;
+                    }
+                    if(param.redirect) {
+                        window.location.href = '/auto-tires';
+                        return false;
+                    }
+                    this.dispatch('generalStore/UN_LOCK_UI');
+                    commit('ADD_AUTO_TIRES_TO_STATE');
+                    return param;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    return error;
+                });
+        },
     },
     mutations: {
         ADD_AUTO_TIRES_IMAGE_FROM_LIST: () => {
             alert('Изображения добавлены!');
+        },
+        ADD_AUTO_TIRES_TO_STATE: () => {
+            alert('Добавлена шина!');
+        },
+        ADD_AUTO_TIRES_IMAGE: (state, file) => {
+            if(!state.autoTiresIndex.images) {state.autoTiresIndex.images = []}
+            if(!state.autoTiresIndex.imagesServer) {state.autoTiresIndex.imagesServer = []}
+
+            state.autoTiresIndex.images.push(file.dataURL);
+            state.autoTiresIndex.imagesServer.push(file.upload.filename);
+        },
+        EDIT_AUTO_TIRES_ON_STATE: () => {
+            alert("изменения сохранены!");
+        },
+        RESET_AUTO_TIRES: (state) => {
+            state.autoTiresIndex = {};
         },
         SET_AUTO_TIRES_TO_STATE: (state, autoTires) => {
             state.autoTires = {};
@@ -208,9 +262,6 @@ export default {
                     state.autoTires[id].images[i].imageShow = true;
                 }
             }
-        },
-        SET_AUTO_TIRES_HISTORY_STATE: (state, autoTiresHistory) => {
-            state.autoTiresHistory = autoTiresHistory;
         },
         DELETE_THIS_AUTO_TIRES: (state, id) => {
             state.autoTiresTotals = state.autoTiresTotals - 1;

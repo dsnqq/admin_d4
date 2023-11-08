@@ -54,5 +54,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "./src/components/sparePartsStatistics/style/spare-parts-statistics";
+@import "@/components/sparePartsStatistics/style/spare-parts-statistics.scss";
 </style>

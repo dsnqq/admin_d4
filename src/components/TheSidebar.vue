@@ -67,6 +67,7 @@
 
       linkToComponent(linkComponent) {
         this.$router.push({ name: linkComponent }).catch(()=>{});
+
         if(this.isMobile) {
           this.$emit("menuSideBarClosed");
         }
@@ -95,5 +96,5 @@
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/style/sidebar-admin.scss";
+@import "@/components/style/t-slidebar.scss";
 </style>

@@ -119,5 +119,5 @@
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/style/header-admin.scss";
+@import "@/components/style/t-header.scss";
 </style>

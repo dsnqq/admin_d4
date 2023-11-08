@@ -106,5 +106,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/style/admin-content.scss";
+@import "@/components/style/t-admin.scss";
 </style>

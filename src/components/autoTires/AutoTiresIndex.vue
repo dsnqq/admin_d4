@@ -39,25 +39,23 @@
                   className="auto-tires-index-field__wrap--is-flex auto-tires-index-field__wrap--is-three"
               >
                 <BaseMultiselect
-                    v-model="AUTO_TIRES_INDEX.fuel"
-                    :options="FUELS"
-                    @select="getFuelToTypeEngines"
+                    v-model="AUTO_TIRES_INDEX.width"
+                    :options="WIDTH"
                     placeholder="Ширина"
-                    id="fuel"
+                    id="width"
                     class="auto-tires-index-field__select"
                 />
                 <BaseMultiselect
-                    v-model="AUTO_TIRES_INDEX.fuel"
-                    :options="FUELS"
-                    @select="getFuelToTypeEngines"
+                    v-model="AUTO_TIRES_INDEX.height"
+                    :options="HEIGHT"
                     placeholder="Высота"
-                    id="fuel"
+                    id="height"
                     class="auto-tires-index-field__select"
                 />
                 <BaseMultiselect
-                    v-model="AUTO_TIRES_INDEX.typeEngines"
-                    :options="this.typeEngines"
-                    id="typeEngines"
+                    v-model="AUTO_TIRES_INDEX.rSize"
+                    :options="R_SIZE"
+                    id="rSize"
                     placeholder="R"
                     class="auto-tires-index-field__select"
                 />
@@ -69,14 +67,14 @@
                   required
               >
                 <BaseMultiselect
-                    v-model="AUTO_TIRES_INDEX.year"
-                    :options="YEARS"
-                    id="year"
+                    v-model="AUTO_TIRES_INDEX.marka"
+                    :options="MARKA"
+                    id="marka"
                     placeholder="Марка"
                     class="auto-tires-index-field__select"
                 />
                 <input
-                    v-model="AUTO_TIRES_INDEX.modification"
+                    v-model="AUTO_TIRES_INDEX.modelS"
                     type="text"
                     placeholder="Модель"
                     class="auto-tires-index-field__input"
@@ -89,21 +87,21 @@
                   className="auto-tires-index-field__wrap--is-flex auto-tires-index-field__wrap--is-three"
               >
                 <BaseMultiselect
-                    v-model="AUTO_TIRES_INDEX.typeBody"
-                    :options="BODYS"
-                    id="typeBody"
+                    v-model="AUTO_TIRES_INDEX.condition"
+                    :options="CONDITION"
+                    id="condition"
                     placeholder="Состояние"
                     class="auto-tires-index-field__select"
                 />
                 <BaseMultiselect
-                    v-model="AUTO_TIRES_INDEX.transmission"
-                    :options="TRANSMISSION"
-                    id="transmission"
+                    v-model="AUTO_TIRES_INDEX.season"
+                    :options="SEASON"
+                    id="season"
                     placeholder="Cезон"
                     class="auto-tires-index-field__select"
                 />
                 <input
-                    v-model="AUTO_TIRES_INDEX.modification"
+                    v-model="AUTO_TIRES_INDEX.quantity"
                     type="text"
                     placeholder="Кол-во"
                     class="auto-tires-index-field__input"
@@ -115,16 +113,16 @@
                   className="auto-tires-index-field__wrap--is-flex auto-tires-index-field__wrap--is-too"
               >
                 <BaseMultiselect
-                    v-model="AUTO_TIRES_INDEX.typeBody"
+                    v-model="AUTO_TIRES_INDEX.type"
                     :options="BODYS"
-                    id="typeBody"
+                    id="type"
                     placeholder="Тип авто"
                     class="auto-tires-index-field__select"
                 />
                 <BaseMultiselect
-                    v-model="AUTO_TIRES_INDEX.transmission"
-                    :options="TRANSMISSION"
-                    id="transmission"
+                    v-model="AUTO_TIRES_INDEX.year"
+                    :options="YEARS"
+                    id="year"
                     placeholder="Год"
                     class="auto-tires-index-field__select"
                 />
@@ -281,7 +279,7 @@ import AutoTiresIndexField from "@/components/autoTires/AutoTiresIndexField.vue"
 import BaseMultiselect from "@/components/UI/BaseMultiselect.vue";
 import Breadcrumb from "@/components/UI/BaseBreadcrumb.vue";
 import {mapActions, mapGetters} from "vuex";
-import {DOMAIN, STATUS, YEARS, BODYS, TRANSMISSION, FUELS, TYPE_ENGINES_ALL, TYPE_ENGINES_DISEL, TYPE_ENGINES_BENZ} from "@/constants/constants";
+import {DOMAIN, STATUS, YEARS, BODYS, TRANSMISSION, WIDTH, HEIGHT, MARKA, CONDITION, SEASON, R_SIZE, TYPE_ENGINES_ALL} from "@/constants/constants";
 import vue2Dropzone from 'vue2-dropzone';
 import {FIELD_POST_TO_SEND, FIELDS_FOR_CAST_DISK_DRIVE} from "@/components/autoTires/constants/constants";
 
@@ -305,16 +303,11 @@ export default {
     if(!this.isCreatedPage) {
       this.GET_AUTO_TIRES_INDEX(this.param);
     }
-
-    this.GET_BREND_MODEL_CAR_AUTO_TIRES();
-    this.GET_TYPES_OF_AUTO_TIRES();
   },
 
   computed: {
     ...mapGetters('autoTires', [
-      'AUTO_TIRES_INDEX',
-      'BREND_MODEL_CAR_AUTO_TIRES',
-      'TYPES_OF_AUTO_TIRES'
+      'AUTO_TIRES_INDEX'
     ]),
 
     getAutoTiresIndexButtonsComponent() {
@@ -335,8 +328,6 @@ export default {
   methods: {
     ...mapActions('autoTires', [
       'GET_AUTO_TIRES_INDEX',
-      'GET_BREND_MODEL_CAR_AUTO_TIRES',
-      'GET_TYPES_OF_AUTO_TIRES',
       'EDIT_AUTO_TIRES_FROM_API',
       'SET_AUTO_TIRES_IMAGE_FROM_USER',
       'SET_AUTO_TIRES_FROM_API',
@@ -519,16 +510,6 @@ export default {
     closeAlertMessage() {
       this.errorValidate = "";
     },
-
-    getFuelToTypeEngines(value) {
-      if(value == 'дизель') {
-        this.typeEngines = TYPE_ENGINES_DISEL;
-      } else if(value == 'бензин') {
-        this.typeEngines = TYPE_ENGINES_BENZ;
-      } else {
-        this.typeEngines = TYPE_ENGINES_ALL;
-      }
-    },
   },
 
   data() {
@@ -547,7 +528,12 @@ export default {
       YEARS,
       BODYS,
       TRANSMISSION,
-      FUELS,
+      WIDTH,
+      HEIGHT,
+      MARKA,
+      SEASON,
+      CONDITION,
+      R_SIZE,
       FIELDS_FOR_CAST_DISK_DRIVE,
       typeEngines: TYPE_ENGINES_ALL,
       dropzoneOptions: {

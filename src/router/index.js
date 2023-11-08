@@ -1,6 +1,11 @@
+import {autoPartsRouter} from "@/components/autoParts/router";
+import {carsRouter} from "@/components/carsAdmin/router";
+import {autoTiresRouter} from "@/components/autoTires/router";
+import {historyUsersRouter} from "@/components/historyUsers/router";
+
 import VueRouter from "vue-router";
 
-const routes = [
+let defaults = [
     {
         path: '/',
         name: 'dashboardAdmin',
@@ -10,77 +15,12 @@ const routes = [
         component: () => import('../components/dashboardAdmin/DashboardAdmin.vue'),
     },
     {
-        path: '/auto-parts',
-        name: 'autoParts',
-        meta: {
-            title: 'Автозапчасти',
-        },
-        component: () => import('../components/autoParts/AutoPartsList.vue'),
-    },
-    {
-        path: '/auto-parts/create',
-        name: 'autoPartsCreate',
-        meta: {
-            title: 'Добавить З/Ч',
-        },
-        component: () => import('../components/autoParts/AutoPartsIndex.vue'),
-    },
-    {
-        path: '/auto/:id',
-        name: 'autoPartsDetail',
-        meta: {
-            title: 'Автозапчасть',
-        },
-        props: true,
-        component: () => import('../components/autoParts/AutoPartsIndex.vue'),
-    },
-    {
         path: '/auto-parts-archive',
         name: 'autoPartsArchive',
         meta: {
             title: 'Архив автозапчастей',
         },
         component: () => import('../components/autoPartsArchive/AutoPartsArchiveList.vue'),
-    },
-    {
-        path: '/history-users',
-        name: 'historyUsers',
-        meta: {
-            title: 'История пользователей',
-        },
-        component: () => import('../components/historyUsers/HistoryUsers.vue'),
-    },
-    {
-        path: '/history-users/:id',
-        name: 'historyUsersIndex',
-        meta: {
-            title: 'История пользователя',
-        },
-        component: () => import('../components/historyUsers/components/HistoryUsersIndex.vue'),
-    },
-    {
-        path: '/cars',
-        name: 'carsAdmin',
-        meta: {
-            title: 'Авто в разборе',
-        },
-        component: () => import('../components/carsAdmin/CarContent.vue'),
-    },
-    {
-        path: '/car/:id',
-        name: 'carDetail',
-        meta: {
-            title: 'Авто в разборе',
-        },
-        component: () => import('../components/carsAdmin/CarIndex.vue'),
-    },
-    {
-        path: '/car/create',
-        name: 'carCreate',
-        meta: {
-            title: 'Добавление авто',
-        },
-        component: () => import('../components/carsAdmin/CarIndex.vue'),
     },
     {
         path: '/tire-statistics',
@@ -112,31 +52,6 @@ const routes = [
         component: () => import('../components/orderSale/OrderSale.vue'),
     },
     {
-        path: '/auto-tires',
-        name: 'autoTires',
-        meta: {
-            title: 'Шины',
-        },
-        component: () => import('../components/autoTires/AutoTiresList.vue'),
-    },
-    {
-        path: '/auto-tires/:id',
-        name: 'autoTiresDetail',
-        meta: {
-            title: 'Шина',
-        },
-        props: true,
-        component: () => import('../components/autoTires/AutoTiresIndex.vue'),
-    },
-    {
-        path: '/auto-tires/create',
-        name: 'autoTiresCreate',
-        meta: {
-            title: 'Добавить шину',
-        },
-        component: () => import('../components/autoTires/AutoTiresIndex.vue'),
-    },
-    {
         path: '/auto-tires-archive',
         name: 'autoTiresArchive',
         meta: {
@@ -153,6 +68,8 @@ const routes = [
         component: () => import('../components/TheNotFound.vue'),
     },
 ];
+
+const routes = [].concat(defaults, autoPartsRouter, carsRouter, autoTiresRouter, historyUsersRouter);
 
 export default new VueRouter({
     mode:'history',
