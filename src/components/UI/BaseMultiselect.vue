@@ -5,8 +5,8 @@
       :options="options"
       :custom-label="(customLabel == 'name') ? customLabelNameReturn : customLabelReturn"
       :selectedLabel="``"
-      :deselectLabel="`Клик, чтобы удалить`"
-      :selectLabel="`Клик, чтобы выбрать`"
+      :deselectLabel="`Удалить`"
+      :selectLabel="`Выбрать`"
       :placeholder="placeholder"
       @select="select"
   >
