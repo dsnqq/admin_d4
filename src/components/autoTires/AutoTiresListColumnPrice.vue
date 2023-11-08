@@ -7,7 +7,7 @@
       <span class="auto-tires-list-wrapper-column__edits auto-tires-list-wrapper-column-edits">
         <input
             v-if="columnEdit"
-            placeholder="Туть что-то"
+            placeholder="Цена"
             v-model="price"
             class="auto-tires-list-wrapper-column-edits__input"
             type="number"
@@ -62,10 +62,20 @@ export default {
     },
   },
 
+  computed: {
+    price: {
+      get() {
+        return this.$props.priceUSD;
+      },
+      set(val) {
+        this.$props.priceUSD = val;
+      },
+    },
+  },
+
   data() {
     return {
-      columnEdit: false,
-      price: this.priceUSD
+      columnEdit: false
     }
   }
 }

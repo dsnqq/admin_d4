@@ -7,7 +7,7 @@
       <span class="auto-parts-list-wrapper-column__edits auto-parts-list-wrapper-column-edits">
         <input
             v-if="columnEdit"
-            placeholder="Туть что-то"
+            placeholder="Цена"
             v-model="price"
             class="auto-parts-list-wrapper-column-edits__input"
             type="number"
