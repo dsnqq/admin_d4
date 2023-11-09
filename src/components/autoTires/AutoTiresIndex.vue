@@ -367,7 +367,7 @@ export default {
           fields: this.getFormDataAboutAutoTires()
         }
 
-        this.SET_AUTO_PARTS_FROM_API(param);
+        this.SET_AUTO_TIRES_FROM_API(param);
         this.$refs.myVueDropzone.removeAllFiles();
       }
     },
@@ -377,12 +377,12 @@ export default {
 
       if(!this.errorValidate) {
         let postAutoTiresInformation = {
-          autoParts: this.getFormDataAboutAutoTires(),
+          autoTires: this.getFormDataAboutAutoTires(),
           id: this.param.id,
           redirect: redirect
         };
 
-        this.EDIT_AUTO_PARTS_FROM_API(postAutoTiresInformation);
+        this.EDIT_AUTO_TIRES_FROM_API(postAutoTiresInformation);
       }
     },
 

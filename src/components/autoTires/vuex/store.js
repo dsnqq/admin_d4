@@ -222,7 +222,7 @@ export default {
             alert('Изображения добавлены!');
         },
         ADD_AUTO_TIRES_TO_STATE: () => {
-            alert('Добавлена шина!');
+            alert('Добавлено объявление!');
         },
         ADD_AUTO_TIRES_IMAGE: (state, file) => {
             if(!state.autoTiresIndex.images) {state.autoTiresIndex.images = []}
@@ -266,7 +266,7 @@ export default {
         DELETE_THIS_AUTO_TIRES: (state, id) => {
             state.autoTiresTotals = state.autoTiresTotals - 1;
             state.autoTires.splice(id, 1);
-            alert("Запчасть удалена удалено!");
+            alert("Объявление удалено!");
         },
     }
 }
