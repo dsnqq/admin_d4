@@ -15,7 +15,7 @@
       <template v-slot:tableThead>
         <tr>
           <th
-              v-for="(c, i) in columns"
+              v-for="(c, i) in COLUMNS_INDEX"
               :key="i"
               scope="col"
           >
