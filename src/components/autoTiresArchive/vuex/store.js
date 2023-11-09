@@ -144,7 +144,7 @@ export default {
         RESTORE_THIS_AUTO_TIRES_ARCHIVE: (state, id) => {
             state.autoTiresArchiveTotals = state.autoTiresArchiveTotals - 1;
             state.autoTiresArchive.splice(id, 1);
-            alert("Шина восстановлена удалено!");
+            alert("Шина восстановлена!");
         },
     }
 }
