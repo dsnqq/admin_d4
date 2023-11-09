@@ -281,7 +281,6 @@ import Breadcrumb from "@/components/UI/BaseBreadcrumb.vue";
 import {mapActions, mapGetters} from "vuex";
 import {DOMAIN, STATUS, YEARS, BODYS, TRANSMISSION, WIDTH, HEIGHT, MARKA, CONDITION, SEASON, R_SIZE, TYPE_ENGINES_ALL} from "@/constants/constants";
 import vue2Dropzone from 'vue2-dropzone';
-import {FIELD_POST_TO_SEND, FIELDS_FOR_CAST_DISK_DRIVE} from "@/components/autoTires/constants/constants";
 
 export default {
   name: "AutoTiresIndex",
@@ -345,18 +344,6 @@ export default {
 
     validateForm() {
       this.errorValidate = "";
-
-      if(!("autoTiresModelBrand" in this.AUTO_TIRES_INDEX) && this.countAutoTiresAdd == 1 && !this.isCreatedPage){
-        this.errorValidate = "Заполните поле запчасть!";
-      }
-
-      if(this.isCreatedPage && this.autoTiresModelBrands[this.countAutoTiresAdd-1] == undefined){
-        this.errorValidate = "Заполните поле запчасть!";
-      }
-
-      if(!("autoTiresName" in this.AUTO_TIRES_INDEX)){
-        this.errorValidate = "Заполните марку и модель!";
-      }
 
       if(!("year" in this.AUTO_TIRES_INDEX)){
         this.errorValidate = "Заполните поле год!";
@@ -437,9 +424,7 @@ export default {
 
       for (let key in this.AUTO_TIRES_INDEX) {
         if(this.AUTO_TIRES_INDEX[key] !== undefined) {
-          if(this.FIELD_POST_TO_SEND.includes(key)) {
-            xForm.append(key, this.AUTO_TIRES_INDEX[key]);
-          }
+          xForm.append(key, this.AUTO_TIRES_INDEX[key]);
         }
       }
 
@@ -448,46 +433,9 @@ export default {
         xForm.append('status', status);
       }
 
-      if(this.AUTO_TIRES_INDEX.autoTiresName !== undefined){
-        xForm.append('autoTiresName', this.AUTO_TIRES_INDEX.autoTiresName.code);
-      }
-
-      if("autoTiresModelBrand" in this.AUTO_TIRES_INDEX) {
-        xForm.append('autoTiresCategoryId', this.AUTO_TIRES_INDEX.autoTiresModelBrand.code);
-      }
-
-      if(this.AUTO_TIRES_INDEX.autoTiresName.code !== undefined && this.countAutoTiresAdd == 1 && !this.isCreatedPage){
-        xForm.append('autoTiresManufacturerId', this.AUTO_TIRES_INDEX.autoTiresName.code);
-        xForm.append('autoTiresNameForBd', this.createNameAutoPartsForBd());
-      }
-
-      if(this.AUTO_TIRES_INDEX.autoTiresName.code !== undefined && this.countAutoTiresAdd == 1 && this.isCreatedPage){
-        xForm.append('autoTiresManufacturerId', this.AUTO_TIRES_INDEX.autoTiresName.code);
-
-        for(let i = 1;this.autoTiresModelBrands.length >= i ;i++) {
-          xForm.append('autoTiresNameForBd[]', this.AUTO_TIRES_INDEX.autoTiresName.name + " к " + this.autoTiresModelBrands[i-1].name.split(' >')[0] + " " + this.autoTiresModelBrands[i-1].name.split('> ')[1] + " " + this.AUTO_TIRES_INDEX.year + " г.");
-        }
-      }
-
-      if(this.AUTO_TIRES_INDEX.autoTiresName.code !== undefined && this.countAutoTiresAdd > 1 && this.isCreatedPage){
-        xForm.append('autoTiresManufacturerId', this.AUTO_TIRES_INDEX.autoTiresName.code);
-
-        for(let i = 1;this.autoTiresModelBrands.length >= i ;i++) {
-          xForm.append('autoTiresNameForBd[]', this.AUTO_TIRES_INDEX.autoTiresName.name + " к " + this.autoTiresModelBrands[i-1].name.split(' >')[0] + " " + this.autoTiresModelBrands[i-1].name.split('> ')[1] + " " + this.AUTO_TIRES_INDEX.year + " г.");
-        }
-      }
-
-      if(this.autoTiresModelBrands.length != 0 && this.isCreatedPage){
-        for(let i = 1;this.autoTiresModelBrands.length >= i ;i++) {
-          xForm.append('autoTiresModelBrandsObject[]', this.autoTiresModelBrands[i-1].code);
-        }
-      }
-
       if(this.AUTO_TIRES_INDEX.imagesServer !== undefined) {
         xForm.append('images', this.AUTO_TIRES_INDEX.imagesServer);
       }
-
-      xForm.append('user_id', JSON.parse(localStorage.user).user_id);
 
       if(this.AUTO_TIRES_INDEX.mainImage !== undefined) {
         xForm.append('imagesMain', this.AUTO_TIRES_INDEX.mainImage);
@@ -523,7 +471,6 @@ export default {
       countAutoTiresAdd: 1,
       autoTiresModelBrands: [],
       domain: DOMAIN,
-      FIELD_POST_TO_SEND,
       STATUS,
       YEARS,
       BODYS,
@@ -534,7 +481,6 @@ export default {
       SEASON,
       CONDITION,
       R_SIZE,
-      FIELDS_FOR_CAST_DISK_DRIVE,
       typeEngines: TYPE_ENGINES_ALL,
       dropzoneOptions: {
         url: '/upload.php',
