@@ -1,7 +1,7 @@
 <template>
   <div class="admin-content">
     <div
-        :class="{'toggled' : this.menu}"
+        :class="adminContentMenuToggled"
         class="wrapper"
     >
       <TheHeader
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import {DISENABLE_BREADCRUMB} from "@/constants/constants";
 import TheHeader from "@/components/TheHeader.vue";
 import TheSidebar from "@/components/TheSidebar.vue";
 import Breadcrumb from "@/components/UI/BaseBreadcrumb.vue";
@@ -53,19 +54,12 @@ export default {
   },
 
   computed: {
-    getBreadcrumbBool() {
-      let noBreadcrumbAdmin = [
-          'historyUsersIndex',
-          'carDetail',
-          'carCreate',
-          'autoPartsDetail',
-          'autoPartsCreate',
-          'autoTiresDetail',
-          'dashboardAdmin',
-          'autoTiresCreate'
-      ];
+    adminContentMenuToggled() {
+      return (this.menu) ? 'toggled' : '';
+    },
 
-      return (noBreadcrumbAdmin.includes(this.$route.name)) ? false : true;
+    getBreadcrumbBool() {
+      return (DISENABLE_BREADCRUMB.includes(this.$route.name)) ? false : true;
     }
   },
 
@@ -98,6 +92,7 @@ export default {
 
   data() {
     return {
+      DISENABLE_BREADCRUMB,
       buttonShow: false,
       menu: false
     }

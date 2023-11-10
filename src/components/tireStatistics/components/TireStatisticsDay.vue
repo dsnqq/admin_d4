@@ -1,40 +1,40 @@
 <template>
-  <div>
-    <h6 class="mb-0 text-uppercase">
-      Статистика по датам
-    </h6>
-    <hr>
-    <div class="card">
-      <div class="card-body">
-        <div class="row">
-          <table class="table mb-0 table-border-1">
-            <thead>
-              <tr>
-                <th scope="col">Дата</th>
-                <th scope="col">Количество просмотров</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                  v-for="(tireStatisticsDay, i) in TIRE_STATISTICS_DAY"
-                  :key="i"
-              >
-                <td>
-                  {{tireStatisticsDay.date}}
-                </td>
-                <td>
-                  {{tireStatisticsDay.count}} шт.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+  <LayoutDefault>
+    <template v-slot:header>
+      <h6 class="mb-0 text-uppercase">
+        {{DICTIONARY.pageStatistics}}
+      </h6>
+    </template>
+    <template v-slot:tableThead>
+        <th
+            v-for="(c, index) in COLUMNS_DAY"
+            :key="index"
+            scope="col"
+        >
+          {{c.title}}
+        </th>
+    </template>
+    <template v-slot:tableTbody>
+      <tr
+          v-for="(tireStatisticsDay, i) in TIRE_STATISTICS_DAY"
+          :key="i"
+      >
+        <td
+            v-for="(c, index) in COLUMNS_DAY"
+            :key="index"
+            :data-th="c.title"
+        >
+          {{tireStatisticsDay[c.content] + c.prefix}}
+        </td>
+      </tr>
+    </template>
+  </LayoutDefault>
 </template>
 
 <script>
+import {COLUMNS_DAY} from "@/components/tireStatistics/constants/constants";
+import LayoutDefault from "@/layouts/LayoutDefault.vue";
+import {DICTIONARY} from "@/constants/constants";
 import {mapActions, mapGetters} from "vuex";
 
 export default {
@@ -42,6 +42,10 @@ export default {
 
   mounted() {
     this.GET_TIRE_STATISTICS_DAY();
+  },
+
+  components: {
+    LayoutDefault
   },
 
   computed: {
@@ -55,5 +59,12 @@ export default {
       'GET_TIRE_STATISTICS_DAY'
     ]),
   },
+
+  data() {
+    return {
+      COLUMNS_DAY,
+      DICTIONARY
+    }
+  }
 }
 </script>

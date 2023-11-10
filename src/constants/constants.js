@@ -4,8 +4,42 @@ export const DOMAIN = "https://d4.by";
 
 export const DICTIONARY = {
     goBack: "Выйти",
+    logo: "D4.by",
     lastOrderOnTop: "Последние заказы отображаются вверху",
+    oldVersion: "Старая версия",
+    goToMain: "На главную d4.by",
+    page404Text: "Вы достигли края вселенной.<br>Страница, которую вы ищете, не найдена.<br>Не волнуйтесь и вернитесь на предыдущую страницу.",
+    page404Title: "Здесь ничего нет",
+    page404Main: "Главная панель",
+    pageStatistics: "Статистика по датам",
+    pageStatisticsTires: "Статистика просмотров шин"
 };
+
+export const DISENABLE_BREADCRUMB = [
+    'historyUsersIndex',
+    'carDetail',
+    'carCreate',
+    'autoPartsDetail',
+    'autoPartsCreate',
+    'autoTiresDetail',
+    'dashboardAdmin',
+    'autoTiresCreate'
+];
+
+export const LEFT_MENU = [
+    {title: 'Главная панель', component: 'dashboardAdmin', icon: 'bi-house-fill', permissions: []},
+    {title: 'Мои запчасти', component: 'autoParts', icon: 'bi-basket2-fill', permissions: []},
+    {title: 'Архив Запчастей', component: 'autoPartsArchive', icon: 'bi-archive', permissions: []},
+    {title: 'Добавить запчасть', component: 'autoPartsCreate', icon: 'bi-plus-square', permissions: []},
+    {title: 'История пользователей', component: 'historyUsers', icon: 'bi-journal-text', permissions: [7,8,22,2]},
+    {title: 'Авто в разборе', component: 'carsAdmin', icon: 'bi-wrench', permissions: []},
+    {title: 'Добавить авто в разборе', component: 'carCreate', icon: 'bi-wrench', permissions: []},
+    {title: 'Мои шины', component: 'autoTires', icon: 'bi-vinyl', permissions: []},
+    {title: 'Архив Шин', component: 'autoTiresArchive', icon: 'bi-archive', permissions: []},
+    {title: 'Добавить шину', component: 'autoTiresCreate', icon: 'bi-plus-square', permissions: [7,8,22,2]},
+    {title: 'Статистика шин', component: 'tireStatistics', icon: 'bi-info-square-fill', permissions: [7,8,22,2]},
+    {title: 'Статистика З/Ч', component: 'sparePartsStatistics', icon: 'bi-info-square-fill', permissions: [7,8,22,2]}
+];
 
 export const STATUS = [
     "Активно",

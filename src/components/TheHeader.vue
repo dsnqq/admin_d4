@@ -8,7 +8,7 @@
         <i class="bi bi-list"></i>
       </div>
       <a href="https://d4.by/admin" class="fs-6 top-header__oldest">
-        Старая версия
+        {{DICTIONARY.oldVersion}}
       </a>
       <div class="top-navbar-right ms-auto">
         <ul class="navbar-nav align-items-center">
@@ -44,7 +44,9 @@
                 <div class="d-flex align-items-center">
                   <div class="ms-3">
                     <span>
-                      <span class="mobile-hidden">На главную d4.by</span>
+                      <span class="mobile-hidden">
+                        {{DICTIONARY.goToMain}}
+                      </span>
                       <i class="bi bi-house-fill"></i>
                     </span>
                   </div>
@@ -59,7 +61,7 @@
               <div class="d-flex align-items-center">
                 <div class="ms-3">
                   <span>
-                    <span class="mobile-hidden">Выйти</span>
+                    <span class="mobile-hidden">{{DICTIONARY.goBack}}</span>
                     <i class="bi bi-lock-fill"></i>
                   </span>
                 </div>
@@ -73,6 +75,7 @@
 </template>
 
 <script>
+  import {DICTIONARY} from "@/constants/constants";
   import {mapActions, mapGetters} from "vuex";
   import {DOMAIN} from "@/constants/constants";
 
@@ -112,6 +115,7 @@
     data() {
       return {
         domain: DOMAIN,
+        DICTIONARY,
         menu: false,
       }
     }

@@ -11,18 +11,16 @@
                   <span class="text-primary">0</span>
                   <span class="text-success">4</span>
                 </h1>
-                <h2 class="font-weight-bold display-4">Здесь ничего нет</h2>
-                <p>
-                  Вы достигли края вселенной.
-                  <br>Страница, которую вы ищете, не найдена.
-                  <br>Не волнуйтесь и вернитесь на предыдущую страницу.
-                </p>
+                <h2 class="font-weight-bold display-4">
+                  {{DICTIONARY.page404Title}}
+                </h2>
+                <p v-html="DICTIONARY.page404Text"></p>
                 <div class="mt-5">
                   <router-link
                       :to="{name: 'dashboardAdmin'}"
                       class="btn btn-danger btn-lg px-md-5 radius-30"
                   >
-                    Главная панель
+                    {{DICTIONARY.page404Main}}
                   </router-link>
                 </div>
               </div>
@@ -38,7 +36,15 @@
 </template>
 
 <script>
+  import {DICTIONARY} from "@/constants/constants";
+
   export default {
     name: "TheNotFound",
+
+    data() {
+      return {
+        DICTIONARY
+      }
+    }
   }
 </script>

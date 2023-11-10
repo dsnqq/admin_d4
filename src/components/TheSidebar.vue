@@ -13,7 +13,9 @@
         />
       </div>
       <div>
-        <h4 class="logo-text">D4.by</h4>
+        <h4 class="logo-text">
+          {{DICTIONARY.logo}}
+        </h4>
       </div>
       </router-link>
       <div
@@ -25,7 +27,7 @@
     </div>
     <ul class="metismenu" id="menu">
       <li
-          v-for="link in links"
+          v-for="link in LEFT_MENU"
           :key="link.index"
       >
         <a
@@ -49,6 +51,8 @@
 </template>
 
 <script>
+  import {DICTIONARY} from "@/constants/constants";
+  import {LEFT_MENU} from "@/constants/constants";
   import {mixins} from "@/mixins/mixins";
 
   export default {
@@ -76,20 +80,8 @@
 
     data() {
       return {
-        links: [
-          {title: 'Главная панель', component: 'dashboardAdmin', icon: 'bi-house-fill', permissions: []},
-          {title: 'Мои запчасти', component: 'autoParts', icon: 'bi-basket2-fill', permissions: []},
-          {title: 'Архив Запчастей', component: 'autoPartsArchive', icon: 'bi-archive', permissions: []},
-          {title: 'Добавить запчасть', component: 'autoPartsCreate', icon: 'bi-plus-square', permissions: []},
-          {title: 'История пользователей', component: 'historyUsers', icon: 'bi-journal-text', permissions: [7,8,22,2]},
-          {title: 'Авто в разборе', component: 'carsAdmin', icon: 'bi-wrench', permissions: []},
-          {title: 'Добавить авто в разборе', component: 'carCreate', icon: 'bi-wrench', permissions: []},
-          {title: 'Мои шины', component: 'autoTires', icon: 'bi-vinyl', permissions: []},
-          {title: 'Архив Шин', component: 'autoTiresArchive', icon: 'bi-archive', permissions: []},
-          {title: 'Добавить шину', component: 'autoTiresCreate', icon: 'bi-plus-square', permissions: [7,8,22,2]},
-          {title: 'Статистика шин', component: 'tireStatistics', icon: 'bi-info-square-fill', permissions: [7,8,22,2]},
-          {title: 'Статистика З/Ч', component: 'sparePartsStatistics', icon: 'bi-info-square-fill', permissions: [7,8,22,2]},
-        ]
+        LEFT_MENU,
+        DICTIONARY
       }
     }
   }
