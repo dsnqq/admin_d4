@@ -1,5 +1,5 @@
 import axios from "axios";
-import {DOMAIN, KEYS} from '/src/constants/constants';
+import {DOMAIN_API, KEYS} from '/src/constants/constants';
 
 export default {
     namespaced: true,
@@ -15,7 +15,7 @@ export default {
     actions: {
         LOGIN_FROM_API({commit}, param) {
             return axios.post(
-                DOMAIN + '/index.php?route=api/user/login',
+                DOMAIN_API + '/index.php?route=api/user/login',
                 {
                     key: KEYS,
                     login: param.login,

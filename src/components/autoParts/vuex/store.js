@@ -1,5 +1,5 @@
 import axios from "axios";
-import {DOMAIN, KEYS} from '/src/constants/constants';
+import {DOMAIN_API, KEYS} from '/src/constants/constants';
 
 export default {
     namespaced: true,
@@ -39,7 +39,7 @@ export default {
         GET_AUTO_PARTS_FROM_API({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts/auto',
+                DOMAIN_API + '/index.php?route=api/auto_parts/auto',
                 {
                     key: KEYS,
                     page: param.pageNum,
@@ -67,7 +67,7 @@ export default {
 
         GET_AUTO_PARTS_TOTALS({commit}, param) {
             return  axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts/auto/totals',
+                DOMAIN_API + '/index.php?route=api/auto_parts/auto/totals',
                 {
                     key: KEYS,
                     filter_sparePartNumber: param.filters.sparePartNumber,
@@ -94,7 +94,7 @@ export default {
         GET_AUTO_PARTS_HISTORY({commit}, id) {
             this.dispatch('generalStore/LOCK_UI');
             return  axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts/auto/history/' + id,
+                DOMAIN_API + '/index.php?route=api/auto_parts/auto/history/' + id,
                 {
                     key: KEYS,
                 }
@@ -113,7 +113,7 @@ export default {
         GET_AUTO_PARTS_INDEX({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return  axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts/auto/index/' + param.id,
+                DOMAIN_API + '/index.php?route=api/auto_parts/auto/index/' + param.id,
                 {
                     key: KEYS,
                     param: param
@@ -132,7 +132,7 @@ export default {
 
         async GET_TYPES_OF_AUTO_PARTS({commit}) {
             return await axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts/auto/types',
+                DOMAIN_API + '/index.php?route=api/auto_parts/auto/types',
                 {
                     key: KEYS,
                 }
@@ -149,7 +149,7 @@ export default {
 
         async GET_BREND_MODEL_CAR_AUTO_PARTS({commit}) {
             return await axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts/auto/category',
+                DOMAIN_API + '/index.php?route=api/auto_parts/auto/category',
                 {
                     key: KEYS,
                 }
@@ -169,7 +169,7 @@ export default {
                 this.dispatch('generalStore/LOCK_UI');
             }
             return axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts/auto/' + param.id + '/edit',
+                DOMAIN_API + '/index.php?route=api/auto_parts/auto/' + param.id + '/edit',
                 param.autoParts
             )
                 .then(() => {
@@ -195,7 +195,7 @@ export default {
         DELET_AUTO_PARTS_BY_API({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts/auto/delete/' + param.autoPartsId,
+                DOMAIN_API + '/index.php?route=api/auto_parts/auto/delete/' + param.autoPartsId,
                 {
                     key: KEYS,
                     user_id: JSON.parse(localStorage.user).user_id
@@ -213,7 +213,7 @@ export default {
         CHANGE_AUTO_PARTS_PRICE({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts/auto/change_price/' + param.id,
+                DOMAIN_API + '/index.php?route=api/auto_parts/auto/change_price/' + param.id,
                 {
                     key: KEYS,
                     price: param.priceUSD,
@@ -239,7 +239,7 @@ export default {
         SET_AUTO_PARTS_FROM_API({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts/auto/create',
+                DOMAIN_API + '/index.php?route=api/auto_parts/auto/create',
                 param.fields,
             )
             .then((response) => {
@@ -264,7 +264,7 @@ export default {
         CHANGE_AUTO_PARTS_STATUS({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts/auto/change_status/' + param.id,
+                DOMAIN_API + '/index.php?route=api/auto_parts/auto/change_status/' + param.id,
                 {
                     key: KEYS,
                     status: param.status,
@@ -283,7 +283,7 @@ export default {
         SET_AUTO_PARTS_IMAGE_FROM_LIST({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts/auto/add_images/' + param.autoPartsId,
+                DOMAIN_API + '/index.php?route=api/auto_parts/auto/add_images/' + param.autoPartsId,
                 {
                     key: KEYS,
                     images: param.images.toString()

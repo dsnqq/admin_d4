@@ -1,5 +1,5 @@
 import axios from "axios";
-import {DOMAIN, KEYS} from '/src/constants/constants';
+import {DOMAIN_API, KEYS} from '/src/constants/constants';
 
 export default {
     namespaced: true,
@@ -19,7 +19,7 @@ export default {
     actions: {
         GET_ORDER_SALE({commit}, page) {
             return axios.post(
-                DOMAIN + '/index.php?route=api/order_sale/index/' + page,
+                DOMAIN_API + '/index.php?route=api/order_sale/index/' + page,
                 {
                     key: KEYS,
                 }
@@ -36,7 +36,7 @@ export default {
 
         GET_ORDER_TOTALS({commit}) {
             return axios.post(
-                DOMAIN + '/index.php?route=api/order_sale/index/totals',
+                DOMAIN_API + '/index.php?route=api/order_sale/index/totals',
                 {
                     key: KEYS,
                 }

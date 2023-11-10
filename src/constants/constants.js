@@ -2,6 +2,8 @@ export const KEYS = "ttoCiOHMPjOkCjQBRE8OheHGWMi6hITr7iYmWDupyWXdKmP8DYTLp0xxrtb
 
 export const DOMAIN = "https://d4.by";
 
+export const DOMAIN_API = "https://admin.d4.by/v1";
+
 export const DICTIONARY = {
     goBack: "Выйти",
     logo: "D4.by",

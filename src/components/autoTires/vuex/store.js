@@ -1,5 +1,5 @@
 import axios from "axios";
-import {DOMAIN, KEYS} from '/src/constants/constants';
+import {DOMAIN_API, KEYS} from '/src/constants/constants';
 
 export default {
     namespaced: true,
@@ -28,7 +28,7 @@ export default {
         GET_AUTO_TIRES_FROM_API({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
-                DOMAIN + '/index.php?route=api/auto_tires/tires',
+                DOMAIN_API + '/index.php?route=api/auto_tires/tires',
                 {
                     key: KEYS,
                     page: param,
@@ -47,7 +47,7 @@ export default {
 
         GET_AUTO_TIRES_TOTALS({commit}) {
             return  axios.post(
-                DOMAIN + '/index.php?route=api/auto_tires/tires/totals',
+                DOMAIN_API + '/index.php?route=api/auto_tires/tires/totals',
                 {
                     key: KEYS,
                 }
@@ -65,7 +65,7 @@ export default {
         CHANGE_AUTO_TIRES_STATUS({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
-                DOMAIN + '/index.php?route=api/auto_tires/tires/change_status/' + param.id,
+                DOMAIN_API + '/index.php?route=api/auto_tires/tires/change_status/' + param.id,
                 {
                     key: KEYS,
                     status: param.status
@@ -82,7 +82,7 @@ export default {
 
         GET_AUTO_TIRES_INDEX({commit}, param) {
             return  axios.post(
-                DOMAIN + '/index.php?route=api/auto_tires/tires/index/' + param.id,
+                DOMAIN_API + '/index.php?route=api/auto_tires/tires/index/' + param.id,
                 {
                     key: KEYS,
                     param: param
@@ -101,7 +101,7 @@ export default {
         SET_AUTO_TIRES_IMAGE_FROM_LIST({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
-                DOMAIN + '/index.php?route=api/auto_tires/tires/add_images/' + param.autoPartsId,
+                DOMAIN_API + '/index.php?route=api/auto_tires/tires/add_images/' + param.autoPartsId,
                 {
                     key: KEYS,
                     images: param.images.toString()
@@ -119,7 +119,7 @@ export default {
         CHANGE_AUTO_TIRES_PRICE({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
-                DOMAIN + '/index.php?route=api/auto_tires/tires/change_price/' + param.id,
+                DOMAIN_API + '/index.php?route=api/auto_tires/tires/change_price/' + param.id,
                 {
                     key: KEYS,
                     price: param.priceUSD
@@ -143,7 +143,7 @@ export default {
 
         DELET_AUTO_TIRES_BY_API({commit}, param) {
             return axios.post(
-                DOMAIN + '/index.php?route=api/auto_tires/tires/delete/' + param.autoTiresId,
+                DOMAIN_API + '/index.php?route=api/auto_tires/tires/delete/' + param.autoTiresId,
                 {
                     key: KEYS,
                 }
@@ -165,7 +165,7 @@ export default {
                 this.dispatch('generalStore/LOCK_UI');
             }
             return axios.post(
-                DOMAIN + '/index.php?route=api/auto_tires/tires/' + param.id + '/edit',
+                DOMAIN_API + '/index.php?route=api/auto_tires/tires/' + param.id + '/edit',
                 param.autoTires
             )
                 .then(() => {
@@ -195,7 +195,7 @@ export default {
         SET_AUTO_TIRES_FROM_API({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
-                DOMAIN + '/index.php?route=api/auto_tires/tires/create',
+                DOMAIN_API + '/index.php?route=api/auto_tires/tires/create',
                 param.fields,
             )
                 .then((response) => {

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {DOMAIN, KEYS} from '/src/constants/constants';
+import {DOMAIN_API, KEYS} from '/src/constants/constants';
 
 export default {
     namespaced: true,
@@ -26,7 +26,7 @@ export default {
         GET_USER_HISTORY_LIST({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
-                DOMAIN + '/index.php?route=api/history_users/index',
+                DOMAIN_API + '/index.php?route=api/history_users/index',
                 {
                     key: KEYS,
                     page: param,
@@ -45,7 +45,7 @@ export default {
         GET_USER_HISTORY({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
-                DOMAIN + '/index.php?route=api/history_users/index/' + param.user_id,
+                DOMAIN_API + '/index.php?route=api/history_users/index/' + param.user_id,
                 {
                     page: param.page,
                     key: KEYS,
@@ -63,7 +63,7 @@ export default {
         },
         GET_USER_HISTORY_TOTAL({commit}, user_id) {
             return axios.post(
-                DOMAIN + '/index.php?route=api/history_users/index/' + user_id + '/total',
+                DOMAIN_API + '/index.php?route=api/history_users/index/' + user_id + '/total',
                 {
                     key: KEYS,
                 }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {DOMAIN, KEYS} from '/src/constants/constants';
+import {DOMAIN_API, KEYS} from '/src/constants/constants';
 
 export default {
     namespaced: true,
@@ -32,7 +32,7 @@ export default {
     actions: {
         async GET_BREND_MODEL_CAR_AUTO_PARTS({commit}) {
             return await axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts/auto/category',
+                DOMAIN_API + '/index.php?route=api/auto_parts/auto/category',
                 {
                     key: KEYS,
                 }
@@ -50,7 +50,7 @@ export default {
         GET_AUTO_PARTS_ARCHIVE_FROM_API({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts_archive/auto',
+                DOMAIN_API + '/index.php?route=api/auto_parts_archive/auto',
                 {
                     key: KEYS,
                     page: param.pageNum,
@@ -77,7 +77,7 @@ export default {
 
         GET_AUTO_PARTS_ARCHIVE_TOTALS({commit}, param) {
             return  axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts_archive/auto/totals',
+                DOMAIN_API + '/index.php?route=api/auto_parts_archive/auto/totals',
                 {
                     key: KEYS,
                     filter_sparePartNumber: param.filters.sparePartNumber,
@@ -103,7 +103,7 @@ export default {
         GET_AUTO_PARTS_ARCHIVE_HISTORY({commit}, id) {
             this.dispatch('generalStore/LOCK_UI');
             return  axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts_archive/auto/history/' + id,
+                DOMAIN_API + '/index.php?route=api/auto_parts_archive/auto/history/' + id,
                 {
                     key: KEYS,
                 }
@@ -121,7 +121,7 @@ export default {
 
         async GET_TYPES_OF_AUTO_PARTS_ARCHIVE({commit}) {
             return await axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts/auto/types',
+                DOMAIN_API + '/index.php?route=api/auto_parts/auto/types',
                 {
                     key: KEYS,
                 }
@@ -139,7 +139,7 @@ export default {
         RESTORE_AUTO_PARTS_ARCHIVE_BY_API({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
-                DOMAIN + '/index.php?route=api/auto_parts_archive/auto/restore/' + param.autoPartsId,
+                DOMAIN_API + '/index.php?route=api/auto_parts_archive/auto/restore/' + param.autoPartsId,
                 {
                     key: KEYS,
                     user_id: JSON.parse(localStorage.user).user_id

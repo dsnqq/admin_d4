@@ -1,5 +1,5 @@
 import axios from "axios";
-import {KEYS, DOMAIN} from '/src/constants/constants';
+import {KEYS, DOMAIN_API} from '/src/constants/constants';
 
 export default {
     namespaced: true,
@@ -28,7 +28,7 @@ export default {
         GET_AUTO_TIRES_ARCHIVE_FROM_API({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
-                DOMAIN + '/index.php?route=api/auto_tires_archive/tires',
+                DOMAIN_API + '/index.php?route=api/auto_tires_archive/tires',
                 {
                     key: KEYS,
                     page: param,
@@ -47,7 +47,7 @@ export default {
 
         GET_AUTO_TIRES_ARCHIVE_TOTALS({commit}) {
             return  axios.post(
-                DOMAIN + '/index.php?route=api/auto_tires_archive/tires/totals',
+                DOMAIN_API + '/index.php?route=api/auto_tires_archive/tires/totals',
                 {
                     key: KEYS,
                 }
@@ -65,7 +65,7 @@ export default {
         GET_AUTO_TIRES_ARCHIVE_HISTORY({commit}, id) {
             this.dispatch('generalStore/LOCK_UI');
             return  axios.post(
-                DOMAIN + '/index.php?route=api/auto_tires_archive/tires/history/' + id,
+                DOMAIN_API + '/index.php?route=api/auto_tires_archive/tires/history/' + id,
                 {
                     key: KEYS,
                 }
@@ -83,7 +83,7 @@ export default {
 
         GET_AUTO_TIRES_ARCHIVE_INDEX({commit}, param) {
             return  axios.post(
-                DOMAIN + '/index.php?route=api/auto_tires_archive/tires/index/' + param.id,
+                DOMAIN_API + '/index.php?route=api/auto_tires_archive/tires/index/' + param.id,
                 {
                     key: KEYS,
                     param: param
@@ -101,7 +101,7 @@ export default {
 
         RESTORE_AUTO_TIRES_ARCHIVE_BY_API({commit}, param) {
             return axios.post(
-                DOMAIN + '/index.php?route=api/auto_tires_archive/tires/restore/' + param.autoTiresId,
+                DOMAIN_API + '/index.php?route=api/auto_tires_archive/tires/restore/' + param.autoTiresId,
                 {
                     key: KEYS,
                 }

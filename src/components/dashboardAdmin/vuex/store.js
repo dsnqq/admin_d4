@@ -1,5 +1,5 @@
 import axios from "axios";
-import {DOMAIN, KEYS} from '/src/constants/constants';
+import {DOMAIN_API, KEYS} from '/src/constants/constants';
 
 export default {
     namespaced: true,
@@ -16,7 +16,7 @@ export default {
         GET_DASHBOARD_INFORMATION({commit}) { 
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
-                DOMAIN + '/index.php?route=api/dashboard_admin/index',
+                DOMAIN_API + '/index.php?route=api/dashboard_admin/index',
                 {
                     key: KEYS,
                 }
@@ -34,7 +34,7 @@ export default {
 
         SET_CURRENCY_FROM_API({commit}, param) {
             return axios.post(
-                DOMAIN + '/index.php?route=api/dashboard_admin/index/currency',
+                DOMAIN_API + '/index.php?route=api/dashboard_admin/index/currency',
                 {
                     currency: param.currency,
                     value: param.value

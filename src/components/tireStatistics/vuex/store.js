@@ -1,5 +1,5 @@
 import axios from "axios";
-import {DOMAIN, KEYS} from '/src/constants/constants';
+import {DOMAIN_API, KEYS} from '/src/constants/constants';
 
 export default {
     namespaced: true,
@@ -23,7 +23,7 @@ export default {
         async GET_TIRE_STATISTICS({commit}, param) {
             this.dispatch('generalStore/LOCK_UI');
             return axios.post(
-                DOMAIN + '/index.php?route=api/tire_statistics/index',
+                DOMAIN_API + '/index.php?route=api/tire_statistics/index',
                 {
                     key: KEYS,
                     page: param,
@@ -42,7 +42,7 @@ export default {
 
         GET_TIRE_STATISTICS_TOTALS({commit}) {
             return  axios.post(
-                DOMAIN + '/index.php?route=api/tire_statistics/index/totals',
+                DOMAIN_API + '/index.php?route=api/tire_statistics/index/totals',
                 {
                     key: KEYS,
                 }
@@ -60,7 +60,7 @@ export default {
         GET_TIRE_STATISTICS_DAY({commit}) {
             this.dispatch('generalStore/LOCK_UI');
             return  axios.post(
-                DOMAIN + '/index.php?route=api/tire_statistics/index/day',
+                DOMAIN_API + '/index.php?route=api/tire_statistics/index/day',
                 {
                     key: KEYS,
                 }
