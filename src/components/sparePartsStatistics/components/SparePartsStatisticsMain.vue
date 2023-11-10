@@ -2,54 +2,29 @@
   <LayoutDefault>
     <template v-slot:header>
       <h6 class="mb-0 text-uppercase">
-        Статистика просмотров З/Ч
+        {{DICTIONARY.pageStatisticsSpareParts}}
       </h6>
     </template>
     <template v-slot:tableThead>
-      <tr>
-        <th scope="col">Дата</th>
-        <th scope="col">Название</th>
-        <th scope="col">Артикул</th>
-        <th scope="col">Статус З/Ч</th>
-        <th scope="col">Кол-во просмотров</th>
-        <th scope="col">Действие</th>
-      </tr>
+      <th
+          v-for="(c, index) in COLUMNS_MAIN"
+          :key="index"
+          scope="col"
+      >
+        {{c.title}}
+      </th>
     </template>
     <template v-slot:tableTbody>
       <tr
           v-for="(sparePartsStatisticsItem, i) in SPARE_PARTS_STATISTICS"
           :key="i"
       >
-        <td data-th="Дата">
-          {{ sparePartsStatisticsItem.date }}
-        </td>
-        <td data-th="Название">
-          {{ sparePartsStatisticsItem.name }}
-        </td>
-        <td data-th="Артикул">
-          {{ sparePartsStatisticsItem.article }}
-        </td>
-        <td data-th="Статус З/Ч">
-          {{ setStatusByApi(sparePartsStatisticsItem.status) }}
-        </td>
-        <td data-th="Кол-во просмотров">
-          {{ sparePartsStatisticsItem.views }}
-        </td>
-        <td data-th="Действие">
-          <a
-              target="_blank"
-              class="p-2 text-primary"
-              :href="DOMAIN + sparePartsStatisticsItem.linkSite"
-          >
-            <i class="bx bx-show"></i>
-          </a>
-          <router-link
-              :to="{name: 'autoPartsDetail', params: {id: sparePartsStatisticsItem.product_id}}"
-              target="_blank"
-              class="p-2 text-warning cursor-pointer"
-          >
-            <i class="bx bx-pencil"></i>
-          </router-link>
+        <td
+            v-for="(c, index) in COLUMNS_MAIN"
+            :key="index"
+            :data-th="c.title"
+        >
+          {{renderContentText(sparePartsStatisticsItem[c.content], c.content)}}
         </td>
       </tr>
     </template>
@@ -68,8 +43,9 @@
   import LayoutDefault from "@/layouts/LayoutDefault.vue";
   import Pagination from "@/components/UI/BasePagination.vue";
   import {mapActions, mapGetters} from "vuex";
-  import {DOMAIN} from "@/constants/constants";
+  import {DICTIONARY, DOMAIN} from "@/constants/constants";
   import {mixins} from "@/mixins/mixins";
+  import {COLUMNS_MAIN} from "@/components/sparePartsStatistics/constants/constants";
 
   export default {
     name: "SparePartsStatisticsMain",
@@ -100,6 +76,10 @@
         'GET_SPARE_PARTS_STATISTICS_TOTALS'
       ]),
 
+      renderContentText(content, type) {
+        return (type == "status") ? this.setStatusByApi(content) : content;
+      },
+
       setPageByTotal(page) {
         this.pageNum = page;
         this.GET_SPARE_PARTS_STATISTICS(this.pageNum);
@@ -113,6 +93,8 @@
     data() {
       return {
         DOMAIN,
+        DICTIONARY,
+        COLUMNS_MAIN,
         pageNum: 1,
       };
     }

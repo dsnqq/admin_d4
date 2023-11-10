@@ -2,11 +2,13 @@ export const COLUMNS_INDEX = [
     {
         title: "Изображение",
         name: "image",
+        name2: "",
         type: "image"
     },
     {
         title: "Запчасть",
         name: "name",
+        name2: "",
         type: "default"
     },
     {
@@ -18,31 +20,37 @@ export const COLUMNS_INDEX = [
     {
         title: "Артикул",
         name: "productModel",
+        name2: "",
         type: "default"
     },
     {
         title: "Что менялось/Действие",
         name: "valueName",
+        name2: "",
         type: "default"
     },
     {
         title: "Дата изменения",
         name: "dataChange",
+        name2: "",
         type: "default"
     },
     {
         title: "Было",
         name: "valueOld",
+        name2: "",
         type: "default"
     },
     {
         title: "Стало",
         name: "valueNew",
+        name2: "",
         type: "default"
     },
     {
         title: "Местоположение текущее",
         name: "nowSection",
+        name2: "",
         type: "default"
     },
 ];

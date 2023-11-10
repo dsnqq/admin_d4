@@ -1,44 +1,45 @@
 <template>
-  <div>
-    <h6 class="mb-0 text-uppercase">
-      Статистика по датам
-    </h6>
-    <hr>
-    <div class="card">
-      <div class="card-body">
-        <div class="row">
-          <table class="table mb-0 table-border-1">
-            <thead>
-            <tr>
-              <th scope="col">Дата</th>
-              <th scope="col">Количество просмотров</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr
-                v-for="(sparePartsStatisticsDay, i) in SPARE_PARTS_STATISTICS_DAY"
-                :key="i"
-            >
-              <td>
-                {{sparePartsStatisticsDay.date}}
-              </td>
-              <td>
-                {{sparePartsStatisticsDay.count}} шт.
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+  <LayoutDefault>
+    <template v-slot:header>
+      <h6 class="mb-0 text-uppercase">
+        {{DICTIONARY.pageStatistics}}
+      </h6>
+    </template>
+    <template v-slot:tableThead>
+      <th
+          v-for="(c, index) in COLUMNS_DAY"
+          :key="index"
+          scope="col"
+      >
+        {{c.title}}
+      </th>
+    </template>
+    <template v-slot:tableTbody>
+      <tr
+          v-for="(item, i) in SPARE_PARTS_STATISTICS_DAY"
+          :key="i"
+      >
+        <td
+            v-for="(c, index) in COLUMNS_DAY"
+            :key="index"
+            :data-th="c.title"
+        >
+          {{item[c.content] + c.prefix}}
+        </td>
+      </tr>
+    </template>
+  </LayoutDefault>
 </template>
 
 <script>
+import {COLUMNS_DAY} from "@/components/sparePartsStatistics/constants/constants";
+import {DICTIONARY} from "@/constants/constants";
+import LayoutDefault from "@/layouts/LayoutDefault.vue";
 import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "SparePartsStatisticsDay",
+  components: {LayoutDefault},
 
   mounted() {
     this.GET_SPARE_PARTS_STATISTICS_DAY();
@@ -55,5 +56,12 @@ export default {
       'GET_SPARE_PARTS_STATISTICS_DAY'
     ]),
   },
+
+  data() {
+    return {
+      DICTIONARY,
+      COLUMNS_DAY
+    }
+  }
 }
 </script>

@@ -28,19 +28,19 @@
             {{ order[c.name] }}
           </template>
           <template v-if="c.type == 'address'">
-                  <span
-                      :title="order[c.name2]"
-                      class="cursor-pointer"
-                  >
-                    {{ order[c.name] }}
-                  </span>
+            <span
+                :title="order[c.name2]"
+                class="cursor-pointer"
+            >
+              {{ order[c.name] }}
+            </span>
           </template>
           <template v-else-if="c.type == 'email'">
-                  <span
-                      :title="order[c.name]"
-                  >
-                    {{ order[c.name] }}
-                  </span>
+            <span
+                :title="order[c.name]"
+            >
+              {{ order[c.name] }}
+            </span>
           </template>
           <template v-else-if="c.type == 'products'">
             <div class="products-on-order">

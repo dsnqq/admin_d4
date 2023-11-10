@@ -1,6 +1,9 @@
 <template>
   <div class="card">
-    <div class="card-header py-3">
+    <div
+        v-if="isHeaderSlot"
+        class="card-header py-3"
+    >
       <slot name="header"></slot>
     </div>
     <div class="card-body">
@@ -23,7 +26,13 @@
 
 <script>
   export default {
-    name: "LayoutDefault"
+    name: "LayoutDefault",
+
+    computed: {
+      isHeaderSlot() {
+        return this.$slots.header;
+      }
+    }
   }
 </script>
 

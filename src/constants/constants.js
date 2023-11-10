@@ -12,7 +12,8 @@ export const DICTIONARY = {
     page404Title: "Здесь ничего нет",
     page404Main: "Главная панель",
     pageStatistics: "Статистика по датам",
-    pageStatisticsTires: "Статистика просмотров шин"
+    pageStatisticsTires: "Статистика просмотров шин",
+    pageStatisticsSpareParts: "Статистика просмотров З/Ч"
 };
 
 export const DISENABLE_BREADCRUMB = [

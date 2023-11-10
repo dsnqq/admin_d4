@@ -13,7 +13,6 @@
     <hr>
     <LayoutDefault>
       <template v-slot:tableThead>
-        <tr>
           <th
               v-for="(c, i) in COLUMNS_INDEX"
               :key="i"
@@ -21,7 +20,6 @@
           >
             {{c.title}}
           </th>
-        </tr>
       </template>
       <template v-slot:tableTbody>
         <tr
@@ -32,17 +30,8 @@
               v-for="(c, index) in COLUMNS_INDEX"
               :key="index"
               :data-th="c.title"
-          >
-            <template v-if="c.type == 'default'">
-              {{userItem[c.name]}}
-            </template>
-            <template v-else-if="c.type == 'image'">
-              <img :src="userItem[c.name]" />
-            </template>
-            <template v-else-if="c.type == 'price'">
-              {{userItem[c.name]}}<br>{{userItem[c.name2]}}
-            </template>
-          </td>
+              v-html="renderContentOnColumn(userItem[c.name], c.type)"
+          ></td>
         </tr>
       </template>
       <template v-slot:pagination>
@@ -95,6 +84,10 @@ export default {
       'GET_USER_HISTORY_TOTAL'
     ]),
 
+    renderContentOnColumn(content, type) {
+      return (type == "image") ? '<img src="' + content + '" />': content;
+    },
+
     setPageByTotal(page) {
       this.pageNum = page;
       this.param.page = page;
@@ -118,5 +111,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "./src/components/historyUsers/components/style/history-users-index.scss";
+@import "@/components/historyUsers/style/history-users-index.scss";
 </style>
