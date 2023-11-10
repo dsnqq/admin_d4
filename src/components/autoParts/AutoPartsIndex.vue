@@ -665,7 +665,7 @@
         FIELDS_FOR_CAST_DISK_DRIVE,
         typeEngines: TYPE_ENGINES_ALL,
         dropzoneOptions: {
-          url: 'https://d4.by/upload.php',
+          url: '/upload.php',
           thumbnailWidth: 150,
           thumbnailHeight: 150,
           maxFilesize: 2500,
