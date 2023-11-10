@@ -1,13 +1,20 @@
 <template>
-  <clazy-load :src="src">
+  <clazy-load
+      class="base-lazy-image"
+      :src="src"
+  >
     <transition name="fade">
       <img
           :src="src"
           :alt="alt"
+          class="base-lazy-image__load"
       />
     </transition>
     <div slot="placeholder">
-      <img :src="imageUrl">
+      <img
+          :src="imageUrl"
+          class="base-lazy-image__preloader"
+      />
     </div>
   </clazy-load>
 </template>
@@ -43,8 +50,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.loaded {
-  img {
+.base-lazy-image {
+  &__preloader,
+  &__load {
     width: 100%;
   }
 }

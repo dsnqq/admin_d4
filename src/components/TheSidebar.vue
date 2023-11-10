@@ -1,4 +1,4 @@
-<template>
+<template v-once>
   <aside class="sidebar-wrapper" data-simplebar="true">
     <div class="sidebar-header">
       <router-link
