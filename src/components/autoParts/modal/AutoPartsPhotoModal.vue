@@ -68,7 +68,7 @@ export default {
     return {
       imageServer: [],
       dropzoneOptions: {
-        url: '/upload.php',
+        url: 'https://d4.by/upload.php',
         thumbnailWidth: 150,
         thumbnailHeight: 150,
         maxFilesize: 2500,
