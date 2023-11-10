@@ -1,5 +1,5 @@
 import axios from "axios";
-import {DOMAIN, KEYS} from '/src/constants/constants';
+import {DOMAIN_API, KEYS} from '/src/constants/constants';
 
 export default {
     namespaced: true,
@@ -29,7 +29,7 @@ export default {
 
         NOTIFICATION_FROM_API({commit}) {
             return axios.post(
-                DOMAIN + '/index.php?route=api/general/information/notifacation',
+                DOMAIN_API + '/index.php?route=api/general/information/notifacation',
                 {
                     key: KEYS,
                 }
