@@ -5,10 +5,12 @@ import VueRouter from "vue-router";
 import router from './router/index';
 import Multiselect from 'vue-multiselect';
 import Pagination from 'vue-pagination-2';
+import VueClazyLoad from 'vue-clazy-load';
 
 
 Vue.config.productionTip = false
 Vue.use(VueRouter);
+Vue.use(VueClazyLoad);
 Vue.component('v-pagination', Pagination);
 Vue.component('v-multiselect', Multiselect);
 

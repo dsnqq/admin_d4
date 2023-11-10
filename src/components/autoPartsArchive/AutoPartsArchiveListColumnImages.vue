@@ -6,7 +6,7 @@
         :data-lightbox="id"
         class="product-box-image"
     >
-      <img
+      <BaseLazyImage
           :src="images[0].imageMini"
           :alt="title"
       />
@@ -21,10 +21,10 @@
           class="product-box-image--small"
           v-show="image.imageShow"
       >
-        <img
+        <BaseLazyImage
             :src="image.imageMini"
             :alt="title"
-        >
+        />
       </a>
       <span
           v-if="!showAll"
@@ -36,6 +36,7 @@
 </template>
 
 <script>
+  import BaseLazyImage from "@/components/UI/BaseLazyImage.vue";
   import {DOMAIN} from "@/constants/constants";
   import {mapActions} from "vuex";
   import Jquery from 'jquery'; // eslint-disable-line no-unused-vars
@@ -45,6 +46,10 @@
     name: "AutoPartsArchiveListColumnImages",
 
     props: ['images', 'title', 'id', 'showAll', 'index'],
+
+    components: {
+      BaseLazyImage
+    },
 
     methods: {
       ...mapActions('autoPartsArchive', [
