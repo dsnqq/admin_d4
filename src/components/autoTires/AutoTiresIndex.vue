@@ -353,6 +353,34 @@ export default {
         this.errorValidate = "Заполните поле цена!";
       }
 
+      if(!("width" in this.AUTO_TIRES_INDEX)){
+        this.errorValidate = "Заполните поле ширины!";
+      }
+
+      if(!("height" in this.AUTO_TIRES_INDEX)){
+        this.errorValidate = "Заполните поле высота!";
+      }
+
+      if(!("marka" in this.AUTO_TIRES_INDEX)){
+        this.errorValidate = "Заполните поле марка!";
+      }
+
+      if(!("condition" in this.AUTO_TIRES_INDEX)){
+        this.errorValidate = "Заполните поле состояние!";
+      }
+
+      if(!("season" in this.AUTO_TIRES_INDEX)){
+        this.errorValidate = "Заполните поле сезон!";
+      }
+
+      if(!("quantity" in this.AUTO_TIRES_INDEX)){
+        this.errorValidate = "Заполните поле количество!";
+      }
+
+      if(!("rSize" in this.AUTO_TIRES_INDEX)){
+        this.errorValidate = "Заполните поле R радиус!";
+      }
+
       if(this.errorValidate) {
         window.scrollTo(0, 0);
       }
