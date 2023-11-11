@@ -136,7 +136,6 @@ body {
 }
 
 .btn-mobile-event {
-  @media screen and (max-width: 560px) {
     &:hover,
     &:focus {
       position: relative;
@@ -176,5 +175,4 @@ body {
         transform: scale3d(1.2, 1.2, 1);
       }
     }
-  }
 }
