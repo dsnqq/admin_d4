@@ -1,7 +1,5 @@
 <?php
     class ModelCatalogSparePartsStatistics extends Model {
-
-        // me
         public function getProductsViews($data = array()) {
             $sql = "SELECT * FROM " . DB_PREFIX . "product_stax ORDER BY id_view DESC";
             if (isset($data['start']) || isset($data['limit'])) {
@@ -21,7 +19,6 @@
 
         public function getProductsAll() {
             $sql = "SELECT * FROM " . DB_PREFIX . "product_stax";
-
             $sql .= " ORDER BY product_id DESC";
 
             if (isset($data['start']) || isset($data['limit'])) {

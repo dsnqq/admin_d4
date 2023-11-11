@@ -75,5 +75,4 @@ class ModelCatalogDashboardAdmin extends Model {
         return true;
     }
 }
-
 ?>

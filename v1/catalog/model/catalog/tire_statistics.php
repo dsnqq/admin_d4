@@ -1,7 +1,5 @@
 <?php
 class ModelCatalogTireStatistics extends Model {
-
-    // me
     public function getProductsViews($data = array()) {
         $sql = "SELECT * FROM " . DB_PREFIX . "shiny_stax ORDER BY id_view DESC";
         if (isset($data['start']) || isset($data['limit'])) {
@@ -39,7 +37,6 @@ class ModelCatalogTireStatistics extends Model {
         $query = $this->db->query($sql);
         return $query->rows;
     }
-    // end me
 
     public function getTotalProductViews() {
         $query = $this->db->query("SELECT SUM(viewed) AS total FROM " . DB_PREFIX . "product");
