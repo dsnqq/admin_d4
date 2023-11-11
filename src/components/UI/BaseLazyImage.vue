@@ -1,18 +1,18 @@
 <template>
   <clazy-load
       class="base-lazy-image"
-      :src="src"
+      :src="imageRenderUrl"
   >
     <transition name="fade">
       <img
-          :src="src"
+          :src="imageRenderUrl"
           :alt="alt"
           class="base-lazy-image__load"
       />
     </transition>
     <div slot="placeholder">
       <img
-          :src="imageUrl"
+          :src="imageLoaderUrl"
           class="base-lazy-image__preloader"
       />
     </div>
@@ -36,8 +36,12 @@ export default {
   },
 
   computed: {
-    imageUrl() {
+    imageLoaderUrl() {
       return DOMAIN + '/image/loader.gif';
+    },
+
+    imageRenderUrl() {
+      return (this.$props.src == null) ? DOMAIN + "/image/no_image.png" : this.$props.src;
     }
   },
 

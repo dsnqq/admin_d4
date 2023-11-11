@@ -483,7 +483,7 @@ export default {
       R_SIZE,
       typeEngines: TYPE_ENGINES_ALL,
       dropzoneOptions: {
-        url: '/upload.php',
+        url: '/v1/upload.php',
         thumbnailWidth: 150,
         thumbnailHeight: 150,
         maxFilesize: 2500,

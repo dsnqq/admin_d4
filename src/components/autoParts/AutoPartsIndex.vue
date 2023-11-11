@@ -36,6 +36,7 @@
                   v-for="(countAutoParts, i) in countAutoPartsAdd"
                   :key="i"
                   label="Марка и модель"
+                  required
                   class="auto-parts-index-wrapp__field auto-parts-index-wrapp__auto-parts"
               >
                 <BaseMultiselect
@@ -591,7 +592,7 @@
           }
         }
 
-        if(this.autoPartsModelBrands.length != 0 && this.isCreatedPage){
+        if(this.autoPartsModelBrands.length != 0 && this.isCreatedPage && this.countAutoPartsAdd > 1){
           for(let i = 1;this.autoPartsModelBrands.length >= i ;i++) {
             xForm.append('autoPartsModelBrandsObject[]', this.autoPartsModelBrands[i-1].code);
           }
@@ -665,7 +666,7 @@
         FIELDS_FOR_CAST_DISK_DRIVE,
         typeEngines: TYPE_ENGINES_ALL,
         dropzoneOptions: {
-          url: '/upload.php',
+          url: '/v1/upload.php',
           thumbnailWidth: 150,
           thumbnailHeight: 150,
           maxFilesize: 2500,
