@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand gap-3">
       <div
           @click="leftMenuMobileShow"
-          class="mobile-toggle-icon fs-3"
+          class="mobile-toggle-icon fs-3 btn-mobile-event"
       >
         <i class="bi bi-list"></i>
       </div>
@@ -24,7 +24,7 @@
                 :to="{name: 'orderSale'}"
                 class="nav-link dropdown-toggle dropdown-toggle-nocaret"
             >
-              <div class="notifications">
+              <div class="notifications btn-mobile-event">
                 <span
                     v-if="NOTIFICATION > 0"
                     class="notify-badge"
@@ -43,7 +43,7 @@
               >
                 <div class="d-flex align-items-center">
                   <div class="ms-3">
-                    <span>
+                  <span class="btn-mobile-event">
                       <span class="mobile-hidden">
                         {{DICTIONARY.goToMain}}
                       </span>
@@ -60,7 +60,7 @@
             >
               <div class="d-flex align-items-center">
                 <div class="ms-3">
-                  <span>
+                  <span class="btn-mobile-event">
                     <span class="mobile-hidden">{{DICTIONARY.goBack}}</span>
                     <i class="bi bi-lock-fill"></i>
                   </span>

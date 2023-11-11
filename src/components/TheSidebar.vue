@@ -20,7 +20,7 @@
       </router-link>
       <div
           @click="menuSideBarClosed"
-          class="toggle-icon ms-auto desktop-hidden"
+          class="toggle-icon ms-auto desktop-hidden btn-mobile-event"
       >
         <i class="bi bi-x-lg"></i>
       </div>
@@ -33,7 +33,7 @@
         <a
            v-if="checkPermissions(link.permissions)"
            @click.prevent="linkToComponent(link.component)"
-           class="cursor-pointer"
+           class="cursor-pointer btn-mobile-event"
         >
           <div class="parent-icon">
             <i

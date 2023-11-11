@@ -3,34 +3,34 @@
     <div class="d-flex align-items-center gap-2 fs-6">
       <a
           @click.p.prevent="getHistoryAuto(id)"
-          class="text-primary cursor-pointer"
+          class="text-primary cursor-pointer btn-mobile-event"
       >
         <i class="bi bi-archive"></i>
       </a>
       <a
           :href="DOMAIN + linkToSite"
           target="_blank"
-          class="text-primary"
+          class="text-primary btn-mobile-event"
           title="Открыть на сайте"
       >
         <i class="bi bi-eye-fill"></i>
       </a>
       <router-link
           :to="`/auto/${id}`"
-          class="text-warning"
+          class="text-warning btn-mobile-event"
           title="Редактировать"
       >
         <i class="bi bi-pencil-fill"></i>
       </router-link>
       <a
           @click="getPhotoAutoParts()"
-          class="text-primary cursor-pointer"
+          class="text-primary cursor-pointer btn-mobile-event"
       >
         <i class="bi bi-camera"></i>
       </a>
       <a
           @click.prevent="autoPartsRemove(id, index)"
-          class="text-danger"
+          class="text-danger btn-mobile-event"
       >
         <i class="bi bi-trash-fill"></i>
       </a>
@@ -40,7 +40,7 @@
     </div>
     <div
         @click="getPrintQrCodeAutoParts(AUTO_PARTS[index].qrCode)"
-        class="btn btn-info"
+        class="btn btn-info btn-mobile-event"
     >
       <span class="mobile-block-hidden">Печать</span> QR
     </div>
@@ -132,5 +132,5 @@
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/autoParts/style/auto-parts-list-column-actions.scss"
+@import "@/components/autoParts/style/auto-parts-list-column-actions.scss";
 </style>

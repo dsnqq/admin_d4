@@ -71,13 +71,13 @@ export const COLUMNS_LIST = [
     },
     {
         title: "Статус",
-        className: "text-center",
+        className: "text-xxl-center",
         name: "status",
         type: "status",
     },
     {
         title: "Действие",
-        className: "text-center",
+        className: "text-xxl-center",
         type: "action",
         links: [
             {

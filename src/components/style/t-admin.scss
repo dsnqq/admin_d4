@@ -7,12 +7,15 @@
 .btn-up {
   position: fixed;
   background-color: hsl(216, 98%, 52%);
-  left: 20px;
+  left: 260px;
   bottom: 20px;
   border-radius: 22px;
   cursor: pointer;
   width: 44px;
   height: 44px;
+  @media (max-width: 1024px) {
+    left: 20px;
+  }
 
   .bi {
     content: "";
