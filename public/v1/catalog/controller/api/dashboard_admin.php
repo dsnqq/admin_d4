@@ -149,7 +149,7 @@ class ControllerApiDashboardAdmin extends Controller {
                     "iconClass" => 'bi bi-vinyl',
                     "iconColorClass" => 'text-success'
                 ],
-                [
+                /*[
                     "title" => 'Сумма всех запчастей',
                     "text" => $autoPartsPriceAll . '$',
                     "iconClass" => 'bi bi-wrench',
@@ -160,7 +160,7 @@ class ControllerApiDashboardAdmin extends Controller {
                     "text" => $tirePriceAll . '$',
                     "iconClass" => 'bi bi-vinyl',
                     "iconColorClass" => 'text-success'
-                ],
+                ],*/
                 [
                     "title" => 'Просмотры З/Ч за этот месяц',
                     "text" => $dateInThisMounth . ' шт.',
