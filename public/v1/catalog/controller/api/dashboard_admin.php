@@ -185,7 +185,7 @@ class ControllerApiDashboardAdmin extends Controller {
                 ],
                 [
                     "title" => "Удаленные запчасти",
-                    "text" => "Продано в этом месяце",
+                    "text" => "Удалено в этом месяце",
                     "result" => $saleAutoPartsMouth,
                     "colorClass" => "text-danger",
                     "iconClass" => "bi bi-award-fill"
