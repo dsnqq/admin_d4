@@ -608,6 +608,10 @@
           }
         }
 
+        if(this.isCreatedPage && this.countAutoPartsAdd == 1){
+          xForm.append('autoPartsCategoryId', this.autoPartsModelBrands[0].code);
+        }
+
         if(this.AUTO_PARTS_INDEX.imagesServer !== undefined) {
           xForm.append('images', this.AUTO_PARTS_INDEX.imagesServer);
         }

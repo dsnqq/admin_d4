@@ -3,34 +3,34 @@
     <div class="d-flex align-items-center gap-2 fs-6">
       <a
           @click.p.prevent="getHistoryAuto(id)"
-          class="text-primary cursor-pointer btn-mobile-event"
+          class="text-primary cursor-pointer"
       >
         <i class="bi bi-archive"></i>
       </a>
       <a
           :href="DOMAIN + linkToSite"
           target="_blank"
-          class="text-primary btn-mobile-event"
+          class="text-primary"
           title="Открыть на сайте"
       >
         <i class="bi bi-eye-fill"></i>
       </a>
       <router-link
           :to="`/auto/${id}`"
-          class="text-warning btn-mobile-event"
+          class="text-warning"
           title="Редактировать"
       >
         <i class="bi bi-pencil-fill"></i>
       </router-link>
       <a
           @click="getPhotoAutoParts()"
-          class="text-primary cursor-pointer btn-mobile-event"
+          class="text-primary cursor-pointer"
       >
         <i class="bi bi-camera"></i>
       </a>
       <a
           @click.prevent="autoPartsRemove(id, index)"
-          class="text-danger btn-mobile-event"
+          class="text-danger  cursor-pointer"
       >
         <i class="bi bi-trash-fill"></i>
       </a>
