@@ -325,7 +325,7 @@ class ModelCatalogAutoParts extends Model {
 
         $this->db->query("INSERT INTO " . DB_PREFIX . "product_description SET product_id = '" . (int)$product_id . "', name = '" . $this->db->escape($data['autoPartsNameForBd']) . "', language_id = '1', description = '" . $this->db->escape($data['description']) . "', tag = '', meta_title = '" . $this->db->escape($data['autoPartsNameForBd']) . "', meta_h1 = '" . $this->db->escape($data['autoPartsNameForBd']) . "', meta_description = '".$this->db->escape($data['autoPartsNameForBd'])."', meta_keyword = ''");
 
-        if ($data['telephone'] || $data['stock'] || $data['firstname']) {
+        if ($data['telephone'] || $data['stock'] || $data['firstname'] || $data['theNote']) {
             $this->db->query("INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int)$product_id . "', attribute_id = '14', language_id = '1', text = '" .  $this->db->escape($data['firstname']) . "'");
             $this->db->query("INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int)$product_id . "', attribute_id = '13', language_id = '1', text = '" .  $this->db->escape($data['telephone']) . "'");
             $this->db->query("INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int)$product_id . "', attribute_id = '17', language_id = '1', text = '" .  $this->db->escape($data['stock']) . "'");
@@ -347,7 +347,7 @@ class ModelCatalogAutoParts extends Model {
 
         $this->db->query("DELETE FROM " . DB_PREFIX . "product_image WHERE product_id = '" . (int)$id . "'");
 
-        if ($data['telephone'] || $data['stock'] || $data['firstname']) {
+        if ($data['telephone'] || $data['stock'] || $data['firstname'] || $data['theNote']) {
             $this->db->query("DELETE FROM " . DB_PREFIX . "product_attribute WHERE product_id = '" . (int)$id . "'");
 
             $this->db->query("INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int)$id . "', attribute_id = '14', language_id = '1', text = '" .  $this->db->escape($data['firstname']) . "'");
