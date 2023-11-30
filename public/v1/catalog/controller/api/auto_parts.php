@@ -437,7 +437,7 @@
         private function _setAutoPartsCreate($post, $data){
             $json = [];
             $this->load->model('catalog/auto_parts');
-            $user_id = (int)$data['user_id'];
+            $user_id = (int)$post['user_id'];
 
             if($this->request->server['REQUEST_METHOD'] == 'POST') {
                 if (!$post['autoPartsModelBrandsObject']) { // Тут вариант если добавляем 1 запчасть

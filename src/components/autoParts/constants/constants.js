@@ -89,6 +89,7 @@ export const FIELD_POST_TO_SEND = [
     'firstname',
     'stock',
     'telephone',
+    'theNote',
     'sparePartNumber',
     'pcd',
     'priceUSD'
