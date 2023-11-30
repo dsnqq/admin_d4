@@ -1,5 +1,5 @@
 <template>
-  <LayoutDefault>
+  <LayoutTableRow>
     <template v-slot:header>
       <h6 class="mb-0 text-uppercase">
         {{DICTIONARY.pageStatistics}}
@@ -28,18 +28,18 @@
         </td>
       </tr>
     </template>
-  </LayoutDefault>
+  </LayoutTableRow>
 </template>
 
 <script>
 import {COLUMNS_DAY} from "@/components/sparePartsStatistics/constants/constants";
 import {DICTIONARY} from "@/constants/constants";
-import LayoutDefault from "@/layouts/LayoutDefault.vue";
+import LayoutTableRow from "@/layouts/LayoutTableRow.vue";
 import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "SparePartsStatisticsDay",
-  components: {LayoutDefault},
+  components: {LayoutTableRow},
 
   mounted() {
     this.GET_SPARE_PARTS_STATISTICS_DAY();

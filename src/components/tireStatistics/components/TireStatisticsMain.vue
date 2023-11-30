@@ -1,5 +1,5 @@
 <template>
-  <LayoutDefault>
+  <LayoutTableRow>
     <template v-slot:header>
       <h6 class="mb-0 text-uppercase">
         {{DICTIONARY.pageStatisticsTires}}
@@ -36,13 +36,13 @@
           @setPageByTotal="setPageByTotal"
       />
     </template>
-  </LayoutDefault>
+  </LayoutTableRow>
 </template>
 
 <script>
 import {COLUMNS_MAIN} from "@/components/tireStatistics/constants/constants";
 import {DICTIONARY} from "@/constants/constants";
-import LayoutDefault from "@/layouts/LayoutDefault.vue";
+import LayoutTableRow from "@/layouts/LayoutTableRow.vue";
 import Pagination from "@/components/UI/BasePagination.vue";
 import {mixins} from "@/mixins/mixins";
 import {mapActions, mapGetters} from "vuex";
@@ -60,7 +60,7 @@ export default {
 
   components: {
     Pagination,
-    LayoutDefault
+    LayoutTableRow
   },
 
   computed: {

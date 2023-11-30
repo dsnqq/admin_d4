@@ -1,0 +1,106 @@
+$breakpoint-alpha: 1024px;
+
+.middle-responsive {
+  overflow-y: hidden !important;
+  overflow-x: auto !important;
+}
+
+.rwd-table {
+  min-width: 300px;
+  @media (max-width: $breakpoint-alpha) {
+    margin-bottom: 0;
+  }
+
+  th {
+    display: none;
+  }
+
+  td {
+    display: block;
+
+    &:first-child {
+      padding-top: .5em;
+    }
+
+    &:last-child {
+      padding-bottom: .5em;
+    }
+
+    &:before {
+      content: attr(data-th)": ";
+      font-weight: bold;
+      white-space: normal;
+
+      width: 107px;
+      min-width: 107px;
+      display: inline-block;
+
+      @media (max-width: $breakpoint-alpha) {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      @media (min-width: $breakpoint-alpha) {
+        display: none;
+      }
+    }
+  }
+
+  th, td {
+    text-align: left;
+
+    @media (min-width: $breakpoint-alpha) {
+      display: table-cell;
+      padding: .25em .5em;
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+  }
+}
+
+.rwd-table {
+  overflow: hidden;
+  thead {
+    th {
+      white-space: nowrap;
+    }
+  }
+
+  th, td {
+    @media (min-width: $breakpoint-alpha) {
+      padding: 1em !important;
+    }
+  }
+
+  @media screen and (max-width: $breakpoint-alpha) {
+    td {
+      display: flex;
+      align-items: center;
+      padding: 5px;
+
+      &:before {
+        border-right: 1px solid hsl(210, 14%, 89%);
+        margin-right: 5px;
+        padding-right: 5px;
+      }
+
+      &:last-child {
+        margin-bottom: 30px;
+      }
+    }
+  }
+}
+
+.text-ellipsis {
+  display: block;
+  max-width: 80px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

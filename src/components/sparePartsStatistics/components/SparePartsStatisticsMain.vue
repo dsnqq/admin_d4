@@ -1,5 +1,5 @@
 <template>
-  <LayoutDefault>
+  <LayoutTableRow>
     <template v-slot:header>
       <h6 class="mb-0 text-uppercase">
         {{DICTIONARY.pageStatisticsSpareParts}}
@@ -36,11 +36,11 @@
           :class="{'card-body-pagination-mobile' : isMobile}"
       />
     </template>
-  </LayoutDefault>
+  </LayoutTableRow>
 </template>
 
 <script>
-  import LayoutDefault from "@/layouts/LayoutDefault.vue";
+  import LayoutTableRow from "@/layouts/LayoutTableRow.vue";
   import Pagination from "@/components/UI/BasePagination.vue";
   import {mapActions, mapGetters} from "vuex";
   import {DICTIONARY, DOMAIN} from "@/constants/constants";
@@ -59,7 +59,7 @@
 
     components: {
       Pagination,
-      LayoutDefault
+      LayoutTableRow
     },
 
     computed: {

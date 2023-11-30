@@ -1,5 +1,5 @@
 <template>
-  <LayoutDefault>
+  <LayoutTableRow>
     <template v-slot:header>
       <h6 class="mb-0 text-uppercase">
         {{DICTIONARY.pageStatistics}}
@@ -28,12 +28,12 @@
         </td>
       </tr>
     </template>
-  </LayoutDefault>
+  </LayoutTableRow>
 </template>
 
 <script>
 import {COLUMNS_DAY} from "@/components/tireStatistics/constants/constants";
-import LayoutDefault from "@/layouts/LayoutDefault.vue";
+import LayoutTableRow from "@/layouts/LayoutTableRow.vue";
 import {DICTIONARY} from "@/constants/constants";
 import {mapActions, mapGetters} from "vuex";
 
@@ -45,7 +45,7 @@ export default {
   },
 
   components: {
-    LayoutDefault
+    LayoutTableRow
   },
 
   computed: {
