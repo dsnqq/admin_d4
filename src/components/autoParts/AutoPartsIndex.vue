@@ -258,13 +258,13 @@
                   >
                 </AutoPartsIndexField>
                 <AutoPartsIndexField
-                    label="Складская информация"
+                    label="Город"
                     class="auto-parts-index-wrapp__field"
                 >
                   <input
                       v-model="AUTO_PARTS_INDEX.stock"
                       type="text"
-                      placeholder="Складская информация"
+                      placeholder="Город"
                       class="auto-parts-index-field__input"
                   >
                 </AutoPartsIndexField>
@@ -278,6 +278,16 @@
                       placeholder="Телефон, если другой"
                       class="auto-parts-index-field__input"
                   >
+                </AutoPartsIndexField>
+                <AutoPartsIndexField
+                    label="Заметка"
+                    class="auto-parts-index-wrapp__field"
+                >
+                  <textarea
+                      v-model="AUTO_PARTS_INDEX.theNote"
+                      placeholder="Заметка"
+                      class="auto-parts-index-field__textarea"
+                  ></textarea>
                 </AutoPartsIndexField>
               </div>
               <AutoPartsIndexField
