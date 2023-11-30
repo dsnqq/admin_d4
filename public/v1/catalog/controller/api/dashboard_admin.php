@@ -184,7 +184,7 @@ class ControllerApiDashboardAdmin extends Controller {
                     "iconClass" => "bi bi-cloud-plus"
                 ],
                 [
-                    "title" => "Проданные запчасти",
+                    "title" => "Удаленные запчасти",
                     "text" => "Продано в этом месяце",
                     "result" => $saleAutoPartsMouth,
                     "colorClass" => "text-danger",
