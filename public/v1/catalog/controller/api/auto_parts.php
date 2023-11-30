@@ -190,6 +190,7 @@ class ControllerApiAutoParts extends Controller {
         foreach ($results as $result) {
             $images = array();
             $i = 1;
+            $theNote = "";
 
             $name =  $this->model_catalog_auto_parts->getAutoName($result['product_id']);
 
