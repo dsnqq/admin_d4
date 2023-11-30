@@ -33,6 +33,7 @@
               :index="i"
               :id="auto.product_id"
               :showAll="auto.imagesShowAllImage"
+              :contentTheNote="auto.theNote"
               :content="auto[c.content]"
               :contentExtension="auto[c.contentExtension]"
               :priceUSD="auto.priceUSD"

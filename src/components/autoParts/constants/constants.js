@@ -58,8 +58,9 @@ export const COLUMNS = [
     },
     {
         title: "Описание",
-        components: () => import("@/components/autoParts/AutoPartsListColumnDefault.vue"),
+        components: () => import("@/components/autoParts/AutoPartsListColumnDescription.vue"),
         content: "description",
+        contentTheNote: "theNote",
         className: "td-description"
     },
     {
