@@ -224,6 +224,14 @@
                 $auto_parts_description = $this->model_catalog_auto_parts->getAutoPartsDescription($result['product_id']);
                 $auto_parts = $this->model_catalog_auto_parts->getAutoPartsName($result['manufacturer_id']);
 
+                $results_additional_fields = $this->model_catalog_auto_parts->getAutoPartsAdditionalFields($result['product_id']);
+
+                foreach ($results_additional_fields as $field) {
+                    if($field['attribute_id'] == 12) {
+                        $theNote = $field['text'];
+                    }
+                }
+
                 $date_added = new DateTime($result['date_added']);
                 $date_added = $date_added->format("d.m.Y H:i:s");
 
@@ -273,6 +281,7 @@
                     'dateAdded'      => $date_added,
                     'view' => $auto_stax_view,
                     'qrCode' => $qr_code,
+                    'theNote' => $theNote,
                     'linkToSite'      => '/index.php?route=product/product&product_id=' . $result['product_id'],
                     'status'      => $result['status'],
                     'description'      => $auto_parts_description
@@ -632,6 +641,7 @@
             $telephone = "";
             $firstname = "";
             $stock = "";
+            $theNote = "";
 
             $this->load->model('tool/image');
             $this->load->model('catalog/auto_parts');
@@ -644,11 +654,14 @@
                 if($field['attribute_id'] == 13) {
                     $telephone = $field['text'];
                 }
-                if($field['attribute_id'] == 12) {
+                if($field['attribute_id'] == 14) {
                     $firstname = $field['text'];
                 }
                 if($field['attribute_id'] == 17) {
                     $stock = $field['text'];
+                }
+                if($field['attribute_id'] == 12) {
+                    $theNote = $field['text'];
                 }
             }
 
@@ -696,6 +709,7 @@
                 'telephone'     => $telephone,
                 'stock'     => $stock,
                 'firstname'     => $firstname,
+                'theNote'     => $theNote,
                 'autoPartsModelBrand'      => $auto_parts_model_brand,
                 'autoPartsName' => $autoPartsName,
                 'year'      => $results['length'],
