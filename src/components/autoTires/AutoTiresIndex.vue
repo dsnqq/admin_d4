@@ -160,12 +160,47 @@
                     class="auto-tires-index-field__input"
                 >
               </AutoTiresIndexField>
+              <AutoTiresIndexField
+                  label="Фото"
+                  class="auto-tires-index-wrapp__field"
+                  className="auto-tires-index-field-wrap"
+              >
+                <div class="auto-tires-index-field-wrap__photos auto-tires-index-photo-list">
+                  <template v-if="AUTO_TIRES_INDEX.images">
+                    <div
+                        v-for="(image, index) in AUTO_TIRES_INDEX.images"
+                        v-bind:key="index"
+                        class="auto-tires-index-photo-list__item auto-tires-index-photo-item"
+                    >
+                      <img
+                          :src="isImageUrlLocalOrServer(image)"
+                          class="auto-tires-index-photo-item__image"
+                      />
+                      <div
+                          @click="removeImgDop(index)"
+                          class="auto-tires-index-photo-item__del"
+                      >Удалить</div>
+                      <div
+                          @click="setThisPhotoOnMain(image)"
+                          class="auto-tires-index-photo-item__del"
+                          :class="{'auto-tires-index-photo-item__del--is-active' :mainPhotoSetAutoTires(image)}"
+                      >Главное фото</div>
+                    </div>
+                  </template>
+                </div>
+                <button
+                    @click.prevent="modalCarPhotoFade"
+                    class="auto-tires-index-field-wrap__btn btn btn-dark"
+                >
+                  Добавить фото
+                </button>
+              </AutoTiresIndexField>
               <div
                   @click="toggleDopFields"
                   class="auto-tires-index-wrapp__field auto-tires-index-field"
               >
                 <label class="auto-tires-index-field__label cursor-pointer color-blue">
-                  Дополнительные поля (<span v-html="!dopFields ? 'Показать' : 'Скрыть'"></span>)
+                  Дополнительные поля - заметка (<span v-html="!dopFields ? 'Показать' : 'Скрыть'"></span>)
                 </label>
               </div>
               <div v-show="dopFields">
@@ -203,41 +238,6 @@
                   >
                 </AutoTiresIndexField>
               </div>
-              <AutoTiresIndexField
-                  label="Фото"
-                  class="auto-tires-index-wrapp__field"
-                  className="auto-tires-index-field-wrap"
-              >
-                <div class="auto-tires-index-field-wrap__photos auto-tires-index-photo-list">
-                  <template v-if="AUTO_TIRES_INDEX.images">
-                    <div
-                        v-for="(image, index) in AUTO_TIRES_INDEX.images"
-                        v-bind:key="index"
-                        class="auto-tires-index-photo-list__item auto-tires-index-photo-item"
-                    >
-                      <img
-                          :src="isImageUrlLocalOrServer(image)"
-                          class="auto-tires-index-photo-item__image"
-                      />
-                      <div
-                          @click="removeImgDop(index)"
-                          class="auto-tires-index-photo-item__del"
-                      >Удалить</div>
-                      <div
-                          @click="setThisPhotoOnMain(image)"
-                          class="auto-tires-index-photo-item__del"
-                          :class="{'auto-tires-index-photo-item__del--is-active' :mainPhotoSetAutoTires(image)}"
-                      >Главное фото</div>
-                    </div>
-                  </template>
-                </div>
-                <button
-                    @click.prevent="modalCarPhotoFade"
-                    class="auto-tires-index-field-wrap__btn btn btn-dark"
-                >
-                  Добавить фото
-                </button>
-              </AutoTiresIndexField>
               <component
                   :is="getAutoTiresIndexButtonsComponent"
                   :qrCode="AUTO_TIRES_INDEX.qrCode"
