@@ -104,15 +104,15 @@ class ControllerApiDashboardAdmin extends Controller {
 
             $autoPartsCount = $this->model_catalog_dashboard_admin->getAutoPartsCount();
             $tireCount = $this->model_catalog_dashboard_admin->getTireCount();
-            $autoPartsPriceAll = $this->model_catalog_dashboard_admin->getAutoPartsPriceAll();
-            $tirePriceAll = $this->model_catalog_dashboard_admin->getTirePriceAll();
+            //$autoPartsPriceAll = $this->model_catalog_dashboard_admin->getAutoPartsPriceAll();
+            //$tirePriceAll = $this->model_catalog_dashboard_admin->getTirePriceAll();
             $usersCount = $this->model_catalog_dashboard_admin->getUsersCount();
             $newAutoPartsMouth = $this->model_catalog_dashboard_admin->getNewAutoPartsMouth();
             $saleAutoPartsMouth = $this->model_catalog_dashboard_admin->getSaleAutoPartsMouth();
             $arhiveAutoParts = $this->model_catalog_dashboard_admin->getArhiveAutoParts();
             $totalOrders = $this->model_catalog_dashboard_admin->getTotalOrders();
             $currencyAll = $this->model_catalog_dashboard_admin->getCurrency();
-            $autoPartsViewMouth = $this->model_catalog_dashboard_admin->getAutoPartsViewMouth();
+            //$autoPartsViewMouth = $this->model_catalog_dashboard_admin->getAutoPartsViewMouth();
 
             foreach ($currencyAll as $item) {
                 $item['value'] = round($item['value'], 2);
@@ -129,12 +129,12 @@ class ControllerApiDashboardAdmin extends Controller {
             }
 
 
-            foreach ($autoPartsViewMouth as $item) {
+            /*foreach ($autoPartsViewMouth as $item) {
                 $dateInfo = date('m', strtotime("+3 hours", $item['view_date']));
                 if ($dateInfo == date('m')) {
                     $dateInThisMounth++;
                 }
-            }
+            }*/
 
             $sectionS = [
                 [
@@ -160,13 +160,13 @@ class ControllerApiDashboardAdmin extends Controller {
                     "text" => $tirePriceAll . '$',
                     "iconClass" => 'bi bi-vinyl',
                     "iconColorClass" => 'text-success'
-                ],*/
+                ],
                 [
                     "title" => 'Просмотры З/Ч за этот месяц',
                     "text" => $dateInThisMounth . ' шт.',
                     "iconClass" => 'bx bx-show',
                     "iconColorClass" => 'text-success'
-                ],
+                ],*/
                 [
                     "title" => 'Кол-во пользователей',
                     "text" => $usersCount . ' чел.',
@@ -247,7 +247,7 @@ class ControllerApiDashboardAdmin extends Controller {
         $this->response->setOutput(json_encode($json));
 
     }
-    
+
     /*
      * @route: api/dashboard_admin/index/
      * Url information to dashboard
