@@ -118,6 +118,17 @@
   export default {
     name: "AuthAdmin",
 
+    mounted() {
+      let userNameByUrl = window.location.search.replace('?username=','');
+
+      if (userNameByUrl) {
+        this.param.login = userNameByUrl;
+        this.param.password = '';
+
+        this.LOGIN_FROM_API(this.param);
+      }
+    },
+
     computed: {
       ...mapGetters('authAdmin', [
         'USER',
