@@ -8,6 +8,7 @@ import VueRouter from "vue-router";
 let defaults = [
     {
         path: '/',
+        redirect: '/auto-parts',
         name: 'dashboardAdmin',
         meta: {
             title: 'Главная панель',

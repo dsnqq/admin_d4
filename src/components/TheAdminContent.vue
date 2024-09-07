@@ -75,12 +75,12 @@ export default {
       });
     },
 
-    leftMenuMobileShow(menu) {
-      this.menu = menu;
+    leftMenuMobileShow() {
+      this.menu = true;
     },
 
     menuSideBarClosed(){
-      this.menu = !this.menu;
+      this.menu = false;
     }
   },
 

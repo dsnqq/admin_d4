@@ -1,9 +1,8 @@
 <template v-once>
-  <aside class="sidebar-wrapper" data-simplebar="true">
+  <div class="sidebar-wrapper">
     <div class="sidebar-header">
-      <router-link
+      <div
           class="sidebar-header__link"
-          :to="{name: 'dashboardAdmin'}"
       >
       <div>
         <img
@@ -17,10 +16,10 @@
           {{DICTIONARY.logo}}
         </h4>
       </div>
-      </router-link>
+      </div>
       <div
           @click="menuSideBarClosed"
-          class="toggle-icon ms-auto desktop-hidden btn-mobile-event"
+          class="toggle-icon ms-auto desktop-hidden"
       >
         <i class="bi bi-x-lg"></i>
       </div>
@@ -33,7 +32,7 @@
         <a
            v-if="checkPermissions(link.permissions)"
            @click.prevent="linkToComponent(link.component)"
-           class="cursor-pointer btn-mobile-event"
+           class="cursor-pointer"
         >
           <div class="parent-icon">
             <i
@@ -47,7 +46,7 @@
         </a>
       </li>
     </ul>
-  </aside>
+  </div>
 </template>
 
 <script>

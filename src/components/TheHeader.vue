@@ -3,11 +3,11 @@
     <nav class="navbar navbar-expand gap-3">
       <div
           @click="leftMenuMobileShow"
-          class="mobile-toggle-icon fs-3 btn-mobile-event"
+          class="mobile-toggle-icon fs-3"
       >
         <i class="bi bi-list"></i>
       </div>
-      <a href="https://d4.by/admin" class="fs-6 top-header__oldest">
+      <a href="https://d4.by/admin/index.php?route=catalog/product" class="fs-6 top-header__oldest">
         {{DICTIONARY.oldVersion}}
       </a>
       <div class="top-navbar-right ms-auto">
@@ -24,7 +24,7 @@
                 :to="{name: 'orderSale'}"
                 class="nav-link dropdown-toggle dropdown-toggle-nocaret"
             >
-              <div class="notifications btn-mobile-event">
+              <div class="notifications">
                 <span
                     v-if="NOTIFICATION > 0"
                     class="notify-badge"
@@ -43,7 +43,7 @@
               >
                 <div class="d-flex align-items-center">
                   <div class="ms-3">
-                  <span class="btn-mobile-event">
+                  <span>
                       <span class="mobile-hidden">
                         {{DICTIONARY.goToMain}}
                       </span>
@@ -60,7 +60,7 @@
             >
               <div class="d-flex align-items-center">
                 <div class="ms-3">
-                  <span class="btn-mobile-event">
+                  <span>
                     <span class="mobile-hidden">{{DICTIONARY.goBack}}</span>
                     <i class="bi bi-lock-fill"></i>
                   </span>
@@ -107,8 +107,7 @@
       },
 
       leftMenuMobileShow (){
-        this.menu = !this.menu;
-        this.$emit('leftMenuMobileShow', this.menu);
+        this.$emit('leftMenuMobileShow');
       }
     },
 
@@ -116,7 +115,6 @@
       return {
         domain: DOMAIN,
         DICTIONARY,
-        menu: false,
       }
     }
   }

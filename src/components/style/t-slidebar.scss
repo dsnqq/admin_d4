@@ -1,7 +1,30 @@
 .sidebar-header {
+  @media screen and (max-width: 1024px) {
+    position: static;
+    background-clip: unset;
+  }
   &__link {
     display: flex;
     align-items: center;
     position: fixed;
+  }
+}
+
+.wrapper {
+  $self: &;
+
+  .sidebar-wrapper {
+    @media screen and (max-width: 1024px) {
+      display: none;
+    }
+  }
+
+  &.toggled {
+    .sidebar-wrapper {
+      @media screen and (max-width: 1024px) {
+        display: block;
+        z-index: 120;
+      }
+    }
   }
 }

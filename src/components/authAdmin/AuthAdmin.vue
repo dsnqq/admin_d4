@@ -26,9 +26,6 @@
         <div class="authentication-card">
           <div class="card shadow rounded-0 overflow-hidden">
             <div class="row g-0">
-              <div class="col-lg-6 bg-login d-flex align-items-center justify-content-center">
-                <img :src="`./assets/images/login-img.jpg`" class="img-fluid" alt="" />
-              </div>
               <div class="col-lg-6">
                 <div class="card-body p-4 p-sm-5">
                   <h5 class="card-title">Вход</h5>
@@ -103,6 +100,9 @@
                   </div>
                 </div>
               </div>
+              <div class="col-lg-6 bg-login d-flex align-items-center justify-content-center">
+                <img :src="`./assets/images/login-img.jpg`" class="img-fluid" alt="" />
+              </div>
             </div>
           </div>
         </div>
@@ -113,6 +113,7 @@
 
 <script>
   import {mapActions, mapGetters} from "vuex";
+  import autoParts from "@/components/autoParts/vuex/store";
 
   export default {
     name: "AuthAdmin",
@@ -173,7 +174,7 @@
     watch: {
       'USER': function() {
         if(this.USER.user_id != null) {
-          this.$router.push({ name: 'dashboardAdmin' }).catch(()=>{});
+          this.$router.push({ name: 'autoParts' }).catch(()=>{});
           location.reload();
         } else {
           this.auth.status = false;
