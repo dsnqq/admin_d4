@@ -681,18 +681,14 @@
         typeEngines: TYPE_ENGINES_ALL,
         dropzoneOptions: {
           url: '/v1/upload.php',
-          thumbnailWidth: 150,
-          thumbnailHeight: 150,
-          maxFilesize: 2500,
           autoProcessQueue: false,
           dictDefaultMessage: 'Нажмите сюда или перетащите сюда файлы для загрузки <div><span style="color: darkgrey; margin-bottom: 5px">* для выбора нескольких фото, удерживайте клавишу Ctrl</span><br/></div><br/>',
           dictRemoveFile: 'удалить',
           dictCancelUpload: 'отменить',
-          parallelUploads: 20,
-          maxThumbnailFilesize: 200,
-          resizeWidth: 800,
+          parallelUploads: 10,
+          resizeWidth: 1400,
+          resizeQuality: 0.99,
           timeout: 180000000,
-          acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg",
           renameFile: function (file) {
             let newName = new Date().getTime() + '_' + file.name;
             return newName;
