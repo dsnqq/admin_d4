@@ -203,7 +203,7 @@ class ControllerApiAutoParts extends Controller {
             }
 
             $images[] = array(
-                'imageMini' => $this->model_tool_image->resize($image, 150, 150),
+                'imageMini' => str_replace('admin.d4.by/v1', 'd4.by', $this->model_tool_image->resize($image, 150, 150)),
                 'imageBig' => $result['image'],
                 'imageShow' => true
             );
@@ -211,7 +211,7 @@ class ControllerApiAutoParts extends Controller {
             foreach ($imagesThumb as $image) {
                 if($image['image'] != $result['image']) {
                     $images[] = array(
-                        'imageMini' => $this->model_tool_image->resize($image['image'], 150, 150),
+                        'imageMini' => str_replace('admin.d4.by/v1', 'd4.by', $this->model_tool_image->resize($image['image'], 150, 150)),
                         'imageBig' => $image['image'],
                         'imageShow' => ($i > 5) ? false : true
                     );
