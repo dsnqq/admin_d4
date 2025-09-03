@@ -1,45 +1,36 @@
-<template v-once>
-  <aside class="sidebar-wrapper" data-simplebar="true">
+<template>
+  <div class="sidebar-wrapper">
     <div class="sidebar-header">
-      <router-link
-          class="sidebar-header__link"
-          :to="{name: 'dashboardAdmin'}"
-      >
-      <div>
-        <img
+      <div class="sidebar-header__link">
+        <div>
+          <img
             :src="`/assets/images/logo-icon.png`"
             class="logo-icon"
             alt="d4.by - logo"
-        />
+          />
+        </div>
+        <div>
+          <h4 class="logo-text">
+            {{ DICTIONARY.logo }}
+          </h4>
+        </div>
       </div>
-      <div>
-        <h4 class="logo-text">
-          {{DICTIONARY.logo}}
-        </h4>
-      </div>
-      </router-link>
       <div
-          @click="menuSideBarClosed"
-          class="toggle-icon ms-auto desktop-hidden btn-mobile-event"
+        class="toggle-icon ms-auto desktop-hidden"
+        @click="menuSideBarClosed"
       >
         <i class="bi bi-x-lg"></i>
       </div>
     </div>
-    <ul class="metismenu" id="menu">
-      <li
-          v-for="link in LEFT_MENU"
-          :key="link.index"
-      >
+    <ul id="menu" class="metismenu">
+      <li v-for="link in LEFT_MENU" :key="link.index">
         <a
-           v-if="checkPermissions(link.permissions)"
-           @click.prevent="linkToComponent(link.component)"
-           class="cursor-pointer btn-mobile-event"
+          v-if="checkPermissions(link.permissions)"
+          class="cursor-pointer"
+          @click.prevent="linkToComponent(link.component)"
         >
           <div class="parent-icon">
-            <i
-                class="bi"
-                :class="link.icon"
-            ></i>
+            <i class="bi" :class="link.icon"></i>
           </div>
           <div class="menu-title">
             {{ link.title }}
@@ -47,44 +38,34 @@
         </a>
       </li>
     </ul>
-  </aside>
+  </div>
 </template>
 
-<script>
-  import {DICTIONARY} from "@/constants/constants";
-  import {LEFT_MENU} from "@/constants/constants";
-  import {mixins} from "@/mixins/mixins";
+<script setup>
+import { DICTIONARY } from "@/constants/constants";
+import { LEFT_MENU } from "@/constants/constants";
+import { useDevice } from "@/composables/useDevice";
+import { unref, defineEmits } from "vue";
+import { useRouter } from "@/composables/useRouter";
 
-  export default {
-    name: "TheSidebar",
+const isMobile = useDevice();
+const router = useRouter();
+const emit = defineEmits(["menuSideBarClosed"]);
 
-    mixins: [mixins],
+const menuSideBarClosed = () => {
+  emit("menuSideBarClosed");
+};
 
-    methods: {
-      menuSideBarClosed() {
-        this.$emit("menuSideBarClosed");
-      },
+const checkPermissions = (p) =>
+  p.includes(parseInt(JSON.parse(localStorage.user).user_id)) || p.length == 0;
 
-      checkPermissions(p) {
-        return p.includes(parseInt(JSON.parse(localStorage.user).user_id)) || p.length == 0;
-      },
+const linkToComponent = function (linkComponent) {
+  router.push({ name: linkComponent }).catch(() => {});
 
-      linkToComponent(linkComponent) {
-        this.$router.push({ name: linkComponent }).catch(()=>{});
-
-        if(this.isMobile) {
-          this.$emit("menuSideBarClosed");
-        }
-      }
-    },
-
-    data() {
-      return {
-        LEFT_MENU,
-        DICTIONARY
-      }
-    }
+  if (unref(isMobile)) {
+    emit("menuSideBarClosed");
   }
+};
 </script>
 
 <style lang="scss" scoped>

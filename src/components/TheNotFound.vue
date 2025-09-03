@@ -12,21 +12,21 @@
                   <span class="text-success">4</span>
                 </h1>
                 <h2 class="font-weight-bold display-4">
-                  {{DICTIONARY.page404Title}}
+                  {{ DICTIONARY.page404Title }}
                 </h2>
                 <p v-html="DICTIONARY.page404Text"></p>
                 <div class="mt-5">
                   <router-link
-                      :to="{name: 'dashboardAdmin'}"
-                      class="btn btn-danger btn-lg px-md-5 radius-30"
+                    :to="{ name: 'dashboardAdmin' }"
+                    class="btn btn-danger btn-lg px-md-5 radius-30"
                   >
-                    {{DICTIONARY.page404Main}}
+                    {{ DICTIONARY.page404Main }}
                   </router-link>
                 </div>
               </div>
             </div>
             <div class="col-xl-7">
-              <img :src="`./assets/images/404-error.png`" class="img-fluid">
+              <img :src="`./assets/images/404-error.png`" class="img-fluid" />
             </div>
           </div>
         </div>
@@ -35,16 +35,6 @@
   </div>
 </template>
 
-<script>
-  import {DICTIONARY} from "@/constants/constants";
-
-  export default {
-    name: "TheNotFound",
-
-    data() {
-      return {
-        DICTIONARY
-      }
-    }
-  }
+<script setup>
+import { DICTIONARY } from "@/constants/constants";
 </script>

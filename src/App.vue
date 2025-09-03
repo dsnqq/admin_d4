@@ -1,30 +1,21 @@
 <template>
   <div id="app">
-    <TheAdminContent v-if="loginUserChecked"/>
-    <AuthAdmin v-else/>
+    <TheAdminContent v-if="loginUserChecked" />
+    <AuthAdmin v-else />
   </div>
 </template>
 
-<script>
+<script setup>
 import AuthAdmin from "@/components/authAdmin/AuthAdmin.vue";
 import TheAdminContent from "@/components/TheAdminContent.vue";
+import { computed } from "vue";
 
-export default {
-  name: 'App',
+const loginUserChecked = computed(() => {
+  if (!localStorage.user) return false;
+  let user = JSON.parse(localStorage.user);
 
-  computed: {
-    loginUserChecked() {
-      if(!localStorage.user) return false;
-      let user = JSON.parse(localStorage.user);
-      return user.user_id;
-    }
-  },
-
-  components: {
-    TheAdminContent,
-    AuthAdmin
-  }
-}
+  return user.user_id;
+});
 </script>
 
 <style>

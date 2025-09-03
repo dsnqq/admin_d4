@@ -1,29 +1,16 @@
 <template>
   <div class="admin-content">
-    <div
-        :class="adminContentMenuToggled"
-        class="wrapper"
-    >
-      <TheHeader
-          @leftMenuMobileShow="leftMenuMobileShow"
-      />
-      <TheSidebar
-        @menuSideBarClosed="menuSideBarClosed"
-      />
+    <div :class="adminContentMenuToggled" class="wrapper">
+      <TheHeader @leftMenuMobileShow="leftMenuMobileShow" />
+      <TheSidebar @menuSideBarClosed="menuSideBarClosed" />
 
       <main class="page-content">
         <Preloader />
-        <Breadcrumb
-            v-if="getBreadcrumbBool"
-        />
+        <Breadcrumb v-if="getBreadcrumbBool" />
         <router-view></router-view>
       </main>
       <transition name="fade">
-        <div
-          v-if="buttonShow"
-          @click="arrowButtonGoTop"
-          class="btn-up"
-        >
+        <div v-if="buttonShow" class="btn-up" @click="arrowButtonGoTop">
           <i class="bi bi-arrow-up-short"></i>
         </div>
       </transition>
@@ -31,73 +18,55 @@
   </div>
 </template>
 
-<script>
-import {DISENABLE_BREADCRUMB} from "@/constants/constants";
+<script setup>
+import { DISENABLE_BREADCRUMB } from "@/constants/constants";
 import TheHeader from "@/components/TheHeader.vue";
 import TheSidebar from "@/components/TheSidebar.vue";
 import Breadcrumb from "@/components/UI/BaseBreadcrumb.vue";
 import Preloader from "@/components/UI/BasePreloader.vue";
+import { ref, computed, defineEmits, onMounted, watch } from "vue";
+import { useRoute } from "@/composables/useRoute";
 
-export default {
-  name: 'TheAdminContent',
+const buttonShow = ref(false);
+const menu = ref(false);
 
-  mounted: function () {
-    this.checkScrollPosition();
-    window.addEventListener('scroll', this.checkScrollPosition);
-  },
+const emit = defineEmits(["leftMenuMobileShow", "menuSideBarClosed"]);
 
-  components: {
-    TheHeader,
-    TheSidebar,
-    Breadcrumb,
-    Preloader,
-  },
+const route = useRoute();
 
-  computed: {
-    adminContentMenuToggled() {
-      return (this.menu) ? 'toggled' : '';
-    },
+const adminContentMenuToggled = computed(() => (menu.value ? "toggled" : ""));
 
-    getBreadcrumbBool() {
-      return (DISENABLE_BREADCRUMB.includes(this.$route.name)) ? false : true;
-    }
-  },
+const getBreadcrumbBool = computed(() =>
+  DISENABLE_BREADCRUMB.includes(route.name) ? false : true
+);
 
-  methods: {
-    checkScrollPosition() {
-      this.buttonShow = window.pageYOffset > 200;
-    },
+const checkScrollPosition = () => {
+  buttonShow.value = window.pageYOffset > 200;
+};
 
-    arrowButtonGoTop() {
-      scroll({
-        top: 0,
-        behavior: "smooth"
-      });
-    },
+const menuSideBarClosed = function () {
+  emit("menuSideBarClosed");
+};
 
-    leftMenuMobileShow(menu) {
-      this.menu = menu;
-    },
+const leftMenuMobileShow = function () {
+  emit("leftMenuMobileShow");
+};
 
-    menuSideBarClosed(){
-      this.menu = !this.menu;
-    }
-  },
+const arrowButtonGoTop = function () {
+  window.scroll({
+    top: 0,
+    behavior: "smooth",
+  });
+};
 
-  watch: {
-    '$route' () {
-      this.menu = false;
-    }
-  },
+onMounted(() => {
+  checkScrollPosition();
+  window.addEventListener("scroll", checkScrollPosition);
+});
 
-  data() {
-    return {
-      DISENABLE_BREADCRUMB,
-      buttonShow: false,
-      menu: false
-    }
-  }
-}
+watch(route, () => {
+  menu.value = false;
+});
 </script>
 
 <style lang="scss" scoped>
