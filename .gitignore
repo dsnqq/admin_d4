@@ -1,0 +1,8 @@
+node_modules
+/vendor/
+.idea/
+.vscode
+.deptrac.cache
+.DS_Store
+.cache
+.config
