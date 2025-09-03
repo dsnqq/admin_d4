@@ -2,29 +2,18 @@
   <LayoutTableRow>
     <template v-slot:header>
       <h6 class="mb-0 text-uppercase">
-        {{DICTIONARY.pageStatistics}}
+        {{ DICTIONARY.pageStatistics }}
       </h6>
     </template>
     <template v-slot:tableThead>
-        <th
-            v-for="(c, index) in COLUMNS_DAY"
-            :key="index"
-            scope="col"
-        >
-          {{c.title}}
-        </th>
+      <th v-for="(c, index) in COLUMNS_DAY" :key="index" scope="col">
+        {{ c.title }}
+      </th>
     </template>
     <template v-slot:tableTbody>
-      <tr
-          v-for="(tireStatisticsDay, i) in TIRE_STATISTICS_DAY"
-          :key="i"
-      >
-        <td
-            v-for="(c, index) in COLUMNS_DAY"
-            :key="index"
-            :data-th="c.title"
-        >
-          {{tireStatisticsDay[c.content] + c.prefix}}
+      <tr v-for="(tireStatisticsDay, i) in TIRE_STATISTICS_DAY" :key="i">
+        <td v-for="(c, index) in COLUMNS_DAY" :key="index" :data-th="c.title">
+          {{ tireStatisticsDay[c.content] + c.prefix }}
         </td>
       </tr>
     </template>
@@ -32,10 +21,10 @@
 </template>
 
 <script>
-import {COLUMNS_DAY} from "@/components/tireStatistics/constants/constants";
+import { COLUMNS_DAY } from "@/components/tireStatistics/constants/constants";
 import LayoutTableRow from "@/layouts/LayoutTableRow.vue";
-import {DICTIONARY} from "@/constants/constants";
-import {mapActions, mapGetters} from "vuex";
+import { DICTIONARY } from "@/constants/constants";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "TireStatisticsDay",
@@ -45,26 +34,22 @@ export default {
   },
 
   components: {
-    LayoutTableRow
+    LayoutTableRow,
   },
 
   computed: {
-    ...mapGetters('tireStatistics', [
-      'TIRE_STATISTICS_DAY'
-    ])
+    ...mapGetters("tireStatistics", ["TIRE_STATISTICS_DAY"]),
   },
 
   methods: {
-    ...mapActions('tireStatistics', [
-      'GET_TIRE_STATISTICS_DAY'
-    ]),
+    ...mapActions("tireStatistics", ["GET_TIRE_STATISTICS_DAY"]),
   },
 
   data() {
     return {
       COLUMNS_DAY,
-      DICTIONARY
-    }
-  }
-}
+      DICTIONARY,
+    };
+  },
+};
 </script>

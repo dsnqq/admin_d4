@@ -1,28 +1,25 @@
 <template>
-  <div
-      class="preloader"
-      v-if="isUiLocked"
-  >
-    <img src="../../assets/images/loader.gif">
+  <div class="preloader" v-if="isUiLocked">
+    <img src="../../assets/images/loader.gif" />
   </div>
 </template>
 
 <script>
-  import generalStore from "@/vuex/store"
+import generalStore from "@/vuex/store";
 
-  export default {
-    name: 'BasePreloader',
+export default {
+  name: "BasePreloader",
 
-    computed: {
-      isUiLocked: function (){
-        if(generalStore.state.lockingPool == 1) {
-          return true;
-        }
-
-        return false;
+  computed: {
+    isUiLocked: function () {
+      if (generalStore.state.lockingPool == 1) {
+        return true;
       }
+
+      return false;
     },
-  }
+  },
+};
 </script>
 
 <style lang="scss" scoped>

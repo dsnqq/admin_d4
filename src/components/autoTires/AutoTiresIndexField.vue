@@ -1,15 +1,12 @@
 <template>
   <div class="auto-tires-index-field">
     <label
-        class="auto-tires-index-field__label"
-        :class="{'auto-tires-index-field__label--is-required' : required}"
+      class="auto-tires-index-field__label"
+      :class="{ 'auto-tires-index-field__label--is-required': required }"
     >
-      {{label}}:
+      {{ label }}:
     </label>
-    <div
-        class="auto-tires-index-field__wrap"
-        :class="className"
-    >
+    <div class="auto-tires-index-field__wrap" :class="className">
       <slot></slot>
     </div>
     <slot name="additional"></slot>
@@ -21,25 +18,25 @@ export default {
   name: "AutoTiresIndexField",
 
   model: {
-    prop: 'value',
-    event: 'input',
+    prop: "value",
+    event: "input",
   },
 
   props: {
     className: {
-      type: String
+      type: String,
     },
 
     label: {
-      type: String
+      type: String,
     },
 
     required: {
       type: Boolean,
-      default: false
-    }
-  }
-}
+      default: false,
+    },
+  },
+};
 </script>
 
 <style scoped lang="sass">

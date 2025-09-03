@@ -6,40 +6,40 @@
       </div>
       <div class="ms-3">
         <div class="text-danger">
-          {{errorValidate}}
+          {{ errorValidate }}
         </div>
       </div>
     </div>
     <button
-        @click.prevent="closeAlertMessage"
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close">
-    </button>
+      @click.prevent="closeAlertMessage"
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
   </div>
 </template>
 
 <script>
-  export default {
-    name: "BaseAlert",
+export default {
+  name: "BaseAlert",
 
-    props: {
-      errorValidate: {
-        type: String
-      }
+  props: {
+    errorValidate: {
+      type: String,
     },
+  },
 
-    methods: {
-      closeAlertMessage() {
-        this.$emit("closeAlertMessage");
-      }
+  methods: {
+    closeAlertMessage() {
+      this.$emit("closeAlertMessage");
     },
+  },
 
-    data() {
-      return {
-        modal: false
-      }
-    }
-  }
+  data() {
+    return {
+      modal: false,
+    };
+  },
+};
 </script>

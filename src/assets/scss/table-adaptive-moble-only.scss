@@ -19,15 +19,15 @@ $breakpoint-alpha: 1024px;
     display: block;
 
     &:first-child {
-      padding-top: .5em;
+      padding-top: 0.5em;
     }
 
     &:last-child {
-      padding-bottom: .5em;
+      padding-bottom: 0.5em;
     }
 
     &:before {
-      content: attr(data-th)": ";
+      content: attr(data-th) ": ";
       font-weight: bold;
       white-space: normal;
 
@@ -46,12 +46,13 @@ $breakpoint-alpha: 1024px;
     }
   }
 
-  th, td {
+  th,
+  td {
     text-align: left;
 
     @media (min-width: $breakpoint-alpha) {
       display: table-cell;
-      padding: .25em .5em;
+      padding: 0.25em 0.5em;
 
       &:first-child {
         padding-left: 0;
@@ -72,7 +73,8 @@ $breakpoint-alpha: 1024px;
     }
   }
 
-  th, td {
+  th,
+  td {
     @media (min-width: $breakpoint-alpha) {
       padding: 1em !important;
     }

@@ -1,27 +1,27 @@
 <template>
   <v-multiselect
-      :id="id"
-      v-model="model"
-      :options="options"
-      :custom-label="(customLabel == 'name') ? customLabelNameReturn : customLabelReturn"
-      :selectedLabel="``"
-      :deselectLabel="`Удалить`"
-      :selectLabel="`Выбрать`"
-      :placeholder="placeholder"
-      @select="select"
+    :id="id"
+    v-model="model"
+    :options="options"
+    :custom-label="
+      customLabel == 'name' ? customLabelNameReturn : customLabelReturn
+    "
+    :selectedLabel="``"
+    :deselectLabel="`Удалить`"
+    :selectLabel="`Выбрать`"
+    :placeholder="placeholder"
+    @select="select"
   >
-    <template v-slot:noResult>
-      Пусто...
-    </template>
+    <template v-slot:noResult> Пусто... </template>
   </v-multiselect>
 </template>
 
 <script>
 export default {
-  name: 'BaseMultiselect',
+  name: "BaseMultiselect",
   model: {
-    prop: 'value',
-    event: 'input',
+    prop: "value",
+    event: "input",
   },
   props: {
     id: {
@@ -45,8 +45,8 @@ export default {
     },
 
     placeholder: {
-      type: String
-    }
+      type: String,
+    },
   },
   computed: {
     model: {
@@ -54,10 +54,7 @@ export default {
         return this.value;
       },
       set(val) {
-        this.$emit(
-            'input',
-            val
-        )
+        this.$emit("input", val);
       },
     },
   },
@@ -74,6 +71,6 @@ export default {
     customLabelReturn(data) {
       return data;
     },
-  }
-}
+  },
+};
 </script>

@@ -1,16 +1,16 @@
 <template>
   <div v-if="contentExtension === undefined">
-    {{content}}
+    {{ content }}
   </div>
   <div v-else>
-    {{content + ' ' + contentExtension}}
+    {{ content + " " + contentExtension }}
   </div>
 </template>
 
 <script>
-  export default {
-    name: "AutoTiresArchiveListColumnDefault",
+export default {
+  name: "AutoTiresArchiveListColumnDefault",
 
-    props: ['content', 'contentExtension']
-  }
+  props: ["content", "contentExtension"],
+};
 </script>

@@ -1,15 +1,14 @@
 <template>
   <div class="card">
-    <div
-        v-if="isHeaderSlot"
-        class="card-header py-3"
-    >
+    <div v-if="isHeaderSlot" class="card-header py-3">
       <slot name="header"></slot>
     </div>
     <div class="card-body">
       <div class="row">
         <div>
-          <table class="table align-middle table-striped table-border-1 rwd-table middle-responsive">
+          <table
+            class="table align-middle table-striped table-border-1 rwd-table middle-responsive"
+          >
             <thead>
               <slot name="tableThead"></slot>
             </thead>
@@ -25,15 +24,15 @@
 </template>
 
 <script>
-  export default {
-    name: "LayoutDefault",
+export default {
+  name: "LayoutDefault",
 
-    computed: {
-      isHeaderSlot() {
-        return this.$slots.header;
-      }
-    }
-  }
+  computed: {
+    isHeaderSlot() {
+      return this.$slots.header;
+    },
+  },
+};
 </script>
 
 <style lang="scss">

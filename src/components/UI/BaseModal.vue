@@ -7,11 +7,11 @@
             <slot name="header"></slot>
           </h4>
           <button
-              type="button"
-              class="modal-header__close close"
-              data-dismiss="modal"
-              aria-hidden="true"
-              @click.prevent="closeModalAdmin"
+            type="button"
+            class="modal-header__close close"
+            data-dismiss="modal"
+            aria-hidden="true"
+            @click.prevent="closeModalAdmin"
           >
             ×
           </button>
@@ -25,15 +25,15 @@
 </template>
 
 <script>
-  export default {
-    name: "BaseModal",
+export default {
+  name: "BaseModal",
 
-    methods: {
-      closeModalAdmin() {
-        this.$emit('closeModalAdmin');
-      },
-    }
-  }
+  methods: {
+    closeModalAdmin() {
+      this.$emit("closeModalAdmin");
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

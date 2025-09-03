@@ -5,26 +5,23 @@
         <div class="card">
           <div class="card-body">
             <div class="row">
-                <table class="table align-middle table-striped table-border-1 rwd-table middle-responsive">
-                  <thead>
-                    <CarListItemHead
-                        class="car-list__head"
-                    />
-                  </thead>
-                  <tbody class="card-body__grid">
-                    <CarListItem
-                        v-for="(carItem, i) in CARS"
-                        :key="i"
-                        :number="i"
-                        :store="carItem"
-                    />
-                  </tbody>
-                </table>
+              <table
+                class="table align-middle table-striped table-border-1 rwd-table middle-responsive"
+              >
+                <thead>
+                  <CarListItemHead class="car-list__head" />
+                </thead>
+                <tbody class="card-body__grid">
+                  <CarListItem
+                    v-for="(carItem, i) in CARS"
+                    :key="i"
+                    :number="i"
+                    :store="carItem"
+                  />
+                </tbody>
+              </table>
             </div>
-            <Pagination
-                :totals="TOTALS"
-                @setPageByTotal="setPageByTotal"
-            />
+            <Pagination :totals="TOTALS" @setPageByTotal="setPageByTotal" />
           </div>
         </div>
       </div>
@@ -34,9 +31,9 @@
 
 <script>
 import Pagination from "@/components/UI/BasePagination.vue";
-import CarListItem from '@/components/carsAdmin/CarListItem.vue';
+import CarListItem from "@/components/carsAdmin/CarListItem.vue";
 import CarListItemHead from "@/components/carsAdmin/CarListItemHead.vue";
-import {mapActions, mapGetters} from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "CarContent",
@@ -47,10 +44,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('carAdmin', [
-        'CARS',
-        'TOTALS'
-    ]),
+    ...mapGetters("carAdmin", ["CARS", "TOTALS"]),
   },
 
   methods: {
@@ -59,24 +53,24 @@ export default {
       this.GET_CARS_FROM_API(this.pageNum);
     },
 
-    ...mapActions('carAdmin', [
-      'GET_CARS_FROM_API',
-      'GET_CARS_TOTALS_FROM_API'
+    ...mapActions("carAdmin", [
+      "GET_CARS_FROM_API",
+      "GET_CARS_TOTALS_FROM_API",
     ]),
   },
 
   components: {
     CarListItemHead,
     CarListItem,
-    Pagination
+    Pagination,
   },
 
   data() {
     return {
       pageNum: 1,
     };
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss">

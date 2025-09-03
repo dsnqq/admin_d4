@@ -1,49 +1,44 @@
 <template>
   <div class="auto-parts-list-column-price">
     <div class="price-table">
-      <template v-if="!columnEdit">
-        {{priceUSD}} $
-      </template>
-      <span class="auto-parts-list-wrapper-column__edits auto-parts-list-wrapper-column-edits">
+      <template v-if="!columnEdit"> {{ priceUSD }} $ </template>
+      <span
+        class="auto-parts-list-wrapper-column__edits auto-parts-list-wrapper-column-edits"
+      >
         <input
-            v-if="columnEdit"
-            placeholder="Цена"
-            v-model="price"
-            class="auto-parts-list-wrapper-column-edits__input"
-            type="number"
-        >
+          v-if="columnEdit"
+          placeholder="Цена"
+          v-model="price"
+          class="auto-parts-list-wrapper-column-edits__input"
+          type="number"
+        />
         <button
-            @click.prevent="setEditThisColumnOnList"
-            class="auto-parts-list-wrapper-column-edits__button auto-parts-list-wrapper-column-edit"
+          @click.prevent="setEditThisColumnOnList"
+          class="auto-parts-list-wrapper-column-edits__button auto-parts-list-wrapper-column-edit"
         >
-        <i
-            v-if="!columnEdit"
-            class="bx bx-pencil p-2 text-warning"></i>
-        <i
+          <i v-if="!columnEdit" class="bx bx-pencil p-2 text-warning"></i>
+          <i
             v-else
             @click="setPriceAutoParts(id, price, index)"
-            class="lni lni-save p-2 text-success"></i>
-      </button>
-    </span>
+            class="lni lni-save p-2 text-success"
+          ></i>
+        </button>
+      </span>
     </div>
-    <div>
-      {{priceBYN}} руб.
-    </div>
+    <div>{{ priceBYN }} руб.</div>
   </div>
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "AutoPartsListColumnPrice",
 
-  props: ['id', 'index', 'priceUSD', 'priceBYN'],
+  props: ["id", "index", "priceUSD", "priceBYN"],
 
   methods: {
-    ...mapActions('autoParts', [
-      'CHANGE_AUTO_PARTS_PRICE'
-    ]),
+    ...mapActions("autoParts", ["CHANGE_AUTO_PARTS_PRICE"]),
 
     setEditThisColumnOnList() {
       this.columnEdit = !this.columnEdit;
@@ -53,10 +48,10 @@ export default {
       let param = {
         id: id,
         priceUSD: priceUSD,
-        index: i
+        index: i,
       };
 
-      if(priceUSD != null && parseInt(priceUSD) != 0) {
+      if (priceUSD != null && parseInt(priceUSD) != 0) {
         this.CHANGE_AUTO_PARTS_PRICE(param);
       }
     },
@@ -75,10 +70,10 @@ export default {
 
   data() {
     return {
-      columnEdit: false
-    }
-  }
-}
+      columnEdit: false,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>

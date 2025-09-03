@@ -30,11 +30,11 @@
 
 .auto-parts-list-column-price {
   @media screen and (max-width: 1570px) {
-    display:flex;
+    display: flex;
     align-items: center;
   }
-    @media screen and (max-width: 560px) {
-      flex-direction: column;
-      align-items: normal;
-    }
+  @media screen and (max-width: 560px) {
+    flex-direction: column;
+    align-items: normal;
+  }
 }

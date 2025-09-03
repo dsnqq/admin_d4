@@ -1,56 +1,48 @@
 <template>
-  <clazy-load
-      class="base-lazy-image"
-      :src="imageRenderUrl"
-  >
+  <clazy-load class="base-lazy-image" :src="imageRenderUrl">
     <transition name="fade">
-      <img
-          :src="imageRenderUrl"
-          :alt="alt"
-          class="base-lazy-image__load"
-      />
+      <img :src="imageRenderUrl" :alt="alt" class="base-lazy-image__load" />
     </transition>
     <div slot="placeholder">
-      <img
-          :src="imageLoaderUrl"
-          class="base-lazy-image__preloader"
-      />
+      <img :src="imageLoaderUrl" class="base-lazy-image__preloader" />
     </div>
   </clazy-load>
 </template>
 
 <script>
-import {DOMAIN} from "@/constants/constants";
+import { DOMAIN } from "@/constants/constants";
 
 export default {
   name: "BaseLazyImage",
 
   props: {
     alt: {
-      type: String
+      type: String,
     },
 
     src: {
-      type: String
-    }
+      type: String,
+    },
   },
 
   computed: {
     imageLoaderUrl() {
-      return DOMAIN + '/image/loader.gif';
+      return DOMAIN + "/image/loader.gif";
     },
 
     imageRenderUrl() {
-      return (this.$props.src == null) ? DOMAIN + "/image/no_image.png" : this.$props.src;
-    }
+      return this.$props.src == null
+        ? DOMAIN + "/image/no_image.png"
+        : this.$props.src;
+    },
   },
 
   data() {
     return {
-      DOMAIN
-    }
-  }
-}
+      DOMAIN,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>

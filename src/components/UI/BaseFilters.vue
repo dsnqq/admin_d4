@@ -3,46 +3,42 @@
     <div class="row">
       <div class="card-filter__rows">
         <div
-            v-for="(p, index) in options"
-            :key="index"
-            class="card-filter__item card-filter-item"
+          v-for="(p, index) in options"
+          :key="index"
+          class="card-filter__item card-filter-item"
         >
           <div class="card-filter-item__label">
-            {{p.title}}
+            {{ p.title }}
           </div>
           <div
-              class="card-filter-item__form card-filter-item"
-              :class="classObject(p.className, Array.isArray(p))"
+            class="card-filter-item__form card-filter-item"
+            :class="classObject(p.className, Array.isArray(p))"
           >
             <template v-if="Array.isArray(p)">
-              <div
-                  v-for="(j, i) in p"
-                  :key="i"
-                  class="card-filter-item__line"
-              >
+              <div v-for="(j, i) in p" :key="i" class="card-filter-item__line">
                 <span class="m-1">
-                  {{j.textLabel}}
+                  {{ j.textLabel }}
                 </span>
                 <BaseMultiselect
-                    v-model="parameters[j.vModel]"
-                    :options="j.params"
-                    :id="j.vModel"
-                    :placeholder="j.title"
-                    class="card-filter-item__select card-filter-item__select--is-year"
+                  v-model="parameters[j.vModel]"
+                  :options="j.params"
+                  :id="j.vModel"
+                  :placeholder="j.title"
+                  class="card-filter-item__select card-filter-item__select--is-year"
                 />
               </div>
             </template>
             <template v-else>
               <BaseMultiselect
-                  v-if="p.type == 'select'"
-                  :options="p.params"
-                  v-model="parameters[p.vModel]"
-                  :id="p.vModel"
-                  :customLabel="p.customLabel"
-                  :placeholder="p.title"
-                  class="card-filter-item__select"
+                v-if="p.type == 'select'"
+                :options="p.params"
+                v-model="parameters[p.vModel]"
+                :id="p.vModel"
+                :customLabel="p.customLabel"
+                :placeholder="p.title"
+                class="card-filter-item__select"
               />
-            <input
+              <input
                 v-else-if="p.type == 'input'"
                 v-model="parameters[p.vModel]"
                 :type="p.inputType"
@@ -50,7 +46,7 @@
                 :placeholder="p.title"
                 class="card-filter-item__input"
                 :autocomplete="p.autocomplete"
-            />
+              />
             </template>
           </div>
         </div>
@@ -59,16 +55,16 @@
     <div class="row">
       <div class="card-filter__buttons">
         <button
-            @click.prevent="setFilterOnAutoPartsPage"
-            type="button"
-            class="btn btn-success card-filter__search"
+          @click.prevent="setFilterOnAutoPartsPage"
+          type="button"
+          class="btn btn-success card-filter__search"
         >
           Поиск
         </button>
         <button
-            @click="resetFilters"
-            type="button"
-            class="btn btn-warning card-filter__refresh"
+          @click="resetFilters"
+          type="button"
+          class="btn btn-warning card-filter__refresh"
         >
           Сброс
         </button>
@@ -84,19 +80,19 @@ export default {
   name: "BaseFilter",
 
   props: {
-    options: Array
+    options: Array,
   },
 
   components: {
-    BaseMultiselect
+    BaseMultiselect,
   },
 
   methods: {
     classObject(className, bool) {
       return {
         className,
-        'card-filter-item--is-mobile-flex': bool
-      }
+        "card-filter-item--is-mobile-flex": bool,
+      };
     },
 
     setFilterOnAutoPartsPage() {
@@ -105,16 +101,16 @@ export default {
 
     resetFilters() {
       this.parameters = [];
-      this.$emit("resetFilters")
-    }
+      this.$emit("resetFilters");
+    },
   },
 
   data() {
     return {
-      parameters: []
-    }
-  }
-}
+      parameters: [],
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>

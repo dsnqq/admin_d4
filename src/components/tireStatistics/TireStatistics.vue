@@ -1,16 +1,12 @@
 <template>
   <div>
-    <hr>
+    <hr />
     <ul class="nav nav-pills">
-      <li
-          v-for="(tab, i) in tabComponents"
-          :key="i"
-          class="nav-item"
-      >
+      <li v-for="(tab, i) in tabComponents" :key="i" class="nav-item">
         <a
-            class="nav-link"
-            :class="setActiveClass(tab.component)"
-            @click.prevent="setActiveTab(tab.component)"
+          class="nav-link"
+          :class="setActiveClass(tab.component)"
+          @click.prevent="setActiveTab(tab.component)"
         >
           {{ tab.title }}
         </a>
@@ -27,13 +23,15 @@ export default {
   name: "TireStatistics",
 
   components: {
-    TireStatisticsMain: () => import("@/components/tireStatistics/components/TireStatisticsMain.vue"),
-    TireStatisticsDay: () => import("@/components/tireStatistics/components/TireStatisticsDay.vue"),
+    TireStatisticsMain: () =>
+      import("@/components/tireStatistics/components/TireStatisticsMain.vue"),
+    TireStatisticsDay: () =>
+      import("@/components/tireStatistics/components/TireStatisticsDay.vue"),
   },
 
   methods: {
     setActiveClass(component) {
-      return this.tabActive == component ? 'active' : '';
+      return this.tabActive == component ? "active" : "";
     },
 
     setActiveTab(component) {
@@ -43,14 +41,14 @@ export default {
 
   data() {
     return {
-      tabActive: 'TireStatisticsMain',
+      tabActive: "TireStatisticsMain",
       tabComponents: [
-        {component: 'TireStatisticsMain', title: 'Статистика просмотров шин'},
-        {component: 'TireStatisticsDay', title: 'Статистика по датам'},
-      ]
+        { component: "TireStatisticsMain", title: "Статистика просмотров шин" },
+        { component: "TireStatisticsDay", title: "Статистика по датам" },
+      ],
     };
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>
