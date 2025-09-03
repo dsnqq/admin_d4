@@ -19,25 +19,25 @@
 </template>
 
 <script setup>
-import { DISENABLE_BREADCRUMB } from "@/constants/constants";
-import TheHeader from "@/components/TheHeader.vue";
-import TheSidebar from "@/components/TheSidebar.vue";
-import Breadcrumb from "@/components/UI/BaseBreadcrumb.vue";
-import Preloader from "@/components/UI/BasePreloader.vue";
-import { ref, computed, defineEmits, onMounted, watch } from "vue";
-import { useRoute } from "@/composables/useRoute";
+import { DISENABLE_BREADCRUMB } from '@/constants/constants';
+import TheHeader from '@/components/TheHeader.vue';
+import TheSidebar from '@/components/TheSidebar.vue';
+import Breadcrumb from '@/components/UI/BaseBreadcrumb.vue';
+import Preloader from '@/components/UI/BasePreloader.vue';
+import { ref, computed, defineEmits, onMounted, watch } from 'vue';
+import { useRoute } from '@/composables/useRoute';
 
 const buttonShow = ref(false);
 const menu = ref(false);
 
-const emit = defineEmits(["leftMenuMobileShow", "menuSideBarClosed"]);
+const emit = defineEmits(['leftMenuMobileShow', 'menuSideBarClosed']);
 
 const route = useRoute();
 
-const adminContentMenuToggled = computed(() => (menu.value ? "toggled" : ""));
+const adminContentMenuToggled = computed(() => (menu.value ? 'toggled' : ''));
 
 const getBreadcrumbBool = computed(() =>
-  DISENABLE_BREADCRUMB.includes(route.name) ? false : true
+  DISENABLE_BREADCRUMB.includes(route.name) ? false : true,
 );
 
 const checkScrollPosition = () => {
@@ -45,23 +45,23 @@ const checkScrollPosition = () => {
 };
 
 const menuSideBarClosed = function () {
-  emit("menuSideBarClosed");
+  emit('menuSideBarClosed');
 };
 
 const leftMenuMobileShow = function () {
-  emit("leftMenuMobileShow");
+  emit('leftMenuMobileShow');
 };
 
 const arrowButtonGoTop = function () {
   window.scroll({
     top: 0,
-    behavior: "smooth",
+    behavior: 'smooth',
   });
 };
 
 onMounted(() => {
   checkScrollPosition();
-  window.addEventListener("scroll", checkScrollPosition);
+  window.addEventListener('scroll', checkScrollPosition);
 });
 
 watch(route, () => {
@@ -70,5 +70,5 @@ watch(route, () => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/style/t-admin.scss";
+@import '@/components/style/t-admin.scss';
 </style>

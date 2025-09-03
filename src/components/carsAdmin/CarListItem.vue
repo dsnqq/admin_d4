@@ -12,20 +12,14 @@
 </template>
 
 <script>
-import { LIST_ITEM_COLUMN } from "@/components/carsAdmin/constants/constants";
-import CarListItemColumn from "@/components/carsAdmin/CarListItemColumn.vue";
+import { LIST_ITEM_COLUMN } from '@/components/carsAdmin/constants/constants';
+import CarListItemColumn from '@/components/carsAdmin/CarListItemColumn.vue';
 
 export default {
-  name: "CarListItem",
+  name: 'CarListItem',
 
   components: {
     CarListItemColumn,
-  },
-
-  data() {
-    return {
-      LIST_ITEM_COLUMN,
-    };
   },
 
   props: {
@@ -36,6 +30,12 @@ export default {
     number: {
       type: Number,
     },
+  },
+
+  data() {
+    return {
+      LIST_ITEM_COLUMN,
+    };
   },
 };
 </script>

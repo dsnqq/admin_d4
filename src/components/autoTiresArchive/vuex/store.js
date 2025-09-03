@@ -1,5 +1,5 @@
-import axios from "axios";
-import { KEYS, DOMAIN_API } from "/src/constants/constants";
+import axios from 'axios';
+import { KEYS, DOMAIN_API } from '/src/constants/constants';
 
 export default {
   namespaced: true,
@@ -26,17 +26,17 @@ export default {
   },
   actions: {
     GET_AUTO_TIRES_ARCHIVE_FROM_API({ commit }, param) {
-      this.dispatch("generalStore/LOCK_UI");
+      this.dispatch('generalStore/LOCK_UI');
       return axios
-        .post(DOMAIN_API + "/index.php?route=api/auto_tires_archive/tires", {
+        .post(DOMAIN_API + '/index.php?route=api/auto_tires_archive/tires', {
           key: KEYS,
           page: param,
         })
         .then((response) => {
-          this.dispatch("generalStore/UN_LOCK_UI");
+          this.dispatch('generalStore/UN_LOCK_UI');
           commit(
-            "SET_AUTO_TIRES_ARCHIVE_TO_STATE",
-            response.data.autoTiresArchive
+            'SET_AUTO_TIRES_ARCHIVE_TO_STATE',
+            response.data.autoTiresArchive,
           );
           return response.data.autoTiresArchive;
         })
@@ -49,15 +49,15 @@ export default {
     GET_AUTO_TIRES_ARCHIVE_TOTALS({ commit }) {
       return axios
         .post(
-          DOMAIN_API + "/index.php?route=api/auto_tires_archive/tires/totals",
+          DOMAIN_API + '/index.php?route=api/auto_tires_archive/tires/totals',
           {
             key: KEYS,
-          }
+          },
         )
         .then((response) => {
           commit(
-            "SET_AUTO_TIRES_ARCHIVE_TOTALS_STATE",
-            response.data.autoTiresArchiveTotals
+            'SET_AUTO_TIRES_ARCHIVE_TOTALS_STATE',
+            response.data.autoTiresArchiveTotals,
           );
           return response.data.autoTiresArchiveTotals;
         })
@@ -68,21 +68,21 @@ export default {
     },
 
     GET_AUTO_TIRES_ARCHIVE_HISTORY({ commit }, id) {
-      this.dispatch("generalStore/LOCK_UI");
+      this.dispatch('generalStore/LOCK_UI');
       return axios
         .post(
           DOMAIN_API +
-            "/index.php?route=api/auto_tires_archive/tires/history/" +
+            '/index.php?route=api/auto_tires_archive/tires/history/' +
             id,
           {
             key: KEYS,
-          }
+          },
         )
         .then((response) => {
-          this.dispatch("generalStore/UN_LOCK_UI");
+          this.dispatch('generalStore/UN_LOCK_UI');
           commit(
-            "SET_AUTO_TIRES_ARCHIVE_HISTORY_STATE",
-            response.data.autoTiresArchiveHistory
+            'SET_AUTO_TIRES_ARCHIVE_HISTORY_STATE',
+            response.data.autoTiresArchiveHistory,
           );
           return response.data.autoTiresArchiveHistory;
         })
@@ -96,17 +96,17 @@ export default {
       return axios
         .post(
           DOMAIN_API +
-            "/index.php?route=api/auto_tires_archive/tires/index/" +
+            '/index.php?route=api/auto_tires_archive/tires/index/' +
             param.id,
           {
             key: KEYS,
             param: param,
-          }
+          },
         )
         .then((response) => {
           commit(
-            "SET_AUTO_TIRES_ARCHIVE_INDEX_STATE",
-            response.data.autoTiresArchiveIndex
+            'SET_AUTO_TIRES_ARCHIVE_INDEX_STATE',
+            response.data.autoTiresArchiveIndex,
           );
           return response.data.autoTiresArchiveIndex;
         })
@@ -120,14 +120,14 @@ export default {
       return axios
         .post(
           DOMAIN_API +
-            "/index.php?route=api/auto_tires_archive/tires/restore/" +
+            '/index.php?route=api/auto_tires_archive/tires/restore/' +
             param.autoTiresId,
           {
             key: KEYS,
-          }
+          },
         )
         .then(() => {
-          commit("RESTORE_THIS_AUTO_TIRES_ARCHIVE", param.autoTiresNumber);
+          commit('RESTORE_THIS_AUTO_TIRES_ARCHIVE', param.autoTiresNumber);
         })
         .catch(function (error) {
           console.log(error);
@@ -135,7 +135,7 @@ export default {
     },
 
     SET_SHOW_ALL_IMAGE({ commit }, id) {
-      commit("SHOW_ALL_IMAGE_BY_ID", id);
+      commit('SHOW_ALL_IMAGE_BY_ID', id);
     },
   },
   mutations: {
@@ -164,7 +164,7 @@ export default {
     RESTORE_THIS_AUTO_TIRES_ARCHIVE: (state, id) => {
       state.autoTiresArchiveTotals = state.autoTiresArchiveTotals - 1;
       state.autoTiresArchive.splice(id, 1);
-      alert("Шина восстановлена!");
+      alert('Шина восстановлена!');
     },
   },
 };

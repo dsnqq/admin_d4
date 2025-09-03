@@ -1,66 +1,66 @@
 export const COLUMNS = [
   {
-    title: "Изображение",
+    title: 'Изображение',
     components: () =>
       import(
-        "@/components/autoTiresArchive/AutoTiresArchiveListColumnImages.vue"
+        '@/components/autoTiresArchive/AutoTiresArchiveListColumnImages.vue'
       ),
-    className: "auto-tires-list-column-images",
+    className: 'auto-tires-list-column-images',
   },
   {
-    title: "Год",
+    title: 'Год',
     components: () =>
       import(
-        "@/components/autoTiresArchive/AutoTiresArchiveListColumnDefault.vue"
+        '@/components/autoTiresArchive/AutoTiresArchiveListColumnDefault.vue'
       ),
-    content: "year",
+    content: 'year',
   },
   {
-    title: "Название шины",
+    title: 'Название шины',
     components: () =>
       import(
-        "@/components/autoTiresArchive/AutoTiresArchiveListColumnDefault.vue"
+        '@/components/autoTiresArchive/AutoTiresArchiveListColumnDefault.vue'
       ),
-    content: "name",
+    content: 'name',
   },
   {
-    title: "Артикул",
+    title: 'Артикул',
     components: () =>
       import(
-        "@/components/autoTiresArchive/AutoTiresArchiveListColumnDefault.vue"
+        '@/components/autoTiresArchive/AutoTiresArchiveListColumnDefault.vue'
       ),
-    content: "model",
+    content: 'model',
   },
   {
-    title: "Цена за штуку",
+    title: 'Цена за штуку',
     components: () =>
       import(
-        "@/components/autoTiresArchive/AutoTiresArchiveListColumnPrice.vue"
+        '@/components/autoTiresArchive/AutoTiresArchiveListColumnPrice.vue'
       ),
-    content: "priceUSD",
+    content: 'priceUSD',
   },
   {
-    title: "Дата удаления",
+    title: 'Дата удаления',
     components: () =>
       import(
-        "@/components/autoTiresArchive/AutoTiresArchiveListColumnDefault.vue"
+        '@/components/autoTiresArchive/AutoTiresArchiveListColumnDefault.vue'
       ),
-    content: "dateDeleted",
+    content: 'dateDeleted',
   },
   {
-    title: "Описание",
+    title: 'Описание',
     components: () =>
       import(
-        "@/components/autoTiresArchive/AutoTiresArchiveListColumnDefault.vue"
+        '@/components/autoTiresArchive/AutoTiresArchiveListColumnDefault.vue'
       ),
-    content: "description",
-    className: "td-description",
+    content: 'description',
+    className: 'td-description',
   },
   {
-    title: "Действия",
+    title: 'Действия',
     components: () =>
       import(
-        "@/components/autoTiresArchive/AutoTiresArchiveListColumnActions.vue"
+        '@/components/autoTiresArchive/AutoTiresArchiveListColumnActions.vue'
       ),
   },
 ];

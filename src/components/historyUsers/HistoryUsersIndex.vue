@@ -1,7 +1,7 @@
 <template>
   <div>
     <Breadcrumb>
-      <template v-slot:buttons>
+      <template #buttons>
         <router-link :to="{ name: 'historyUsers' }" class="btn btn-primary">
           {{ DICTIONARY.goBack }}
         </router-link>
@@ -9,12 +9,12 @@
     </Breadcrumb>
     <hr />
     <LayoutDefault>
-      <template v-slot:tableThead>
+      <template #tableThead>
         <th v-for="(c, i) in COLUMNS_INDEX" :key="i" scope="col">
           {{ c.title }}
         </th>
       </template>
-      <template v-slot:tableTbody>
+      <template #tableTbody>
         <tr v-for="(userItem, i) in USER_HISTORY" :key="i">
           <td
             v-for="(c, index) in COLUMNS_INDEX"
@@ -24,12 +24,12 @@
           ></td>
         </tr>
       </template>
-      <template v-slot:pagination>
+      <template #pagination>
         <Pagination
           :totals="USER_HISTORY_TOTAL"
-          @setPageByTotal="setPageByTotal"
-          :countChunk="isMobile ? 4 : 5"
+          :count-chunk="isMobile ? 4 : 5"
           :class="{ 'card-body-pagination-mobile': isMobile }"
+          @setPageByTotal="setPageByTotal"
         />
       </template>
     </LayoutDefault>
@@ -37,16 +37,16 @@
 </template>
 
 <script>
-import LayoutDefault from "@/layouts/LayoutDefault.vue";
-import Pagination from "@/components/UI/BasePagination.vue";
-import { COLUMNS_INDEX } from "@/components/historyUsers/constants/constants";
-import { DICTIONARY } from "@/constants/constants";
-import Breadcrumb from "@/components/UI/BaseBreadcrumb.vue";
-import { mapActions, mapGetters } from "vuex";
-import { mixins } from "@/mixins/mixins";
+import LayoutDefault from '@/layouts/LayoutDefault.vue';
+import Pagination from '@/components/UI/BasePagination.vue';
+import { COLUMNS_INDEX } from '@/components/historyUsers/constants/constants';
+import { DICTIONARY } from '@/constants/constants';
+import Breadcrumb from '@/components/UI/BaseBreadcrumb.vue';
+import { mapActions, mapGetters } from 'vuex';
+import { mixins } from '@/mixins/mixins';
 
 export default {
-  name: "HistoryUsersIndex",
+  name: 'HistoryUsersIndex',
 
   components: {
     Breadcrumb,
@@ -62,17 +62,17 @@ export default {
   },
 
   computed: {
-    ...mapGetters("historyUsers", ["USER_HISTORY", "USER_HISTORY_TOTAL"]),
+    ...mapGetters('historyUsers', ['USER_HISTORY', 'USER_HISTORY_TOTAL']),
   },
 
   methods: {
-    ...mapActions("historyUsers", [
-      "GET_USER_HISTORY",
-      "GET_USER_HISTORY_TOTAL",
+    ...mapActions('historyUsers', [
+      'GET_USER_HISTORY',
+      'GET_USER_HISTORY_TOTAL',
     ]),
 
     renderContentOnColumn(content, type) {
-      return type == "image" ? '<img src="' + content + '" />' : content;
+      return type == 'image' ? '<img src="' + content + '" />' : content;
     },
 
     setPageByTotal(page) {
@@ -98,5 +98,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/historyUsers/style/history-users-index.scss";
+@import '@/components/historyUsers/style/history-users-index.scss';
 </style>

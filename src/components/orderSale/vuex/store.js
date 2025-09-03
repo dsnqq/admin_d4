@@ -1,5 +1,5 @@
-import axios from "axios";
-import { DOMAIN_API, KEYS } from "/src/constants/constants";
+import axios from 'axios';
+import { DOMAIN_API, KEYS } from '/src/constants/constants';
 
 export default {
   namespaced: true,
@@ -19,11 +19,11 @@ export default {
   actions: {
     GET_ORDER_SALE({ commit }, page) {
       return axios
-        .post(DOMAIN_API + "/index.php?route=api/order_sale/index/" + page, {
+        .post(DOMAIN_API + '/index.php?route=api/order_sale/index/' + page, {
           key: KEYS,
         })
         .then((response) => {
-          commit("SET_ORDER_SALE", response.data.orders);
+          commit('SET_ORDER_SALE', response.data.orders);
           return response.data.orders;
         })
         .catch(function (error) {
@@ -34,11 +34,11 @@ export default {
 
     GET_ORDER_TOTALS({ commit }) {
       return axios
-        .post(DOMAIN_API + "/index.php?route=api/order_sale/index/totals", {
+        .post(DOMAIN_API + '/index.php?route=api/order_sale/index/totals', {
           key: KEYS,
         })
         .then((response) => {
-          commit("SET_ORDER_TOTALS", response.data.totals);
+          commit('SET_ORDER_TOTALS', response.data.totals);
           return response.data.totals;
         })
         .catch(function (error) {

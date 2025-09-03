@@ -1,16 +1,16 @@
 <template>
   <LayoutTableRow>
-    <template v-slot:header>
+    <template #header>
       <h6 class="mb-0 text-uppercase">
         {{ DICTIONARY.pageStatisticsSpareParts }}
       </h6>
     </template>
-    <template v-slot:tableThead>
+    <template #tableThead>
       <th v-for="(c, index) in COLUMNS_MAIN" :key="index" scope="col">
         {{ c.title }}
       </th>
     </template>
-    <template v-slot:tableTbody>
+    <template #tableTbody>
       <tr
         v-for="(sparePartsStatisticsItem, i) in SPARE_PARTS_STATISTICS"
         :key="i"
@@ -22,55 +22,55 @@
         </td>
       </tr>
     </template>
-    <template v-slot:pagination>
+    <template #pagination>
       <Pagination
         :totals="TOTALS_SPARE_PARTS_STATISTICS"
-        @setPageByTotal="setPageByTotal"
-        :countChunk="isMobile ? 4 : 5"
+        :count-chunk="isMobile ? 4 : 5"
         :class="{ 'card-body-pagination-mobile': isMobile }"
+        @setPageByTotal="setPageByTotal"
       />
     </template>
   </LayoutTableRow>
 </template>
 
 <script>
-import LayoutTableRow from "@/layouts/LayoutTableRow.vue";
-import Pagination from "@/components/UI/BasePagination.vue";
-import { mapActions, mapGetters } from "vuex";
-import { DICTIONARY, DOMAIN } from "@/constants/constants";
-import { mixins } from "@/mixins/mixins";
-import { COLUMNS_MAIN } from "@/components/sparePartsStatistics/constants/constants";
+import LayoutTableRow from '@/layouts/LayoutTableRow.vue';
+import Pagination from '@/components/UI/BasePagination.vue';
+import { mapActions, mapGetters } from 'vuex';
+import { DICTIONARY, DOMAIN } from '@/constants/constants';
+import { mixins } from '@/mixins/mixins';
+import { COLUMNS_MAIN } from '@/components/sparePartsStatistics/constants/constants';
 
 export default {
-  name: "SparePartsStatisticsMain",
-
-  mounted() {
-    this.GET_SPARE_PARTS_STATISTICS(this.pageNum);
-    this.GET_SPARE_PARTS_STATISTICS_TOTALS();
-  },
-
-  mixins: [mixins],
+  name: 'SparePartsStatisticsMain',
 
   components: {
     Pagination,
     LayoutTableRow,
   },
 
+  mixins: [mixins],
+
+  mounted() {
+    this.GET_SPARE_PARTS_STATISTICS(this.pageNum);
+    this.GET_SPARE_PARTS_STATISTICS_TOTALS();
+  },
+
   computed: {
-    ...mapGetters("sparePartsStatistics", [
-      "SPARE_PARTS_STATISTICS",
-      "TOTALS_SPARE_PARTS_STATISTICS",
+    ...mapGetters('sparePartsStatistics', [
+      'SPARE_PARTS_STATISTICS',
+      'TOTALS_SPARE_PARTS_STATISTICS',
     ]),
   },
 
   methods: {
-    ...mapActions("sparePartsStatistics", [
-      "GET_SPARE_PARTS_STATISTICS",
-      "GET_SPARE_PARTS_STATISTICS_TOTALS",
+    ...mapActions('sparePartsStatistics', [
+      'GET_SPARE_PARTS_STATISTICS',
+      'GET_SPARE_PARTS_STATISTICS_TOTALS',
     ]),
 
     renderContentText(content, type) {
-      return type == "status" ? this.setStatusByApi(content) : content;
+      return type == 'status' ? this.setStatusByApi(content) : content;
     },
 
     setPageByTotal(page) {
@@ -79,7 +79,7 @@ export default {
     },
 
     setStatusByApi(status) {
-      return status == 1 ? "Активно" : "Неактивно";
+      return status == 1 ? 'Активно' : 'Неактивно';
     },
   },
 
@@ -95,5 +95,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "./src/components/sparePartsStatistics/components/style/spare-parts-statistics-main";
+@import './src/components/sparePartsStatistics/components/style/spare-parts-statistics-main';
 </style>

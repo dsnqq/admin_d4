@@ -27,22 +27,22 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
-  name: "AutoPartsHistoryModal",
+  name: 'AutoPartsHistoryModal',
 
   components: {
-    Modal: () => import("@/components/UI/BaseModal.vue"),
+    Modal: () => import('@/components/UI/BaseModal.vue'),
   },
 
   computed: {
-    ...mapGetters("autoPartsArchive", ["AUTO_PARTS_ARCHIVE_HISTORY"]),
+    ...mapGetters('autoPartsArchive', ['AUTO_PARTS_ARCHIVE_HISTORY']),
   },
 
   methods: {
     closeModalAdmin() {
-      this.$emit("closeModalAdmin");
+      this.$emit('closeModalAdmin');
     },
   },
 };

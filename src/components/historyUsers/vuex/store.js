@@ -1,5 +1,5 @@
-import axios from "axios";
-import { DOMAIN_API, KEYS } from "/src/constants/constants";
+import axios from 'axios';
+import { DOMAIN_API, KEYS } from '/src/constants/constants';
 
 export default {
   namespaced: true,
@@ -24,15 +24,15 @@ export default {
   },
   actions: {
     GET_USER_HISTORY_LIST({ commit }, param) {
-      this.dispatch("generalStore/LOCK_UI");
+      this.dispatch('generalStore/LOCK_UI');
       return axios
-        .post(DOMAIN_API + "/index.php?route=api/history_users/index", {
+        .post(DOMAIN_API + '/index.php?route=api/history_users/index', {
           key: KEYS,
           page: param,
         })
         .then((response) => {
-          this.dispatch("generalStore/UN_LOCK_UI");
-          commit("SET_USER_HISTORY_LIST", response.data.userHistoryList);
+          this.dispatch('generalStore/UN_LOCK_UI');
+          commit('SET_USER_HISTORY_LIST', response.data.userHistoryList);
           return response.data.userHistoryList;
         })
         .catch(function (error) {
@@ -41,20 +41,20 @@ export default {
         });
     },
     GET_USER_HISTORY({ commit }, param) {
-      this.dispatch("generalStore/LOCK_UI");
+      this.dispatch('generalStore/LOCK_UI');
       return axios
         .post(
           DOMAIN_API +
-            "/index.php?route=api/history_users/index/" +
+            '/index.php?route=api/history_users/index/' +
             param.user_id,
           {
             page: param.page,
             key: KEYS,
-          }
+          },
         )
         .then((response) => {
-          this.dispatch("generalStore/UN_LOCK_UI");
-          commit("SET_USER_HISTORY", response.data.userHistory);
+          this.dispatch('generalStore/UN_LOCK_UI');
+          commit('SET_USER_HISTORY', response.data.userHistory);
           return response.data.userHistory;
         })
         .catch(function (error) {
@@ -66,15 +66,15 @@ export default {
       return axios
         .post(
           DOMAIN_API +
-            "/index.php?route=api/history_users/index/" +
+            '/index.php?route=api/history_users/index/' +
             user_id +
-            "/total",
+            '/total',
           {
             key: KEYS,
-          }
+          },
         )
         .then((response) => {
-          commit("SET_USER_HISTORY_TOTAL", response.data.userHistoryTotal);
+          commit('SET_USER_HISTORY_TOTAL', response.data.userHistoryTotal);
           return response.data.userHistoryTotal;
         })
         .catch(function (error) {

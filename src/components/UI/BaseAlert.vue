@@ -11,18 +11,18 @@
       </div>
     </div>
     <button
-      @click.prevent="closeAlertMessage"
       type="button"
       class="btn-close"
       data-bs-dismiss="alert"
       aria-label="Close"
+      @click.prevent="closeAlertMessage"
     ></button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "BaseAlert",
+  name: 'BaseAlert',
 
   props: {
     errorValidate: {
@@ -30,16 +30,16 @@ export default {
     },
   },
 
-  methods: {
-    closeAlertMessage() {
-      this.$emit("closeAlertMessage");
-    },
-  },
-
   data() {
     return {
       modal: false,
     };
+  },
+
+  methods: {
+    closeAlertMessage() {
+      this.$emit('closeAlertMessage');
+    },
   },
 };
 </script>

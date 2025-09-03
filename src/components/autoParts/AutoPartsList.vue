@@ -1,18 +1,18 @@
 <template>
   <LayoutDefault>
-    <template v-slot:header>
+    <template #header>
       <Filters
         :options="optionsFilters"
         @setFilterOnAutoPartsPage="setFilterOnAutoPartsPage"
         @resetFilters="resetFilters"
       />
     </template>
-    <template v-slot:tableThead>
+    <template #tableThead>
       <th v-for="(c, index) in COLUMNS" :key="index">
         {{ c.title }}
       </th>
     </template>
-    <template v-slot:tableTbody>
+    <template #tableTbody>
       <tr v-for="(auto, i) in AUTO_PARTS" :key="i">
         <td
           v-for="(c, index) in COLUMNS"
@@ -22,30 +22,30 @@
         >
           <component
             :is="c.components"
+            :id="auto.product_id"
             :images="auto.images"
             :title="auto.autoParts.name"
             :index="i"
-            :id="auto.product_id"
-            :showAll="auto.imagesShowAllImage"
-            :contentTheNote="auto.theNote"
+            :show-all="auto.imagesShowAllImage"
+            :content-the-note="auto.theNote"
             :content="auto[c.content]"
-            :contentExtension="auto[c.contentExtension]"
-            :priceUSD="auto.priceUSD"
-            :priceBYN="auto.priceBYN"
+            :content-extension="auto[c.contentExtension]"
+            :price-u-s-d="auto.priceUSD"
+            :price-b-y-n="auto.priceBYN"
             :status="auto.status"
-            :linkToSite="auto.linkToSite"
+            :link-to-site="auto.linkToSite"
             :view="auto.view"
           ></component>
         </td>
       </tr>
     </template>
-    <template v-slot:pagination>
+    <template #pagination>
       <Pagination
         :totals="AUTO_PARTS_TOTALS"
-        :storageCache="storageCache"
-        :countChunk="isMobile ? 4 : 5"
-        @setPageByTotal="setPageByTotal"
+        :storage-cache="storageCache"
+        :count-chunk="isMobile ? 4 : 5"
         :class="{ 'card-body-pagination-mobile': isMobile }"
+        @setPageByTotal="setPageByTotal"
       />
       <BaseButtonFixedAdd component="autoPartsCreate" />
     </template>
@@ -53,14 +53,21 @@
 </template>
 
 <script>
-import LayoutDefault from "@/layouts/LayoutDefault.vue";
-import { COLUMNS } from "@/components/autoParts/constants/constants";
-import { autoPartsListOptionsFilters } from "@/components/autoParts/mixins/autoPartsListOptionsFilters.mixins";
-import { mixins } from "@/mixins/mixins";
-import { mapActions, mapGetters } from "vuex";
+import LayoutDefault from '@/layouts/LayoutDefault.vue';
+import { COLUMNS } from '@/components/autoParts/constants/constants';
+import { autoPartsListOptionsFilters } from '@/components/autoParts/mixins/autoPartsListOptionsFilters.mixins';
+import { mixins } from '@/mixins/mixins';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  name: "AutoPartsList",
+  name: 'AutoPartsList',
+
+  components: {
+    LayoutDefault,
+    Filters: () => import('@/components/UI/BaseFilters.vue'),
+    BaseButtonFixedAdd: () => import('@/components/UI/BaseButtonFixedAdd.vue'),
+    Pagination: () => import('@/components/UI/BasePagination.vue'),
+  },
 
   mixins: [mixins, autoPartsListOptionsFilters],
 
@@ -69,27 +76,20 @@ export default {
     this.GET_AUTO_PARTS_TOTALS(this.param);
   },
 
-  components: {
-    LayoutDefault,
-    Filters: () => import("@/components/UI/BaseFilters.vue"),
-    BaseButtonFixedAdd: () => import("@/components/UI/BaseButtonFixedAdd.vue"),
-    Pagination: () => import("@/components/UI/BasePagination.vue"),
-  },
-
   computed: {
-    ...mapGetters("autoParts", ["AUTO_PARTS", "AUTO_PARTS_TOTALS"]),
+    ...mapGetters('autoParts', ['AUTO_PARTS', 'AUTO_PARTS_TOTALS']),
 
     storageCache() {
-      return localStorage.getItem("localCacheFilters") !== null
+      return localStorage.getItem('localCacheFilters') !== null
         ? JSON.parse(localStorage.localCacheFilters)
         : {};
     },
   },
 
   methods: {
-    ...mapActions("autoParts", [
-      "GET_AUTO_PARTS_FROM_API",
-      "GET_AUTO_PARTS_TOTALS",
+    ...mapActions('autoParts', [
+      'GET_AUTO_PARTS_FROM_API',
+      'GET_AUTO_PARTS_TOTALS',
     ]),
 
     setFilterOnAutoPartsPage(param) {
@@ -112,13 +112,13 @@ export default {
       this.param = {
         pageNum: this.param.pageNum,
         filters: {
-          sparePartNumber: "",
-          model: "",
-          status: "Все объявления",
-          fuel: "Не выбрано",
-          value: "",
-          yearStart: "",
-          yearLast: "",
+          sparePartNumber: '',
+          model: '',
+          status: 'Все объявления',
+          fuel: 'Не выбрано',
+          value: '',
+          yearStart: '',
+          yearLast: '',
           types: {},
           car: {},
         },
@@ -135,13 +135,13 @@ export default {
       param: {
         pageNum: 1,
         filters: {
-          sparePartNumber: "",
-          model: "",
-          status: "Все объявления",
-          fuel: "Не выбрано",
-          value: "",
-          yearStart: "",
-          yearLast: "",
+          sparePartNumber: '',
+          model: '',
+          status: 'Все объявления',
+          fuel: 'Не выбрано',
+          value: '',
+          yearStart: '',
+          yearLast: '',
           types: {},
           car: {},
         },
@@ -152,5 +152,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "./src/components/autoParts/style/auto-parts-list";
+@import './src/components/autoParts/style/auto-parts-list';
 </style>

@@ -8,8 +8,8 @@
 
 <script>
 export default {
-  name: "AutoPartsListColumnTitle",
+  name: 'AutoPartsListColumnTitle',
 
-  props: ["title"],
+  props: ['title'],
 };
 </script>

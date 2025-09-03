@@ -20,37 +20,37 @@
 
 <script>
 export default {
-  name: "TireStatistics",
+  name: 'TireStatistics',
 
   components: {
     TireStatisticsMain: () =>
-      import("@/components/tireStatistics/components/TireStatisticsMain.vue"),
+      import('@/components/tireStatistics/components/TireStatisticsMain.vue'),
     TireStatisticsDay: () =>
-      import("@/components/tireStatistics/components/TireStatisticsDay.vue"),
+      import('@/components/tireStatistics/components/TireStatisticsDay.vue'),
+  },
+
+  data() {
+    return {
+      tabActive: 'TireStatisticsMain',
+      tabComponents: [
+        { component: 'TireStatisticsMain', title: 'Статистика просмотров шин' },
+        { component: 'TireStatisticsDay', title: 'Статистика по датам' },
+      ],
+    };
   },
 
   methods: {
     setActiveClass(component) {
-      return this.tabActive == component ? "active" : "";
+      return this.tabActive == component ? 'active' : '';
     },
 
     setActiveTab(component) {
       this.tabActive = component;
     },
   },
-
-  data() {
-    return {
-      tabActive: "TireStatisticsMain",
-      tabComponents: [
-        { component: "TireStatisticsMain", title: "Статистика просмотров шин" },
-        { component: "TireStatisticsDay", title: "Статистика по датам" },
-      ],
-    };
-  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "./src/components/tireStatistics/style/tire-statistics";
+@import './src/components/tireStatistics/style/tire-statistics';
 </style>

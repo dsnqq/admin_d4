@@ -4,8 +4,8 @@
 
 <script>
 export default {
-  name: "AutoPartsArchiveListColumnPrice",
+  name: 'AutoPartsArchiveListColumnPrice',
 
-  props: ["priceUSD"],
+  props: ['priceUSD'],
 };
 </script>

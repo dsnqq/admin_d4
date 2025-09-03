@@ -1,25 +1,25 @@
 <template>
   <LayoutTableRow>
-    <template v-slot:header>
+    <template #header>
       <h6 class="mb-0 text-uppercase">
         {{ DICTIONARY.pageStatisticsTires }}
       </h6>
     </template>
-    <template v-slot:tableThead>
+    <template #tableThead>
       <th v-for="(c, index) in COLUMNS_MAIN" :key="index" scope="col">
         {{ c.title }}
       </th>
     </template>
-    <template v-slot:tableTbody>
+    <template #tableTbody>
       <tr v-for="(tireStatisticsItem, i) in TIRE_STATISTICS" :key="i">
         <td v-for="(c, index) in COLUMNS_MAIN" :key="index" :data-th="c.title">
           {{ renderContentText(tireStatisticsItem[c.content], c.content) }}
         </td>
       </tr>
     </template>
-    <template v-slot:pagination>
+    <template #pagination>
       <Pagination
-        :countChunk="isMobile ? 4 : 5"
+        :count-chunk="isMobile ? 4 : 5"
         :class="{ 'card-body-pagination-mobile': isMobile }"
         :totals="TOTALS_TIRE_STATISTICS"
         @setPageByTotal="setPageByTotal"
@@ -29,44 +29,44 @@
 </template>
 
 <script>
-import { COLUMNS_MAIN } from "@/components/tireStatistics/constants/constants";
-import { DICTIONARY } from "@/constants/constants";
-import LayoutTableRow from "@/layouts/LayoutTableRow.vue";
-import Pagination from "@/components/UI/BasePagination.vue";
-import { mixins } from "@/mixins/mixins";
-import { mapActions, mapGetters } from "vuex";
-import { DOMAIN } from "@/constants/constants";
+import { COLUMNS_MAIN } from '@/components/tireStatistics/constants/constants';
+import { DICTIONARY } from '@/constants/constants';
+import LayoutTableRow from '@/layouts/LayoutTableRow.vue';
+import Pagination from '@/components/UI/BasePagination.vue';
+import { mixins } from '@/mixins/mixins';
+import { mapActions, mapGetters } from 'vuex';
+import { DOMAIN } from '@/constants/constants';
 
 export default {
-  name: "TireStatisticsMain",
-
-  mounted() {
-    this.GET_TIRE_STATISTICS(this.pageNum);
-    this.GET_TIRE_STATISTICS_TOTALS();
-  },
-
-  mixins: [mixins],
+  name: 'TireStatisticsMain',
 
   components: {
     Pagination,
     LayoutTableRow,
   },
 
+  mixins: [mixins],
+
+  mounted() {
+    this.GET_TIRE_STATISTICS(this.pageNum);
+    this.GET_TIRE_STATISTICS_TOTALS();
+  },
+
   computed: {
-    ...mapGetters("tireStatistics", [
-      "TIRE_STATISTICS",
-      "TOTALS_TIRE_STATISTICS",
+    ...mapGetters('tireStatistics', [
+      'TIRE_STATISTICS',
+      'TOTALS_TIRE_STATISTICS',
     ]),
   },
 
   methods: {
-    ...mapActions("tireStatistics", [
-      "GET_TIRE_STATISTICS",
-      "GET_TIRE_STATISTICS_TOTALS",
+    ...mapActions('tireStatistics', [
+      'GET_TIRE_STATISTICS',
+      'GET_TIRE_STATISTICS_TOTALS',
     ]),
 
     renderContentText(content, type) {
-      return type == "status" ? this.setStatusByApi(content) : content;
+      return type == 'status' ? this.setStatusByApi(content) : content;
     },
 
     setPageByTotal(page) {
@@ -75,7 +75,7 @@ export default {
     },
 
     setStatusByApi(status) {
-      return status == 1 ? "Активно" : "Неактивно";
+      return status == 1 ? 'Активно' : 'Неактивно';
     },
   },
 
@@ -91,5 +91,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "./src/components/tireStatistics/components/style/tire-statistics-main";
+@import './src/components/tireStatistics/components/style/tire-statistics-main';
 </style>

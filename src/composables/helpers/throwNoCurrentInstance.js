@@ -1,4 +1,4 @@
-import { getCurrentInstance } from "vue";
+import { getCurrentInstance } from 'vue';
 
 /**
  * @param {string} tag
@@ -6,7 +6,7 @@ import { getCurrentInstance } from "vue";
  * @return {void | never}
  */
 export function throwNoCurrentInstance(tag, method) {
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === 'production') {
     return;
   }
 
@@ -14,7 +14,7 @@ export function throwNoCurrentInstance(tag, method) {
 
   if (!instance) {
     throw new Error(
-      `[${tag}]: Missing current instance. ${method}() must be called inside <script setup> or setup().`
+      `[${tag}]: Missing current instance. ${method}() must be called inside <script setup> or setup().`,
     );
   }
 }

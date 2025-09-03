@@ -1,18 +1,18 @@
 export let historyUsersRouter = [
   {
-    path: "/history-users",
-    name: "historyUsers",
+    path: '/history-users',
+    name: 'historyUsers',
     meta: {
-      title: "Пользователи",
+      title: 'Пользователи',
     },
-    component: () => import("@/components/historyUsers/HistoryUsersList.vue"),
+    component: () => import('@/components/historyUsers/HistoryUsersList.vue'),
   },
   {
-    path: "/history-users/:id",
-    name: "historyUsersIndex",
+    path: '/history-users/:id',
+    name: 'historyUsersIndex',
     meta: {
-      title: "История пользователя",
+      title: 'История пользователя',
     },
-    component: () => import("@/components/historyUsers/HistoryUsersIndex.vue"),
+    component: () => import('@/components/historyUsers/HistoryUsersIndex.vue'),
   },
 ];

@@ -16,23 +16,23 @@
       >
         <i class="bi bi-pencil-fill"></i>
       </router-link>
-      <a @click="getPhotoAutoTires()" class="text-primary cursor-pointer">
+      <a class="text-primary cursor-pointer" @click="getPhotoAutoTires()">
         <i class="bi bi-camera"></i>
       </a>
-      <a @click.prevent="autoTiresRemove(id, index)" class="text-danger">
+      <a class="text-danger" @click.prevent="autoTiresRemove(id, index)">
         <i class="bi bi-trash-fill"></i>
       </a>
     </div>
     <div
-      @click="getPrintQrCodeAutoTires(AUTO_TIRES[index].qrCode)"
       class="btn btn-info"
+      @click="getPrintQrCodeAutoTires(AUTO_TIRES[index].qrCode)"
     >
       <span class="mobile-block-hidden">Печать</span> QR
     </div>
     <AutoTiresPhotoModal
-      @closePhotoModalAdmin="closePhotoModalAdmin"
       v-if="modalPhotoAdminShow"
-      :autoTiresId="id"
+      :auto-tires-id="id"
+      @closePhotoModalAdmin="closePhotoModalAdmin"
     />
     <iframe
       name="autoPartsQrCode"
@@ -42,28 +42,28 @@
 </template>
 
 <script>
-import { DOMAIN } from "@/constants/constants";
-import { mapActions, mapGetters } from "vuex";
+import { DOMAIN } from '@/constants/constants';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  name: "AutoTiresListColumnActions",
-
-  props: ["id", "linkToSite", "index"],
+  name: 'AutoTiresListColumnActions',
 
   components: {
     AutoTiresPhotoModal: () =>
-      import("@/components/autoTires/modal/AutoTiresPhotoModal.vue"),
+      import('@/components/autoTires/modal/AutoTiresPhotoModal.vue'),
   },
 
+  props: ['id', 'linkToSite', 'index'],
+
   computed: {
-    ...mapGetters("autoTires", ["AUTO_TIRES"]),
+    ...mapGetters('autoTires', ['AUTO_TIRES']),
   },
 
   methods: {
-    ...mapActions("autoTires", ["DELET_AUTO_TIRES_BY_API"]),
+    ...mapActions('autoTires', ['DELET_AUTO_TIRES_BY_API']),
 
     getPrintQrCodeAutoTires(qr) {
-      let isIframe = window.frames["autoPartsQrCode"];
+      let isIframe = window.frames['autoPartsQrCode'];
       isIframe.document.write(qr);
       isIframe.document.close();
     },
@@ -77,7 +77,7 @@ export default {
     },
 
     autoTiresRemove(id, index) {
-      if (confirm("Вы действительно хотите удалить данную шину ?")) {
+      if (confirm('Вы действительно хотите удалить данную шину ?')) {
         let param = {
           autoTiresId: id,
           autoTiresNumber: index,
@@ -99,5 +99,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/autoTires/style/auto-tires-list-column-actions.scss";
+@import '@/components/autoTires/style/auto-tires-list-column-actions.scss';
 </style>

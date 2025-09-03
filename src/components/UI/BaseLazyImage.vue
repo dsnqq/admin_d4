@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import { DOMAIN } from "@/constants/constants";
+import { DOMAIN } from '@/constants/constants';
 
 export default {
-  name: "BaseLazyImage",
+  name: 'BaseLazyImage',
 
   props: {
     alt: {
@@ -25,22 +25,22 @@ export default {
     },
   },
 
-  computed: {
-    imageLoaderUrl() {
-      return DOMAIN + "/image/loader.gif";
-    },
-
-    imageRenderUrl() {
-      return this.$props.src == null
-        ? DOMAIN + "/image/no_image.png"
-        : this.$props.src;
-    },
-  },
-
   data() {
     return {
       DOMAIN,
     };
+  },
+
+  computed: {
+    imageLoaderUrl() {
+      return DOMAIN + '/image/loader.gif';
+    },
+
+    imageRenderUrl() {
+      return this.$props.src == null
+        ? DOMAIN + '/image/no_image.png'
+        : this.$props.src;
+    },
   },
 };
 </script>

@@ -20,9 +20,9 @@
                   {{ j.textLabel }}
                 </span>
                 <BaseMultiselect
+                  :id="j.vModel"
                   v-model="parameters[j.vModel]"
                   :options="j.params"
-                  :id="j.vModel"
                   :placeholder="j.title"
                   class="card-filter-item__select card-filter-item__select--is-year"
                 />
@@ -31,18 +31,18 @@
             <template v-else>
               <BaseMultiselect
                 v-if="p.type == 'select'"
-                :options="p.params"
-                v-model="parameters[p.vModel]"
                 :id="p.vModel"
-                :customLabel="p.customLabel"
+                v-model="parameters[p.vModel]"
+                :options="p.params"
+                :custom-label="p.customLabel"
                 :placeholder="p.title"
                 class="card-filter-item__select"
               />
               <input
                 v-else-if="p.type == 'input'"
+                :id="p.vModel"
                 v-model="parameters[p.vModel]"
                 :type="p.inputType"
-                :id="p.vModel"
                 :placeholder="p.title"
                 class="card-filter-item__input"
                 :autocomplete="p.autocomplete"
@@ -55,16 +55,16 @@
     <div class="row">
       <div class="card-filter__buttons">
         <button
-          @click.prevent="setFilterOnAutoPartsPage"
           type="button"
           class="btn btn-success card-filter__search"
+          @click.prevent="setFilterOnAutoPartsPage"
         >
           Поиск
         </button>
         <button
-          @click="resetFilters"
           type="button"
           class="btn btn-warning card-filter__refresh"
+          @click="resetFilters"
         >
           Сброс
         </button>
@@ -74,35 +74,17 @@
 </template>
 
 <script>
-import BaseMultiselect from "@/components/UI/BaseMultiselect.vue";
+import BaseMultiselect from '@/components/UI/BaseMultiselect.vue';
 
 export default {
-  name: "BaseFilter",
-
-  props: {
-    options: Array,
-  },
+  name: 'BaseFilter',
 
   components: {
     BaseMultiselect,
   },
 
-  methods: {
-    classObject(className, bool) {
-      return {
-        className,
-        "card-filter-item--is-mobile-flex": bool,
-      };
-    },
-
-    setFilterOnAutoPartsPage() {
-      this.$emit("setFilterOnAutoPartsPage", this.parameters);
-    },
-
-    resetFilters() {
-      this.parameters = [];
-      this.$emit("resetFilters");
-    },
+  props: {
+    options: Array,
   },
 
   data() {
@@ -110,10 +92,28 @@ export default {
       parameters: [],
     };
   },
+
+  methods: {
+    classObject(className, bool) {
+      return {
+        className,
+        'card-filter-item--is-mobile-flex': bool,
+      };
+    },
+
+    setFilterOnAutoPartsPage() {
+      this.$emit('setFilterOnAutoPartsPage', this.parameters);
+    },
+
+    resetFilters() {
+      this.parameters = [];
+      this.$emit('resetFilters');
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/UI/style/base-filters.scss";
-@import "../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css";
+@import '@/components/UI/style/base-filters.scss';
+@import '../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css';
 </style>

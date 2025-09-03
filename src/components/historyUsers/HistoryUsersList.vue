@@ -1,11 +1,11 @@
 <template>
   <LayoutDefault>
-    <template v-slot:tableThead>
+    <template #tableThead>
       <th v-for="(c, i) in columns" :key="i" scope="col" :class="c.className">
         {{ c.title }}
       </th>
     </template>
-    <template v-slot:tableTbody>
+    <template #tableTbody>
       <tr v-for="(userItem, i) in USER_HISTORY_LIST" :key="i">
         <td
           v-for="(c, index) in columns"
@@ -39,30 +39,30 @@
 </template>
 
 <script>
-import LayoutDefault from "@/layouts/LayoutDefault.vue";
-import { COLUMNS_LIST } from "@/components/historyUsers/constants/constants";
-import { mapActions, mapGetters } from "vuex";
+import LayoutDefault from '@/layouts/LayoutDefault.vue';
+import { COLUMNS_LIST } from '@/components/historyUsers/constants/constants';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  name: "HistoryUsersList",
-
-  mounted() {
-    this.GET_USER_HISTORY_LIST();
-  },
+  name: 'HistoryUsersList',
 
   components: {
     LayoutDefault,
   },
 
+  mounted() {
+    this.GET_USER_HISTORY_LIST();
+  },
+
   computed: {
-    ...mapGetters("historyUsers", ["USER_HISTORY_LIST"]),
+    ...mapGetters('historyUsers', ['USER_HISTORY_LIST']),
   },
 
   methods: {
-    ...mapActions("historyUsers", ["GET_USER_HISTORY_LIST"]),
+    ...mapActions('historyUsers', ['GET_USER_HISTORY_LIST']),
 
     getStatusUser(status) {
-      return status == 1 ? "Активно" : "Неактивно";
+      return status == 1 ? 'Активно' : 'Неактивно';
     },
   },
 

@@ -1,75 +1,75 @@
-import { autoPartsRouter } from "@/components/autoParts/router";
-import { carsRouter } from "@/components/carsAdmin/router";
-import { autoTiresRouter } from "@/components/autoTires/router";
-import { historyUsersRouter } from "@/components/historyUsers/router";
+import { autoPartsRouter } from '@/components/autoParts/router';
+import { carsRouter } from '@/components/carsAdmin/router';
+import { autoTiresRouter } from '@/components/autoTires/router';
+import { historyUsersRouter } from '@/components/historyUsers/router';
 
-import VueRouter from "vue-router";
+import VueRouter from 'vue-router';
 
 let defaults = [
   {
-    path: "/",
-    redirect: "/auto-parts",
-    name: "dashboardAdmin",
+    path: '/',
+    redirect: '/auto-parts',
+    name: 'dashboardAdmin',
     meta: {
-      title: "Главная панель",
+      title: 'Главная панель',
     },
-    component: () => import("../components/dashboardAdmin/DashboardAdmin.vue"),
+    component: () => import('../components/dashboardAdmin/DashboardAdmin.vue'),
   },
   {
-    path: "/auto-parts-archive",
-    name: "autoPartsArchive",
+    path: '/auto-parts-archive',
+    name: 'autoPartsArchive',
     meta: {
-      title: "Архив автозапчастей",
-    },
-    component: () =>
-      import("../components/autoPartsArchive/AutoPartsArchiveList.vue"),
-  },
-  {
-    path: "/tire-statistics",
-    name: "tireStatistics",
-    meta: {
-      title: "Статистика шин",
-    },
-    component: () => import("../components/tireStatistics/TireStatistics.vue"),
-  },
-  {
-    path: "/spare-parts-statistics",
-    name: "sparePartsStatistics",
-    meta: {
-      title: "Статистика запчастей",
+      title: 'Архив автозапчастей',
     },
     component: () =>
-      import("../components/sparePartsStatistics/SparePartsStatistics.vue"),
+      import('../components/autoPartsArchive/AutoPartsArchiveList.vue'),
   },
   {
-    path: "/login",
-    name: "authAdmin",
-    component: () => import("../components/authAdmin/AuthAdmin.vue"),
-  },
-  {
-    path: "/order-sale",
-    name: "orderSale",
+    path: '/tire-statistics',
+    name: 'tireStatistics',
     meta: {
-      title: "Заказы",
+      title: 'Статистика шин',
     },
-    component: () => import("../components/orderSale/OrderSale.vue"),
+    component: () => import('../components/tireStatistics/TireStatistics.vue'),
   },
   {
-    path: "/auto-tires-archive",
-    name: "autoTiresArchive",
+    path: '/spare-parts-statistics',
+    name: 'sparePartsStatistics',
     meta: {
-      title: "Архив шин",
+      title: 'Статистика запчастей',
     },
     component: () =>
-      import("../components/autoTiresArchive/AutoTiresArchiveList.vue"),
+      import('../components/sparePartsStatistics/SparePartsStatistics.vue'),
   },
   {
-    path: "*",
-    name: "notFound",
+    path: '/login',
+    name: 'authAdmin',
+    component: () => import('../components/authAdmin/AuthAdmin.vue'),
+  },
+  {
+    path: '/order-sale',
+    name: 'orderSale',
     meta: {
-      title: "Здесь ничего нет",
+      title: 'Заказы',
     },
-    component: () => import("../components/TheNotFound.vue"),
+    component: () => import('../components/orderSale/OrderSale.vue'),
+  },
+  {
+    path: '/auto-tires-archive',
+    name: 'autoTiresArchive',
+    meta: {
+      title: 'Архив шин',
+    },
+    component: () =>
+      import('../components/autoTiresArchive/AutoTiresArchiveList.vue'),
+  },
+  {
+    path: '*',
+    name: 'notFound',
+    meta: {
+      title: 'Здесь ничего нет',
+    },
+    component: () => import('../components/TheNotFound.vue'),
   },
 ];
 
@@ -78,11 +78,11 @@ const routes = [].concat(
   autoPartsRouter,
   carsRouter,
   autoTiresRouter,
-  historyUsersRouter
+  historyUsersRouter,
 );
 
 export default new VueRouter({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
   routes,
   scrollBehavior(to, from, savedPosition) {

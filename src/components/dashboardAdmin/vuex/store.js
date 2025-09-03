@@ -1,5 +1,5 @@
-import axios from "axios";
-import { DOMAIN_API, KEYS } from "/src/constants/constants";
+import axios from 'axios';
+import { DOMAIN_API, KEYS } from '/src/constants/constants';
 
 export default {
   namespaced: true,
@@ -14,16 +14,16 @@ export default {
   },
   actions: {
     GET_DASHBOARD_INFORMATION({ commit }) {
-      this.dispatch("generalStore/LOCK_UI");
+      this.dispatch('generalStore/LOCK_UI');
       return axios
-        .post(DOMAIN_API + "/index.php?route=api/dashboard_admin/index", {
+        .post(DOMAIN_API + '/index.php?route=api/dashboard_admin/index', {
           key: KEYS,
         })
         .then((response) => {
-          this.dispatch("generalStore/UN_LOCK_UI");
+          this.dispatch('generalStore/UN_LOCK_UI');
           commit(
-            "SET_DASHBOARD_INFORMATION",
-            response.data.dashboardInformations
+            'SET_DASHBOARD_INFORMATION',
+            response.data.dashboardInformations,
           );
           return response.data.dashboardInformations;
         })
@@ -36,14 +36,14 @@ export default {
     SET_CURRENCY_FROM_API({ commit }, param) {
       return axios
         .post(
-          DOMAIN_API + "/index.php?route=api/dashboard_admin/index/currency",
+          DOMAIN_API + '/index.php?route=api/dashboard_admin/index/currency',
           {
             currency: param.currency,
             value: param.value,
-          }
+          },
         )
         .then(() => {
-          commit("SET_CURRENCY");
+          commit('SET_CURRENCY');
           return param;
         })
         .catch(function (error) {
@@ -54,7 +54,7 @@ export default {
   },
   mutations: {
     SET_CURRENCY: () => {
-      alert("Курс изменен!");
+      alert('Курс изменен!');
     },
     SET_DASHBOARD_INFORMATION: (state, dashboardInformations) => {
       state.dashboardInformations = Object.freeze(dashboardInformations);

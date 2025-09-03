@@ -17,7 +17,7 @@
               <div class="user-setting d-flex align-items-center">
                 {{
                   userInformationAbout.firstname +
-                  " " +
+                  ' ' +
                   userInformationAbout.lastname
                 }}
               </div>
@@ -76,13 +76,13 @@
 </template>
 
 <script setup>
-import { DICTIONARY } from "@/constants/constants";
-import { DOMAIN } from "@/constants/constants";
-import { onMounted, computed, defineEmits } from "vue";
-import { useStore } from "@/composables/useStore";
+import { DICTIONARY } from '@/constants/constants';
+import { DOMAIN } from '@/constants/constants';
+import { onMounted, computed, defineEmits } from 'vue';
+import { useStore } from '@/composables/useStore';
 
 const userInformationAbout = computed(() => JSON.parse(localStorage.user));
-const emit = defineEmits(["leftMenuMobileShow"]);
+const emit = defineEmits(['leftMenuMobileShow']);
 const store = useStore();
 
 onMounted(() => {
@@ -90,20 +90,20 @@ onMounted(() => {
 });
 
 const logout = function () {
-  localStorage.user = "";
+  localStorage.user = '';
   location.reload();
 };
 
 const leftMenuMobileShow = function () {
-  emit("leftMenuMobileShow");
+  emit('leftMenuMobileShow');
 };
 
-const NOTIFICATION = computed(() => store.getters["generalStore/NOTIFICATION"]);
+const NOTIFICATION = computed(() => store.getters['generalStore/NOTIFICATION']);
 
 const NOTIFICATION_FROM_API = (payload) =>
-  store.dispatch("generalStore/NOTIFICATION_FROM_API", payload);
+  store.dispatch('generalStore/NOTIFICATION_FROM_API', payload);
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/style/t-header.scss";
+@import '@/components/style/t-header.scss';
 </style>

@@ -1,11 +1,11 @@
 <template>
   <LayoutDefault>
-    <template v-slot:tableThead>
+    <template #tableThead>
       <th v-for="(c, index) in COLUMNS" :key="index">
         {{ c.title }}
       </th>
     </template>
-    <template v-slot:tableTbody>
+    <template #tableTbody>
       <tr v-for="(autoTire, i) in AUTO_TIRES" :key="i">
         <td
           v-for="(c, index) in COLUMNS"
@@ -15,27 +15,27 @@
         >
           <component
             :is="c.components"
+            :id="autoTire.product_id"
             :images="autoTire.images"
             :title="autoTire.name"
             :index="i"
-            :id="autoTire.product_id"
-            :showAll="autoTire.imagesShowAllImage"
+            :show-all="autoTire.imagesShowAllImage"
             :content="autoTire[c.content]"
-            :contentExtension="autoTire[c.contentExtension]"
-            :priceUSD="autoTire.priceUSD"
-            :priceBYN="autoTire.priceBYN"
+            :content-extension="autoTire[c.contentExtension]"
+            :price-u-s-d="autoTire.priceUSD"
+            :price-b-y-n="autoTire.priceBYN"
             :status="autoTire.status"
-            :linkToSite="autoTire.linkToSite"
+            :link-to-site="autoTire.linkToSite"
           ></component>
         </td>
       </tr>
     </template>
-    <template v-slot:pagination>
+    <template #pagination>
       <Pagination
         :totals="AUTO_TIRES_TOTALS"
-        :countChunk="isMobile ? 4 : 5"
-        @setPageByTotal="setPageByTotal"
+        :count-chunk="isMobile ? 4 : 5"
         :class="{ 'card-body-pagination-mobile': isMobile }"
+        @setPageByTotal="setPageByTotal"
       />
       <BaseButtonFixedAdd component="autoTiresCreate" />
     </template>
@@ -43,36 +43,36 @@
 </template>
 
 <script>
-import LayoutDefault from "@/layouts/LayoutDefault.vue";
-import { COLUMNS } from "@/components/autoTires/constants/constants";
-import Pagination from "@/components/UI/BasePagination.vue";
-import { mapActions, mapGetters } from "vuex";
-import { mixins } from "@/mixins/mixins";
+import LayoutDefault from '@/layouts/LayoutDefault.vue';
+import { COLUMNS } from '@/components/autoTires/constants/constants';
+import Pagination from '@/components/UI/BasePagination.vue';
+import { mapActions, mapGetters } from 'vuex';
+import { mixins } from '@/mixins/mixins';
 
 export default {
-  name: "AutoTiresList",
+  name: 'AutoTiresList',
+
+  components: {
+    Pagination,
+    LayoutDefault,
+    BaseButtonFixedAdd: () => import('@/components/UI/BaseButtonFixedAdd.vue'),
+  },
+
+  mixins: [mixins],
 
   mounted() {
     this.GET_AUTO_TIRES_FROM_API(this.param.pageNum);
     this.GET_AUTO_TIRES_TOTALS();
   },
 
-  mixins: [mixins],
-
-  components: {
-    Pagination,
-    LayoutDefault,
-    BaseButtonFixedAdd: () => import("@/components/UI/BaseButtonFixedAdd.vue"),
-  },
-
   computed: {
-    ...mapGetters("autoTires", ["AUTO_TIRES", "AUTO_TIRES_TOTALS"]),
+    ...mapGetters('autoTires', ['AUTO_TIRES', 'AUTO_TIRES_TOTALS']),
   },
 
   methods: {
-    ...mapActions("autoTires", [
-      "GET_AUTO_TIRES_FROM_API",
-      "GET_AUTO_TIRES_TOTALS",
+    ...mapActions('autoTires', [
+      'GET_AUTO_TIRES_FROM_API',
+      'GET_AUTO_TIRES_TOTALS',
     ]),
 
     setPageByTotal(page) {
@@ -93,5 +93,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/autoTires/style/auto-tires-list.scss";
+@import '@/components/autoTires/style/auto-tires-list.scss';
 </style>

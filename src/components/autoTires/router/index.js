@@ -1,27 +1,27 @@
 export let autoTiresRouter = [
   {
-    path: "/auto-tires",
-    name: "autoTires",
+    path: '/auto-tires',
+    name: 'autoTires',
     meta: {
-      title: "Шины",
+      title: 'Шины',
     },
-    component: () => import("@/components/autoTires/AutoTiresList.vue"),
+    component: () => import('@/components/autoTires/AutoTiresList.vue'),
   },
   {
-    path: "/auto-tires/:id",
-    name: "autoTiresDetail",
+    path: '/auto-tires/:id',
+    name: 'autoTiresDetail',
     meta: {
-      title: "Шина",
+      title: 'Шина',
     },
     props: true,
-    component: () => import("@/components/autoTires/AutoTiresIndex.vue"),
+    component: () => import('@/components/autoTires/AutoTiresIndex.vue'),
   },
   {
-    path: "/auto-tires/create",
-    name: "autoTiresCreate",
+    path: '/auto-tires/create',
+    name: 'autoTiresCreate',
     meta: {
-      title: "Добавить шину",
+      title: 'Добавить шину',
     },
-    component: () => import("@/components/autoTires/AutoTiresIndex.vue"),
+    component: () => import('@/components/autoTires/AutoTiresIndex.vue'),
   },
 ];

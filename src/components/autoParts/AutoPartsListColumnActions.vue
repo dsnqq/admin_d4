@@ -2,8 +2,8 @@
   <div class="auto-parts-list-column-actions">
     <div class="d-flex align-items-center gap-2 fs-6">
       <a
-        @click.p.prevent="getHistoryAuto(id)"
         class="text-primary cursor-pointer"
+        @click.p.prevent="getHistoryAuto(id)"
       >
         <i class="bi bi-archive"></i>
       </a>
@@ -22,31 +22,31 @@
       >
         <i class="bi bi-pencil-fill"></i>
       </router-link>
-      <a @click="getPhotoAutoParts()" class="text-primary cursor-pointer">
+      <a class="text-primary cursor-pointer" @click="getPhotoAutoParts()">
         <i class="bi bi-camera"></i>
       </a>
       <a
-        @click.prevent="autoPartsRemove(id, index)"
         class="text-danger cursor-pointer"
+        @click.prevent="autoPartsRemove(id, index)"
       >
         <i class="bi bi-trash-fill"></i>
       </a>
     </div>
     <div class="td-viewed">Просмотров: {{ view }}</div>
     <div
-      @click="getPrintQrCodeAutoParts(AUTO_PARTS[index].qrCode)"
       class="btn btn-info btn-mobile-event"
+      @click="getPrintQrCodeAutoParts(AUTO_PARTS[index].qrCode)"
     >
       <span class="mobile-block-hidden">Печать</span> QR
     </div>
     <AutoPartsHistoryModal
-      @closeHistoryModalAdmin="closeHistoryModalAdmin"
       v-if="modalHistoryAdminShow"
+      @closeHistoryModalAdmin="closeHistoryModalAdmin"
     />
     <AutoPartsPhotoModal
-      @closePhotoModalAdmin="closePhotoModalAdmin"
       v-if="modalPhotoAdminShow"
-      :autoPartsId="id"
+      :auto-parts-id="id"
+      @closePhotoModalAdmin="closePhotoModalAdmin"
     />
     <iframe
       name="autoPartsQrCode"
@@ -56,33 +56,33 @@
 </template>
 
 <script>
-import { DOMAIN } from "@/constants/constants";
-import { mapActions, mapGetters } from "vuex";
+import { DOMAIN } from '@/constants/constants';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  name: "AutoPartsListColumnActions",
-
-  props: ["id", "linkToSite", "index", "view"],
+  name: 'AutoPartsListColumnActions',
 
   components: {
     AutoPartsHistoryModal: () =>
-      import("@/components/autoParts/modal/AutoPartsHistoryModal.vue"),
+      import('@/components/autoParts/modal/AutoPartsHistoryModal.vue'),
     AutoPartsPhotoModal: () =>
-      import("@/components/autoParts/modal/AutoPartsPhotoModal.vue"),
+      import('@/components/autoParts/modal/AutoPartsPhotoModal.vue'),
   },
 
+  props: ['id', 'linkToSite', 'index', 'view'],
+
   computed: {
-    ...mapGetters("autoParts", ["AUTO_PARTS"]),
+    ...mapGetters('autoParts', ['AUTO_PARTS']),
   },
 
   methods: {
-    ...mapActions("autoParts", [
-      "DELET_AUTO_PARTS_BY_API",
-      "GET_AUTO_PARTS_HISTORY",
+    ...mapActions('autoParts', [
+      'DELET_AUTO_PARTS_BY_API',
+      'GET_AUTO_PARTS_HISTORY',
     ]),
 
     getPrintQrCodeAutoParts(qr) {
-      let isIframe = window.frames["autoPartsQrCode"];
+      let isIframe = window.frames['autoPartsQrCode'];
       isIframe.document.write(qr);
       isIframe.document.close();
     },
@@ -105,7 +105,7 @@ export default {
     },
 
     autoPartsRemove(id, index) {
-      if (confirm("Вы действительно хотите удалить данную запчасть ?")) {
+      if (confirm('Вы действительно хотите удалить данную запчасть ?')) {
         let param = {
           autoPartsId: id,
           autoPartsNumber: index,
@@ -127,5 +127,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/autoParts/style/auto-parts-list-column-actions.scss";
+@import '@/components/autoParts/style/auto-parts-list-column-actions.scss';
 </style>

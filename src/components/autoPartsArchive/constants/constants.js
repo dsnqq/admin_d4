@@ -1,100 +1,100 @@
 export const COLUMNS = [
   {
-    title: "Изображение",
+    title: 'Изображение',
     components: () =>
       import(
-        "@/components/autoPartsArchive/AutoPartsArchiveListColumnImages.vue"
+        '@/components/autoPartsArchive/AutoPartsArchiveListColumnImages.vue'
       ),
-    className: "auto-parts-list-column-images",
+    className: 'auto-parts-list-column-images',
   },
   {
-    title: "Марка и модель",
+    title: 'Марка и модель',
     components: () =>
       import(
-        "@/components/autoPartsArchive/AutoPartsArchiveListColumnDefault.vue"
+        '@/components/autoPartsArchive/AutoPartsArchiveListColumnDefault.vue'
       ),
-    content: "title",
+    content: 'title',
   },
   {
-    title: "Год",
+    title: 'Год',
     components: () =>
       import(
-        "@/components/autoPartsArchive/AutoPartsArchiveListColumnDefault.vue"
+        '@/components/autoPartsArchive/AutoPartsArchiveListColumnDefault.vue'
       ),
-    content: "year",
+    content: 'year',
   },
   {
-    title: "Объём",
+    title: 'Объём',
     components: () =>
       import(
-        "@/components/autoPartsArchive/AutoPartsArchiveListColumnDefault.vue"
+        '@/components/autoPartsArchive/AutoPartsArchiveListColumnDefault.vue'
       ),
-    content: "value",
+    content: 'value',
   },
   {
-    title: "Тип топлива",
+    title: 'Тип топлива',
     components: () =>
       import(
-        "@/components/autoPartsArchive/AutoPartsArchiveListColumnDefault.vue"
+        '@/components/autoPartsArchive/AutoPartsArchiveListColumnDefault.vue'
       ),
-    content: "fuel",
-    contentExtension: "typeEngines",
+    content: 'fuel',
+    contentExtension: 'typeEngines',
   },
   {
-    title: "Название запчасти",
+    title: 'Название запчасти',
     components: () =>
       import(
-        "@/components/autoPartsArchive/AutoPartsArchiveListColumnTitle.vue"
+        '@/components/autoPartsArchive/AutoPartsArchiveListColumnTitle.vue'
       ),
-    content: "autoParts.name",
+    content: 'autoParts.name',
   },
   {
-    title: "Артикул",
+    title: 'Артикул',
     components: () =>
       import(
-        "@/components/autoPartsArchive/AutoPartsArchiveListColumnDefault.vue"
+        '@/components/autoPartsArchive/AutoPartsArchiveListColumnDefault.vue'
       ),
-    content: "model",
+    content: 'model',
   },
   {
-    title: "Цена",
+    title: 'Цена',
     components: () =>
       import(
-        "@/components/autoPartsArchive/AutoPartsArchiveListColumnPrice.vue"
+        '@/components/autoPartsArchive/AutoPartsArchiveListColumnPrice.vue'
       ),
   },
   {
-    title: "Номер запчасти",
+    title: 'Номер запчасти',
     components: () =>
       import(
-        "@/components/autoPartsArchive/AutoPartsArchiveListColumnDefault.vue"
+        '@/components/autoPartsArchive/AutoPartsArchiveListColumnDefault.vue'
       ),
-    content: "sparePartNumber",
-    className: "productlist",
+    content: 'sparePartNumber',
+    className: 'productlist',
   },
   {
-    title: "Дата удаления",
+    title: 'Дата удаления',
     components: () =>
       import(
-        "@/components/autoPartsArchive/AutoPartsArchiveListColumnDefault.vue"
+        '@/components/autoPartsArchive/AutoPartsArchiveListColumnDefault.vue'
       ),
-    content: "dateDeleted",
+    content: 'dateDeleted',
   },
   {
-    title: "Описание",
+    title: 'Описание',
     components: () =>
       import(
-        "@/components/autoPartsArchive/AutoPartsArchiveListColumnDefault.vue"
+        '@/components/autoPartsArchive/AutoPartsArchiveListColumnDefault.vue'
       ),
-    content: "description",
-    className: "td-description",
+    content: 'description',
+    className: 'td-description',
   },
   {
-    title: "Действия",
+    title: 'Действия',
     components: () =>
       import(
-        "@/components/autoPartsArchive/AutoPartsArchiveListColumnActions.vue"
+        '@/components/autoPartsArchive/AutoPartsArchiveListColumnActions.vue'
       ),
-    className: "text-xxl-center",
+    className: 'text-xxl-center',
   },
 ];

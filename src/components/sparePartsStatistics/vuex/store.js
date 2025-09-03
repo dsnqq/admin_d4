@@ -1,5 +1,5 @@
-import axios from "axios";
-import { DOMAIN_API, KEYS } from "/src/constants/constants";
+import axios from 'axios';
+import { DOMAIN_API, KEYS } from '/src/constants/constants';
 
 export default {
   namespaced: true,
@@ -21,20 +21,20 @@ export default {
   },
   actions: {
     async GET_SPARE_PARTS_STATISTICS({ commit }, param) {
-      this.dispatch("generalStore/LOCK_UI");
+      this.dispatch('generalStore/LOCK_UI');
       return axios
         .post(
-          DOMAIN_API + "/index.php?route=api/spare_parts_statistics/index",
+          DOMAIN_API + '/index.php?route=api/spare_parts_statistics/index',
           {
             key: KEYS,
             page: param,
-          }
+          },
         )
         .then((response) => {
-          this.dispatch("generalStore/UN_LOCK_UI");
+          this.dispatch('generalStore/UN_LOCK_UI');
           commit(
-            "SET_SPARE_PARTS_STATISTICS_TO_STATE",
-            response.data.sparePartsStatistics
+            'SET_SPARE_PARTS_STATISTICS_TO_STATE',
+            response.data.sparePartsStatistics,
           );
           return response.data.sparePartsStatistics;
         })
@@ -48,15 +48,15 @@ export default {
       return axios
         .post(
           DOMAIN_API +
-            "/index.php?route=api/spare_parts_statistics/index/totals",
+            '/index.php?route=api/spare_parts_statistics/index/totals',
           {
             key: KEYS,
-          }
+          },
         )
         .then((response) => {
           commit(
-            "SET_TOTALS_SPARE_PARTS_STATISTICS",
-            response.data.totalsSparePartsStatistics
+            'SET_TOTALS_SPARE_PARTS_STATISTICS',
+            response.data.totalsSparePartsStatistics,
           );
           return response.data.totalsSparePartsStatistics;
         })
@@ -67,19 +67,19 @@ export default {
     },
 
     GET_SPARE_PARTS_STATISTICS_DAY({ commit }) {
-      this.dispatch("generalStore/LOCK_UI");
+      this.dispatch('generalStore/LOCK_UI');
       return axios
         .post(
-          DOMAIN_API + "/index.php?route=api/spare_parts_statistics/index/day",
+          DOMAIN_API + '/index.php?route=api/spare_parts_statistics/index/day',
           {
             key: KEYS,
-          }
+          },
         )
         .then((response) => {
-          this.dispatch("generalStore/UN_LOCK_UI");
+          this.dispatch('generalStore/UN_LOCK_UI');
           commit(
-            "SET_DAY_SPARE_PARTS_STATISTICS",
-            response.data.sparePartsStatisticsDay
+            'SET_DAY_SPARE_PARTS_STATISTICS',
+            response.data.sparePartsStatisticsDay,
           );
           return response.data.sparePartsStatisticsDay;
         })
@@ -95,7 +95,7 @@ export default {
     },
     SET_TOTALS_SPARE_PARTS_STATISTICS: (state, totalsSparePartsStatistics) => {
       state.totalsSparePartsStatistics = Object.freeze(
-        totalsSparePartsStatistics
+        totalsSparePartsStatistics,
       );
     },
     SET_DAY_SPARE_PARTS_STATISTICS: (state, sparePartsStatisticsDay) => {

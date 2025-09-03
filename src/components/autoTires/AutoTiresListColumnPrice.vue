@@ -7,20 +7,20 @@
       >
         <input
           v-if="columnEdit"
-          placeholder="Цена"
           v-model="price"
+          placeholder="Цена"
           class="auto-tires-list-wrapper-column-edits__input"
           type="number"
         />
         <button
-          @click.prevent="setEditThisColumnOnList"
           class="auto-tires-list-wrapper-column-edits__button auto-tires-list-wrapper-column-edit"
+          @click.prevent="setEditThisColumnOnList"
         >
           <i v-if="!columnEdit" class="bx bx-pencil p-2 text-warning"></i>
           <i
             v-else
-            @click="setPriceAutoTires(id, price, index)"
             class="lni lni-save p-2 text-success"
+            @click="setPriceAutoTires(id, price, index)"
           ></i>
         </button>
       </span>
@@ -30,15 +30,15 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from 'vuex';
 
 export default {
-  name: "AutoTiresListColumnPrice",
+  name: 'AutoTiresListColumnPrice',
 
-  props: ["id", "index", "priceUSD", "priceBYN"],
+  props: ['id', 'index', 'priceUSD', 'priceBYN'],
 
   methods: {
-    ...mapActions("autoTires", ["CHANGE_AUTO_TIRES_PRICE"]),
+    ...mapActions('autoTires', ['CHANGE_AUTO_TIRES_PRICE']),
 
     setEditThisColumnOnList() {
       this.columnEdit = !this.columnEdit;
@@ -57,6 +57,12 @@ export default {
     },
   },
 
+  data() {
+    return {
+      columnEdit: false,
+    };
+  },
+
   computed: {
     price: {
       get() {
@@ -67,15 +73,9 @@ export default {
       },
     },
   },
-
-  data() {
-    return {
-      columnEdit: false,
-    };
-  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "./src/components/autoTires/style/auto-tires-list-column-price";
+@import './src/components/autoTires/style/auto-tires-list-column-price';
 </style>

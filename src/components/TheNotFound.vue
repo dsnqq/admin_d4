@@ -36,5 +36,5 @@
 </template>
 
 <script setup>
-import { DICTIONARY } from "@/constants/constants";
+import { DICTIONARY } from '@/constants/constants';
 </script>

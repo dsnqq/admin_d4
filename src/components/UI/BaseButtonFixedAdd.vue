@@ -8,29 +8,29 @@
 
 <script>
 export default {
-  name: "BaseButtonFixedAdd",
+  name: 'BaseButtonFixedAdd',
 
-  mounted() {
-    this.checkScrollPosition();
-    window.addEventListener("scroll", this.checkScrollPosition);
-  },
-
-  props: ["component"],
-
-  methods: {
-    checkScrollPosition() {
-      this.buttonShow = window.pageYOffset > 200;
-    },
-  },
+  props: ['component'],
 
   data() {
     return {
       buttonShow: false,
     };
   },
+
+  mounted() {
+    this.checkScrollPosition();
+    window.addEventListener('scroll', this.checkScrollPosition);
+  },
+
+  methods: {
+    checkScrollPosition() {
+      this.buttonShow = window.pageYOffset > 200;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/UI/style/base-button-fixed-add.scss";
+@import '@/components/UI/style/base-button-fixed-add.scss';
 </style>

@@ -2,11 +2,11 @@
   <div class="auto-tires-index">
     <BaseAlert
       v-if="errorValidate != ''"
-      :errorValidate="errorValidate"
+      :error-validate="errorValidate"
       @closeAlertMessage="closeAlertMessage"
     />
     <Breadcrumb>
-      <template v-slot:buttons>
+      <template #buttons>
         <router-link :to="{ name: 'autoTires' }" class="btn btn-primary">
           Выйти
         </router-link>
@@ -22,9 +22,9 @@
                 class="auto-tires-index-wrapp__field"
               >
                 <BaseMultiselect
+                  id="status"
                   v-model="AUTO_TIRES_INDEX.status"
                   :options="STATUS"
-                  id="status"
                   placeholder="Статус"
                   class="auto-tires-index-field__select"
                 />
@@ -33,26 +33,26 @@
                 label="Ширина, высота, R"
                 class="auto-tires-index-wrapp__field"
                 required
-                className="auto-tires-index-field__wrap--is-flex auto-tires-index-field__wrap--is-three"
+                class-name="auto-tires-index-field__wrap--is-flex auto-tires-index-field__wrap--is-three"
               >
                 <BaseMultiselect
+                  id="width"
                   v-model="AUTO_TIRES_INDEX.width"
                   :options="WIDTH"
                   placeholder="Ширина"
-                  id="width"
                   class="auto-tires-index-field__select"
                 />
                 <BaseMultiselect
+                  id="height"
                   v-model="AUTO_TIRES_INDEX.height"
                   :options="HEIGHT"
                   placeholder="Высота"
-                  id="height"
                   class="auto-tires-index-field__select"
                 />
                 <BaseMultiselect
+                  id="rSize"
                   v-model="AUTO_TIRES_INDEX.rSize"
                   :options="R_SIZE"
-                  id="rSize"
                   placeholder="R"
                   class="auto-tires-index-field__select"
                 />
@@ -60,13 +60,13 @@
               <AutoTiresIndexField
                 label="Марка"
                 class="auto-tires-index-wrapp__field"
-                className="auto-tires-index-field__wrap--is-flex auto-tires-index-field__wrap--is-too"
+                class-name="auto-tires-index-field__wrap--is-flex auto-tires-index-field__wrap--is-too"
                 required
               >
                 <BaseMultiselect
+                  id="marka"
                   v-model="AUTO_TIRES_INDEX.marka"
                   :options="MARKA"
-                  id="marka"
                   placeholder="Марка"
                   class="auto-tires-index-field__select"
                 />
@@ -81,19 +81,19 @@
                 label="Состояние, сезон, количество"
                 class="auto-tires-index-wrapp__field"
                 required
-                className="auto-tires-index-field__wrap--is-flex auto-tires-index-field__wrap--is-three"
+                class-name="auto-tires-index-field__wrap--is-flex auto-tires-index-field__wrap--is-three"
               >
                 <BaseMultiselect
+                  id="condition"
                   v-model="AUTO_TIRES_INDEX.condition"
                   :options="CONDITION"
-                  id="condition"
                   placeholder="Состояние"
                   class="auto-tires-index-field__select"
                 />
                 <BaseMultiselect
+                  id="season"
                   v-model="AUTO_TIRES_INDEX.season"
                   :options="SEASON"
-                  id="season"
                   placeholder="Cезон"
                   class="auto-tires-index-field__select"
                 />
@@ -107,19 +107,19 @@
               <AutoTiresIndexField
                 label="Тип авто, год выпуска шин"
                 class="auto-tires-index-wrapp__field"
-                className="auto-tires-index-field__wrap--is-flex auto-tires-index-field__wrap--is-too"
+                class-name="auto-tires-index-field__wrap--is-flex auto-tires-index-field__wrap--is-too"
               >
                 <BaseMultiselect
+                  id="type"
                   v-model="AUTO_TIRES_INDEX.type"
                   :options="BODYS"
-                  id="type"
                   placeholder="Тип авто"
                   class="auto-tires-index-field__select"
                 />
                 <BaseMultiselect
+                  id="year"
                   v-model="AUTO_TIRES_INDEX.year"
                   :options="YEARS"
-                  id="year"
                   placeholder="Год"
                   class="auto-tires-index-field__select"
                 />
@@ -160,7 +160,7 @@
               <AutoTiresIndexField
                 label="Фото"
                 class="auto-tires-index-wrapp__field"
-                className="auto-tires-index-field-wrap"
+                class-name="auto-tires-index-field-wrap"
               >
                 <div
                   class="auto-tires-index-field-wrap__photos auto-tires-index-photo-list"
@@ -168,7 +168,7 @@
                   <template v-if="AUTO_TIRES_INDEX.images">
                     <div
                       v-for="(image, index) in AUTO_TIRES_INDEX.images"
-                      v-bind:key="index"
+                      :key="index"
                       class="auto-tires-index-photo-list__item auto-tires-index-photo-item"
                     >
                       <img
@@ -176,18 +176,18 @@
                         class="auto-tires-index-photo-item__image"
                       />
                       <div
-                        @click="removeImgDop(index)"
                         class="auto-tires-index-photo-item__del"
+                        @click="removeImgDop(index)"
                       >
                         Удалить
                       </div>
                       <div
-                        @click="setThisPhotoOnMain(image)"
                         class="auto-tires-index-photo-item__del"
                         :class="{
                           'auto-tires-index-photo-item__del--is-active':
                             mainPhotoSetAutoTires(image),
                         }"
+                        @click="setThisPhotoOnMain(image)"
                       >
                         Главное фото
                       </div>
@@ -195,15 +195,15 @@
                   </template>
                 </div>
                 <button
-                  @click.prevent="modalCarPhotoFade"
                   class="auto-tires-index-field-wrap__btn btn btn-dark"
+                  @click.prevent="modalCarPhotoFade"
                 >
                   Добавить фото
                 </button>
               </AutoTiresIndexField>
               <div
-                @click="toggleDopFields"
                 class="auto-tires-index-wrapp__field auto-tires-index-field"
+                @click="toggleDopFields"
               >
                 <label
                   class="auto-tires-index-field__label cursor-pointer color-blue"
@@ -251,8 +251,8 @@
               </div>
               <component
                 :is="getAutoTiresIndexButtonsComponent"
-                :qrCode="AUTO_TIRES_INDEX.qrCode"
-                :linkToSite="AUTO_TIRES_INDEX.linkToSite"
+                :qr-code="AUTO_TIRES_INDEX.qrCode"
+                :link-to-site="AUTO_TIRES_INDEX.linkToSite"
                 @editAutoTires="editAutoTires"
                 @setAutoTiresFromApi="setAutoTiresFromApi"
               ></component>
@@ -262,18 +262,18 @@
       </div>
     </div>
     <Modal v-show="showModal" @closeModalAdmin="modalCarPhotoFade">
-      <template v-slot:header> Добавление фото </template>
+      <template #header> Добавление фото </template>
       <template>
         <vue-dropzone
-          v-on:vdropzone-sending="sendingEvent"
-          :options="dropzoneOptions"
-          ref="myVueDropzone"
           id="dropzone"
+          ref="myVueDropzone"
+          :options="dropzoneOptions"
+          @vdropzone-sending="sendingEvent"
         ></vue-dropzone>
         <button
-          @click.prevent="sendingDropzonePhoto"
-          class="btn btn-info"
           id="submit-all"
+          class="btn btn-info"
+          @click.prevent="sendingDropzonePhoto"
         >
           Загрузить изображения
         </button>
@@ -283,10 +283,10 @@
 </template>
 
 <script>
-import AutoTiresIndexField from "@/components/autoTires/AutoTiresIndexField.vue";
-import BaseMultiselect from "@/components/UI/BaseMultiselect.vue";
-import Breadcrumb from "@/components/UI/BaseBreadcrumb.vue";
-import { mapActions, mapGetters } from "vuex";
+import AutoTiresIndexField from '@/components/autoTires/AutoTiresIndexField.vue';
+import BaseMultiselect from '@/components/UI/BaseMultiselect.vue';
+import Breadcrumb from '@/components/UI/BaseBreadcrumb.vue';
+import { mapActions, mapGetters } from 'vuex';
 import {
   DOMAIN,
   STATUS,
@@ -300,23 +300,23 @@ import {
   SEASON,
   R_SIZE,
   TYPE_ENGINES_ALL,
-} from "@/constants/constants";
-import vue2Dropzone from "vue2-dropzone";
+} from '@/constants/constants';
+import vue2Dropzone from 'vue2-dropzone';
 
 export default {
-  name: "AutoTiresIndex",
+  name: 'AutoTiresIndex',
 
   components: {
     Breadcrumb,
     vueDropzone: vue2Dropzone,
     BaseMultiselect,
     AutoTiresIndexField,
-    BaseAlert: () => import("@/components/UI/BaseAlert.vue"),
-    Modal: () => import("@/components/UI/BaseModal.vue"),
+    BaseAlert: () => import('@/components/UI/BaseAlert.vue'),
+    Modal: () => import('@/components/UI/BaseModal.vue'),
     AutoTiresIndexButtonsCreate: () =>
-      import("@/components/autoTires/AutoTiresIndexButtonsCreate.vue"),
+      import('@/components/autoTires/AutoTiresIndexButtonsCreate.vue'),
     AutoTiresIndexButtonsEdit: () =>
-      import("@/components/autoTires/AutoTiresIndexButtonsEdit.vue"),
+      import('@/components/autoTires/AutoTiresIndexButtonsEdit.vue'),
   },
 
   mounted() {
@@ -328,16 +328,16 @@ export default {
   },
 
   computed: {
-    ...mapGetters("autoTires", ["AUTO_TIRES_INDEX"]),
+    ...mapGetters('autoTires', ['AUTO_TIRES_INDEX']),
 
     getAutoTiresIndexButtonsComponent() {
       return !this.isCreatedPage
-        ? "AutoTiresIndexButtonsEdit"
-        : "AutoTiresIndexButtonsCreate";
+        ? 'AutoTiresIndexButtonsEdit'
+        : 'AutoTiresIndexButtonsCreate';
     },
 
     isCreatedPage() {
-      return this.$route.name === "autoTiresCreate";
+      return this.$route.name === 'autoTiresCreate';
     },
   },
 
@@ -348,17 +348,17 @@ export default {
   },
 
   methods: {
-    ...mapActions("autoTires", [
-      "GET_AUTO_TIRES_INDEX",
-      "EDIT_AUTO_TIRES_FROM_API",
-      "SET_AUTO_TIRES_IMAGE_FROM_USER",
-      "SET_AUTO_TIRES_FROM_API",
-      "RESET_AUTO_TIRES_FOR_CREATE_PAGE",
+    ...mapActions('autoTires', [
+      'GET_AUTO_TIRES_INDEX',
+      'EDIT_AUTO_TIRES_FROM_API',
+      'SET_AUTO_TIRES_IMAGE_FROM_USER',
+      'SET_AUTO_TIRES_FROM_API',
+      'RESET_AUTO_TIRES_FOR_CREATE_PAGE',
     ]),
 
     resetAutoTiresForCreatePage() {
       this.RESET_AUTO_TIRES_FOR_CREATE_PAGE();
-      this.AUTO_TIRES_INDEX.status = "Активно";
+      this.AUTO_TIRES_INDEX.status = 'Активно';
     },
 
     mainPhotoSetAutoTires(image) {
@@ -366,42 +366,42 @@ export default {
     },
 
     validateForm() {
-      this.errorValidate = "";
+      this.errorValidate = '';
 
-      if (!("year" in this.AUTO_TIRES_INDEX)) {
-        this.errorValidate = "Заполните поле год!";
+      if (!('year' in this.AUTO_TIRES_INDEX)) {
+        this.errorValidate = 'Заполните поле год!';
       }
 
-      if (!("priceUSD" in this.AUTO_TIRES_INDEX)) {
-        this.errorValidate = "Заполните поле цена!";
+      if (!('priceUSD' in this.AUTO_TIRES_INDEX)) {
+        this.errorValidate = 'Заполните поле цена!';
       }
 
-      if (!("width" in this.AUTO_TIRES_INDEX)) {
-        this.errorValidate = "Заполните поле ширины!";
+      if (!('width' in this.AUTO_TIRES_INDEX)) {
+        this.errorValidate = 'Заполните поле ширины!';
       }
 
-      if (!("height" in this.AUTO_TIRES_INDEX)) {
-        this.errorValidate = "Заполните поле высота!";
+      if (!('height' in this.AUTO_TIRES_INDEX)) {
+        this.errorValidate = 'Заполните поле высота!';
       }
 
-      if (!("marka" in this.AUTO_TIRES_INDEX)) {
-        this.errorValidate = "Заполните поле марка!";
+      if (!('marka' in this.AUTO_TIRES_INDEX)) {
+        this.errorValidate = 'Заполните поле марка!';
       }
 
-      if (!("condition" in this.AUTO_TIRES_INDEX)) {
-        this.errorValidate = "Заполните поле состояние!";
+      if (!('condition' in this.AUTO_TIRES_INDEX)) {
+        this.errorValidate = 'Заполните поле состояние!';
       }
 
-      if (!("season" in this.AUTO_TIRES_INDEX)) {
-        this.errorValidate = "Заполните поле сезон!";
+      if (!('season' in this.AUTO_TIRES_INDEX)) {
+        this.errorValidate = 'Заполните поле сезон!';
       }
 
-      if (!("quantity" in this.AUTO_TIRES_INDEX)) {
-        this.errorValidate = "Заполните поле количество!";
+      if (!('quantity' in this.AUTO_TIRES_INDEX)) {
+        this.errorValidate = 'Заполните поле количество!';
       }
 
-      if (!("rSize" in this.AUTO_TIRES_INDEX)) {
-        this.errorValidate = "Заполните поле R радиус!";
+      if (!('rSize' in this.AUTO_TIRES_INDEX)) {
+        this.errorValidate = 'Заполните поле R радиус!';
       }
 
       if (this.errorValidate) {
@@ -450,12 +450,12 @@ export default {
       this.AUTO_TIRES_INDEX.imagesServer.splice(index, 1);
 
       if (this.AUTO_TIRES_INDEX.images.length == 0) {
-        this.AUTO_TIRES_INDEX.mainImage = "";
+        this.AUTO_TIRES_INDEX.mainImage = '';
       }
     },
 
     isImageUrlLocalOrServer(image) {
-      if (image.substr(0, 4) === "data") {
+      if (image.substr(0, 4) === 'data') {
         return image;
       }
 
@@ -480,18 +480,18 @@ export default {
       }
 
       if (this.AUTO_TIRES_INDEX.status !== undefined) {
-        let status = this.AUTO_TIRES_INDEX.status == "Активно" ? "1" : "0";
-        xForm.append("status", status);
+        let status = this.AUTO_TIRES_INDEX.status == 'Активно' ? '1' : '0';
+        xForm.append('status', status);
       }
 
       if (this.AUTO_TIRES_INDEX.imagesServer !== undefined) {
-        xForm.append("images", this.AUTO_TIRES_INDEX.imagesServer);
+        xForm.append('images', this.AUTO_TIRES_INDEX.imagesServer);
       }
 
       if (this.AUTO_TIRES_INDEX.mainImage !== undefined) {
-        xForm.append("imagesMain", this.AUTO_TIRES_INDEX.mainImage);
+        xForm.append('imagesMain', this.AUTO_TIRES_INDEX.mainImage);
       } else if (this.AUTO_TIRES_INDEX.imagesServer !== undefined) {
-        xForm.append("imagesMain", this.AUTO_TIRES_INDEX.imagesServer[0]);
+        xForm.append('imagesMain', this.AUTO_TIRES_INDEX.imagesServer[0]);
       }
 
       return xForm;
@@ -507,13 +507,13 @@ export default {
     },
 
     closeAlertMessage() {
-      this.errorValidate = "";
+      this.errorValidate = '';
     },
   },
 
   data() {
     return {
-      errorValidate: "",
+      errorValidate: '',
       dopFields: false,
       param: {
         id: this.$route.params.id,
@@ -534,22 +534,22 @@ export default {
       R_SIZE,
       typeEngines: TYPE_ENGINES_ALL,
       dropzoneOptions: {
-        url: "/v1/upload.php",
+        url: '/v1/upload.php',
         thumbnailWidth: 150,
         thumbnailHeight: 150,
         maxFilesize: 2500,
         autoProcessQueue: false,
         dictDefaultMessage:
           'Нажмите сюда или перетащите сюда файлы для загрузки <div><span style="color: darkgrey; margin-bottom: 5px">* для выбора нескольких фото, удерживайте клавишу Ctrl</span><br/></div><br/>',
-        dictRemoveFile: "удалить",
-        dictCancelUpload: "отменить",
+        dictRemoveFile: 'удалить',
+        dictCancelUpload: 'отменить',
         parallelUploads: 20,
         maxThumbnailFilesize: 200,
         resizeWidth: 800,
         timeout: 180000000,
-        acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg",
+        acceptedFiles: '.png,.jpg,.gif,.bmp,.jpeg',
         renameFile: function (file) {
-          let newName = new Date().getTime() + "_" + file.name;
+          let newName = new Date().getTime() + '_' + file.name;
           return newName;
         },
       },
