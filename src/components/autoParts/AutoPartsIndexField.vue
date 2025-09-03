@@ -15,11 +15,11 @@
 
 <script>
 export default {
-  name: "AutoPartsIndexField",
+  name: 'AutoPartsIndexField',
 
   model: {
-    prop: "value",
-    event: "input",
+    prop: 'value',
+    event: 'input',
   },
 
   props: {

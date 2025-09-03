@@ -42,18 +42,18 @@
 </template>
 
 <script setup>
-import { DICTIONARY } from "@/constants/constants";
-import { LEFT_MENU } from "@/constants/constants";
-import { useDevice } from "@/composables/useDevice";
-import { unref, defineEmits } from "vue";
-import { useRouter } from "@/composables/useRouter";
+import { DICTIONARY } from '@/constants/constants';
+import { LEFT_MENU } from '@/constants/constants';
+import { useDevice } from '@/composables/useDevice';
+import { unref, defineEmits } from 'vue';
+import { useRouter } from '@/composables/useRouter';
 
 const isMobile = useDevice();
 const router = useRouter();
-const emit = defineEmits(["menuSideBarClosed"]);
+const emit = defineEmits(['menuSideBarClosed']);
 
 const menuSideBarClosed = () => {
-  emit("menuSideBarClosed");
+  emit('menuSideBarClosed');
 };
 
 const checkPermissions = (p) =>
@@ -63,11 +63,11 @@ const linkToComponent = function (linkComponent) {
   router.push({ name: linkComponent }).catch(() => {});
 
   if (unref(isMobile)) {
-    emit("menuSideBarClosed");
+    emit('menuSideBarClosed');
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/style/t-slidebar.scss";
+@import '@/components/style/t-slidebar.scss';
 </style>

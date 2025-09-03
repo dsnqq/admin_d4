@@ -27,10 +27,10 @@
 
 <script>
 export default {
-  name: "BaseBreadcrumb",
+  name: 'BaseBreadcrumb',
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/UI/style/base-breadcrumb.scss";
+@import '@/components/UI/style/base-breadcrumb.scss';
 </style>

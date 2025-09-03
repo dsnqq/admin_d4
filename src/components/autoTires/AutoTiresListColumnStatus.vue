@@ -1,25 +1,25 @@
 <template>
   <span
-    @click="changeStatus(id, status, index)"
     class="badge rounded-pill cursor-pointer"
     :class="status == 1 ? 'alert-success' : 'alert-danger'"
+    @click="changeStatus(id, status, index)"
   >
     {{ getStatus(status) }}
   </span>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from 'vuex';
 
 export default {
-  name: "AutoTiresListColumnStatus",
+  name: 'AutoTiresListColumnStatus',
 
-  props: ["id", "status", "index"],
+  props: ['id', 'status', 'index'],
 
   methods: {
-    ...mapActions("autoTires", ["CHANGE_AUTO_TIRES_STATUS"]),
+    ...mapActions('autoTires', ['CHANGE_AUTO_TIRES_STATUS']),
 
     getStatus(status) {
-      return status == 1 ? "Активно" : "Неактивно";
+      return status == 1 ? 'Активно' : 'Неактивно';
     },
 
     changeStatus(id, status, i) {

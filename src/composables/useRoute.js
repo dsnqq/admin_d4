@@ -1,5 +1,5 @@
-import { getCurrentInstance, shallowReactive, effectScope } from "vue";
-import { throwNoCurrentInstance } from "@/composables/helpers/throwNoCurrentInstance";
+import { getCurrentInstance, shallowReactive, effectScope } from 'vue';
+import { throwNoCurrentInstance } from '@/composables/helpers/throwNoCurrentInstance';
 
 /**
  * @use import {useRoute} from 'vue-router/composables';
@@ -7,14 +7,14 @@ import { throwNoCurrentInstance } from "@/composables/helpers/throwNoCurrentInst
  * @return {*}
  */
 export const useRoute = () => {
-  throwNoCurrentInstance("vue-router", "useRoute");
+  throwNoCurrentInstance('vue-router', 'useRoute');
 
   const instance = getCurrentInstance();
   const root = instance.proxy.$root;
 
   if (!root._$route) {
     const route = effectScope(true).run(() =>
-      shallowReactive({ ...(root.$router?.currentRoute ?? {}) })
+      shallowReactive({ ...(root.$router?.currentRoute ?? {}) }),
     );
 
     root._$route = route;

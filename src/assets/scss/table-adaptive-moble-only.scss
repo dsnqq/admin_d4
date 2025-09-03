@@ -27,7 +27,7 @@ $breakpoint-alpha: 1024px;
     }
 
     &:before {
-      content: attr(data-th) ": ";
+      content: attr(data-th) ': ';
       font-weight: bold;
       white-space: normal;
 

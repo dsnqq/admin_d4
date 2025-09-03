@@ -172,7 +172,7 @@ a {
 }
 
 .top-header .navbar .dropdown-large .dropdown-menu::after {
-  content: "";
+  content: '';
   width: 13px;
   height: 13px;
   background: #fff;
@@ -185,7 +185,7 @@ a {
 }
 
 .top-header .navbar .dropdown-menu::after {
-  content: "";
+  content: '';
   width: 13px;
   height: 13px;
   background: #ffff;
@@ -206,7 +206,7 @@ a {
 }
 
 .top-header .navbar .dropdown-user-setting .dropdown-menu::after {
-  content: "";
+  content: '';
   width: 13px;
   height: 13px;
   background: #fff;
@@ -219,7 +219,7 @@ a {
 }
 
 .top-header .navbar .dropdown-menu::after {
-  content: "";
+  content: '';
   width: 13px;
   height: 13px;
   background: #ffff;
@@ -509,7 +509,7 @@ a {
 
 .metismenu .has-arrow:after {
   position: absolute;
-  content: "";
+  content: '';
   width: 0.5em;
   height: 0.5em;
   border-style: solid;
@@ -920,7 +920,7 @@ a {
   padding-right: 0.5rem;
   color: #6c757d;
   font-family: LineIcons;
-  content: "\ea5c";
+  content: '\ea5c';
 }
 
 .page-breadcrumb .breadcrumb li.breadcrumb-item {
@@ -964,7 +964,7 @@ a {
 }
 
 .w_percent:after {
-  content: "%";
+  content: '%';
   margin-left: 0.1em;
 }
 
@@ -1187,7 +1187,7 @@ a {
 }
 
 .email-hangout .chat-user-online:before {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 8px;
   left: 45px;
@@ -1322,7 +1322,7 @@ a {
 }
 
 .chat-sidebar-header .chat-user-online:before {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 7px;
   left: 40px;
@@ -1334,7 +1334,7 @@ a {
 }
 
 .chat-list .chat-user-online:before {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 7px;
   left: 36px;

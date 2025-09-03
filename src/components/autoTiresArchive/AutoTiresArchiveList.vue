@@ -1,11 +1,11 @@
 <template>
   <LayoutDefault>
-    <template v-slot:tableThead>
+    <template #tableThead>
       <th v-for="(column, index) in COLUMNS" :key="index">
         {{ column.title }}
       </th>
     </template>
-    <template v-slot:tableTbody>
+    <template #tableTbody>
       <tr v-for="(autoTireArchive, i) in AUTO_TIRES_ARCHIVE" :key="i">
         <td
           v-for="(c, index) in COLUMNS"
@@ -15,62 +15,62 @@
         >
           <component
             :is="c.components"
+            :id="autoTireArchive.product_id"
             :images="autoTireArchive.images"
             :title="autoTireArchive.name"
             :index="i"
-            :id="autoTireArchive.product_id"
-            :showAll="autoTireArchive.imagesShowAllImage"
+            :show-all="autoTireArchive.imagesShowAllImage"
             :content="autoTireArchive[c.content]"
-            :contentExtension="autoTireArchive[c.contentExtension]"
-            :priceUSD="autoTireArchive.priceUSD"
+            :content-extension="autoTireArchive[c.contentExtension]"
+            :price-u-s-d="autoTireArchive.priceUSD"
           ></component>
         </td>
       </tr>
     </template>
-    <template v-slot:pagination>
+    <template #pagination>
       <Pagination
         :totals="AUTO_TIRES_ARCHIVE_TOTALS"
-        :countChunk="isMobile ? 4 : 5"
-        @setPageByTotal="setPageByTotal"
+        :count-chunk="isMobile ? 4 : 5"
         :class="{ 'card-body-pagination-mobile': isMobile }"
+        @setPageByTotal="setPageByTotal"
       />
     </template>
   </LayoutDefault>
 </template>
 
 <script>
-import Pagination from "@/components/UI/BasePagination.vue";
-import LayoutDefault from "@/layouts/LayoutDefault.vue";
-import { mapActions, mapGetters } from "vuex";
-import { mixins } from "@/mixins/mixins";
-import { COLUMNS } from "@/components/autoTiresArchive/constants/constants";
+import Pagination from '@/components/UI/BasePagination.vue';
+import LayoutDefault from '@/layouts/LayoutDefault.vue';
+import { mapActions, mapGetters } from 'vuex';
+import { mixins } from '@/mixins/mixins';
+import { COLUMNS } from '@/components/autoTiresArchive/constants/constants';
 
 export default {
-  name: "AutoTiresArchiveList",
-
-  mounted() {
-    this.GET_AUTO_TIRES_ARCHIVE_FROM_API(this.param.pageNum);
-    this.GET_AUTO_TIRES_ARCHIVE_TOTALS();
-  },
-
-  mixins: [mixins],
+  name: 'AutoTiresArchiveList',
 
   components: {
     LayoutDefault,
     Pagination,
   },
 
+  mixins: [mixins],
+
+  mounted() {
+    this.GET_AUTO_TIRES_ARCHIVE_FROM_API(this.param.pageNum);
+    this.GET_AUTO_TIRES_ARCHIVE_TOTALS();
+  },
+
   computed: {
-    ...mapGetters("autoTiresArchive", [
-      "AUTO_TIRES_ARCHIVE",
-      "AUTO_TIRES_ARCHIVE_TOTALS",
+    ...mapGetters('autoTiresArchive', [
+      'AUTO_TIRES_ARCHIVE',
+      'AUTO_TIRES_ARCHIVE_TOTALS',
     ]),
   },
 
   methods: {
-    ...mapActions("autoTiresArchive", [
-      "GET_AUTO_TIRES_ARCHIVE_FROM_API",
-      "GET_AUTO_TIRES_ARCHIVE_TOTALS",
+    ...mapActions('autoTiresArchive', [
+      'GET_AUTO_TIRES_ARCHIVE_FROM_API',
+      'GET_AUTO_TIRES_ARCHIVE_TOTALS',
     ]),
 
     setPageByTotal(page) {
@@ -91,5 +91,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "./src/components/autoTiresArchive/style/auto-tires-archive-list";
+@import './src/components/autoTiresArchive/style/auto-tires-archive-list';
 </style>

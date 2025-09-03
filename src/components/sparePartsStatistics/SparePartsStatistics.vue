@@ -20,44 +20,44 @@
 
 <script>
 export default {
-  name: "SparePartsStatistics",
+  name: 'SparePartsStatistics',
 
   components: {
     SparePartsStatisticsMain: () =>
       import(
-        "@/components/sparePartsStatistics/components/SparePartsStatisticsMain.vue"
+        '@/components/sparePartsStatistics/components/SparePartsStatisticsMain.vue'
       ),
     SparePartsStatisticsDay: () =>
       import(
-        "@/components/sparePartsStatistics/components/SparePartsStatisticsDay.vue"
+        '@/components/sparePartsStatistics/components/SparePartsStatisticsDay.vue'
       ),
+  },
+
+  data() {
+    return {
+      tabActive: 'SparePartsStatisticsMain',
+      tabComponents: [
+        {
+          component: 'SparePartsStatisticsMain',
+          title: 'Статистика просмотров З/Ч',
+        },
+        { component: 'SparePartsStatisticsDay', title: 'Статистика по датам' },
+      ],
+    };
   },
 
   methods: {
     setActiveClass(component) {
-      return this.tabActive == component ? "active" : "";
+      return this.tabActive == component ? 'active' : '';
     },
 
     setActiveTab(component) {
       this.tabActive = component;
     },
   },
-
-  data() {
-    return {
-      tabActive: "SparePartsStatisticsMain",
-      tabComponents: [
-        {
-          component: "SparePartsStatisticsMain",
-          title: "Статистика просмотров З/Ч",
-        },
-        { component: "SparePartsStatisticsDay", title: "Статистика по датам" },
-      ],
-    };
-  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/sparePartsStatistics/style/spare-parts-statistics.scss";
+@import '@/components/sparePartsStatistics/style/spare-parts-statistics.scss';
 </style>

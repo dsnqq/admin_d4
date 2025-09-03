@@ -5,25 +5,15 @@
       v-model="pageNum"
       :records="totals"
       :per-page="20"
-      @paginate="setPageByTotal"
       :options="paginationOptions"
+      @paginate="setPageByTotal"
     ></v-pagination>
   </div>
 </template>
 
 <script>
 export default {
-  name: "BasePagination",
-
-  mounted() {
-    if (this.deleteText) {
-      this.paginationOptions.texts.count = "";
-    }
-
-    if (this.countChunk) {
-      this.paginationOptions.chunk = this.$props.countChunk;
-    }
-  },
+  name: 'BasePagination',
 
   props: {
     totals: Number,
@@ -34,14 +24,6 @@ export default {
     },
   },
 
-  methods: {
-    setPageByTotal(page) {
-      this.pageNum = page;
-      window.scrollTo(0, 0);
-      this.$emit("setPageByTotal", page);
-    },
-  },
-
   data() {
     return {
       pageNum: 1,
@@ -49,10 +31,28 @@ export default {
       paginationOptions: {
         chunk: 5,
         texts: {
-          count: "Отображается с {from} по {to} (всего {count} шт.)|{count}",
+          count: 'Отображается с {from} по {to} (всего {count} шт.)|{count}',
         },
       },
     };
+  },
+
+  mounted() {
+    if (this.deleteText) {
+      this.paginationOptions.texts.count = '';
+    }
+
+    if (this.countChunk) {
+      this.paginationOptions.chunk = this.$props.countChunk;
+    }
+  },
+
+  methods: {
+    setPageByTotal(page) {
+      this.pageNum = page;
+      window.scrollTo(0, 0);
+      this.$emit('setPageByTotal', page);
+    },
   },
 };
 </script>

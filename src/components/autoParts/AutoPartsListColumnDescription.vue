@@ -10,14 +10,14 @@
 
 <script>
 export default {
-  name: "AutoPartsListColumnDescription",
+  name: 'AutoPartsListColumnDescription',
 
-  props: ["content", "contentTheNote"],
+  props: ['content', 'contentTheNote'],
 
   computed: {
     theNoteRenderOnPage() {
       return (
-        this.$props.contentTheNote !== null && this.$props.contentTheNote !== ""
+        this.$props.contentTheNote !== null && this.$props.contentTheNote !== ''
       );
     },
   },

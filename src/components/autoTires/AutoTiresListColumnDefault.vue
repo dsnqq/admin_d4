@@ -3,14 +3,14 @@
     {{ content }}
   </div>
   <div v-else>
-    {{ content + " " + contentExtension }}
+    {{ content + ' ' + contentExtension }}
   </div>
 </template>
 
 <script>
 export default {
-  name: "AutoTiresListColumnDefault",
+  name: 'AutoTiresListColumnDefault',
 
-  props: ["content", "contentExtension"],
+  props: ['content', 'contentExtension'],
 };
 </script>

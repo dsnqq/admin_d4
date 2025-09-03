@@ -1,5 +1,5 @@
-import { getCurrentInstance } from "vue";
-import { throwNoCurrentInstance } from "@/composables/helpers/throwNoCurrentInstance";
+import { getCurrentInstance } from 'vue';
+import { throwNoCurrentInstance } from '@/composables/helpers/throwNoCurrentInstance';
 
 /**
  * @use import {useRouter} from 'vue-router/composables';
@@ -7,7 +7,7 @@ import { throwNoCurrentInstance } from "@/composables/helpers/throwNoCurrentInst
  * @return {VueRouter}
  */
 export const useRouter = () => {
-  throwNoCurrentInstance("vue-router", "useRouter");
+  throwNoCurrentInstance('vue-router', 'useRouter');
 
   const instance = getCurrentInstance();
 

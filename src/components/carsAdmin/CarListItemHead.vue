@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import { TABLE_HEADS } from "@/components/carsAdmin/constants/constants";
+import { TABLE_HEADS } from '@/components/carsAdmin/constants/constants';
 export default {
-  name: "CarListItemHead",
+  name: 'CarListItemHead',
 
   data() {
     return {
@@ -20,5 +20,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "@/components/carsAdmin/style/car-list-item-head.scss";
+@import '@/components/carsAdmin/style/car-list-item-head.scss';
 </style>

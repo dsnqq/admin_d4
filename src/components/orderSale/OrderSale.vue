@@ -1,18 +1,18 @@
 <template>
   <LayoutDefault>
-    <template v-slot:header>
+    <template #header>
       {{ DICTIONARY.lastOrderOnTop }}
     </template>
-    <template v-slot:tableThead>
+    <template #tableThead>
       <tr>
         <th v-for="(c, i) in COLUMNS" :key="i" scope="col">
           {{ c.title }}
         </th>
       </tr>
     </template>
-    <template v-slot:tableTbody>
+    <template #tableTbody>
       <tr v-for="(order, i) in ORDER_SALE" :key="i">
-        <td :data-th="c.title" v-for="(c, index) in COLUMNS" :key="index">
+        <td v-for="(c, index) in COLUMNS" :key="index" :data-th="c.title">
           <template v-if="c.type == 'default'">
             {{ order[c.name] }}
           </template>
@@ -36,37 +36,37 @@
         </td>
       </tr>
     </template>
-    <template v-slot:pagination>
+    <template #pagination>
       <Pagination
         :totals="ORDER_TOTALS"
-        @setPageByTotal="setPageByTotal"
-        :countChunk="isMobile ? 4 : 5"
+        :count-chunk="isMobile ? 4 : 5"
         :class="{ 'card-body-pagination-mobile': isMobile }"
+        @setPageByTotal="setPageByTotal"
       />
     </template>
   </LayoutDefault>
 </template>
 
 <script>
-import LayoutDefault from "@/layouts/LayoutDefault.vue";
-import Pagination from "@/components/UI/BasePagination.vue";
-import { COLUMNS } from "@/components/orderSale/constants/constants";
-import { DICTIONARY } from "@/constants/constants";
-import { mapActions, mapGetters } from "vuex";
-import { mixins } from "@/mixins/mixins";
+import LayoutDefault from '@/layouts/LayoutDefault.vue';
+import Pagination from '@/components/UI/BasePagination.vue';
+import { COLUMNS } from '@/components/orderSale/constants/constants';
+import { DICTIONARY } from '@/constants/constants';
+import { mapActions, mapGetters } from 'vuex';
+import { mixins } from '@/mixins/mixins';
 
 export default {
-  name: "OrderSale",
+  name: 'OrderSale',
+
+  mixins: [mixins],
 
   mounted() {
     this.GET_ORDER_SALE(this.pageNum);
     this.GET_ORDER_TOTALS();
   },
 
-  mixins: [mixins],
-
   computed: {
-    ...mapGetters("orderSale", ["ORDER_SALE", "ORDER_TOTALS"]),
+    ...mapGetters('orderSale', ['ORDER_SALE', 'ORDER_TOTALS']),
   },
 
   components: {
@@ -75,7 +75,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("orderSale", ["GET_ORDER_SALE", "GET_ORDER_TOTALS"]),
+    ...mapActions('orderSale', ['GET_ORDER_SALE', 'GET_ORDER_TOTALS']),
 
     setPageByTotal(page) {
       this.pageNum = page;
@@ -84,7 +84,7 @@ export default {
 
     getInformationAbout(product) {
       return (
-        product.number + ") " + product.name + " (цена: " + product.price + "$)"
+        product.number + ') ' + product.name + ' (цена: ' + product.price + '$)'
       );
     },
   },
@@ -100,5 +100,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/orderSale/style/order-sale.scss";
+@import '@/components/orderSale/style/order-sale.scss';
 </style>

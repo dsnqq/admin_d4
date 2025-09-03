@@ -2,11 +2,11 @@
   <div class="auto-parts-index">
     <BaseAlert
       v-if="errorValidate != ''"
-      :errorValidate="errorValidate"
+      :error-validate="errorValidate"
       @closeAlertMessage="closeAlertMessage"
     />
     <Breadcrumb>
-      <template v-slot:buttons>
+      <template #buttons>
         <router-link :to="{ name: 'autoParts' }" class="btn btn-primary">
           Выйти
         </router-link>
@@ -22,9 +22,9 @@
                 class="auto-parts-index-wrapp__field"
               >
                 <BaseMultiselect
+                  id="status"
                   v-model="AUTO_PARTS_INDEX.status"
                   :options="STATUS"
-                  id="status"
                   placeholder="Статус"
                   class="auto-parts-index-field__select"
                 />
@@ -38,35 +38,35 @@
               >
                 <BaseMultiselect
                   v-if="isCreatedPage"
+                  :id="`autoPartsModelBrands` + i"
                   v-model="autoPartsModelBrands[i]"
                   :options="BREND_MODEL_CAR_AUTO_PARTS"
                   placeholder="Марка и модель"
-                  customLabel="name"
-                  :id="`autoPartsModelBrands` + i"
+                  custom-label="name"
                   class="auto-parts-index-field__select"
                 />
                 <BaseMultiselect
                   v-else
+                  id="autoPartsModelBrands"
                   v-model="AUTO_PARTS_INDEX.autoPartsModelBrand"
                   :options="BREND_MODEL_CAR_AUTO_PARTS"
                   placeholder="Марка и модель"
-                  customLabel="name"
-                  id="autoPartsModelBrands"
+                  custom-label="name"
                   class="auto-parts-index-field__select"
                 />
-                <template v-slot:additional>
+                <template #additional>
                   <div class="auto-parts-index-field__controll">
                     <div
                       v-if="isAddAutoPartsMore(i)"
-                      @click="addAutoPartsMore"
                       class="auto-parts-index-field__plus btn-primary btn"
+                      @click="addAutoPartsMore"
                     >
                       <span class="bi bi-plus-circle"></span>
                     </div>
                     <div
                       v-if="isRemoveAutoPartsMore(i)"
-                      @click="removeAutoPartsMore"
                       class="auto-parts-index-field__plus btn-danger btn"
+                      @click="removeAutoPartsMore"
                     >
                       <span class="bi bi-x-circle"></span>
                     </div>
@@ -76,13 +76,13 @@
               <AutoPartsIndexField
                 label="Год"
                 class="auto-parts-index-wrapp__field"
-                className="auto-parts-index-field__wrap--is-flex auto-parts-index-field__wrap--is-too"
+                class-name="auto-parts-index-field__wrap--is-flex auto-parts-index-field__wrap--is-too"
                 required
               >
                 <BaseMultiselect
+                  id="year"
                   v-model="AUTO_PARTS_INDEX.year"
                   :options="YEARS"
-                  id="year"
                   placeholder="Год"
                   class="auto-parts-index-field__select"
                 />
@@ -96,7 +96,7 @@
               <AutoPartsIndexField
                 label="Объем (л), топливо и тип"
                 class="auto-parts-index-wrapp__field"
-                className="auto-parts-index-field__wrap--is-flex auto-parts-index-field__wrap--is-three"
+                class-name="auto-parts-index-field__wrap--is-flex auto-parts-index-field__wrap--is-three"
               >
                 <input
                   v-model="AUTO_PARTS_INDEX.value"
@@ -105,17 +105,17 @@
                   class="auto-parts-index-field__input"
                 />
                 <BaseMultiselect
+                  id="fuel"
                   v-model="AUTO_PARTS_INDEX.fuel"
                   :options="FUELS"
-                  @select="getFuelToTypeEngines"
                   placeholder="Топливо"
-                  id="fuel"
                   class="auto-parts-index-field__select"
+                  @select="getFuelToTypeEngines"
                 />
                 <BaseMultiselect
-                  v-model="AUTO_PARTS_INDEX.typeEngines"
-                  :options="this.typeEngines"
                   id="typeEngines"
+                  v-model="AUTO_PARTS_INDEX.typeEngines"
+                  :options="typeEngines"
                   placeholder="Тип"
                   class="auto-parts-index-field__select"
                 />
@@ -123,19 +123,19 @@
               <AutoPartsIndexField
                 label="Тип кузова и коробка"
                 class="auto-parts-index-wrapp__field"
-                className="auto-parts-index-field__wrap--is-flex auto-parts-index-field__wrap--is-too"
+                class-name="auto-parts-index-field__wrap--is-flex auto-parts-index-field__wrap--is-too"
               >
                 <BaseMultiselect
+                  id="typeBody"
                   v-model="AUTO_PARTS_INDEX.typeBody"
                   :options="BODYS"
-                  id="typeBody"
                   placeholder="Тип кузова"
                   class="auto-parts-index-field__select"
                 />
                 <BaseMultiselect
+                  id="transmission"
                   v-model="AUTO_PARTS_INDEX.transmission"
                   :options="TRANSMISSION"
-                  id="transmission"
                   placeholder="Коробка"
                   class="auto-parts-index-field__select"
                 />
@@ -146,10 +146,10 @@
                 required
               >
                 <BaseMultiselect
+                  id="autoPartsName"
                   v-model="AUTO_PARTS_INDEX.autoPartsName"
                   :options="TYPES_OF_AUTO_PARTS"
-                  customLabel="name"
-                  id="autoPartsName"
+                  custom-label="name"
                   placeholder="Запчасть"
                   class="auto-parts-index-field__select"
                 />
@@ -163,9 +163,9 @@
                 >
                   <BaseMultiselect
                     v-if="field.id"
+                    :id="field.id"
                     v-model="AUTO_PARTS_INDEX[field.vModel]"
                     :options="field.options"
-                    :id="field.id"
                     :placeholder="field.label"
                     class="auto-parts-index-field__select"
                   />
@@ -239,7 +239,7 @@
               <AutoPartsIndexField
                 label="Фото"
                 class="auto-parts-index-wrapp__field"
-                className="auto-parts-index-field-wrap"
+                class-name="auto-parts-index-field-wrap"
               >
                 <div
                   class="auto-parts-index-field-wrap__photos auto-parts-index-photo-list"
@@ -247,7 +247,7 @@
                   <template v-if="AUTO_PARTS_INDEX.images">
                     <div
                       v-for="(image, index) in AUTO_PARTS_INDEX.images"
-                      v-bind:key="index"
+                      :key="index"
                       class="auto-parts-index-photo-list__item auto-parts-index-photo-item"
                     >
                       <img
@@ -255,18 +255,18 @@
                         class="auto-parts-index-photo-item__image"
                       />
                       <div
-                        @click="removeImgDop(index)"
                         class="auto-parts-index-photo-item__del"
+                        @click="removeImgDop(index)"
                       >
                         Удалить
                       </div>
                       <div
-                        @click="setThisPhotoOnMain(image)"
                         class="auto-parts-index-photo-item__del"
                         :class="{
                           'auto-parts-index-photo-item__del--is-active':
                             mainPhotoSetAutoParts(image),
                         }"
+                        @click="setThisPhotoOnMain(image)"
                       >
                         Главное фото
                       </div>
@@ -274,15 +274,15 @@
                   </template>
                 </div>
                 <button
-                  @click.prevent="modalCarPhotoFade"
                   class="auto-parts-index-field-wrap__btn btn btn-dark"
+                  @click.prevent="modalCarPhotoFade"
                 >
                   Добавить фото
                 </button>
               </AutoPartsIndexField>
               <div
-                @click="toggleDopFields"
                 class="auto-parts-index-wrapp__field auto-parts-index-field"
+                @click="toggleDopFields"
               >
                 <label
                   class="auto-parts-index-field__label cursor-pointer color-blue"
@@ -340,8 +340,8 @@
               </div>
               <component
                 :is="getAutoPartsIndexButtonsComponent"
-                :qrCode="AUTO_PARTS_INDEX.qrCode"
-                :linkToSite="AUTO_PARTS_INDEX.linkToSite"
+                :qr-code="AUTO_PARTS_INDEX.qrCode"
+                :link-to-site="AUTO_PARTS_INDEX.linkToSite"
                 @editAutoParts="editAutoParts"
                 @setAutoPartsFromApi="setAutoPartsFromApi"
               ></component>
@@ -351,18 +351,18 @@
       </div>
     </div>
     <Modal v-show="showModal" @closeModalAdmin="modalCarPhotoFade">
-      <template v-slot:header> Добавление фото </template>
+      <template #header> Добавление фото </template>
       <template>
         <vue-dropzone
-          v-on:vdropzone-sending="sendingEvent"
-          :options="dropzoneOptions"
-          ref="myVueDropzone"
           id="dropzone"
+          ref="myVueDropzone"
+          :options="dropzoneOptions"
+          @vdropzone-sending="sendingEvent"
         ></vue-dropzone>
         <button
-          @click.prevent="sendingDropzonePhoto"
-          class="btn btn-info"
           id="submit-all"
+          class="btn btn-info"
+          @click.prevent="sendingDropzonePhoto"
         >
           Загрузить изображения
         </button>
@@ -372,10 +372,10 @@
 </template>
 
 <script>
-import AutoPartsIndexField from "@/components/autoParts/AutoPartsIndexField.vue";
-import BaseMultiselect from "@/components/UI/BaseMultiselect.vue";
-import Breadcrumb from "@/components/UI/BaseBreadcrumb.vue";
-import { mapActions, mapGetters } from "vuex";
+import AutoPartsIndexField from '@/components/autoParts/AutoPartsIndexField.vue';
+import BaseMultiselect from '@/components/UI/BaseMultiselect.vue';
+import Breadcrumb from '@/components/UI/BaseBreadcrumb.vue';
+import { mapActions, mapGetters } from 'vuex';
 import {
   DOMAIN,
   STATUS,
@@ -386,27 +386,27 @@ import {
   TYPE_ENGINES_ALL,
   TYPE_ENGINES_DISEL,
   TYPE_ENGINES_BENZ,
-} from "@/constants/constants";
-import vue2Dropzone from "vue2-dropzone";
+} from '@/constants/constants';
+import vue2Dropzone from 'vue2-dropzone';
 import {
   FIELD_POST_TO_SEND,
   FIELDS_FOR_CAST_DISK_DRIVE,
-} from "@/components/autoParts/constants/constants";
+} from '@/components/autoParts/constants/constants';
 
 export default {
-  name: "AutoParstIndex",
+  name: 'AutoParstIndex',
 
   components: {
     Breadcrumb,
     vueDropzone: vue2Dropzone,
     BaseMultiselect,
     AutoPartsIndexField,
-    BaseAlert: () => import("@/components/UI/BaseAlert.vue"),
-    Modal: () => import("@/components/UI/BaseModal.vue"),
+    BaseAlert: () => import('@/components/UI/BaseAlert.vue'),
+    Modal: () => import('@/components/UI/BaseModal.vue'),
     AutoPartsIndexButtonsCreate: () =>
-      import("@/components/autoParts/AutoPartsIndexButtonsCreate.vue"),
+      import('@/components/autoParts/AutoPartsIndexButtonsCreate.vue'),
     AutoPartsIndexButtonsEdit: () =>
-      import("@/components/autoParts/AutoPartsIndexButtonsEdit.vue"),
+      import('@/components/autoParts/AutoPartsIndexButtonsEdit.vue'),
   },
 
   mounted() {
@@ -421,24 +421,24 @@ export default {
   },
 
   computed: {
-    ...mapGetters("autoParts", [
-      "AUTO_PARTS_INDEX",
-      "BREND_MODEL_CAR_AUTO_PARTS",
-      "TYPES_OF_AUTO_PARTS",
+    ...mapGetters('autoParts', [
+      'AUTO_PARTS_INDEX',
+      'BREND_MODEL_CAR_AUTO_PARTS',
+      'TYPES_OF_AUTO_PARTS',
     ]),
 
     getAutoPartsIndexButtonsComponent() {
       return !this.isCreatedPage
-        ? "AutoPartsIndexButtonsEdit"
-        : "AutoPartsIndexButtonsCreate";
+        ? 'AutoPartsIndexButtonsEdit'
+        : 'AutoPartsIndexButtonsCreate';
     },
 
     isCreatedPage() {
-      return this.$route.name === "autoPartsCreate";
+      return this.$route.name === 'autoPartsCreate';
     },
 
     autoPartsNameCode() {
-      if ("autoPartsName" in this.AUTO_PARTS_INDEX) {
+      if ('autoPartsName' in this.AUTO_PARTS_INDEX) {
         return this.$store.state.autoParts.autoPartsIndex.autoPartsName;
       }
     },
@@ -451,7 +451,7 @@ export default {
 
     autoPartsNameCode: {
       handler(newCode, oldCode) {
-        if (newCode !== oldCode && "autoPartsName" in this.AUTO_PARTS_INDEX) {
+        if (newCode !== oldCode && 'autoPartsName' in this.AUTO_PARTS_INDEX) {
           this.dopFieldsSearch(newCode);
         }
       },
@@ -460,19 +460,19 @@ export default {
   },
 
   methods: {
-    ...mapActions("autoParts", [
-      "GET_AUTO_PARTS_INDEX",
-      "GET_BREND_MODEL_CAR_AUTO_PARTS",
-      "GET_TYPES_OF_AUTO_PARTS",
-      "EDIT_AUTO_PARTS_FROM_API",
-      "SET_AUTO_PARTS_IMAGE_FROM_USER",
-      "SET_AUTO_PARTS_FROM_API",
-      "RESET_AUTO_PARTS_FOR_CREATE_PAGE",
+    ...mapActions('autoParts', [
+      'GET_AUTO_PARTS_INDEX',
+      'GET_BREND_MODEL_CAR_AUTO_PARTS',
+      'GET_TYPES_OF_AUTO_PARTS',
+      'EDIT_AUTO_PARTS_FROM_API',
+      'SET_AUTO_PARTS_IMAGE_FROM_USER',
+      'SET_AUTO_PARTS_FROM_API',
+      'RESET_AUTO_PARTS_FOR_CREATE_PAGE',
     ]),
 
     resetAutoPartsForCreatePage() {
       this.RESET_AUTO_PARTS_FOR_CREATE_PAGE();
-      this.AUTO_PARTS_INDEX.status = "Активно";
+      this.AUTO_PARTS_INDEX.status = 'Активно';
     },
 
     dopFieldsSearch(select) {
@@ -482,13 +482,13 @@ export default {
     createNameAutoPartsForBd() {
       return (
         this.AUTO_PARTS_INDEX.autoPartsName.name +
-        " к " +
-        this.AUTO_PARTS_INDEX.autoPartsModelBrand.name.split(" >")[0] +
-        " " +
-        this.AUTO_PARTS_INDEX.autoPartsModelBrand.name.split("> ")[1] +
-        " " +
+        ' к ' +
+        this.AUTO_PARTS_INDEX.autoPartsModelBrand.name.split(' >')[0] +
+        ' ' +
+        this.AUTO_PARTS_INDEX.autoPartsModelBrand.name.split('> ')[1] +
+        ' ' +
         this.AUTO_PARTS_INDEX.year +
-        " г."
+        ' г.'
       );
     },
 
@@ -505,33 +505,33 @@ export default {
     },
 
     validateForm() {
-      this.errorValidate = "";
+      this.errorValidate = '';
 
       if (
-        !("autoPartsModelBrand" in this.AUTO_PARTS_INDEX) &&
+        !('autoPartsModelBrand' in this.AUTO_PARTS_INDEX) &&
         this.countAutoPartsAdd == 1 &&
         !this.isCreatedPage
       ) {
-        this.errorValidate = "Заполните поле запчасть!";
+        this.errorValidate = 'Заполните поле запчасть!';
       }
 
       if (
         this.isCreatedPage &&
         this.autoPartsModelBrands[this.countAutoPartsAdd - 1] == undefined
       ) {
-        this.errorValidate = "Заполните поле запчасть!";
+        this.errorValidate = 'Заполните поле запчасть!';
       }
 
-      if (!("autoPartsName" in this.AUTO_PARTS_INDEX)) {
-        this.errorValidate = "Заполните марку и модель!";
+      if (!('autoPartsName' in this.AUTO_PARTS_INDEX)) {
+        this.errorValidate = 'Заполните марку и модель!';
       }
 
-      if (!("year" in this.AUTO_PARTS_INDEX)) {
-        this.errorValidate = "Заполните поле год!";
+      if (!('year' in this.AUTO_PARTS_INDEX)) {
+        this.errorValidate = 'Заполните поле год!';
       }
 
-      if (!("priceUSD" in this.AUTO_PARTS_INDEX)) {
-        this.errorValidate = "Заполните поле цена!";
+      if (!('priceUSD' in this.AUTO_PARTS_INDEX)) {
+        this.errorValidate = 'Заполните поле цена!';
       }
 
       if (this.errorValidate) {
@@ -580,12 +580,12 @@ export default {
       this.AUTO_PARTS_INDEX.imagesServer.splice(index, 1);
 
       if (this.AUTO_PARTS_INDEX.images.length == 0) {
-        this.AUTO_PARTS_INDEX.mainImage = "";
+        this.AUTO_PARTS_INDEX.mainImage = '';
       }
     },
 
     isImageUrlLocalOrServer(image) {
-      if (image.substr(0, 4) === "data") {
+      if (image.substr(0, 4) === 'data') {
         return image;
       }
 
@@ -612,18 +612,18 @@ export default {
       }
 
       if (this.AUTO_PARTS_INDEX.status !== undefined) {
-        let status = this.AUTO_PARTS_INDEX.status == "Активно" ? "1" : "0";
-        xForm.append("status", status);
+        let status = this.AUTO_PARTS_INDEX.status == 'Активно' ? '1' : '0';
+        xForm.append('status', status);
       }
 
       if (this.AUTO_PARTS_INDEX.autoPartsName !== undefined) {
-        xForm.append("autoPartsName", this.AUTO_PARTS_INDEX.autoPartsName.code);
+        xForm.append('autoPartsName', this.AUTO_PARTS_INDEX.autoPartsName.code);
       }
 
-      if ("autoPartsModelBrand" in this.AUTO_PARTS_INDEX) {
+      if ('autoPartsModelBrand' in this.AUTO_PARTS_INDEX) {
         xForm.append(
-          "autoPartsCategoryId",
-          this.AUTO_PARTS_INDEX.autoPartsModelBrand.code
+          'autoPartsCategoryId',
+          this.AUTO_PARTS_INDEX.autoPartsModelBrand.code,
         );
       }
 
@@ -633,10 +633,10 @@ export default {
         !this.isCreatedPage
       ) {
         xForm.append(
-          "autoPartsManufacturerId",
-          this.AUTO_PARTS_INDEX.autoPartsName.code
+          'autoPartsManufacturerId',
+          this.AUTO_PARTS_INDEX.autoPartsName.code,
         );
-        xForm.append("autoPartsNameForBd", this.createNameAutoPartsForBd());
+        xForm.append('autoPartsNameForBd', this.createNameAutoPartsForBd());
       }
 
       if (
@@ -645,21 +645,21 @@ export default {
         this.isCreatedPage
       ) {
         xForm.append(
-          "autoPartsManufacturerId",
-          this.AUTO_PARTS_INDEX.autoPartsName.code
+          'autoPartsManufacturerId',
+          this.AUTO_PARTS_INDEX.autoPartsName.code,
         );
 
         for (let i = 1; this.autoPartsModelBrands.length >= i; i++) {
           xForm.append(
-            "autoPartsNameForBd[]",
+            'autoPartsNameForBd[]',
             this.AUTO_PARTS_INDEX.autoPartsName.name +
-              " к " +
-              this.autoPartsModelBrands[i - 1].name.split(" >")[0] +
-              " " +
-              this.autoPartsModelBrands[i - 1].name.split("> ")[1] +
-              " " +
+              ' к ' +
+              this.autoPartsModelBrands[i - 1].name.split(' >')[0] +
+              ' ' +
+              this.autoPartsModelBrands[i - 1].name.split('> ')[1] +
+              ' ' +
               this.AUTO_PARTS_INDEX.year +
-              " г."
+              ' г.',
           );
         }
       }
@@ -670,21 +670,21 @@ export default {
         this.isCreatedPage
       ) {
         xForm.append(
-          "autoPartsManufacturerId",
-          this.AUTO_PARTS_INDEX.autoPartsName.code
+          'autoPartsManufacturerId',
+          this.AUTO_PARTS_INDEX.autoPartsName.code,
         );
 
         for (let i = 1; this.autoPartsModelBrands.length >= i; i++) {
           xForm.append(
-            "autoPartsNameForBd[]",
+            'autoPartsNameForBd[]',
             this.AUTO_PARTS_INDEX.autoPartsName.name +
-              " к " +
-              this.autoPartsModelBrands[i - 1].name.split(" >")[0] +
-              " " +
-              this.autoPartsModelBrands[i - 1].name.split("> ")[1] +
-              " " +
+              ' к ' +
+              this.autoPartsModelBrands[i - 1].name.split(' >')[0] +
+              ' ' +
+              this.autoPartsModelBrands[i - 1].name.split('> ')[1] +
+              ' ' +
               this.AUTO_PARTS_INDEX.year +
-              " г."
+              ' г.',
           );
         }
       }
@@ -696,26 +696,26 @@ export default {
       ) {
         for (let i = 1; this.autoPartsModelBrands.length >= i; i++) {
           xForm.append(
-            "autoPartsModelBrandsObject[]",
-            this.autoPartsModelBrands[i - 1].code
+            'autoPartsModelBrandsObject[]',
+            this.autoPartsModelBrands[i - 1].code,
           );
         }
       }
 
       if (this.isCreatedPage && this.countAutoPartsAdd == 1) {
-        xForm.append("autoPartsCategoryId", this.autoPartsModelBrands[0].code);
+        xForm.append('autoPartsCategoryId', this.autoPartsModelBrands[0].code);
       }
 
       if (this.AUTO_PARTS_INDEX.imagesServer !== undefined) {
-        xForm.append("images", this.AUTO_PARTS_INDEX.imagesServer);
+        xForm.append('images', this.AUTO_PARTS_INDEX.imagesServer);
       }
 
-      xForm.append("user_id", JSON.parse(localStorage.user).user_id);
+      xForm.append('user_id', JSON.parse(localStorage.user).user_id);
 
       if (this.AUTO_PARTS_INDEX.mainImage !== undefined) {
-        xForm.append("imagesMain", this.AUTO_PARTS_INDEX.mainImage);
+        xForm.append('imagesMain', this.AUTO_PARTS_INDEX.mainImage);
       } else if (this.AUTO_PARTS_INDEX.imagesServer !== undefined) {
-        xForm.append("imagesMain", this.AUTO_PARTS_INDEX.imagesServer[0]);
+        xForm.append('imagesMain', this.AUTO_PARTS_INDEX.imagesServer[0]);
       }
 
       return xForm;
@@ -731,13 +731,13 @@ export default {
     },
 
     closeAlertMessage() {
-      this.errorValidate = "";
+      this.errorValidate = '';
     },
 
     getFuelToTypeEngines(value) {
-      if (value == "дизель") {
+      if (value == 'дизель') {
         this.typeEngines = TYPE_ENGINES_DISEL;
-      } else if (value == "бензин") {
+      } else if (value == 'бензин') {
         this.typeEngines = TYPE_ENGINES_BENZ;
       } else {
         this.typeEngines = TYPE_ENGINES_ALL;
@@ -756,7 +756,7 @@ export default {
   data() {
     return {
       dopFieldsForCastDiskDrive: false,
-      errorValidate: "",
+      errorValidate: '',
       dopFields: false,
       param: {
         id: this.$route.params.id,
@@ -774,22 +774,22 @@ export default {
       FIELDS_FOR_CAST_DISK_DRIVE,
       typeEngines: TYPE_ENGINES_ALL,
       dropzoneOptions: {
-        url: "/v1/upload.php",
+        url: '/v1/upload.php',
         thumbnailWidth: 150,
         thumbnailHeight: 150,
         maxFilesize: 2500,
         autoProcessQueue: false,
         dictDefaultMessage:
           'Нажмите сюда или перетащите сюда файлы для загрузки <div><span style="color: darkgrey; margin-bottom: 5px">* для выбора нескольких фото, удерживайте клавишу Ctrl</span><br/></div><br/>',
-        dictRemoveFile: "удалить",
-        dictCancelUpload: "отменить",
+        dictRemoveFile: 'удалить',
+        dictCancelUpload: 'отменить',
         parallelUploads: 20,
         maxThumbnailFilesize: 200,
         resizeWidth: 800,
         timeout: 180000000,
-        acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg",
+        acceptedFiles: '.png,.jpg,.gif,.bmp,.jpeg',
         renameFile: function (file) {
-          let newName = new Date().getTime() + "_" + file.name;
+          let newName = new Date().getTime() + '_' + file.name;
           return newName;
         },
       },

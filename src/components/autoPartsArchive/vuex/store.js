@@ -1,5 +1,5 @@
-import axios from "axios";
-import { DOMAIN_API, KEYS } from "/src/constants/constants";
+import axios from 'axios';
+import { DOMAIN_API, KEYS } from '/src/constants/constants';
 
 export default {
   namespaced: true,
@@ -32,13 +32,13 @@ export default {
   actions: {
     async GET_BREND_MODEL_CAR_AUTO_PARTS({ commit }) {
       return await axios
-        .post(DOMAIN_API + "/index.php?route=api/auto_parts/auto/category", {
+        .post(DOMAIN_API + '/index.php?route=api/auto_parts/auto/category', {
           key: KEYS,
         })
         .then((response) => {
           commit(
-            "SET_BREND_MODEL_CAR_AUTO_PARTS",
-            response.data.brandAndModelCar
+            'SET_BREND_MODEL_CAR_AUTO_PARTS',
+            response.data.brandAndModelCar,
           );
           return response.data.brandAndModelCar;
         })
@@ -49,9 +49,9 @@ export default {
     },
 
     GET_AUTO_PARTS_ARCHIVE_FROM_API({ commit }, param) {
-      this.dispatch("generalStore/LOCK_UI");
+      this.dispatch('generalStore/LOCK_UI');
       return axios
-        .post(DOMAIN_API + "/index.php?route=api/auto_parts_archive/auto", {
+        .post(DOMAIN_API + '/index.php?route=api/auto_parts_archive/auto', {
           key: KEYS,
           page: param.pageNum,
           filter_sparePartNumber: param.filters.sparePartNumber,
@@ -64,10 +64,10 @@ export default {
           filter_category: param.filters.car.code,
         })
         .then((response) => {
-          this.dispatch("generalStore/UN_LOCK_UI");
+          this.dispatch('generalStore/UN_LOCK_UI');
           commit(
-            "SET_AUTO_PARTS_ARCHIVE_TO_STATE",
-            response.data.autoPartsArchive
+            'SET_AUTO_PARTS_ARCHIVE_TO_STATE',
+            response.data.autoPartsArchive,
           );
           return response.data.autoPartsArchive;
         })
@@ -80,7 +80,7 @@ export default {
     GET_AUTO_PARTS_ARCHIVE_TOTALS({ commit }, param) {
       return axios
         .post(
-          DOMAIN_API + "/index.php?route=api/auto_parts_archive/auto/totals",
+          DOMAIN_API + '/index.php?route=api/auto_parts_archive/auto/totals',
           {
             key: KEYS,
             filter_sparePartNumber: param.filters.sparePartNumber,
@@ -91,12 +91,12 @@ export default {
             filter_year_last: param.filters.yearLast,
             filter_types: param.filters.types.code,
             filter_category: param.filters.car.code,
-          }
+          },
         )
         .then((response) => {
           commit(
-            "SET_AUTO_PARTS_ARCHIVE_TOTALS_STATE",
-            response.data.autoPartsArchiveTotals
+            'SET_AUTO_PARTS_ARCHIVE_TOTALS_STATE',
+            response.data.autoPartsArchiveTotals,
           );
           return response.data.autoPartsArchiveTotals;
         })
@@ -107,21 +107,21 @@ export default {
     },
 
     GET_AUTO_PARTS_ARCHIVE_HISTORY({ commit }, id) {
-      this.dispatch("generalStore/LOCK_UI");
+      this.dispatch('generalStore/LOCK_UI');
       return axios
         .post(
           DOMAIN_API +
-            "/index.php?route=api/auto_parts_archive/auto/history/" +
+            '/index.php?route=api/auto_parts_archive/auto/history/' +
             id,
           {
             key: KEYS,
-          }
+          },
         )
         .then((response) => {
-          this.dispatch("generalStore/UN_LOCK_UI");
+          this.dispatch('generalStore/UN_LOCK_UI');
           commit(
-            "SET_AUTO_PARTS_ARCHIVE_HISTORY_STATE",
-            response.data.autoPartsArchiveHistory
+            'SET_AUTO_PARTS_ARCHIVE_HISTORY_STATE',
+            response.data.autoPartsArchiveHistory,
           );
           return response.data.autoPartsArchiveHistory;
         })
@@ -133,13 +133,13 @@ export default {
 
     async GET_TYPES_OF_AUTO_PARTS_ARCHIVE({ commit }) {
       return await axios
-        .post(DOMAIN_API + "/index.php?route=api/auto_parts/auto/types", {
+        .post(DOMAIN_API + '/index.php?route=api/auto_parts/auto/types', {
           key: KEYS,
         })
         .then((response) => {
           commit(
-            "SET_TYPES_OF_AUTO_PARTS_STATE",
-            response.data.typesOfAutoParts
+            'SET_TYPES_OF_AUTO_PARTS_STATE',
+            response.data.typesOfAutoParts,
           );
           return response.data.typesOfAutoParts;
         })
@@ -150,20 +150,20 @@ export default {
     },
 
     RESTORE_AUTO_PARTS_ARCHIVE_BY_API({ commit }, param) {
-      this.dispatch("generalStore/LOCK_UI");
+      this.dispatch('generalStore/LOCK_UI');
       return axios
         .post(
           DOMAIN_API +
-            "/index.php?route=api/auto_parts_archive/auto/restore/" +
+            '/index.php?route=api/auto_parts_archive/auto/restore/' +
             param.autoPartsId,
           {
             key: KEYS,
             user_id: JSON.parse(localStorage.user).user_id,
-          }
+          },
         )
         .then(() => {
-          this.dispatch("generalStore/UN_LOCK_UI");
-          commit("RESTORE_THIS_AUTO_PARTS_ARCHIVE", param.autoPartsNumber);
+          this.dispatch('generalStore/UN_LOCK_UI');
+          commit('RESTORE_THIS_AUTO_PARTS_ARCHIVE', param.autoPartsNumber);
         })
         .catch(function (error) {
           console.log(error);
@@ -171,7 +171,7 @@ export default {
     },
 
     SET_SHOW_ALL_IMAGE({ commit }, id) {
-      commit("SHOW_ALL_IMAGE_BY_ID", id);
+      commit('SHOW_ALL_IMAGE_BY_ID', id);
     },
   },
   mutations: {
@@ -200,7 +200,7 @@ export default {
     RESTORE_THIS_AUTO_PARTS_ARCHIVE: (state, id) => {
       state.autoPartsArchiveTotals = state.autoPartsArchiveTotals - 1;
       state.autoPartsArchive.splice(id, 1);
-      alert("Запчасть восстановлена!");
+      alert('Запчасть восстановлена!');
     },
     SET_BREND_MODEL_CAR_AUTO_PARTS: (state, brandAndModelCar) => {
       state.brandAndModelCar = brandAndModelCar;

@@ -8,8 +8,8 @@
 
 <script>
 export default {
-  name: "AutoPartsArchiveListColumnTitle",
+  name: 'AutoPartsArchiveListColumnTitle',
 
-  props: ["title"],
+  props: ['title'],
 };
 </script>

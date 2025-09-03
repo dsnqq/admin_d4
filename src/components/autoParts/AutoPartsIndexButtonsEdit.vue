@@ -2,16 +2,16 @@
   <div
     class="auto-parts-index-wrapp__field auto-parts-index-field auto-parts-index-field--is-btn"
   >
-    <button @click.prevent="editAutoParts(true)" class="btn btn-primary">
+    <button class="btn btn-primary" @click.prevent="editAutoParts(true)">
       Сохранить
     </button>
-    <button @click.prevent="editAutoParts(false)" class="btn btn-success">
+    <button class="btn btn-success" @click.prevent="editAutoParts(false)">
       Сохранить и продолжить редактирование
     </button>
     <a :href="DOMAIN + linkToSite" target="_blank" class="btn btn-warning">
       Посмотреть на сайте
     </a>
-    <button @click.prevent="printQrAutoParts" class="btn btn-dark">
+    <button class="btn btn-dark" @click.prevent="printQrAutoParts">
       Печать QR
     </button>
     <router-link :to="{ name: 'autoParts' }" class="btn btn-info">
@@ -23,10 +23,10 @@
 </template>
 
 <script>
-import { DOMAIN } from "@/constants/constants";
+import { DOMAIN } from '@/constants/constants';
 
 export default {
-  name: "AutoPartsIndexButtonsEdit",
+  name: 'AutoPartsIndexButtonsEdit',
 
   props: {
     linkToSite: {
@@ -38,26 +38,26 @@ export default {
     },
   },
 
-  methods: {
-    editAutoParts(redirect) {
-      this.$emit("editAutoParts", redirect);
-    },
-
-    printQrAutoParts() {
-      let isIframe = window.frames["autoPartsQrCode"];
-      isIframe.document.write(this.qrCode);
-      isIframe.document.close();
-    },
-  },
-
   data() {
     return {
       DOMAIN,
     };
   },
+
+  methods: {
+    editAutoParts(redirect) {
+      this.$emit('editAutoParts', redirect);
+    },
+
+    printQrAutoParts() {
+      let isIframe = window.frames['autoPartsQrCode'];
+      isIframe.document.write(this.qrCode);
+      isIframe.document.close();
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/autoParts/style/auto-parts-index-buttons-edit.scss";
+@import '@/components/autoParts/style/auto-parts-index-buttons-edit.scss';
 </style>

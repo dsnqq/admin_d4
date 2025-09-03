@@ -1,23 +1,23 @@
 <template>
   <div class="wrapper auth-admin">
     <div
-      v-if="!this.auth.status"
+      v-if="!auth.status"
       class="alert border-0 bg-light-danger alert-dismissible fade show py-2"
     >
       <div class="d-flex align-items-center">
         <div class="fs-3 text-danger"><i class="bi bi-x-circle-fill"></i></div>
         <div class="ms-3">
           <div class="text-danger">
-            {{ this.auth.message }}
+            {{ auth.message }}
           </div>
         </div>
       </div>
       <button
-        @click.prevent="closeAlertMessage"
         type="button"
         class="btn-close"
         data-bs-dismiss="alert"
         aria-label="Close"
+        @click.prevent="closeAlertMessage"
       ></button>
     </div>
     <main class="authentication-content">
@@ -54,14 +54,14 @@
                             <i class="bi bi-envelope-fill"></i>
                           </div>
                           <input
+                            id="inputEmailAddress"
                             v-model="param.login"
-                            @input="loginValidateChecked"
                             type="text"
                             class="form-control radius-30 ps-5"
                             :class="{ 'is-invalid': !loginValidate.status }"
-                            id="inputEmailAddress"
                             placeholder="Введите логин"
                             autocomplete="off"
+                            @input="loginValidateChecked"
                           />
                           <div
                             v-if="!loginValidate.status"
@@ -82,13 +82,13 @@
                             <i class="bi bi-lock-fill"></i>
                           </div>
                           <input
+                            id="inputChoosePassword"
                             v-model="param.password"
-                            @input="passwordValidateChecked"
                             type="password"
                             class="form-control radius-30 ps-5"
                             :class="{ 'is-invalid': !passwordValidate.status }"
-                            id="inputChoosePassword"
                             placeholder="Введите пароль"
+                            @input="passwordValidateChecked"
                           />
                           <div
                             v-if="!passwordValidate.status"
@@ -101,9 +101,9 @@
                       <div class="col-6">
                         <div class="form-check form-switch">
                           <input
+                            id="flexSwitchCheckChecked"
                             class="form-check-input"
                             type="checkbox"
-                            id="flexSwitchCheckChecked"
                             checked=""
                           />
                           <label
@@ -120,8 +120,8 @@
                         <div class="d-grid">
                           <button
                             class="btn btn-primary radius-30"
-                            @click.prevent="loginEnter"
                             title="Войти"
+                            @click.prevent="loginEnter"
                           >
                             Войти
                           </button>
@@ -145,23 +145,23 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  name: "AuthAdmin",
+  name: 'AuthAdmin',
 
   computed: {
-    ...mapGetters("authAdmin", ["USER"]),
+    ...mapGetters('authAdmin', ['USER']),
   },
 
   methods: {
-    ...mapActions("authAdmin", ["LOGIN_FROM_API"]),
+    ...mapActions('authAdmin', ['LOGIN_FROM_API']),
 
     loginValidateChecked() {
       let lg = this.param.login;
 
-      if (lg === "" || lg.length < 3 || lg.length > 7) {
-        this.loginValidate.message = "Проверьте правильность поля логин!";
+      if (lg === '' || lg.length < 3 || lg.length > 7) {
+        this.loginValidate.message = 'Проверьте правильность поля логин!';
         this.loginValidate.status = false;
       } else {
         this.loginValidate.status = true;
@@ -171,8 +171,8 @@ export default {
     passwordValidateChecked() {
       let ps = this.param.password;
 
-      if (ps === "" || ps.length < 4 || ps.length > 12) {
-        this.passwordValidate.message = "Проверьте правильность поля пароль!";
+      if (ps === '' || ps.length < 4 || ps.length > 12) {
+        this.passwordValidate.message = 'Проверьте правильность поля пароль!';
         this.passwordValidate.status = false;
       } else {
         this.passwordValidate.status = true;
@@ -202,11 +202,11 @@ export default {
   watch: {
     USER: function () {
       if (this.USER.user_id != null) {
-        this.$router.push({ name: "dashboardAdmin" }).catch(() => {});
+        this.$router.push({ name: 'dashboardAdmin' }).catch(() => {});
         location.reload();
       } else {
         this.auth.status = false;
-        this.auth.message = "Неверные логин или пароль! Попробуйте снова!";
+        this.auth.message = 'Неверные логин или пароль! Попробуйте снова!';
       }
     },
   },
@@ -215,19 +215,19 @@ export default {
     return {
       auth: {
         status: true,
-        message: "Данные не верны! Попробуйте снова!",
+        message: 'Данные не верны! Попробуйте снова!',
       },
       loginValidate: {
-        message: "",
+        message: '',
         status: true,
       },
       passwordValidate: {
-        message: "",
+        message: '',
         status: true,
       },
       param: {
-        login: "",
-        password: "",
+        login: '',
+        password: '',
       },
     };
   },
@@ -235,5 +235,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/authAdmin/style/auth-admin.scss";
+@import '@/components/authAdmin/style/auth-admin.scss';
 </style>

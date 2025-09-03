@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: "LayoutTableRow",
+  name: 'LayoutTableRow',
 
   computed: {
     isHeaderSlot() {
@@ -36,5 +36,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/assets/scss/table-adaptive-moble-only.scss";
+@import '@/assets/scss/table-adaptive-moble-only.scss';
 </style>

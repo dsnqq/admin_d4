@@ -1,6 +1,6 @@
 <template>
   <Modal @closeModalAdmin="closeHistoryModalAdmin">
-    <template v-slot:header>История запчасти</template>
+    <template #header>История запчасти</template>
     <template>
       <table class="table mb-0 table-border-1 rwd-table">
         <thead>
@@ -23,7 +23,7 @@
               {{ renderValue(autoPartsHistory.valueNew) }}
             </td>
             <td data-th="Пользователь">
-              {{ autoPartsHistory.firstName + " " + autoPartsHistory.lastName }}
+              {{ autoPartsHistory.firstName + ' ' + autoPartsHistory.lastName }}
             </td>
           </tr>
         </tbody>
@@ -33,40 +33,40 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
-  name: "AutoPartsHistoryModal",
+  name: 'AutoPartsHistoryModal',
 
   components: {
-    Modal: () => import("@/components/UI/BaseModal.vue"),
+    Modal: () => import('@/components/UI/BaseModal.vue'),
   },
 
   computed: {
-    ...mapGetters("autoParts", ["AUTO_PARTS_HISTORY"]),
+    ...mapGetters('autoParts', ['AUTO_PARTS_HISTORY']),
   },
 
   methods: {
     renderValue(data) {
-      if (data != "") {
+      if (data != '') {
         if (data == 1) {
-          return "Активно";
+          return 'Активно';
         } else if (data == 0) {
-          return "Неактивно";
+          return 'Неактивно';
         }
 
         return data;
       }
-      return "";
+      return '';
     },
 
     closeHistoryModalAdmin() {
-      this.$emit("closeHistoryModalAdmin");
+      this.$emit('closeHistoryModalAdmin');
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/scss/table-adaptive.scss";
+@import '@/assets/scss/table-adaptive.scss';
 </style>

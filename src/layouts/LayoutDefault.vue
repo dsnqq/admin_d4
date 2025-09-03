@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: "LayoutDefault",
+  name: 'LayoutDefault',
 
   computed: {
     isHeaderSlot() {
@@ -36,6 +36,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/layouts/style/layout-default.scss";
-@import "@/assets/scss/table-adaptive.scss";
+@import '@/layouts/style/layout-default.scss';
+@import '@/assets/scss/table-adaptive.scss';
 </style>

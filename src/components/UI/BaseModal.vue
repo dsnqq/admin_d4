@@ -26,16 +26,16 @@
 
 <script>
 export default {
-  name: "BaseModal",
+  name: 'BaseModal',
 
   methods: {
     closeModalAdmin() {
-      this.$emit("closeModalAdmin");
+      this.$emit('closeModalAdmin');
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "./src/components/UI/style/base-modal";
+@import './src/components/UI/style/base-modal';
 </style>

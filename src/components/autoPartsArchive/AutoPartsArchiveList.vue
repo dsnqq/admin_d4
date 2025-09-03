@@ -1,18 +1,18 @@
 <template>
   <LayoutDefault>
-    <template v-slot:header>
+    <template #header>
       <Filters
         :options="optionsFilters"
         @setFilterOnAutoPartsPage="setFilterOnAutoPartsPage"
         @resetFilters="resetFilters"
       />
     </template>
-    <template v-slot:tableThead>
+    <template #tableThead>
       <th v-for="(c, index) in COLUMNS" :key="index">
         {{ c.title }}
       </th>
     </template>
-    <template v-slot:tableTbody>
+    <template #tableTbody>
       <tr v-for="(autoPartsArchive, i) in AUTO_PARTS_ARCHIVE" :key="i">
         <td
           v-for="(c, index) in COLUMNS"
@@ -22,50 +22,44 @@
         >
           <component
             :is="c.components"
+            :id="autoPartsArchive.product_id"
             :images="autoPartsArchive.images"
             :title="autoPartsArchive.autoParts.name"
             :index="i"
-            :id="autoPartsArchive.product_id"
-            :showAll="autoPartsArchive.imagesShowAllImage"
+            :show-all="autoPartsArchive.imagesShowAllImage"
             :content="autoPartsArchive[c.content]"
-            :contentExtension="autoPartsArchive[c.contentExtension]"
-            :priceUSD="autoPartsArchive.priceUSD"
-            :priceBYN="autoPartsArchive.priceBYN"
+            :content-extension="autoPartsArchive[c.contentExtension]"
+            :price-u-s-d="autoPartsArchive.priceUSD"
+            :price-b-y-n="autoPartsArchive.priceBYN"
             :status="autoPartsArchive.status"
-            :linkToSite="autoPartsArchive.linkToSite"
+            :link-to-site="autoPartsArchive.linkToSite"
             :view="autoPartsArchive.view"
           ></component>
         </td>
       </tr>
     </template>
-    <template v-slot:pagination>
+    <template #pagination>
       <Pagination
         :totals="AUTO_PARTS_ARCHIVE_TOTALS"
-        :countChunk="isMobile ? 4 : 5"
-        @setPageByTotal="setPageByTotal"
+        :count-chunk="isMobile ? 4 : 5"
         :class="{ 'card-body-pagination-mobile': isMobile }"
+        @setPageByTotal="setPageByTotal"
       />
     </template>
   </LayoutDefault>
 </template>
 
 <script>
-import LayoutDefault from "@/layouts/LayoutDefault.vue";
-import Filters from "@/components/UI/BaseFilters.vue";
-import Pagination from "@/components/UI/BasePagination.vue";
-import { COLUMNS } from "@/components/autoPartsArchive/constants/constants";
-import { mapActions, mapGetters } from "vuex";
-import { mixins } from "@/mixins/mixins";
-import { autoPartsArchiveListOptionsFilters } from "@/components/autoPartsArchive/mixins/autoPartsArchiveListOptionsFilters.mixins";
+import LayoutDefault from '@/layouts/LayoutDefault.vue';
+import Filters from '@/components/UI/BaseFilters.vue';
+import Pagination from '@/components/UI/BasePagination.vue';
+import { COLUMNS } from '@/components/autoPartsArchive/constants/constants';
+import { mapActions, mapGetters } from 'vuex';
+import { mixins } from '@/mixins/mixins';
+import { autoPartsArchiveListOptionsFilters } from '@/components/autoPartsArchive/mixins/autoPartsArchiveListOptionsFilters.mixins';
 
 export default {
-  name: "AutoPartsArchiveList",
-
-  mixins: [autoPartsArchiveListOptionsFilters, mixins],
-
-  mounted() {
-    this.loadAutoPartsArchive();
-  },
+  name: 'AutoPartsArchiveList',
 
   components: {
     Pagination,
@@ -73,17 +67,23 @@ export default {
     LayoutDefault,
   },
 
+  mixins: [autoPartsArchiveListOptionsFilters, mixins],
+
+  mounted() {
+    this.loadAutoPartsArchive();
+  },
+
   computed: {
-    ...mapGetters("autoPartsArchive", [
-      "AUTO_PARTS_ARCHIVE",
-      "AUTO_PARTS_ARCHIVE_TOTALS",
+    ...mapGetters('autoPartsArchive', [
+      'AUTO_PARTS_ARCHIVE',
+      'AUTO_PARTS_ARCHIVE_TOTALS',
     ]),
   },
 
   methods: {
-    ...mapActions("autoPartsArchive", [
-      "GET_AUTO_PARTS_ARCHIVE_FROM_API",
-      "GET_AUTO_PARTS_ARCHIVE_TOTALS",
+    ...mapActions('autoPartsArchive', [
+      'GET_AUTO_PARTS_ARCHIVE_FROM_API',
+      'GET_AUTO_PARTS_ARCHIVE_TOTALS',
     ]),
 
     loadAutoPartsArchive() {
@@ -110,12 +110,12 @@ export default {
       this.param = {
         pageNum: this.param.pageNum,
         filters: {
-          sparePartNumber: "",
-          model: "",
-          fuel: "Не выбрано",
-          value: "",
-          yearStart: "",
-          yearLast: "",
+          sparePartNumber: '',
+          model: '',
+          fuel: 'Не выбрано',
+          value: '',
+          yearStart: '',
+          yearLast: '',
           types: {},
           car: {},
         },
@@ -131,13 +131,13 @@ export default {
       param: {
         pageNum: 1,
         filters: {
-          sparePartNumber: "",
-          model: "",
-          status: "Все объявления",
-          fuel: "Не выбрано",
-          value: "",
-          yearStart: "",
-          yearLast: "",
+          sparePartNumber: '',
+          model: '',
+          status: 'Все объявления',
+          fuel: 'Не выбрано',
+          value: '',
+          yearStart: '',
+          yearLast: '',
           types: {},
           car: {},
         },
@@ -148,5 +148,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/autoPartsArchive/style/auto-parts-archive-list.scss";
+@import '@/components/autoPartsArchive/style/auto-parts-archive-list.scss';
 </style>

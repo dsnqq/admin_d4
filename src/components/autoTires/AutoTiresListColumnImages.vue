@@ -10,20 +10,20 @@
     </a>
     <div class="product-box-image-flex">
       <a
-        :data-lightbox="id"
         v-for="(image, index) in images"
+        v-show="image.imageShow"
         :key="index"
+        :data-lightbox="id"
         :data-title="title"
         :href="DOMAIN + `/image/` + image.imageBig"
         class="product-box-image--small"
-        v-show="image.imageShow"
       >
         <BaseLazyImage :src="image.imageMini" :alt="title" />
       </a>
       <span
         v-if="!showAll"
-        @click="showImageAll(index)"
         class="product-more-photo"
+        @click="showImageAll(index)"
         >Ещё фото</span
       >
     </div>
@@ -31,23 +31,23 @@
 </template>
 
 <script>
-import BaseLazyImage from "@/components/UI/BaseLazyImage.vue";
-import { DOMAIN } from "@/constants/constants";
-import { mapActions } from "vuex";
-import Jquery from "jquery"; // eslint-disable-line no-unused-vars
-import lightbox from "lightbox2";
+import BaseLazyImage from '@/components/UI/BaseLazyImage.vue';
+import { DOMAIN } from '@/constants/constants';
+import { mapActions } from 'vuex';
+import Jquery from 'jquery'; // eslint-disable-line no-unused-vars
+import lightbox from 'lightbox2';
 
 export default {
-  name: "AutoTiresListColumnImages",
-
-  props: ["images", "title", "id", "showAll", "index"],
+  name: 'AutoTiresListColumnImages',
 
   components: {
     BaseLazyImage,
   },
 
+  props: ['images', 'title', 'id', 'showAll', 'index'],
+
   methods: {
-    ...mapActions("autoTires", ["SET_SHOW_ALL_IMAGE"]),
+    ...mapActions('autoTires', ['SET_SHOW_ALL_IMAGE']),
 
     showImageAll(index) {
       this.SET_SHOW_ALL_IMAGE(index);
@@ -63,6 +63,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "/node_modules/lightbox2/dist/css/lightbox.min.css";
-@import "./src/components/autoTires/style/auto-tires-list-column-images";
+@import '/node_modules/lightbox2/dist/css/lightbox.min.css';
+@import './src/components/autoTires/style/auto-tires-list-column-images';
 </style>

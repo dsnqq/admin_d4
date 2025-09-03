@@ -70,8 +70,8 @@
             <h3>
               <input
                 v-if="columnEditUSD"
-                placeholder="Курс USD"
                 v-model="DASHBOARD_INFORMATION.currency.USD"
+                placeholder="Курс USD"
                 class="dashboard-admin__input--edits"
                 type="text"
               />
@@ -80,13 +80,13 @@
               </span>
               <i
                 v-if="!columnEditUSD"
-                @click="editCurrencyUSD"
                 class="bi bi-pencil text-warning"
+                @click="editCurrencyUSD"
               ></i>
               <i
                 v-else
-                @click="saveCurrencyUSD"
                 class="lni lni-save p-2 text-success"
+                @click="saveCurrencyUSD"
               ></i>
             </h3>
             <p class="mb-0">Доллар США (USD)</p>
@@ -102,8 +102,8 @@
             <h3>
               <input
                 v-if="columnEditRUB"
-                placeholder="Курс RUB"
                 v-model="DASHBOARD_INFORMATION.currency.RUB"
+                placeholder="Курс RUB"
                 class="dashboard-admin__input--edits"
                 type="text"
               />
@@ -112,13 +112,13 @@
               </span>
               <i
                 v-if="!columnEditRUB"
-                @click="editCurrencyRUB"
                 class="bi bi-pencil text-warning"
+                @click="editCurrencyRUB"
               ></i>
               <i
                 v-else
-                @click="saveCurrencyRUB"
                 class="lni lni-save p-2 text-success"
+                @click="saveCurrencyRUB"
               ></i>
             </h3>
             <p class="mb-0">Рос. рубль (RUB)</p>
@@ -135,8 +135,8 @@
               <h3>
                 <input
                   v-if="columnEditEUR"
-                  placeholder="Курс EUR"
                   v-model="DASHBOARD_INFORMATION.currency.EUR"
+                  placeholder="Курс EUR"
                   class="dashboard-admin__input--edits"
                   type="text"
                 />
@@ -145,13 +145,13 @@
                 </span>
                 <i
                   v-if="!columnEditEUR"
-                  @click="editCurrencyEUR"
                   class="bi bi-pencil text-warning"
+                  @click="editCurrencyEUR"
                 ></i>
                 <i
                   v-else
-                  @click="saveCurrencyEUR"
                   class="lni lni-save p-2 text-success"
+                  @click="saveCurrencyEUR"
                 ></i>
               </h3>
             </h3>
@@ -164,28 +164,28 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  name: "DashboardAdmin",
+  name: 'DashboardAdmin',
 
   mounted() {
     this.GET_DASHBOARD_INFORMATION();
   },
 
   computed: {
-    ...mapGetters("dashboardAdmin", ["DASHBOARD_INFORMATION"]),
+    ...mapGetters('dashboardAdmin', ['DASHBOARD_INFORMATION']),
   },
 
   methods: {
-    ...mapActions("dashboardAdmin", [
-      "GET_DASHBOARD_INFORMATION",
-      "SET_CURRENCY_FROM_API",
+    ...mapActions('dashboardAdmin', [
+      'GET_DASHBOARD_INFORMATION',
+      'SET_CURRENCY_FROM_API',
     ]),
 
     saveCurrencyUSD() {
       let param = {
-        currency: "USD",
+        currency: 'USD',
         value: this.DASHBOARD_INFORMATION.currency.USD,
       };
 
@@ -195,7 +195,7 @@ export default {
 
     saveCurrencyRUB() {
       let param = {
-        currency: "RUB",
+        currency: 'RUB',
         value: this.DASHBOARD_INFORMATION.currency.RUB,
       };
 
@@ -205,7 +205,7 @@ export default {
 
     saveCurrencyEUR() {
       let param = {
-        currency: "EUR",
+        currency: 'EUR',
         value: this.DASHBOARD_INFORMATION.currency.EUR,
       };
 
@@ -237,5 +237,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/dashboardAdmin/style/dashboard-admin.scss";
+@import '@/components/dashboardAdmin/style/dashboard-admin.scss';
 </style>

@@ -2,10 +2,10 @@
   <div
     class="auto-parts-index-wrapp__field auto-parts-index-field auto-parts-index-field--is-btn"
   >
-    <button @click.prevent="setAutoPartsFromApi(true)" class="btn btn-primary">
+    <button class="btn btn-primary" @click.prevent="setAutoPartsFromApi(true)">
       Добавить объявление
     </button>
-    <button @click.prevent="setAutoPartsFromApi(false)" class="btn btn-success">
+    <button class="btn btn-success" @click.prevent="setAutoPartsFromApi(false)">
       Добавить и сохранить значения
     </button>
     <router-link :to="{ name: 'autoParts' }" class="btn btn-info">
@@ -16,11 +16,11 @@
 
 <script>
 export default {
-  name: "AutoPartsIndexButtonsCreate",
+  name: 'AutoPartsIndexButtonsCreate',
 
   methods: {
     setAutoPartsFromApi(redirect) {
-      this.$emit("setAutoPartsFromApi", redirect);
+      this.$emit('setAutoPartsFromApi', redirect);
     },
   },
 };

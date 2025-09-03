@@ -1,14 +1,14 @@
 <template>
-  <div class="preloader" v-if="isUiLocked">
+  <div v-if="isUiLocked" class="preloader">
     <img src="../../assets/images/loader.gif" />
   </div>
 </template>
 
 <script>
-import generalStore from "@/vuex/store";
+import generalStore from '@/vuex/store';
 
 export default {
-  name: "BasePreloader",
+  name: 'BasePreloader',
 
   computed: {
     isUiLocked: function () {
@@ -23,5 +23,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "./src/components/UI/style/base-preloader";
+@import './src/components/UI/style/base-preloader';
 </style>
