@@ -47,56 +47,39 @@
   </LayoutDefault>
 </template>
 
-<script>
+<script setup>
 import LayoutDefault from '@/layouts/LayoutDefault.vue';
 import Pagination from '@/components/UI/BasePagination.vue';
 import { COLUMNS } from '@/components/orderSale/constants/constants';
 import { DICTIONARY } from '@/constants/constants';
-import { mapActions, mapGetters } from 'vuex';
-import { mixins } from '@/mixins/mixins';
+import { ref, onMounted, computed } from 'vue';
+import { useStore } from '@/composables/useStore';
+import { useDevice } from '@/composables/useDevice';
 
-export default {
-  name: 'OrderSale',
+const pageNum = ref(1);
+const store = useStore();
+const isMobile = useDevice();
 
-  mixins: [mixins],
+const ORDER_SALE = computed(() => store.getters['orderSale/ORDER_SALE']);
+const ORDER_TOTALS = computed(() => store.getters['orderSale/ORDER_TOTALS']);
 
-  mounted() {
-    this.GET_ORDER_SALE(this.pageNum);
-    this.GET_ORDER_TOTALS();
-  },
+const GET_ORDER_SALE = (page) =>
+  store.dispatch('orderSale/GET_ORDER_SALE', page);
+const GET_ORDER_TOTALS = () => store.dispatch('orderSale/GET_ORDER_TOTALS');
 
-  computed: {
-    ...mapGetters('orderSale', ['ORDER_SALE', 'ORDER_TOTALS']),
-  },
+function setPageByTotal(page) {
+  pageNum.value = page;
+  GET_ORDER_SALE(pageNum.value);
+}
 
-  components: {
-    LayoutDefault,
-    Pagination,
-  },
+function getInformationAbout(product) {
+  return `${product.number}) ${product.name} (цена: ${product.price}$)`;
+}
 
-  methods: {
-    ...mapActions('orderSale', ['GET_ORDER_SALE', 'GET_ORDER_TOTALS']),
-
-    setPageByTotal(page) {
-      this.pageNum = page;
-      this.GET_ORDER_SALE(this.pageNum);
-    },
-
-    getInformationAbout(product) {
-      return (
-        product.number + ') ' + product.name + ' (цена: ' + product.price + '$)'
-      );
-    },
-  },
-
-  data() {
-    return {
-      pageNum: 1,
-      COLUMNS,
-      DICTIONARY,
-    };
-  },
-};
+onMounted(() => {
+  GET_ORDER_SALE(pageNum.value);
+  GET_ORDER_TOTALS();
+});
 </script>
 
 <style lang="scss" scoped>

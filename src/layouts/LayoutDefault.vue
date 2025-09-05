@@ -23,16 +23,13 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'LayoutDefault',
+<script setup>
+import { computed } from 'vue';
+import { useSlots } from '@/composables/useSlots';
 
-  computed: {
-    isHeaderSlot() {
-      return this.$slots.header;
-    },
-  },
-};
+const slots = useSlots();
+
+const isHeaderSlot = computed(() => slots.header);
 </script>
 
 <style lang="scss">

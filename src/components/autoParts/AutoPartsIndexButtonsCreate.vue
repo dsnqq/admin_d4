@@ -14,14 +14,11 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'AutoPartsIndexButtonsCreate',
+<script setup>
+import { defineEmits } from 'vue';
 
-  methods: {
-    setAutoPartsFromApi(redirect) {
-      this.$emit('setAutoPartsFromApi', redirect);
-    },
-  },
+const emit = defineEmits(['setAutoPartsFromApi']);
+const setAutoPartsFromApi = (redirect) => {
+  emit('setAutoPartsFromApi', redirect);
 };
 </script>

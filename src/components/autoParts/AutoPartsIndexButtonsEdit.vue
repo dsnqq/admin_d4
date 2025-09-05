@@ -22,40 +22,33 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { DOMAIN } from '@/constants/constants';
+import { defineProps, defineEmits } from 'vue';
 
-export default {
-  name: 'AutoPartsIndexButtonsEdit',
+const emit = defineEmits(['editAutoParts']);
 
-  props: {
-    linkToSite: {
-      type: String,
-    },
-
-    qrCode: {
-      type: String,
-    },
-  },
-
-  data() {
-    return {
-      DOMAIN,
-    };
-  },
-
-  methods: {
-    editAutoParts(redirect) {
-      this.$emit('editAutoParts', redirect);
-    },
-
-    printQrAutoParts() {
-      let isIframe = window.frames['autoPartsQrCode'];
-      isIframe.document.write(this.qrCode);
-      isIframe.document.close();
-    },
-  },
+const editAutoParts = (redirect) => {
+  emit('editAutoParts', redirect);
 };
+
+const printQrAutoParts = () => {
+  const isIframe = window.frames['autoPartsQrCode'];
+  isIframe.document.write(props.qrCode);
+  isIframe.document.close();
+};
+
+const props = defineProps({
+  linkToSite: {
+    type: String,
+    default: '',
+  },
+
+  qrCode: {
+    type: String,
+    default: '',
+  },
+});
 </script>
 
 <style lang="scss" scoped>

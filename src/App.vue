@@ -12,7 +12,7 @@ import { computed } from 'vue';
 
 const loginUserChecked = computed(() => {
   if (!localStorage.user) return false;
-  let user = JSON.parse(localStorage.user);
+  const user = JSON.parse(localStorage.user);
 
   return user.user_id;
 });
