@@ -372,9 +372,9 @@
 </template>
 
 <script>
-import AutoPartsIndexField from '@/components/autoParts/AutoPartsIndexField.vue';
-import BaseMultiselect from '@/components/UI/BaseMultiselect.vue';
-import Breadcrumb from '@/components/UI/BaseBreadcrumb.vue';
+import AutoPartsIndexField from '@/components/autoParts/AutoPartsIndexField';
+import BaseMultiselect from '@/components/UI/BaseMultiselect';
+import Breadcrumb from '@/components/UI/BaseBreadcrumb';
 import { mapActions, mapGetters } from 'vuex';
 import {
   DOMAIN,
@@ -392,6 +392,8 @@ import {
   FIELD_POST_TO_SEND,
   FIELDS_FOR_CAST_DISK_DRIVE,
 } from '@/components/autoParts/constants/constants';
+import { computed, unref, ref, defineAsyncComponent } from 'vue';
+import { useRoute } from '@/composables/useRoute';
 
 export default {
   name: 'AutoParstIndex',
@@ -401,12 +403,52 @@ export default {
     vueDropzone: vue2Dropzone,
     BaseMultiselect,
     AutoPartsIndexField,
-    BaseAlert: () => import('@/components/UI/BaseAlert.vue'),
-    Modal: () => import('@/components/UI/BaseModal.vue'),
-    AutoPartsIndexButtonsCreate: () =>
-      import('@/components/autoParts/AutoPartsIndexButtonsCreate.vue'),
-    AutoPartsIndexButtonsEdit: () =>
-      import('@/components/autoParts/AutoPartsIndexButtonsEdit.vue'),
+    BaseAlert: () => import('@/components/UI/BaseAlert'),
+    Modal: () => import('@/components/UI/BaseModal'),
+  },
+
+  setup() {
+    const AutoPartsIndexButtonsCreate = defineAsyncComponent(() =>
+      import('@/components/autoParts/AutoPartsIndexButtonsCreate'),
+    );
+    const AutoPartsIndexButtonsEdit = defineAsyncComponent(() =>
+      import('@/components/autoParts/AutoPartsIndexButtonsEdit'),
+    );
+
+    const route = useRoute();
+    const dopFieldsForCastDiskDrive = ref(false);
+    const countAutoPartsAdd = ref(1);
+
+    const isCreatedPage = computed(() => route.name === 'autoPartsCreate');
+
+    const getAutoPartsIndexButtonsComponent = computed(() =>
+      unref(isCreatedPage)
+        ? AutoPartsIndexButtonsCreate
+        : AutoPartsIndexButtonsEdit,
+    );
+
+    // Methods
+    const dopFieldsSearch = (select) => {
+      dopFieldsForCastDiskDrive.value =
+        select.code == 257 || select.code == 262;
+    };
+    const isAddAutoPartsMore = (i) =>
+      unref(isCreatedPage) && i + 1 == unref(countAutoPartsAdd);
+
+    const isRemoveAutoPartsMore = (i) =>
+      unref(isCreatedPage) && i + 1 == unref(countAutoPartsAdd) && i != 0;
+
+    return {
+      AutoPartsIndexButtonsCreate,
+      AutoPartsIndexButtonsEdit,
+      getAutoPartsIndexButtonsComponent,
+      isCreatedPage,
+      dopFieldsForCastDiskDrive,
+      countAutoPartsAdd,
+      dopFieldsSearch,
+      isAddAutoPartsMore,
+      isRemoveAutoPartsMore,
+    };
   },
 
   mounted() {
@@ -426,16 +468,6 @@ export default {
       'BREND_MODEL_CAR_AUTO_PARTS',
       'TYPES_OF_AUTO_PARTS',
     ]),
-
-    getAutoPartsIndexButtonsComponent() {
-      return !this.isCreatedPage
-        ? 'AutoPartsIndexButtonsEdit'
-        : 'AutoPartsIndexButtonsCreate';
-    },
-
-    isCreatedPage() {
-      return this.$route.name === 'autoPartsCreate';
-    },
 
     autoPartsNameCode() {
       if ('autoPartsName' in this.AUTO_PARTS_INDEX) {
@@ -475,10 +507,6 @@ export default {
       this.AUTO_PARTS_INDEX.status = 'Активно';
     },
 
-    dopFieldsSearch(select) {
-      this.dopFieldsForCastDiskDrive = select.code == 257 || select.code == 262;
-    },
-
     createNameAutoPartsForBd() {
       return (
         this.AUTO_PARTS_INDEX.autoPartsName.name +
@@ -490,14 +518,6 @@ export default {
         this.AUTO_PARTS_INDEX.year +
         ' г.'
       );
-    },
-
-    isAddAutoPartsMore(i) {
-      return this.isCreatedPage && i + 1 == this.countAutoPartsAdd;
-    },
-
-    isRemoveAutoPartsMore(i) {
-      return this.isCreatedPage && i + 1 == this.countAutoPartsAdd && i != 0;
     },
 
     mainPhotoSetAutoParts(image) {
@@ -755,14 +775,12 @@ export default {
 
   data() {
     return {
-      dopFieldsForCastDiskDrive: false,
       errorValidate: '',
       dopFields: false,
       param: {
         id: this.$route.params.id,
       },
       showModal: false,
-      countAutoPartsAdd: 1,
       autoPartsModelBrands: [],
       domain: DOMAIN,
       FIELD_POST_TO_SEND,
