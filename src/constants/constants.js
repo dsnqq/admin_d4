@@ -52,14 +52,54 @@ export const LEFT_MENU = [
     icon: 'bi-archive',
     permissions: [],
   },
-  //{title: 'История пользователей', component: 'historyUsers', icon: 'bi-journal-text', permissions: []},
-  //{title: 'Авто в разборе', component: 'carsAdmin', icon: 'bi-wrench', permissions: []},
-  //{title: 'Добавить авто в разборе', component: 'carCreate', icon: 'bi-wrench', permissions: []},
-  //{title: 'Мои шины', component: 'autoTires', icon: 'bi-vinyl', permissions: []},
-  //{title: 'Архив Шин', component: 'autoTiresArchive', icon: 'bi-archive', permissions: []},
-  //{title: 'Добавить шину', component: 'autoTiresCreate', icon: 'bi-plus-square', permissions: []},
-  //{title: 'Статистика шин', component: 'tireStatistics', icon: 'bi-info-square-fill', permissions: []},
-  //{title: 'Статистика З/Ч', component: 'sparePartsStatistics', icon: 'bi-info-square-fill', permissions: []}
+  {
+    title: 'История пользователей',
+    component: 'historyUsers',
+    icon: 'bi-journal-text',
+    permissions: [],
+  },
+  {
+    title: 'Авто в разборе',
+    component: 'carsAdmin',
+    icon: 'bi-wrench',
+    permissions: [],
+  },
+  {
+    title: 'Добавить авто в разборе',
+    component: 'carCreate',
+    icon: 'bi-wrench',
+    permissions: [],
+  },
+  {
+    title: 'Мои шины',
+    component: 'autoTires',
+    icon: 'bi-vinyl',
+    permissions: [],
+  },
+  {
+    title: 'Архив Шин',
+    component: 'autoTiresArchive',
+    icon: 'bi-archive',
+    permissions: [],
+  },
+  {
+    title: 'Добавить шину',
+    component: 'autoTiresCreate',
+    icon: 'bi-plus-square',
+    permissions: [],
+  },
+  {
+    title: 'Статистика шин',
+    component: 'tireStatistics',
+    icon: 'bi-info-square-fill',
+    permissions: [],
+  },
+  {
+    title: 'Статистика З/Ч',
+    component: 'sparePartsStatistics',
+    icon: 'bi-info-square-fill',
+    permissions: [],
+  },
 ];
 
 export const STATUS = ['Активно', 'Неактивно'];

@@ -7,7 +7,7 @@
       >
         <input
           v-if="columnEdit"
-          v-model="price"
+          v-model="localPrice"
           placeholder="Цена"
           class="auto-parts-list-wrapper-column-edits__input"
           type="number"
@@ -20,7 +20,7 @@
           <i
             v-else
             class="lni lni-save p-2 text-success"
-            @click="setPriceAutoParts(id, price, index)"
+            @click="setPriceAutoParts(id, localPrice, index)"
           ></i>
         </button>
       </span>
@@ -29,51 +29,53 @@
   </div>
 </template>
 
-<script>
-import { mapActions } from 'vuex';
+<script setup>
+import { defineProps, ref, unref, watch } from 'vue';
+import { useStore } from '@/composables/useStore';
 
-export default {
-  name: 'AutoPartsListColumnPrice',
-
-  props: ['id', 'index', 'priceUSD', 'priceBYN'],
-
-  methods: {
-    ...mapActions('autoParts', ['CHANGE_AUTO_PARTS_PRICE']),
-
-    setEditThisColumnOnList() {
-      this.columnEdit = !this.columnEdit;
-    },
-
-    setPriceAutoParts(id, priceUSD, i) {
-      let param = {
-        id: id,
-        priceUSD: priceUSD,
-        index: i,
-      };
-
-      if (priceUSD != null && parseInt(priceUSD) != 0) {
-        this.CHANGE_AUTO_PARTS_PRICE(param);
-      }
-    },
+const props = defineProps({
+  id: {
+    type: String,
+    default: '0',
   },
-
-  data() {
-    return {
-      columnEdit: false,
-    };
+  index: {
+    type: [Number, String],
+    default: 0,
   },
-
-  computed: {
-    price: {
-      get() {
-        return this.$props.priceUSD;
-      },
-      set(val) {
-        this.$props.priceUSD = val;
-      },
-    },
+  priceUSD: {
+    type: [Number, String],
+    default: 0,
   },
+  priceBYN: {
+    type: [Number, String],
+    default: 0,
+  },
+});
+
+const columnEdit = ref(false);
+const localPrice = ref(props.priceUSD);
+const store = useStore();
+
+const setEditThisColumnOnList = () => {
+  columnEdit.value = !unref(columnEdit);
 };
+
+const setPriceAutoParts = (id, priceUSD, i) => {
+  if (priceUSD != null && parseInt(priceUSD) != 0) {
+    store.dispatch('autoParts/CHANGE_AUTO_PARTS_PRICE', {
+      id: id,
+      priceUSD: priceUSD,
+      index: i,
+    });
+  }
+};
+
+watch(
+  () => props.priceUSD,
+  (newVal) => {
+    localPrice.value = newVal;
+  },
+);
 </script>
 
 <style lang="scss" scoped>

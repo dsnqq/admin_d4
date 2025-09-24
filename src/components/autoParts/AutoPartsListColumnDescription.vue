@@ -8,18 +8,19 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'AutoPartsListColumnDescription',
+<script setup>
+import { defineProps, computed } from 'vue';
 
-  props: ['content', 'contentTheNote'],
-
-  computed: {
-    theNoteRenderOnPage() {
-      return (
-        this.$props.contentTheNote !== null && this.$props.contentTheNote !== ''
-      );
-    },
+const props = defineProps({
+  content: {
+    type: String,
+    default: '',
   },
-};
+  contentTheNote: {
+    type: String,
+    default: '',
+  },
+});
+
+const theNoteRenderOnPage = computed(() => !!props.contentTheNote);
 </script>

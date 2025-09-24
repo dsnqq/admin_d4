@@ -1,16 +1,26 @@
 <template>
-  <div v-if="contentExtension === undefined">
-    {{ content }}
-  </div>
-  <div v-else>
-    {{ content + ' ' + contentExtension }}
+  <div>
+    {{ contentFull }}
   </div>
 </template>
 
-<script>
-export default {
-  name: 'AutoPartsListColumnDefault',
+<script setup>
+import { defineProps, computed } from 'vue';
 
-  props: ['content', 'contentExtension'],
-};
+const props = defineProps({
+  content: {
+    type: String,
+    default: '',
+  },
+  contentExtension: {
+    type: String,
+    default: '',
+  },
+});
+
+const contentFull = computed(() =>
+  props.contentExtension
+    ? `${props.content} ${props.contentExtension}`
+    : props.content,
+);
 </script>
