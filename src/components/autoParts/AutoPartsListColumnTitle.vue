@@ -6,10 +6,13 @@
   </span>
 </template>
 
-<script>
-export default {
-  name: 'AutoPartsListColumnTitle',
+<script setup>
+import { defineProps } from 'vue';
 
-  props: ['title'],
-};
+defineProps({
+  title: {
+    type: String,
+    default: '',
+  },
+});
 </script>
