@@ -20,36 +20,20 @@
   </LayoutTableRow>
 </template>
 
-<script>
+<script setup>
 import { COLUMNS_DAY } from '@/components/tireStatistics/constants/constants';
-import LayoutTableRow from '@/layouts/LayoutTableRow.vue';
+import LayoutTableRow from '@/layouts/LayoutTableRow';
 import { DICTIONARY } from '@/constants/constants';
-import { mapActions, mapGetters } from 'vuex';
+import { useStore } from '@/composables/useStore';
+import { computed, onMounted } from 'vue';
 
-export default {
-  name: 'TireStatisticsDay',
+const store = useStore();
 
-  components: {
-    LayoutTableRow,
-  },
+onMounted(() => {
+  store.dispatch('tireStatistics/GET_TIRE_STATISTICS_DAY');
+});
 
-  mounted() {
-    this.GET_TIRE_STATISTICS_DAY();
-  },
-
-  computed: {
-    ...mapGetters('tireStatistics', ['TIRE_STATISTICS_DAY']),
-  },
-
-  methods: {
-    ...mapActions('tireStatistics', ['GET_TIRE_STATISTICS_DAY']),
-  },
-
-  data() {
-    return {
-      COLUMNS_DAY,
-      DICTIONARY,
-    };
-  },
-};
+const TIRE_STATISTICS_DAY = computed(
+  () => store.getters['tireStatistics/TIRE_STATISTICS_DAY'],
+);
 </script>

@@ -28,66 +28,41 @@
   </LayoutTableRow>
 </template>
 
-<script>
+<script setup>
 import { COLUMNS_MAIN } from '@/components/tireStatistics/constants/constants';
 import { DICTIONARY } from '@/constants/constants';
-import LayoutTableRow from '@/layouts/LayoutTableRow.vue';
-import Pagination from '@/components/UI/BasePagination.vue';
-import { mixins } from '@/mixins/mixins';
-import { mapActions, mapGetters } from 'vuex';
-import { DOMAIN } from '@/constants/constants';
+import LayoutTableRow from '@/layouts/LayoutTableRow';
+import Pagination from '@/components/UI/BasePagination';
+import { computed, onMounted, ref } from 'vue';
+import { useStore } from '@/composables/useStore';
+import { useDevice } from '@/composables/useDevice';
 
-export default {
-  name: 'TireStatisticsMain',
+const store = useStore();
+const pageNum = ref(1);
+const isMobile = useDevice();
 
-  components: {
-    Pagination,
-    LayoutTableRow,
-  },
+onMounted(() => {
+  store.dispatch('tireStatistics/GET_TIRE_STATISTICS', pageNum.value);
+  store.dispatch('tireStatistics/GET_TIRE_STATISTICS_TOTALS');
+});
 
-  mixins: [mixins],
-
-  mounted() {
-    this.GET_TIRE_STATISTICS(this.pageNum);
-    this.GET_TIRE_STATISTICS_TOTALS();
-  },
-
-  computed: {
-    ...mapGetters('tireStatistics', [
-      'TIRE_STATISTICS',
-      'TOTALS_TIRE_STATISTICS',
-    ]),
-  },
-
-  methods: {
-    ...mapActions('tireStatistics', [
-      'GET_TIRE_STATISTICS',
-      'GET_TIRE_STATISTICS_TOTALS',
-    ]),
-
-    renderContentText(content, type) {
-      return type == 'status' ? this.setStatusByApi(content) : content;
-    },
-
-    setPageByTotal(page) {
-      this.pageNum = page;
-      this.GET_TIRE_STATISTICS(this.pageNum);
-    },
-
-    setStatusByApi(status) {
-      return status == 1 ? 'Активно' : 'Неактивно';
-    },
-  },
-
-  data() {
-    return {
-      DOMAIN,
-      COLUMNS_MAIN,
-      DICTIONARY,
-      pageNum: 1,
-    };
-  },
+const renderContentText = (content, type) => {
+  return type == 'status' ? setStatusByApi(content) : content;
 };
+
+const setStatusByApi = (status) => (status == 1 ? 'Активно' : 'Неактивно');
+
+const setPageByTotal = (page) => {
+  pageNum.value = page;
+  store.dispatch('tireStatistics/GET_TIRE_STATISTICS', pageNum.value);
+};
+
+const TIRE_STATISTICS = computed(
+  () => store.getters['tireStatistics/TIRE_STATISTICS'],
+);
+const TOTALS_TIRE_STATISTICS = computed(
+  () => store.getters['tireStatistics/TOTALS_TIRE_STATISTICS'],
+);
 </script>
 
 <style lang="scss" scoped>
