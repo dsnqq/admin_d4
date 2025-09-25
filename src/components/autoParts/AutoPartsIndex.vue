@@ -394,6 +394,7 @@ import {
 } from '@/components/autoParts/constants/constants';
 import { computed, unref, ref, defineAsyncComponent } from 'vue';
 import { useRoute } from '@/composables/useRoute';
+import { useStore } from '@/composables/useStore';
 
 export default {
   name: 'AutoParstIndex',
@@ -416,11 +417,13 @@ export default {
     );
 
     const route = useRoute();
+    const store = useStore();
     const dopFieldsForCastDiskDrive = ref(false);
     const countAutoPartsAdd = ref(1);
     const errorValidate = ref('');
     const typeEngines = ref(TYPE_ENGINES_ALL);
     const showModal = ref(false);
+    const dopFields = ref(false);
 
     const isCreatedPage = computed(() => route.name === 'autoPartsCreate');
 
@@ -476,6 +479,15 @@ export default {
       return `${autoPartsName.name} к ${brand} ${model} ${this.AUTO_PARTS_INDEX.year} г.`;
     };
 
+    const toggleDopFields = () => {
+      dopFields.value = !unref(dopFields);
+    };
+
+    const isImageUrlLocalOrServer = (image) =>
+      image.substr(0, 4) === 'data' ? image : DOMAIN + `/image/` + image;
+
+    const customLabelNameReturn = ({ name }) => name;
+
     return {
       AutoPartsIndexButtonsCreate,
       AutoPartsIndexButtonsEdit,
@@ -486,6 +498,10 @@ export default {
       errorValidate,
       typeEngines,
       showModal,
+      dopFields,
+      customLabelNameReturn,
+      isImageUrlLocalOrServer,
+      toggleDopFields,
       createNameAutoPartsForBd,
       modalCarPhotoFade,
       removeAutoPartsMore,
@@ -625,10 +641,6 @@ export default {
       this.AUTO_PARTS_INDEX.mainImage = image;
     },
 
-    toggleDopFields() {
-      this.dopFields = !this.dopFields;
-    },
-
     removeImgDop(index) {
       this.AUTO_PARTS_INDEX.images.splice(index, 1);
       this.AUTO_PARTS_INDEX.imagesServer.splice(index, 1);
@@ -636,14 +648,6 @@ export default {
       if (this.AUTO_PARTS_INDEX.images.length == 0) {
         this.AUTO_PARTS_INDEX.mainImage = '';
       }
-    },
-
-    isImageUrlLocalOrServer(image) {
-      if (image.substr(0, 4) === 'data') {
-        return image;
-      }
-
-      return this.domain + `/image/` + image;
     },
 
     sendingDropzonePhoto() {
@@ -775,15 +779,10 @@ export default {
       this.showModal = false;
       this.SET_AUTO_PARTS_IMAGE_FROM_USER(file);
     },
-
-    customLabelNameReturn({ name }) {
-      return name;
-    },
   },
 
   data() {
     return {
-      dopFields: false,
       param: {
         id: this.$route.params.id,
       },
