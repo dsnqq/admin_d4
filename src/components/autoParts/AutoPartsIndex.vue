@@ -488,51 +488,6 @@ export default {
 
     const customLabelNameReturn = ({ name }) => name;
 
-    const validateForm = () => {
-      this.errorValidate = '';
-
-      const validations = [
-        {
-          condition:
-            !('autoPartsModelBrand' in this.AUTO_PARTS_INDEX) &&
-            this.countAutoPartsAdd === 1 &&
-            !this.isCreatedPage,
-          message: 'Заполните поле запчасть!',
-        },
-        {
-          condition:
-            this.isCreatedPage &&
-            this.autoPartsModelBrands[this.countAutoPartsAdd - 1] === undefined,
-          message: 'Заполните поле запчасть!',
-        },
-        {
-          condition: !('autoPartsName' in this.AUTO_PARTS_INDEX),
-          message: 'Заполните марку и модель!',
-        },
-        {
-          condition: !('year' in this.AUTO_PARTS_INDEX),
-          message: 'Заполните поле год!',
-        },
-        {
-          condition: !('priceUSD' in this.AUTO_PARTS_INDEX),
-          message: 'Заполните поле цена!',
-        },
-      ];
-
-      for (const { condition, message } of validations) {
-        if (condition) {
-          this.errorValidate = message;
-          window.scrollTo(0, 0);
-          break;
-        }
-      }
-    };
-
-    const sendingEvent = (file) => {
-      showModal.value = false;
-      store.dispatch('autoParts/SET_AUTO_PARTS_IMAGE_FROM_USER', file);
-    };
-
     return {
       AutoPartsIndexButtonsCreate,
       AutoPartsIndexButtonsEdit,
@@ -544,8 +499,6 @@ export default {
       typeEngines,
       showModal,
       dopFields,
-      sendingEvent,
-      validateForm,
       customLabelNameReturn,
       isImageUrlLocalOrServer,
       toggleDopFields,
@@ -619,6 +572,41 @@ export default {
 
     mainPhotoSetAutoParts(image) {
       return this.AUTO_PARTS_INDEX.mainImage == image;
+    },
+
+    validateForm() {
+      this.errorValidate = '';
+
+      if (
+        !('autoPartsModelBrand' in this.AUTO_PARTS_INDEX) &&
+        this.countAutoPartsAdd == 1 &&
+        !this.isCreatedPage
+      ) {
+        this.errorValidate = 'Заполните поле запчасть!';
+      }
+
+      if (
+        this.isCreatedPage &&
+        this.autoPartsModelBrands[this.countAutoPartsAdd - 1] == undefined
+      ) {
+        this.errorValidate = 'Заполните поле запчасть!';
+      }
+
+      if (!('autoPartsName' in this.AUTO_PARTS_INDEX)) {
+        this.errorValidate = 'Заполните марку и модель!';
+      }
+
+      if (!('year' in this.AUTO_PARTS_INDEX)) {
+        this.errorValidate = 'Заполните поле год!';
+      }
+
+      if (!('priceUSD' in this.AUTO_PARTS_INDEX)) {
+        this.errorValidate = 'Заполните поле цена!';
+      }
+
+      if (this.errorValidate) {
+        window.scrollTo(0, 0);
+      }
     },
 
     setAutoPartsFromApi(redirect) {
@@ -785,6 +773,11 @@ export default {
       }
 
       return xForm;
+    },
+
+    sendingEvent(file) {
+      this.showModal = false;
+      this.SET_AUTO_PARTS_IMAGE_FROM_USER(file);
     },
   },
 
