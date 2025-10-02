@@ -10,7 +10,6 @@
             type="button"
             class="modal-header__close close"
             data-dismiss="modal"
-            aria-hidden="true"
             @click.prevent="closeModalAdmin"
           >
             ×
@@ -24,15 +23,12 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'BaseModal',
+<script setup>
+import { defineEmits } from 'vue';
 
-  methods: {
-    closeModalAdmin() {
-      this.$emit('closeModalAdmin');
-    },
-  },
+const emit = defineEmits(['closeModalAdmin']);
+const closeModalAdmin = () => {
+  emit('closeModalAdmin');
 };
 </script>
 

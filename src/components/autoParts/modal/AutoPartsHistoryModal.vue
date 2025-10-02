@@ -32,38 +32,28 @@
   </Modal>
 </template>
 
-<script>
-import { mapGetters } from 'vuex';
+<script setup>
+import { defineAsyncComponent, defineEmits } from 'vue';
+import { useStore } from '@/composables/useStore';
 
-export default {
-  name: 'AutoPartsHistoryModal',
+const emit = defineEmits(['closeHistoryModalAdmin']);
+const store = useStore();
+const Modal = defineAsyncComponent(() => import('@/components/UI/BaseModal'));
+const AUTO_PARTS_HISTORY = store.getters['autoParts/AUTO_PARTS_HISTORY'];
+const renderValue = (data) => {
+  if (data === '') return '';
 
-  components: {
-    Modal: () => import('@/components/UI/BaseModal.vue'),
-  },
-
-  computed: {
-    ...mapGetters('autoParts', ['AUTO_PARTS_HISTORY']),
-  },
-
-  methods: {
-    renderValue(data) {
-      if (data != '') {
-        if (data == 1) {
-          return 'Активно';
-        } else if (data == 0) {
-          return 'Неактивно';
-        }
-
-        return data;
-      }
-      return '';
-    },
-
-    closeHistoryModalAdmin() {
-      this.$emit('closeHistoryModalAdmin');
-    },
-  },
+  switch (data) {
+    case 1:
+      return 'Активно';
+    case 0:
+      return 'Неактивно';
+    default:
+      return data;
+  }
+};
+const closeHistoryModalAdmin = () => {
+  emit('closeHistoryModalAdmin');
 };
 </script>
 

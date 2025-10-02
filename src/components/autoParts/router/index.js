@@ -1,27 +1,31 @@
-export let autoPartsRouter = [
+const AutoPartsList = () => import('@/components/autoParts/AutoPartsList.vue');
+const AutoPartsIndex = () =>
+  import('@/components/autoParts/AutoPartsIndex.vue');
+
+const AUTO_PARTS_META = {
+  autoParts: { title: 'Автозапчасти' },
+  autoPartsCreate: { title: 'Добавить З/Ч' },
+  autoPartsDetail: { title: 'Автозапчасть' },
+};
+
+export const autoPartsRouter = [
   {
     path: '/auto-parts',
     name: 'autoParts',
-    meta: {
-      title: 'Автозапчасти',
-    },
-    component: () => import('@/components/autoParts/AutoPartsList.vue'),
+    meta: AUTO_PARTS_META.autoParts,
+    component: AutoPartsList,
   },
   {
     path: '/auto-parts/create',
     name: 'autoPartsCreate',
-    meta: {
-      title: 'Добавить З/Ч',
-    },
-    component: () => import('@/components/autoParts/AutoPartsIndex.vue'),
+    meta: AUTO_PARTS_META.autoPartsCreate,
+    component: AutoPartsIndex,
   },
   {
     path: '/auto/:id',
     name: 'autoPartsDetail',
-    meta: {
-      title: 'Автозапчасть',
-    },
+    meta: AUTO_PARTS_META.autoPartsDetail,
     props: true,
-    component: () => import('@/components/autoParts/AutoPartsIndex.vue'),
+    component: AutoPartsIndex,
   },
 ];
