@@ -40,7 +40,16 @@ class ModelCatalogAutoParts extends Model {
         }
 
         if (!empty($data['filter_category'])) {
-            $sql .= " AND p2c.category_id = '" . (int)$data['filter_category'] . "'";
+            //$sql .= " AND p2c.category_id = '" . (int)$data['filter_category'] . "'";
+            $implode_data = array();
+
+            $categories = $this->getCategoriesChildren($data['filter_category']);
+
+            foreach ($categories as $category) {
+                $implode_data[] = "p2c.category_id = '" . (int)$category['category_id'] . "'";
+            }
+
+            $sql .= " AND (" . implode(' OR ', $implode_data) . ")";
         }
 
         if (isset($data['filter_year_start']) && $data['filter_year_start'] !== '' && isset($data['filter_year_last']) && $data['filter_year_last'] !== '') {
@@ -87,6 +96,11 @@ class ModelCatalogAutoParts extends Model {
 
         $query = $this->db->query($sql);
 
+        return $query->rows;
+    }
+
+    public function getCategoriesChildren($parent_id = 0) {
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category_path WHERE path_id = '" . (int)$parent_id . "'");
         return $query->rows;
     }
 
