@@ -838,3 +838,8 @@ export const MARKA = [
 export const CONDITION = ['новые', 'б/у', 'наварные'];
 
 export const SEASON = ['зимние', 'летние', 'всесезонные'];
+
+export const ENDPOINTS = {
+  NOTIFICATION_FROM_API:
+    '/index.php?route=api/general/information/notifacation',
+};
