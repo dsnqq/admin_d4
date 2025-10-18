@@ -46,3 +46,8 @@ export const COLUMNS = [
     type: 'default',
   },
 ];
+
+export const ENDPOINTS = {
+  GET_ORDER_SALE: '/index.php?route=api/order_sale/index/',
+  GET_ORDER_TOTALS: '/index.php?route=api/order_sale/index/totals',
+};

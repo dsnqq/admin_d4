@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { DOMAIN_API, KEYS } from '/src/constants/constants';
+import { ENDPOINTS } from '@/components/orderSale/constants/constants';
 
 export default {
   namespaced: true,
@@ -16,7 +17,7 @@ export default {
     async GET_ORDER_SALE({ commit }, page) {
       try {
         const response = await axios.post(
-          DOMAIN_API + '/index.php?route=api/order_sale/index/' + page,
+          DOMAIN_API + ENDPOINTS.GET_ORDER_SALE + page,
           {
             key: KEYS,
           },
@@ -31,7 +32,7 @@ export default {
     async GET_ORDER_TOTALS({ commit }) {
       try {
         const response = await axios.post(
-          DOMAIN_API + '/index.php?route=api/order_sale/index/totals',
+          DOMAIN_API + ENDPOINTS.GET_ORDER_TOTALS,
           {
             key: KEYS,
           },

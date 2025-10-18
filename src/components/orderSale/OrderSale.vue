@@ -11,22 +11,22 @@
       </tr>
     </template>
     <template #tableTbody>
-      <tr v-for="(order, i) in ORDER_SALE" :key="i">
+      <tr v-for="(order, i) in orderSale" :key="i">
         <td v-for="(c, index) in COLUMNS" :key="index" :data-th="c.title">
-          <template v-if="c.type == 'default'">
+          <template v-if="c.type === 'default'">
             {{ order[c.name] }}
           </template>
-          <template v-if="c.type == 'address'">
+          <template v-if="c.type === 'address'">
             <span :title="order[c.name2]" class="cursor-pointer">
               {{ order[c.name] }}
             </span>
           </template>
-          <template v-else-if="c.type == 'email'">
+          <template v-else-if="c.type === 'email'">
             <span :title="order[c.name]">
               {{ order[c.name] }}
             </span>
           </template>
-          <template v-else-if="c.type == 'products'">
+          <template v-else-if="c.type === 'products'">
             <div class="products-on-order">
               <div v-for="(p, j) in order[c.name]" :key="j">
                 {{ getInformationAbout(p) }}
@@ -38,7 +38,7 @@
     </template>
     <template #pagination>
       <Pagination
-        :totals="ORDER_TOTALS"
+        :totals="orderTotal"
         :count-chunk="isMobile ? 4 : 5"
         :class="{ 'card-body-pagination-mobile': isMobile }"
         @setPageByTotal="setPageByTotal"
@@ -60,25 +60,23 @@ const pageNum = ref(1);
 const store = useStore();
 const isMobile = useDevice();
 
-const ORDER_SALE = computed(() => store.getters['orderSale/ORDER_SALE']);
-const ORDER_TOTALS = computed(() => store.getters['orderSale/ORDER_TOTALS']);
+const orderSale = computed(() => store.getters['orderSale/ORDER_SALE']);
+const orderTotal = computed(() => store.getters['orderSale/ORDER_TOTALS']);
 
-const GET_ORDER_SALE = (page) =>
-  store.dispatch('orderSale/GET_ORDER_SALE', page);
-const GET_ORDER_TOTALS = () => store.dispatch('orderSale/GET_ORDER_TOTALS');
+const getOrderSale = (page) => store.dispatch('orderSale/GET_ORDER_SALE', page);
+const getOrderTotals = () => store.dispatch('orderSale/GET_ORDER_TOTALS');
 
-function setPageByTotal(page) {
+const setPageByTotal = (page) => {
   pageNum.value = page;
-  GET_ORDER_SALE(pageNum.value);
-}
+  getOrderSale(pageNum.value);
+};
 
-function getInformationAbout(product) {
-  return `${product.number}) ${product.name} (цена: ${product.price}$)`;
-}
+const getInformationAbout = (product) =>
+  `${product.number}) ${product.name} (цена: ${product.price}$)`;
 
 onMounted(() => {
-  GET_ORDER_SALE(pageNum.value);
-  GET_ORDER_TOTALS();
+  getOrderSale(pageNum.value);
+  getOrderTotals();
 });
 </script>
 
