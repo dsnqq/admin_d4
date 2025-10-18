@@ -1,4 +1,4 @@
-export let historyUsersRouter = [
+export const historyUsersRouter = [
   {
     path: '/history-users',
     name: 'historyUsers',

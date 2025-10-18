@@ -15,7 +15,7 @@
         </th>
       </template>
       <template #tableTbody>
-        <tr v-for="(userItem, i) in USER_HISTORY" :key="i">
+        <tr v-for="(userItem, i) in userHistory" :key="i">
           <td
             v-for="(c, index) in COLUMNS_INDEX"
             :key="index"
@@ -26,7 +26,7 @@
       </template>
       <template #pagination>
         <Pagination
-          :totals="USER_HISTORY_TOTAL"
+          :totals="userHistoryTotal"
           :count-chunk="isMobile ? 4 : 5"
           :class="{ 'card-body-pagination-mobile': isMobile }"
           @setPageByTotal="setPageByTotal"
@@ -36,64 +36,45 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import LayoutDefault from '@/layouts/LayoutDefault.vue';
 import Pagination from '@/components/UI/BasePagination.vue';
 import { COLUMNS_INDEX } from '@/components/historyUsers/constants/constants';
 import { DICTIONARY } from '@/constants/constants';
 import Breadcrumb from '@/components/UI/BaseBreadcrumb.vue';
-import { mapActions, mapGetters } from 'vuex';
-import { mixins } from '@/mixins/mixins';
+import { useDevice } from '@/composables/useDevice';
+import { computed, onMounted, ref } from 'vue';
+import { useStore } from '@/composables/useStore';
+import { useRoute } from '@/composables/useRoute';
 
-export default {
-  name: 'HistoryUsersIndex',
+const store = useStore();
+const isMobile = useDevice();
+const route = useRoute();
 
-  components: {
-    Breadcrumb,
-    Pagination,
-    LayoutDefault,
-  },
+const pageNum = ref(1);
+const id = ref(route.params.id);
+const param = ref({
+  user_id: route.params.id,
+  page: 1,
+});
 
-  mixins: [mixins],
+onMounted(() => {
+  store.dispatch('historyUsers/GET_USER_HISTORY', param.value);
+  store.dispatch('historyUsers/GET_USER_HISTORY_TOTAL', id.value);
+});
 
-  mounted() {
-    this.GET_USER_HISTORY(this.param);
-    this.GET_USER_HISTORY_TOTAL(this.id);
-  },
+const userHistory = computed(() => store.getters['historyUsers/USER_HISTORY']);
+const userHistoryTotal = computed(
+  () => store.getters['historyUsers/USER_HISTORY_TOTAL'],
+);
 
-  computed: {
-    ...mapGetters('historyUsers', ['USER_HISTORY', 'USER_HISTORY_TOTAL']),
-  },
+const renderContentOnColumn = (content, type) =>
+  type === 'image' ? '<img src="' + content + '" />' : content;
 
-  methods: {
-    ...mapActions('historyUsers', [
-      'GET_USER_HISTORY',
-      'GET_USER_HISTORY_TOTAL',
-    ]),
-
-    renderContentOnColumn(content, type) {
-      return type == 'image' ? '<img src="' + content + '" />' : content;
-    },
-
-    setPageByTotal(page) {
-      this.pageNum = page;
-      this.param.page = page;
-      this.GET_USER_HISTORY(this.param);
-    },
-  },
-
-  data() {
-    return {
-      id: this.$route.params.id,
-      COLUMNS_INDEX,
-      DICTIONARY,
-      pageNum: 1,
-      param: {
-        user_id: this.$route.params.id,
-        page: 1,
-      },
-    };
-  },
+const setPageByTotal = (page) => {
+  pageNum.value = page;
+  param.value.page = page;
+  store.dispatch('historyUsers/GET_USER_HISTORY', param.value);
 };
 </script>
 

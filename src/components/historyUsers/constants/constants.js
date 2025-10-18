@@ -89,3 +89,9 @@ export const COLUMNS_LIST = [
     ],
   },
 ];
+
+export const ENDPOINTS = {
+  GET_USER_HISTORY_LIST: '/index.php?route=api/history_users/index',
+  GET_USER_HISTORY: '/index.php?route=api/history_users/index/',
+  GET_USER_HISTORY_TOTAL: '/index.php?route=api/history_users/index/',
+};

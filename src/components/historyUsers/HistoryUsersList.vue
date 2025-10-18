@@ -1,14 +1,19 @@
 <template>
   <LayoutDefault>
     <template #tableThead>
-      <th v-for="(c, i) in columns" :key="i" scope="col" :class="c.className">
+      <th
+        v-for="(c, i) in COLUMNS_LIST"
+        :key="i"
+        scope="col"
+        :class="c.className"
+      >
         {{ c.title }}
       </th>
     </template>
     <template #tableTbody>
-      <tr v-for="(userItem, i) in USER_HISTORY_LIST" :key="i">
+      <tr v-for="(userItem, i) in userHistoryList" :key="i">
         <td
-          v-for="(c, index) in columns"
+          v-for="(c, index) in COLUMNS_LIST"
           :key="index"
           :class="c.className"
           :data-th="c.title"
@@ -38,38 +43,17 @@
   </LayoutDefault>
 </template>
 
-<script>
+<script setup>
 import LayoutDefault from '@/layouts/LayoutDefault.vue';
 import { COLUMNS_LIST } from '@/components/historyUsers/constants/constants';
-import { mapActions, mapGetters } from 'vuex';
+import { computed } from 'vue';
+import { useStore } from '@/composables/useStore';
 
-export default {
-  name: 'HistoryUsersList',
+const store = useStore();
+store.dispatch('historyUsers/GET_USER_HISTORY_LIST');
 
-  components: {
-    LayoutDefault,
-  },
-
-  mounted() {
-    this.GET_USER_HISTORY_LIST();
-  },
-
-  computed: {
-    ...mapGetters('historyUsers', ['USER_HISTORY_LIST']),
-  },
-
-  methods: {
-    ...mapActions('historyUsers', ['GET_USER_HISTORY_LIST']),
-
-    getStatusUser(status) {
-      return status == 1 ? 'Активно' : 'Неактивно';
-    },
-  },
-
-  data() {
-    return {
-      columns: COLUMNS_LIST,
-    };
-  },
-};
+const userHistoryList = computed(
+  () => store.getters['historyUsers/USER_HISTORY_LIST'],
+);
+const getStatusUser = (status) => (status == 1 ? 'Активно' : 'Неактивно');
 </script>

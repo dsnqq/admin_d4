@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { DOMAIN_API, KEYS } from '/src/constants/constants';
+import { ENDPOINTS } from '@/components/historyUsers/constants/constants';
 
 export default {
   namespaced: true,
@@ -9,78 +10,64 @@ export default {
     userHistoryTotal: 0,
   },
   getters: {
-    USER_HISTORY_LIST(state) {
-      return state.userHistoryList;
-    },
-    USER_HISTORY(state) {
-      return state.userHistory;
-    },
-    USER_HISTORY_TOTAL(state) {
-      return state.userHistoryTotal;
-    },
-    IS_UI_LOCKED(state) {
-      return state.lockingPool > 0;
-    },
+    USER_HISTORY_LIST: (state) => state.userHistoryList,
+    USER_HISTORY: (state) => state.userHistory,
+    USER_HISTORY_TOTAL: (state) => state.userHistoryTotal,
+    IS_UI_LOCKED: (state) => state.lockingPool > 0,
   },
   actions: {
-    GET_USER_HISTORY_LIST({ commit }, param) {
+    async GET_USER_HISTORY_LIST({ commit }, param) {
       this.dispatch('generalStore/LOCK_UI');
-      return axios
-        .post(DOMAIN_API + '/index.php?route=api/history_users/index', {
-          key: KEYS,
-          page: param,
-        })
-        .then((response) => {
-          this.dispatch('generalStore/UN_LOCK_UI');
-          commit('SET_USER_HISTORY_LIST', response.data.userHistoryList);
-          return response.data.userHistoryList;
-        })
-        .catch(function (error) {
-          console.log(error);
-          return error;
-        });
+      try {
+        const response = await axios.post(
+          DOMAIN_API + ENDPOINTS.GET_USER_HISTORY_LIST,
+          {
+            key: KEYS,
+            page: param,
+          },
+        );
+
+        this.dispatch('generalStore/UN_LOCK_UI');
+        commit('SET_USER_HISTORY_LIST', response.data.userHistoryList);
+        return response.data.userHistoryList;
+      } catch (e) {
+        console.error(e);
+        return e;
+      }
     },
-    GET_USER_HISTORY({ commit }, param) {
+    async GET_USER_HISTORY({ commit }, param) {
       this.dispatch('generalStore/LOCK_UI');
-      return axios
-        .post(
-          DOMAIN_API +
-            '/index.php?route=api/history_users/index/' +
-            param.user_id,
+      try {
+        const response = await axios.post(
+          DOMAIN_API + ENDPOINTS.GET_USER_HISTORY + param.user_id,
           {
             page: param.page,
             key: KEYS,
           },
-        )
-        .then((response) => {
-          this.dispatch('generalStore/UN_LOCK_UI');
-          commit('SET_USER_HISTORY', response.data.userHistory);
-          return response.data.userHistory;
-        })
-        .catch(function (error) {
-          console.log(error);
-          return error;
-        });
+        );
+
+        this.dispatch('generalStore/UN_LOCK_UI');
+        commit('SET_USER_HISTORY', response.data.userHistory);
+        return response.data.userHistory;
+      } catch (e) {
+        console.error(e);
+        return e;
+      }
     },
-    GET_USER_HISTORY_TOTAL({ commit }, user_id) {
-      return axios
-        .post(
-          DOMAIN_API +
-            '/index.php?route=api/history_users/index/' +
-            user_id +
-            '/total',
+    async GET_USER_HISTORY_TOTAL({ commit }, user_id) {
+      try {
+        const response = await axios.post(
+          DOMAIN_API + ENDPOINTS.GET_USER_HISTORY_TOTAL + user_id + '/total',
           {
             key: KEYS,
           },
-        )
-        .then((response) => {
-          commit('SET_USER_HISTORY_TOTAL', response.data.userHistoryTotal);
-          return response.data.userHistoryTotal;
-        })
-        .catch(function (error) {
-          console.log(error);
-          return error;
-        });
+        );
+        commit('SET_USER_HISTORY_TOTAL', response.data.userHistoryTotal);
+        return response.data.userHistoryTotal;
+      } catch (e) {
+        console.error(e);
+        return e;
+      }
     },
   },
   mutations: {
