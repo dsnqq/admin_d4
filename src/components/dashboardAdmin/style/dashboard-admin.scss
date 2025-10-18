@@ -1,8 +1,10 @@
 .dashboard-admin {
   overflow: hidden;
 
-  &__input--edits {
-    width: 55px;
+  &__input {
+    &--edits {
+      width: 55px;
+    }
   }
 
   &__card {

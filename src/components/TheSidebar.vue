@@ -2,18 +2,19 @@
   <div class="sidebar-wrapper">
     <div class="sidebar-header">
       <div class="sidebar-header__link">
-        <div>
+        <router-link
+          class="sidebar-header__link"
+          :to="{ name: 'dashboardAdmin' }"
+        >
           <img
             :src="`/assets/images/logo-icon.png`"
             class="logo-icon"
             alt="d4.by - logo"
           />
-        </div>
-        <div>
           <h4 class="logo-text">
             {{ DICTIONARY.logo }}
           </h4>
-        </div>
+        </router-link>
       </div>
       <div
         class="toggle-icon ms-auto desktop-hidden"
@@ -57,7 +58,7 @@ const menuSideBarClosed = () => {
 };
 
 const checkPermissions = (p) =>
-  p.includes(parseInt(JSON.parse(localStorage.user).user_id)) || p.length == 0;
+  p.includes(parseInt(JSON.parse(localStorage.user).user_id)) || p.length === 0;
 
 const linkToComponent = function (linkComponent) {
   router.push({ name: linkComponent }).catch(() => {});

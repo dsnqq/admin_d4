@@ -1,11 +1,11 @@
 <template>
   <div class="dashboard-admin">
     <div
-      v-if="DASHBOARD_INFORMATION.sectionS"
+      v-if="dashboardInformation.sectionS"
       class="row row-cols-1 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-2"
     >
       <div
-        v-for="(s, i) in DASHBOARD_INFORMATION.sectionS"
+        v-for="(s, i) in dashboardInformation.sectionS"
         :key="i"
         class="col"
       >
@@ -29,11 +29,11 @@
       </div>
     </div>
     <div
-      v-if="DASHBOARD_INFORMATION.sectionM"
+      v-if="dashboardInformation.sectionM"
       class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-2"
     >
       <div
-        v-for="(m, i) in DASHBOARD_INFORMATION.sectionM"
+        v-for="(m, i) in dashboardInformation.sectionM"
         :key="i"
         class="col"
       >
@@ -58,7 +58,7 @@
       </div>
     </div>
     <div
-      v-if="DASHBOARD_INFORMATION.currency"
+      v-if="dashboardInformation.currency"
       class="row row-cols-2 row-cols-sm-3 row-cols-md-3 row-cols-xl-3 row-cols-xxl-3"
     >
       <div class="col">
@@ -70,13 +70,13 @@
             <h3>
               <input
                 v-if="columnEditUSD"
-                v-model="DASHBOARD_INFORMATION.currency.USD"
+                v-model="dashboardInformation.currency.USD"
                 placeholder="Курс USD"
                 class="dashboard-admin__input--edits"
                 type="text"
               />
               <span v-else>
-                {{ DASHBOARD_INFORMATION.currency.USD }}
+                {{ dashboardInformation.currency.USD }}
               </span>
               <i
                 v-if="!columnEditUSD"
@@ -102,13 +102,13 @@
             <h3>
               <input
                 v-if="columnEditRUB"
-                v-model="DASHBOARD_INFORMATION.currency.RUB"
+                v-model="dashboardInformation.currency.RUB"
                 placeholder="Курс RUB"
                 class="dashboard-admin__input--edits"
                 type="text"
               />
               <span v-else>
-                {{ DASHBOARD_INFORMATION.currency.RUB }}
+                {{ dashboardInformation.currency.RUB }}
               </span>
               <i
                 v-if="!columnEditRUB"
@@ -135,13 +135,13 @@
               <h3>
                 <input
                   v-if="columnEditEUR"
-                  v-model="DASHBOARD_INFORMATION.currency.EUR"
+                  v-model="dashboardInformation.currency.EUR"
                   placeholder="Курс EUR"
                   class="dashboard-admin__input--edits"
                   type="text"
                 />
                 <span v-else>
-                  {{ DASHBOARD_INFORMATION.currency.EUR }}
+                  {{ dashboardInformation.currency.EUR }}
                 </span>
                 <i
                   v-if="!columnEditEUR"
@@ -163,76 +163,61 @@
   </div>
 </template>
 
-<script>
-import { mapActions, mapGetters } from 'vuex';
+<script setup>
+import { useStore } from '@/composables/useStore';
+import { computed, onMounted, ref, unref } from 'vue';
 
-export default {
-  name: 'DashboardAdmin',
+const store = useStore();
 
-  mounted() {
-    this.GET_DASHBOARD_INFORMATION();
-  },
+const columnEditUSD = ref(false);
+const columnEditRUB = ref(false);
+const columnEditEUR = ref(false);
 
-  computed: {
-    ...mapGetters('dashboardAdmin', ['DASHBOARD_INFORMATION']),
-  },
+onMounted(() => {
+  store.dispatch('dashboardAdmin/GET_DASHBOARD_INFORMATION');
+});
 
-  methods: {
-    ...mapActions('dashboardAdmin', [
-      'GET_DASHBOARD_INFORMATION',
-      'SET_CURRENCY_FROM_API',
-    ]),
+const dashboardInformation = computed(
+  () => store.getters['dashboardAdmin/DASHBOARD_INFORMATION'],
+);
 
-    saveCurrencyUSD() {
-      let param = {
-        currency: 'USD',
-        value: this.DASHBOARD_INFORMATION.currency.USD,
-      };
+const saveCurrencyUSD = () => {
+  store.dispatch('dashboardAdmin/SET_CURRENCY_FROM_API', {
+    currency: 'USD',
+    value: dashboardInformation.value.currency.USD,
+  });
 
-      this.SET_CURRENCY_FROM_API(param);
-      this.editCurrencyUSD();
-    },
+  editCurrencyUSD();
+};
 
-    saveCurrencyRUB() {
-      let param = {
-        currency: 'RUB',
-        value: this.DASHBOARD_INFORMATION.currency.RUB,
-      };
+const saveCurrencyRUB = () => {
+  store.dispatch('dashboardAdmin/SET_CURRENCY_FROM_API', {
+    currency: 'RUB',
+    value: dashboardInformation.value.currency.RUB,
+  });
 
-      this.SET_CURRENCY_FROM_API(param);
-      this.editCurrencyRUB();
-    },
+  editCurrencyRUB();
+};
 
-    saveCurrencyEUR() {
-      let param = {
-        currency: 'EUR',
-        value: this.DASHBOARD_INFORMATION.currency.EUR,
-      };
+const saveCurrencyEUR = () => {
+  store.dispatch('dashboardAdmin/SET_CURRENCY_FROM_API', {
+    currency: 'EUR',
+    value: dashboardInformation.value.currency.EUR,
+  });
 
-      this.SET_CURRENCY_FROM_API(param);
-      this.editCurrencyEUR();
-    },
+  editCurrencyEUR();
+};
 
-    editCurrencyUSD() {
-      this.columnEditUSD = !this.columnEditUSD;
-    },
+const editCurrencyUSD = () => {
+  columnEditUSD.value = !unref(columnEditUSD);
+};
 
-    editCurrencyRUB() {
-      this.columnEditRUB = !this.columnEditRUB;
-    },
+const editCurrencyRUB = () => {
+  columnEditRUB.value = !unref(columnEditRUB);
+};
 
-    editCurrencyEUR() {
-      this.columnEditEUR = !this.columnEditEUR;
-    },
-  },
-
-  data() {
-    return {
-      columnEditUSD: false,
-      columnEditRUB: false,
-      columnEditEUR: false,
-    };
-  },
+const editCurrencyEUR = () => {
+  columnEditEUR.value = !unref(columnEditEUR);
 };
 </script>
 
