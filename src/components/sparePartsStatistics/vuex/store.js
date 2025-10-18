@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { DOMAIN_API, KEYS } from '/src/constants/constants';
+import { ENDPOINTS } from '@/components/sparePartsStatistics/constants/constants';
 
 export default {
   namespaced: true,
@@ -9,84 +10,77 @@ export default {
     totalsSparePartsStatistics: 0,
   },
   getters: {
-    SPARE_PARTS_STATISTICS(state) {
-      return state.sparePartsStatistics;
-    },
-    TOTALS_SPARE_PARTS_STATISTICS(state) {
-      return state.totalsSparePartsStatistics;
-    },
-    SPARE_PARTS_STATISTICS_DAY(state) {
-      return state.sparePartsStatisticsDay;
-    },
+    SPARE_PARTS_STATISTICS: (state) => state.sparePartsStatistics,
+    TOTALS_SPARE_PARTS_STATISTICS: (state) => state.totalsSparePartsStatistics,
+    SPARE_PARTS_STATISTICS_DAY: (state) => state.sparePartsStatisticsDay,
   },
   actions: {
     async GET_SPARE_PARTS_STATISTICS({ commit }, param) {
-      this.dispatch('generalStore/LOCK_UI');
-      return axios
-        .post(
-          DOMAIN_API + '/index.php?route=api/spare_parts_statistics/index',
+      try {
+        this.dispatch('generalStore/LOCK_UI');
+
+        const response = await axios.post(
+          DOMAIN_API + ENDPOINTS.GET_SPARE_PARTS_STATISTICS,
           {
             key: KEYS,
             page: param,
           },
-        )
-        .then((response) => {
-          this.dispatch('generalStore/UN_LOCK_UI');
-          commit(
-            'SET_SPARE_PARTS_STATISTICS_TO_STATE',
-            response.data.sparePartsStatistics,
-          );
-          return response.data.sparePartsStatistics;
-        })
-        .catch(function (error) {
-          console.log(error);
-          return error;
-        });
-    },
+        );
 
-    GET_SPARE_PARTS_STATISTICS_TOTALS({ commit }) {
-      return axios
-        .post(
-          DOMAIN_API +
-            '/index.php?route=api/spare_parts_statistics/index/totals',
+        this.dispatch('generalStore/UN_LOCK_UI');
+        commit(
+          'SET_SPARE_PARTS_STATISTICS_TO_STATE',
+          response.data.sparePartsStatistics,
+        );
+
+        return response.data.sparePartsStatistics;
+      } catch (e) {
+        console.error(e);
+        return e;
+      }
+    },
+    async GET_SPARE_PARTS_STATISTICS_TOTALS({ commit }) {
+      try {
+        const response = await axios.post(
+          DOMAIN_API + ENDPOINTS.GET_SPARE_PARTS_STATISTICS_TOTALS,
           {
             key: KEYS,
           },
-        )
-        .then((response) => {
-          commit(
-            'SET_TOTALS_SPARE_PARTS_STATISTICS',
-            response.data.totalsSparePartsStatistics,
-          );
-          return response.data.totalsSparePartsStatistics;
-        })
-        .catch(function (error) {
-          console.log(error);
-          return error;
-        });
-    },
+        );
 
-    GET_SPARE_PARTS_STATISTICS_DAY({ commit }) {
-      this.dispatch('generalStore/LOCK_UI');
-      return axios
-        .post(
-          DOMAIN_API + '/index.php?route=api/spare_parts_statistics/index/day',
+        commit(
+          'SET_TOTALS_SPARE_PARTS_STATISTICS',
+          response.data.totalsSparePartsStatistics,
+        );
+
+        return response.data.totalsSparePartsStatistics;
+      } catch (e) {
+        console.error(e);
+        return e;
+      }
+    },
+    async GET_SPARE_PARTS_STATISTICS_DAY({ commit }) {
+      try {
+        this.dispatch('generalStore/LOCK_UI');
+
+        const response = await axios.post(
+          DOMAIN_API + ENDPOINTS.GET_SPARE_PARTS_STATISTICS_DAY,
           {
             key: KEYS,
           },
-        )
-        .then((response) => {
-          this.dispatch('generalStore/UN_LOCK_UI');
-          commit(
-            'SET_DAY_SPARE_PARTS_STATISTICS',
-            response.data.sparePartsStatisticsDay,
-          );
-          return response.data.sparePartsStatisticsDay;
-        })
-        .catch(function (error) {
-          console.log(error);
-          return error;
-        });
+        );
+
+        this.dispatch('generalStore/UN_LOCK_UI');
+        commit(
+          'SET_DAY_SPARE_PARTS_STATISTICS',
+          response.data.sparePartsStatisticsDay,
+        );
+
+        return response.data.sparePartsStatisticsDay;
+      } catch (e) {
+        console.error(e);
+        return e;
+      }
     },
   },
   mutations: {

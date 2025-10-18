@@ -11,7 +11,7 @@
       </th>
     </template>
     <template #tableTbody>
-      <tr v-for="(item, i) in SPARE_PARTS_STATISTICS_DAY" :key="i">
+      <tr v-for="(item, i) in sparePartsStatisticsDay" :key="i">
         <td v-for="(c, index) in COLUMNS_DAY" :key="index" :data-th="c.title">
           {{ item[c.content] + c.prefix }}
         </td>
@@ -20,33 +20,20 @@
   </LayoutTableRow>
 </template>
 
-<script>
+<script setup>
 import { COLUMNS_DAY } from '@/components/sparePartsStatistics/constants/constants';
 import { DICTIONARY } from '@/constants/constants';
 import LayoutTableRow from '@/layouts/LayoutTableRow.vue';
-import { mapActions, mapGetters } from 'vuex';
+import { computed, onMounted } from 'vue';
+import { useStore } from '@/composables/useStore';
 
-export default {
-  name: 'SparePartsStatisticsDay',
-  components: { LayoutTableRow },
+const store = useStore();
 
-  mounted() {
-    this.GET_SPARE_PARTS_STATISTICS_DAY();
-  },
+onMounted(() => {
+  store.dispatch('sparePartsStatistics/GET_SPARE_PARTS_STATISTICS_DAY');
+});
 
-  computed: {
-    ...mapGetters('sparePartsStatistics', ['SPARE_PARTS_STATISTICS_DAY']),
-  },
-
-  methods: {
-    ...mapActions('sparePartsStatistics', ['GET_SPARE_PARTS_STATISTICS_DAY']),
-  },
-
-  data() {
-    return {
-      DICTIONARY,
-      COLUMNS_DAY,
-    };
-  },
-};
+const sparePartsStatisticsDay = computed(
+  () => store.getters['sparePartsStatistics/SPARE_PARTS_STATISTICS_DAY'],
+);
 </script>

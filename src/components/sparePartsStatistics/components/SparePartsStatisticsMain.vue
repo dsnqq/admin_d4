@@ -33,64 +33,50 @@
   </LayoutTableRow>
 </template>
 
-<script>
+<script setup>
 import LayoutTableRow from '@/layouts/LayoutTableRow.vue';
 import Pagination from '@/components/UI/BasePagination.vue';
-import { mapActions, mapGetters } from 'vuex';
-import { DICTIONARY, DOMAIN } from '@/constants/constants';
-import { mixins } from '@/mixins/mixins';
+import { DICTIONARY } from '@/constants/constants';
 import { COLUMNS_MAIN } from '@/components/sparePartsStatistics/constants/constants';
 
-export default {
-  name: 'SparePartsStatisticsMain',
+import { useDevice } from '@/composables/useDevice';
+import { computed, onMounted, ref } from 'vue';
+import { useStore } from '@/composables/useStore';
 
-  components: {
-    Pagination,
-    LayoutTableRow,
-  },
+const isMobile = useDevice();
+const store = useStore();
 
-  mixins: [mixins],
+const pageNum = ref(1);
 
-  mounted() {
-    this.GET_SPARE_PARTS_STATISTICS(this.pageNum);
-    this.GET_SPARE_PARTS_STATISTICS_TOTALS();
-  },
+onMounted(() => {
+  store.dispatch(
+    'sparePartsStatistics/GET_SPARE_PARTS_STATISTICS',
+    pageNum.value,
+  );
+  store.dispatch('sparePartsStatistics/GET_SPARE_PARTS_STATISTICS_TOTALS');
+});
 
-  computed: {
-    ...mapGetters('sparePartsStatistics', [
-      'SPARE_PARTS_STATISTICS',
-      'TOTALS_SPARE_PARTS_STATISTICS',
-    ]),
-  },
+const SPARE_PARTS_STATISTICS = computed(
+  () => store.getters['sparePartsStatistics/TOTALS_SPARE_PARTS_STATISTICS'],
+);
+const TOTALS_SPARE_PARTS_STATISTICS = computed(
+  () => store.getters['sparePartsStatistics/TOTALS_SPARE_PARTS_STATISTICS'],
+);
 
-  methods: {
-    ...mapActions('sparePartsStatistics', [
-      'GET_SPARE_PARTS_STATISTICS',
-      'GET_SPARE_PARTS_STATISTICS_TOTALS',
-    ]),
+const renderContentText = (content, type) => {
+  return type === 'status' ? setStatusByApi(content) : content;
+};
 
-    renderContentText(content, type) {
-      return type == 'status' ? this.setStatusByApi(content) : content;
-    },
+const setPageByTotal = (page) => {
+  pageNum.value = page;
+  store.dispatch(
+    'sparePartsStatistics/GET_SPARE_PARTS_STATISTICS',
+    pageNum.value,
+  );
+};
 
-    setPageByTotal(page) {
-      this.pageNum = page;
-      this.GET_SPARE_PARTS_STATISTICS(this.pageNum);
-    },
-
-    setStatusByApi(status) {
-      return status == 1 ? 'Активно' : 'Неактивно';
-    },
-  },
-
-  data() {
-    return {
-      DOMAIN,
-      DICTIONARY,
-      COLUMNS_MAIN,
-      pageNum: 1,
-    };
-  },
+const setStatusByApi = (status) => {
+  return status == 1 ? 'Активно' : 'Неактивно';
 };
 </script>
 

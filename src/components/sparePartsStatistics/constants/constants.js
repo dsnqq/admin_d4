@@ -33,3 +33,12 @@ export const COLUMNS_MAIN = [
     content: 'views',
   },
 ];
+
+export const ENDPOINTS = {
+  GET_SPARE_PARTS_STATISTICS:
+    '/index.php?route=api/spare_parts_statistics/index',
+  GET_SPARE_PARTS_STATISTICS_TOTALS:
+    '/index.php?route=api/spare_parts_statistics/index/totals',
+  GET_SPARE_PARTS_STATISTICS_DAY:
+    '/index.php?route=api/spare_parts_statistics/index/day',
+};

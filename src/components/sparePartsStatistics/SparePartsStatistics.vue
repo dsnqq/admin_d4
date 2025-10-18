@@ -18,43 +18,38 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'SparePartsStatistics',
+<script setup>
+import { ref, defineAsyncComponent } from 'vue';
 
-  components: {
-    SparePartsStatisticsMain: () =>
-      import(
-        '@/components/sparePartsStatistics/components/SparePartsStatisticsMain.vue'
-      ),
-    SparePartsStatisticsDay: () =>
-      import(
-        '@/components/sparePartsStatistics/components/SparePartsStatisticsDay.vue'
-      ),
+const SparePartsStatisticsMain = defineAsyncComponent(() =>
+  import(
+    '@/components/sparePartsStatistics/components/SparePartsStatisticsMain'
+  ),
+);
+const SparePartsStatisticsDay = defineAsyncComponent(() =>
+  import(
+    '@/components/sparePartsStatistics/components/SparePartsStatisticsDay'
+  ),
+);
+
+const tabComponents = ref([
+  {
+    component: SparePartsStatisticsMain,
+    title: 'Статистика просмотров З/Ч',
   },
-
-  data() {
-    return {
-      tabActive: 'SparePartsStatisticsMain',
-      tabComponents: [
-        {
-          component: 'SparePartsStatisticsMain',
-          title: 'Статистика просмотров З/Ч',
-        },
-        { component: 'SparePartsStatisticsDay', title: 'Статистика по датам' },
-      ],
-    };
+  {
+    component: SparePartsStatisticsDay,
+    title: 'Статистика по датам',
   },
+]);
+const tabActive = ref(SparePartsStatisticsMain);
 
-  methods: {
-    setActiveClass(component) {
-      return this.tabActive == component ? 'active' : '';
-    },
+const setActiveClass = (component) => {
+  return tabActive.value === component ? 'active' : '';
+};
 
-    setActiveTab(component) {
-      this.tabActive = component;
-    },
-  },
+const setActiveTab = (component) => {
+  tabActive.value = component;
 };
 </script>
 
