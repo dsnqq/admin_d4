@@ -19,11 +19,6 @@ export const COLUMNS = [
     name: 'telephone',
     type: 'default',
   },
-  /*{
-        title: "Город",
-        name: "information",
-        type: "default",
-    },*/
   {
     title: 'Адрес',
     name: 'shipping_adress',

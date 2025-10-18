@@ -9,42 +9,39 @@ export default {
     totals: 0,
   },
   getters: {
-    ORDER_SALE(state) {
-      return state.orders;
-    },
-    ORDER_TOTALS(state) {
-      return state.totals;
-    },
+    ORDER_SALE: (state) => state.orders,
+    ORDER_TOTALS: (state) => state.totals,
   },
   actions: {
-    GET_ORDER_SALE({ commit }, page) {
-      return axios
-        .post(DOMAIN_API + '/index.php?route=api/order_sale/index/' + page, {
-          key: KEYS,
-        })
-        .then((response) => {
-          commit('SET_ORDER_SALE', response.data.orders);
-          return response.data.orders;
-        })
-        .catch(function (error) {
-          console.log(error);
-          return error;
-        });
+    async GET_ORDER_SALE({ commit }, page) {
+      try {
+        const response = await axios.post(
+          DOMAIN_API + '/index.php?route=api/order_sale/index/' + page,
+          {
+            key: KEYS,
+          },
+        );
+        commit('SET_ORDER_SALE', response.data.orders);
+        return response.data.orders;
+      } catch (e) {
+        console.error(e);
+        return e;
+      }
     },
-
-    GET_ORDER_TOTALS({ commit }) {
-      return axios
-        .post(DOMAIN_API + '/index.php?route=api/order_sale/index/totals', {
-          key: KEYS,
-        })
-        .then((response) => {
-          commit('SET_ORDER_TOTALS', response.data.totals);
-          return response.data.totals;
-        })
-        .catch(function (error) {
-          console.log(error);
-          return error;
-        });
+    async GET_ORDER_TOTALS({ commit }) {
+      try {
+        const response = await axios.post(
+          DOMAIN_API + '/index.php?route=api/order_sale/index/totals',
+          {
+            key: KEYS,
+          },
+        );
+        commit('SET_ORDER_TOTALS', response.data.totals);
+        return response.data.totals;
+      } catch (e) {
+        console.error(e);
+        return e;
+      }
     },
   },
   mutations: {
