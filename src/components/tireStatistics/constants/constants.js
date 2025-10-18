@@ -33,3 +33,10 @@ export const COLUMNS_MAIN = [
     content: 'views',
   },
 ];
+
+export const ENDPOINTS = {
+  GET_TIRE_STATISTICS: '/index.php?route=api/tire_statistics/index',
+  GET_TIRE_STATISTICS_TOTALS:
+    '/index.php?route=api/tire_statistics/index/totals',
+  GET_TIRE_STATISTICS_DAY: '/index.php?route=api/tire_statistics/index/day',
+};

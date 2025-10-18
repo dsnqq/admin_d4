@@ -11,7 +11,7 @@
       </th>
     </template>
     <template #tableTbody>
-      <tr v-for="(tireStatisticsItem, i) in TIRE_STATISTICS" :key="i">
+      <tr v-for="(tireStatisticsItem, i) in tireStatistics" :key="i">
         <td v-for="(c, index) in COLUMNS_MAIN" :key="index" :data-th="c.title">
           {{ renderContentText(tireStatisticsItem[c.content], c.content) }}
         </td>
@@ -21,7 +21,7 @@
       <Pagination
         :count-chunk="isMobile ? 4 : 5"
         :class="{ 'card-body-pagination-mobile': isMobile }"
-        :totals="TOTALS_TIRE_STATISTICS"
+        :totals="totalsTireStatistics"
         @setPageByTotal="setPageByTotal"
       />
     </template>
@@ -57,10 +57,10 @@ const setPageByTotal = (page) => {
   store.dispatch('tireStatistics/GET_TIRE_STATISTICS', pageNum.value);
 };
 
-const TIRE_STATISTICS = computed(
+const tireStatistics = computed(
   () => store.getters['tireStatistics/TIRE_STATISTICS'],
 );
-const TOTALS_TIRE_STATISTICS = computed(
+const totalsTireStatistics = computed(
   () => store.getters['tireStatistics/TOTALS_TIRE_STATISTICS'],
 );
 </script>

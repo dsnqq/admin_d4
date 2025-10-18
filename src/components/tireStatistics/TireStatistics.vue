@@ -18,36 +18,34 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'TireStatistics',
+<script setup>
+import { defineAsyncComponent, ref } from 'vue';
 
-  components: {
-    TireStatisticsMain: () =>
-      import('@/components/tireStatistics/components/TireStatisticsMain.vue'),
-    TireStatisticsDay: () =>
-      import('@/components/tireStatistics/components/TireStatisticsDay.vue'),
+const TireStatisticsMain = defineAsyncComponent(() =>
+  import('@/components/tireStatistics/components/TireStatisticsMain.vue'),
+);
+const TireStatisticsDay = defineAsyncComponent(() =>
+  import('@/components/tireStatistics/components/TireStatisticsDay.vue'),
+);
+
+const tabActive = ref(TireStatisticsMain);
+const tabComponents = ref([
+  {
+    component: TireStatisticsMain,
+    title: 'Статистика просмотров шин',
   },
-
-  data() {
-    return {
-      tabActive: 'TireStatisticsMain',
-      tabComponents: [
-        { component: 'TireStatisticsMain', title: 'Статистика просмотров шин' },
-        { component: 'TireStatisticsDay', title: 'Статистика по датам' },
-      ],
-    };
+  {
+    component: TireStatisticsDay,
+    title: 'Статистика по датам',
   },
+]);
 
-  methods: {
-    setActiveClass(component) {
-      return this.tabActive == component ? 'active' : '';
-    },
+const setActiveClass = (component) => {
+  return tabActive.value === component ? 'active' : '';
+};
 
-    setActiveTab(component) {
-      this.tabActive = component;
-    },
-  },
+const setActiveTab = (component) => {
+  tabActive.value = component;
 };
 </script>
 

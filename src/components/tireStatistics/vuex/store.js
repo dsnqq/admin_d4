@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { DOMAIN_API, KEYS } from '/src/constants/constants';
+import { ENDPOINTS } from '@/components/tireStatistics/constants/constants';
 
 export default {
   namespaced: true,
@@ -9,71 +10,70 @@ export default {
     totalsTireStatistics: 0,
   },
   getters: {
-    TIRE_STATISTICS(state) {
-      return state.tireStatistics;
-    },
-    TOTALS_TIRE_STATISTICS(state) {
-      return state.totalsTireStatistics;
-    },
-    TIRE_STATISTICS_DAY(state) {
-      return state.tireStatisticsDay;
-    },
+    TIRE_STATISTICS: (state) => state.tireStatistics,
+    TOTALS_TIRE_STATISTICS: (state) => state.totalsTireStatistics,
+    TIRE_STATISTICS_DAY: (state) => state.tireStatisticsDay,
   },
   actions: {
     async GET_TIRE_STATISTICS({ commit }, param) {
-      this.dispatch('generalStore/LOCK_UI');
-      return axios
-        .post(DOMAIN_API + '/index.php?route=api/tire_statistics/index', {
-          key: KEYS,
-          page: param,
-        })
-        .then((response) => {
-          this.dispatch('generalStore/UN_LOCK_UI');
-          commit('SET_TIRE_STATISTICS_TO_STATE', response.data.tireStatistics);
-          return response.data.tireStatistics;
-        })
-        .catch(function (error) {
-          console.log(error);
-          return error;
-        });
-    },
+      try {
+        this.dispatch('generalStore/LOCK_UI');
+        const response = await axios.post(
+          DOMAIN_API + ENDPOINTS.GET_TIRE_STATISTICS,
+          {
+            key: KEYS,
+            page: param,
+          },
+        );
 
-    GET_TIRE_STATISTICS_TOTALS({ commit }) {
-      return axios
-        .post(
-          DOMAIN_API + '/index.php?route=api/tire_statistics/index/totals',
+        this.dispatch('generalStore/UN_LOCK_UI');
+        commit('SET_TIRE_STATISTICS_TO_STATE', response.data.tireStatistics);
+
+        return response.data.tireStatistics;
+      } catch (e) {
+        console.error(e);
+        return e;
+      }
+    },
+    async GET_TIRE_STATISTICS_TOTALS({ commit }) {
+      try {
+        const response = await axios.post(
+          DOMAIN_API + ENDPOINTS.GET_TIRE_STATISTICS_TOTALS,
           {
             key: KEYS,
           },
-        )
-        .then((response) => {
-          commit(
-            'SET_TOTALS_TIRE_STATISTICS',
-            response.data.totalsTireStatistics,
-          );
-          return response.data.totalsTireStatistics;
-        })
-        .catch(function (error) {
-          console.log(error);
-          return error;
-        });
-    },
+        );
+        commit(
+          'SET_TOTALS_TIRE_STATISTICS',
+          response.data.totalsTireStatistics,
+        );
+        return response.data.totalsTireStatistics;
+      } catch (e) {
+        console.error(e);
 
-    GET_TIRE_STATISTICS_DAY({ commit }) {
-      this.dispatch('generalStore/LOCK_UI');
-      return axios
-        .post(DOMAIN_API + '/index.php?route=api/tire_statistics/index/day', {
-          key: KEYS,
-        })
-        .then((response) => {
-          this.dispatch('generalStore/UN_LOCK_UI');
-          commit('SET_DAY_TIRE_STATISTICS', response.data.tireStatisticsDay);
-          return response.data.tireStatisticsDay;
-        })
-        .catch(function (error) {
-          console.log(error);
-          return error;
-        });
+        return e;
+      }
+    },
+    async GET_TIRE_STATISTICS_DAY({ commit }) {
+      try {
+        this.dispatch('generalStore/LOCK_UI');
+
+        const response = await axios.post(
+          DOMAIN_API + ENDPOINTS.GET_TIRE_STATISTICS_DAY,
+          {
+            key: KEYS,
+          },
+        );
+
+        this.dispatch('generalStore/UN_LOCK_UI');
+        commit('SET_DAY_TIRE_STATISTICS', response.data.tireStatisticsDay);
+
+        return response.data.tireStatisticsDay;
+      } catch (e) {
+        console.error(e);
+
+        return e;
+      }
     },
   },
   mutations: {
