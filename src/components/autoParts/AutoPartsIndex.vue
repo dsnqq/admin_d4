@@ -372,9 +372,9 @@
 </template>
 
 <script>
-import AutoPartsIndexField from '@/components/autoParts/AutoPartsIndexField';
-import BaseMultiselect from '@/components/UI/BaseMultiselect';
-import Breadcrumb from '@/components/UI/BaseBreadcrumb';
+import AutoPartsIndexField from '@/components/autoParts/AutoPartsIndexField.vue';
+import BaseMultiselect from '@/components/UI/BaseMultiselect.vue';
+import Breadcrumb from '@/components/UI/BaseBreadcrumb.vue';
 import { mapActions, mapGetters } from 'vuex';
 import {
   DOMAIN,
@@ -392,9 +392,6 @@ import {
   FIELD_POST_TO_SEND,
   FIELDS_FOR_CAST_DISK_DRIVE,
 } from '@/components/autoParts/constants/constants';
-import { computed, unref, ref, defineAsyncComponent } from 'vue';
-import { useRoute } from '@/composables/useRoute';
-import { useStore } from '@/composables/useStore';
 
 export default {
   name: 'AutoParstIndex',
@@ -404,114 +401,12 @@ export default {
     vueDropzone: vue2Dropzone,
     BaseMultiselect,
     AutoPartsIndexField,
-    BaseAlert: () => import('@/components/UI/BaseAlert'),
-    Modal: () => import('@/components/UI/BaseModal'),
-  },
-
-  setup() {
-    const AutoPartsIndexButtonsCreate = defineAsyncComponent(() =>
-      import('@/components/autoParts/AutoPartsIndexButtonsCreate'),
-    );
-    const AutoPartsIndexButtonsEdit = defineAsyncComponent(() =>
-      import('@/components/autoParts/AutoPartsIndexButtonsEdit'),
-    );
-
-    const route = useRoute();
-    const store = useStore();
-    const dopFieldsForCastDiskDrive = ref(false);
-    const countAutoPartsAdd = ref(1);
-    const errorValidate = ref('');
-    const typeEngines = ref(TYPE_ENGINES_ALL);
-    const showModal = ref(false);
-    const dopFields = ref(false);
-
-    const isCreatedPage = computed(() => route.name === 'autoPartsCreate');
-
-    const getAutoPartsIndexButtonsComponent = computed(() =>
-      unref(isCreatedPage)
-        ? AutoPartsIndexButtonsCreate
-        : AutoPartsIndexButtonsEdit,
-    );
-
-    // Methods
-    const dopFieldsSearch = (select) => {
-      dopFieldsForCastDiskDrive.value =
-        select.code == 257 || select.code == 262;
-    };
-    const isAddAutoPartsMore = (i) =>
-      unref(isCreatedPage) && i + 1 == unref(countAutoPartsAdd);
-
-    const isRemoveAutoPartsMore = (i) =>
-      unref(isCreatedPage) && i + 1 == unref(countAutoPartsAdd) && i != 0;
-
-    const addAutoPartsMore = () => {
-      countAutoPartsAdd.value++;
-    };
-
-    const removeAutoPartsMore = () => {
-      countAutoPartsAdd.value--;
-    };
-
-    const closeAlertMessage = () => {
-      errorValidate.value = '';
-    };
-
-    const getFuelToTypeEngines = (value) => {
-      if (value === 'дизель') {
-        typeEngines.value = TYPE_ENGINES_DISEL;
-      } else if (value === 'бензин') {
-        typeEngines.value = TYPE_ENGINES_BENZ;
-      } else {
-        typeEngines.value = TYPE_ENGINES_ALL;
-      }
-    };
-
-    const modalCarPhotoFade = () => {
-      showModal.value = !unref(showModal);
-    };
-
-    const createNameAutoPartsForBd = () => {
-      const { autoPartsName, autoPartsModelBrand } = this.AUTO_PARTS_INDEX;
-      const [brand, model] = autoPartsModelBrand.name
-        .split(' >')
-        .map((s) => s.trim());
-
-      return `${autoPartsName.name} к ${brand} ${model} ${this.AUTO_PARTS_INDEX.year} г.`;
-    };
-
-    const toggleDopFields = () => {
-      dopFields.value = !unref(dopFields);
-    };
-
-    const isImageUrlLocalOrServer = (image) =>
-      image.substr(0, 4) === 'data' ? image : DOMAIN + `/image/` + image;
-
-    const customLabelNameReturn = ({ name }) => name;
-
-    return {
-      AutoPartsIndexButtonsCreate,
-      AutoPartsIndexButtonsEdit,
-      getAutoPartsIndexButtonsComponent,
-      isCreatedPage,
-      dopFieldsForCastDiskDrive,
-      countAutoPartsAdd,
-      errorValidate,
-      typeEngines,
-      showModal,
-      dopFields,
-      customLabelNameReturn,
-      isImageUrlLocalOrServer,
-      toggleDopFields,
-      createNameAutoPartsForBd,
-      modalCarPhotoFade,
-      removeAutoPartsMore,
-      getFuelToTypeEngines,
-      closeAlertMessage,
-      addAutoPartsMore,
-      dopFieldsSearch,
-      isAddAutoPartsMore,
-      isRemoveAutoPartsMore,
-    };
+    BaseAlert: () => import('@/components/UI/BaseAlert.vue'),
+    Modal: () => import('@/components/UI/BaseModal.vue'),
+    AutoPartsIndexButtonsCreate: () =>
+      import('@/components/autoParts/AutoPartsIndexButtonsCreate.vue'),
+    AutoPartsIndexButtonsEdit: () =>
+      import('@/components/autoParts/AutoPartsIndexButtonsEdit.vue'),
   },
 
   mounted() {
@@ -531,6 +426,16 @@ export default {
       'BREND_MODEL_CAR_AUTO_PARTS',
       'TYPES_OF_AUTO_PARTS',
     ]),
+
+    getAutoPartsIndexButtonsComponent() {
+      return !this.isCreatedPage
+        ? 'AutoPartsIndexButtonsEdit'
+        : 'AutoPartsIndexButtonsCreate';
+    },
+
+    isCreatedPage() {
+      return this.$route.name === 'autoPartsCreate';
+    },
 
     autoPartsNameCode() {
       if ('autoPartsName' in this.AUTO_PARTS_INDEX) {
@@ -568,6 +473,31 @@ export default {
     resetAutoPartsForCreatePage() {
       this.RESET_AUTO_PARTS_FOR_CREATE_PAGE();
       this.AUTO_PARTS_INDEX.status = 'Активно';
+    },
+
+    dopFieldsSearch(select) {
+      this.dopFieldsForCastDiskDrive = select.code == 257 || select.code == 262;
+    },
+
+    createNameAutoPartsForBd() {
+      return (
+        this.AUTO_PARTS_INDEX.autoPartsName.name +
+        ' к ' +
+        this.AUTO_PARTS_INDEX.autoPartsModelBrand.name.split(' >')[0] +
+        ' ' +
+        this.AUTO_PARTS_INDEX.autoPartsModelBrand.name.split('> ')[1] +
+        ' ' +
+        this.AUTO_PARTS_INDEX.year +
+        ' г.'
+      );
+    },
+
+    isAddAutoPartsMore(i) {
+      return this.isCreatedPage && i + 1 == this.countAutoPartsAdd;
+    },
+
+    isRemoveAutoPartsMore(i) {
+      return this.isCreatedPage && i + 1 == this.countAutoPartsAdd && i != 0;
     },
 
     mainPhotoSetAutoParts(image) {
@@ -641,6 +571,10 @@ export default {
       this.AUTO_PARTS_INDEX.mainImage = image;
     },
 
+    toggleDopFields() {
+      this.dopFields = !this.dopFields;
+    },
+
     removeImgDop(index) {
       this.AUTO_PARTS_INDEX.images.splice(index, 1);
       this.AUTO_PARTS_INDEX.imagesServer.splice(index, 1);
@@ -650,8 +584,20 @@ export default {
       }
     },
 
+    isImageUrlLocalOrServer(image) {
+      if (image.substr(0, 4) === 'data') {
+        return image;
+      }
+
+      return this.domain + `/image/` + image;
+    },
+
     sendingDropzonePhoto() {
       this.$refs.myVueDropzone.processQueue();
+    },
+
+    modalCarPhotoFade() {
+      this.showModal = !this.showModal;
     },
 
     getFormDataAboutAutoParts() {
@@ -779,13 +725,44 @@ export default {
       this.showModal = false;
       this.SET_AUTO_PARTS_IMAGE_FROM_USER(file);
     },
+
+    customLabelNameReturn({ name }) {
+      return name;
+    },
+
+    closeAlertMessage() {
+      this.errorValidate = '';
+    },
+
+    getFuelToTypeEngines(value) {
+      if (value == 'дизель') {
+        this.typeEngines = TYPE_ENGINES_DISEL;
+      } else if (value == 'бензин') {
+        this.typeEngines = TYPE_ENGINES_BENZ;
+      } else {
+        this.typeEngines = TYPE_ENGINES_ALL;
+      }
+    },
+
+    addAutoPartsMore() {
+      this.countAutoPartsAdd++;
+    },
+
+    removeAutoPartsMore() {
+      this.countAutoPartsAdd--;
+    },
   },
 
   data() {
     return {
+      dopFieldsForCastDiskDrive: false,
+      errorValidate: '',
+      dopFields: false,
       param: {
         id: this.$route.params.id,
       },
+      showModal: false,
+      countAutoPartsAdd: 1,
       autoPartsModelBrands: [],
       domain: DOMAIN,
       FIELD_POST_TO_SEND,
@@ -795,6 +772,7 @@ export default {
       TRANSMISSION,
       FUELS,
       FIELDS_FOR_CAST_DISK_DRIVE,
+      typeEngines: TYPE_ENGINES_ALL,
       dropzoneOptions: {
         url: '/v1/upload.php',
         thumbnailWidth: 150,
