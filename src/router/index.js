@@ -5,7 +5,7 @@ import { historyUsersRouter } from '@/components/historyUsers/router';
 
 import VueRouter from 'vue-router';
 
-let defaults = [
+const defaults = [
   {
     path: '/',
     name: 'dashboardAdmin',
@@ -72,13 +72,13 @@ let defaults = [
   },
 ];
 
-const routes = [].concat(
-  defaults,
-  autoPartsRouter,
-  carsRouter,
-  autoTiresRouter,
-  historyUsersRouter,
-);
+const routes = [
+  ...defaults,
+  ...autoPartsRouter,
+  ...carsRouter,
+  ...autoTiresRouter,
+  ...historyUsersRouter,
+];
 
 export default new VueRouter({
   mode: 'history',

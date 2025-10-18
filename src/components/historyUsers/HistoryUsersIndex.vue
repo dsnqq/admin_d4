@@ -68,8 +68,17 @@ const userHistoryTotal = computed(
   () => store.getters['historyUsers/USER_HISTORY_TOTAL'],
 );
 
-const renderContentOnColumn = (content, type) =>
-  type === 'image' ? '<img src="' + content + '" />' : content;
+const renderContentOnColumn = (content, type) => {
+  if (type === 'image') {
+    if (content) {
+      return '<img src="' + content + '" width="100" alt="no image"/>';
+    }
+
+    return '<img src="https://d4.by/image/no_image.png" width="100" alt="image"/>';
+  }
+
+  return content;
+};
 
 const setPageByTotal = (page) => {
   pageNum.value = page;
