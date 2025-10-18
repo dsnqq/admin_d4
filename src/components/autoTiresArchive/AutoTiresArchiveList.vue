@@ -6,7 +6,10 @@
       </th>
     </template>
     <template #tableTbody>
-      <tr v-for="(autoTireArchive, i) in AUTO_TIRES_ARCHIVE" :key="i">
+      <AutoTiresArchiveListRow
+        v-for="(autoTireArchive, i) in autoTiresArchive"
+        :key="i"
+      >
         <td
           v-for="(c, index) in COLUMNS"
           :key="index"
@@ -25,11 +28,11 @@
             :price-u-s-d="autoTireArchive.priceUSD"
           ></component>
         </td>
-      </tr>
+      </AutoTiresArchiveListRow>
     </template>
     <template #pagination>
       <Pagination
-        :totals="AUTO_TIRES_ARCHIVE_TOTALS"
+        :totals="autoTiresArchiveTotals"
         :count-chunk="isMobile ? 4 : 5"
         :class="{ 'card-body-pagination-mobile': isMobile }"
         @setPageByTotal="setPageByTotal"
@@ -38,55 +41,44 @@
   </LayoutDefault>
 </template>
 
-<script>
-import Pagination from '@/components/UI/BasePagination.vue';
-import LayoutDefault from '@/layouts/LayoutDefault.vue';
-import { mapActions, mapGetters } from 'vuex';
-import { mixins } from '@/mixins/mixins';
+<script setup>
+import Pagination from '@/components/UI/BasePagination';
+import LayoutDefault from '@/layouts/LayoutDefault';
+import AutoTiresArchiveListRow from '@/components/autoTiresArchive/AutoTiresArchiveListRow.vue';
 import { COLUMNS } from '@/components/autoTiresArchive/constants/constants';
+import { useDevice } from '@/composables/useDevice';
+import { useStore } from '@/composables/useStore';
+import { computed, onMounted, ref } from 'vue';
 
-export default {
-  name: 'AutoTiresArchiveList',
+const isMobile = useDevice();
+const store = useStore();
 
-  components: {
-    LayoutDefault,
-    Pagination,
-  },
+const param = ref({
+  pageNum: 1,
+});
 
-  mixins: [mixins],
+onMounted(() => {
+  store.dispatch(
+    'autoTiresArchive/GET_AUTO_TIRES_ARCHIVE_FROM_API',
+    param.value.pageNum,
+  );
+  store.dispatch('autoTiresArchive/GET_AUTO_TIRES_ARCHIVE_TOTALS');
+});
 
-  mounted() {
-    this.GET_AUTO_TIRES_ARCHIVE_FROM_API(this.param.pageNum);
-    this.GET_AUTO_TIRES_ARCHIVE_TOTALS();
-  },
+const autoTiresArchive = computed(
+  () => store.getters['autoTiresArchive/AUTO_TIRES_ARCHIVE'],
+);
+const autoTiresArchiveTotals = computed(
+  () => store.getters['autoTiresArchive/AUTO_TIRES_ARCHIVE_TOTALS'],
+);
 
-  computed: {
-    ...mapGetters('autoTiresArchive', [
-      'AUTO_TIRES_ARCHIVE',
-      'AUTO_TIRES_ARCHIVE_TOTALS',
-    ]),
-  },
+const setPageByTotal = (page) => {
+  param.value.pageNum = page;
 
-  methods: {
-    ...mapActions('autoTiresArchive', [
-      'GET_AUTO_TIRES_ARCHIVE_FROM_API',
-      'GET_AUTO_TIRES_ARCHIVE_TOTALS',
-    ]),
-
-    setPageByTotal(page) {
-      this.param.pageNum = page;
-      this.GET_AUTO_TIRES_ARCHIVE_FROM_API(this.param.pageNum);
-    },
-  },
-
-  data() {
-    return {
-      COLUMNS,
-      param: {
-        pageNum: 1,
-      },
-    };
-  },
+  store.dispatch(
+    'autoTiresArchive/GET_AUTO_TIRES_ARCHIVE_FROM_API',
+    param.value.pageNum,
+  );
 };
 </script>
 

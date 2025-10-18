@@ -2,10 +2,13 @@
   <div class="auto-parts-list-column-price">{{ priceUSD }} $</div>
 </template>
 
-<script>
-export default {
-  name: 'AutoTiresArchiveListColumnPrice',
+<script setup>
+import { defineProps } from 'vue';
 
-  props: ['priceUSD'],
-};
+defineProps({
+  priceUSD: {
+    type: [Number, String],
+    default: 0,
+  },
+});
 </script>

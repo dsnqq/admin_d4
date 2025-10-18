@@ -64,3 +64,12 @@ export const COLUMNS = [
       ),
   },
 ];
+
+export const ENDPOINTS = {
+  GET_AUTO_TIRES_ARCHIVE_FROM_API:
+    '/index.php?route=api/auto_tires_archive/tires',
+  GET_AUTO_TIRES_ARCHIVE_TOTALS:
+    '/index.php?route=api/auto_tires_archive/tires/totals',
+  RESTORE_AUTO_TIRES_ARCHIVE_BY_API:
+    '/index.php?route=api/auto_tires_archive/tires/restore/',
+};

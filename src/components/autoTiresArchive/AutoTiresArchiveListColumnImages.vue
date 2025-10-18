@@ -30,35 +30,41 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import BaseLazyImage from '@/components/UI/BaseLazyImage.vue';
 import { DOMAIN } from '@/constants/constants';
-import { mapActions } from 'vuex';
 import Jquery from 'jquery'; // eslint-disable-line no-unused-vars
 import lightbox from 'lightbox2';
+import { defineProps } from 'vue';
+import { useStore } from '@/composables/useStore';
 
-export default {
-  name: 'AutoTiresArchiveListColumnImages',
+const store = useStore();
 
-  components: {
-    BaseLazyImage,
+defineProps({
+  images: {
+    type: String,
+    default: 'no_image.png',
   },
-
-  props: ['images', 'title', 'id', 'showAll', 'index'],
-
-  methods: {
-    ...mapActions('autoTiresArchive', ['SET_SHOW_ALL_IMAGE']),
-
-    showImageAll(index) {
-      this.SET_SHOW_ALL_IMAGE(index);
-    },
+  title: {
+    type: String,
+    default: '',
   },
-
-  data() {
-    return {
-      DOMAIN,
-    };
+  id: {
+    type: [Number, String],
+    default: 0,
   },
+  showAll: {
+    type: Boolean,
+    default: false,
+  },
+  index: {
+    type: [Number, String],
+    default: 0,
+  },
+});
+
+const showImageAll = (index) => {
+  store.dispatch('autoTiresArchive/SET_SHOW_ALL_IMAGE', index);
 };
 </script>
 

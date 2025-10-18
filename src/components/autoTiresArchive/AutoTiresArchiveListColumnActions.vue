@@ -11,39 +11,29 @@
   </div>
 </template>
 
-<script>
-import { DOMAIN } from '@/constants/constants';
-import { mapActions, mapGetters } from 'vuex';
+<script setup>
+import { defineProps } from 'vue';
+import { useStore } from '@/composables/useStore';
 
-export default {
-  name: 'AutoTiresArchiveListColumnActions',
+const store = useStore();
 
-  props: ['id', 'index'],
-
-  computed: {
-    ...mapGetters('autoTiresArchive', ['AUTO_TIRES_ARCHIVE']),
+defineProps({
+  id: {
+    type: [Number, String],
+    default: 0,
   },
-
-  methods: {
-    ...mapActions('autoTiresArchive', ['RESTORE_AUTO_TIRES_ARCHIVE_BY_API']),
-
-    autoTiresRestore(id, index) {
-      if (confirm('Вы действительно хотите восстановить данное объявление ?')) {
-        let param = {
-          autoTiresId: id,
-          autoTiresNumber: index,
-        };
-
-        this.RESTORE_AUTO_TIRES_ARCHIVE_BY_API(param);
-      }
-    },
+  index: {
+    type: [Number, String],
+    default: 0,
   },
+});
 
-  data() {
-    return {
-      DOMAIN,
-      modalHistoryAdminShow: false,
-    };
-  },
+const autoTiresRestore = (id, index) => {
+  if (confirm('Вы действительно хотите восстановить данное объявление ?')) {
+    store.dispatch('autoTiresArchive/RESTORE_AUTO_TIRES_ARCHIVE_BY_API', {
+      autoTiresId: id,
+      autoTiresNumber: index,
+    });
+  }
 };
 </script>
