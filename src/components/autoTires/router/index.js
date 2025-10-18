@@ -1,4 +1,4 @@
-export let autoTiresRouter = [
+export const autoTiresRouter = [
   {
     path: '/auto-tires',
     name: 'autoTires',

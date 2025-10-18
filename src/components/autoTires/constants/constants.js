@@ -1,11 +1,3 @@
-import {
-  DIAMETER,
-  NUMBER_OF_HOLES,
-  PCD,
-  WHEEL_DIAMETER_R,
-  WHEEL_WIDTH_J,
-} from '@/constants/constants';
-
 export const COLUMNS = [
   {
     title: 'Изображение',
@@ -64,63 +56,17 @@ export const COLUMNS = [
   },
 ];
 
-export const FIELD_POST_TO_SEND = [
-  'description',
-  'year',
-  'diameter',
-  'model',
-  'modification',
-  'fuel',
-  'value',
-  'youtube',
-  'transmission',
-  'typeEngines',
-  'typeBody',
-  'wheelDiameterR',
-  'wheelWidthJ',
-  'numberOfHoles',
-  'departureE',
-  'firstname',
-  'stock',
-  'telephone',
-  'sparePartNumber',
-  'pcd',
-  'priceUSD',
-];
-
-export const FIELDS_FOR_CAST_DISK_DRIVE = [
-  {
-    label: 'Диаметр R, дюймы',
-    id: 'wheelDiameterR',
-    vModel: 'wheelDiameterR',
-    options: WHEEL_DIAMETER_R,
-  },
-  {
-    label: 'Ширина J, дюймы',
-    id: 'wheelWidthJ',
-    vModel: 'wheelWidthJ',
-    options: WHEEL_WIDTH_J,
-  },
-  {
-    label: 'Кол-во отверстий',
-    id: 'numberOfHoles',
-    vModel: 'numberOfHoles',
-    options: NUMBER_OF_HOLES,
-  },
-  {
-    label: 'Расстояние между отверстиями PCD, мм',
-    id: 'pcd',
-    vModel: 'pcd',
-    options: PCD,
-  },
-  {
-    label: 'Вылет ET, мм',
-    vModel: 'departureE',
-  },
-  {
-    label: 'Диаметр центрального отверстия DIA, мм',
-    id: 'diameter',
-    vModel: 'diameter',
-    options: DIAMETER,
-  },
-];
+export const ENDPOINTS = {
+  GET_AUTO_TIRES_FROM_API: '/index.php?route=api/auto_tires/tires',
+  GET_AUTO_TIRES_TOTALS: '/index.php?route=api/auto_tires/tires/totals',
+  CHANGE_AUTO_TIRES_STATUS:
+    '/index.php?route=api/auto_tires/tires/change_status/',
+  GET_AUTO_TIRES_INDEX: '/index.php?route=api/auto_tires/tires/index/',
+  SET_AUTO_TIRES_IMAGE_FROM_LIST:
+    '/index.php?route=api/auto_tires/tires/add_images/',
+  CHANGE_AUTO_TIRES_PRICE:
+    '/index.php?route=api/auto_tires/tires/change_price/',
+  DELET_AUTO_TIRES_BY_API: '/index.php?route=api/auto_tires/tires/delete/',
+  EDIT_AUTO_TIRES_FROM_API: '/index.php?route=api/auto_tires/tires/',
+  SET_AUTO_TIRES_FROM_API: '/index.php?route=api/auto_tires/tires/create',
+};

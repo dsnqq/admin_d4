@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { DOMAIN_API, KEYS } from '/src/constants/constants';
+import { ENDPOINTS } from '@/components/autoTires/constants/constants';
 
 export default {
   namespaced: true,
@@ -8,229 +9,223 @@ export default {
     autoTires: {},
     autoTiresIndex: {},
     autoTiresTotals: 0,
-    autoTiresHistory: {},
   },
   getters: {
-    AUTO_TIRES(state) {
-      return state.autoTires;
-    },
-    AUTO_TIRES_TOTALS(state) {
-      return state.autoTiresTotals;
-    },
-    AUTO_TIRES_INDEX(state) {
-      return state.autoTiresIndex;
-    },
-    AUTO_TIRES_HISTORY(state) {
-      return state.autoTiresHistory;
-    },
+    AUTO_TIRES: (state) => state.autoTires,
+    AUTO_TIRES_TOTALS: (state) => state.autoTiresTotals,
+    AUTO_TIRES_INDEX: (state) => state.autoTiresIndex,
   },
   actions: {
-    GET_AUTO_TIRES_FROM_API({ commit }, param) {
-      this.dispatch('generalStore/LOCK_UI');
-      return axios
-        .post(DOMAIN_API + '/index.php?route=api/auto_tires/tires', {
-          key: KEYS,
-          page: param,
-        })
-        .then((response) => {
-          this.dispatch('generalStore/UN_LOCK_UI');
-          commit('SET_AUTO_TIRES_TO_STATE', response.data.autoTires);
-          return response.data.autoTires;
-        })
-        .catch(function (error) {
-          console.log(error);
-          return error;
-        });
-    },
+    async GET_AUTO_TIRES_FROM_API({ commit }, param) {
+      try {
+        this.dispatch('generalStore/LOCK_UI');
 
-    GET_AUTO_TIRES_TOTALS({ commit }) {
-      return axios
-        .post(DOMAIN_API + '/index.php?route=api/auto_tires/tires/totals', {
-          key: KEYS,
-        })
-        .then((response) => {
-          commit('SET_AUTO_TIRES_TOTALS_STATE', response.data.autoTiresTotals);
-          return response.data.autoTiresTotals;
-        })
-        .catch(function (error) {
-          console.log(error);
-          return error;
-        });
-    },
+        const response = await axios.post(
+          DOMAIN_API + ENDPOINTS.GET_AUTO_TIRES_FROM_API,
+          {
+            key: KEYS,
+            page: param,
+          },
+        );
 
-    CHANGE_AUTO_TIRES_STATUS({ commit }, param) {
-      this.dispatch('generalStore/LOCK_UI');
-      return axios
-        .post(
-          DOMAIN_API +
-            '/index.php?route=api/auto_tires/tires/change_status/' +
-            param.id,
+        this.dispatch('generalStore/UN_LOCK_UI');
+        commit('SET_AUTO_TIRES_TO_STATE', response.data.autoTires);
+
+        return response.data.autoTires;
+      } catch (e) {
+        console.error(e);
+
+        return e;
+      }
+    },
+    async GET_AUTO_TIRES_TOTALS({ commit }) {
+      try {
+        const response = await axios.post(
+          DOMAIN_API + ENDPOINTS.GET_AUTO_TIRES_TOTALS,
+          {
+            key: KEYS,
+          },
+        );
+
+        commit('SET_AUTO_TIRES_TOTALS_STATE', response.data.autoTiresTotals);
+
+        return response.data.autoTiresTotals;
+      } catch (e) {
+        console.error(e);
+
+        return e;
+      }
+    },
+    async CHANGE_AUTO_TIRES_STATUS({ commit }, param) {
+      try {
+        this.dispatch('generalStore/LOCK_UI');
+
+        await axios.post(
+          DOMAIN_API + ENDPOINTS.CHANGE_AUTO_TIRES_STATUS + param.id,
           {
             key: KEYS,
             status: param.status,
           },
-        )
-        .then(() => {
-          this.dispatch('generalStore/UN_LOCK_UI');
-          commit('SET_CHANGE_AUTO_TIRES_STATUS', param);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
+        );
 
-    GET_AUTO_TIRES_INDEX({ commit }, param) {
-      return axios
-        .post(
-          DOMAIN_API +
-            '/index.php?route=api/auto_tires/tires/index/' +
-            param.id,
+        this.dispatch('generalStore/UN_LOCK_UI');
+
+        commit('SET_CHANGE_AUTO_TIRES_STATUS', param);
+      } catch (e) {
+        console.error(e);
+
+        return e;
+      }
+    },
+    async GET_AUTO_TIRES_INDEX({ commit }, param) {
+      try {
+        const response = axios.post(
+          DOMAIN_API + ENDPOINTS.GET_AUTO_TIRES_INDEX + param.id,
           {
             key: KEYS,
             param: param,
           },
-        )
-        .then((response) => {
-          commit('SET_AUTO_TIRES_INDEX_STATE', response.data.autoTiresIndex);
-          return response.data.autoTiresIndex;
-        })
-        .catch(function (error) {
-          console.log(error);
-          return error;
-        });
-    },
+        );
 
-    SET_AUTO_TIRES_IMAGE_FROM_LIST({ commit }, param) {
-      this.dispatch('generalStore/LOCK_UI');
-      return axios
-        .post(
+        commit('SET_AUTO_TIRES_INDEX_STATE', response.data.autoTiresIndex);
+        return response.data.autoTiresIndex;
+      } catch (e) {
+        console.error(e);
+
+        return e;
+      }
+    },
+    async SET_AUTO_TIRES_IMAGE_FROM_LIST({ commit }, param) {
+      try {
+        this.dispatch('generalStore/LOCK_UI');
+
+        await axios.post(
           DOMAIN_API +
-            '/index.php?route=api/auto_tires/tires/add_images/' +
+            ENDPOINTS.SET_AUTO_TIRES_IMAGE_FROM_LIST +
             param.autoPartsId,
           {
             key: KEYS,
             images: param.images.toString(),
           },
-        )
-        .then(() => {
-          this.dispatch('generalStore/UN_LOCK_UI');
-          commit('ADD_AUTO_TIRES_IMAGE_FROM_LIST');
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
+        );
+        this.dispatch('generalStore/UN_LOCK_UI');
 
-    CHANGE_AUTO_TIRES_PRICE({ commit }, param) {
-      this.dispatch('generalStore/LOCK_UI');
-      return axios
-        .post(
-          DOMAIN_API +
-            '/index.php?route=api/auto_tires/tires/change_price/' +
-            param.id,
+        commit('ADD_AUTO_TIRES_IMAGE_FROM_LIST');
+      } catch (e) {
+        console.error(e);
+
+        return e;
+      }
+    },
+    async CHANGE_AUTO_TIRES_PRICE({ commit }, param) {
+      try {
+        this.dispatch('generalStore/LOCK_UI');
+
+        const response = await axios.post(
+          DOMAIN_API + ENDPOINTS.CHANGE_AUTO_TIRES_PRICE + param.id,
           {
             key: KEYS,
             price: param.priceUSD,
           },
-        )
-        .then((response) => {
-          this.dispatch('generalStore/UN_LOCK_UI');
-          let data = {
-            priceBYN: response.data.autoTiresPriceChange.priceBYN,
-            priceUSD: response.data.autoTiresPriceChange.priceUSD,
-            index: param.index,
-          };
+        );
 
-          commit('SET_CHANGE_AUTO_TIRES_PRICE', data);
-          return data;
-        })
-        .catch(function (error) {
-          console.log(error);
+        this.dispatch('generalStore/UN_LOCK_UI');
+
+        commit('SET_CHANGE_AUTO_TIRES_PRICE', {
+          priceBYN: response.data.autoTiresPriceChange.priceBYN,
+          priceUSD: response.data.autoTiresPriceChange.priceUSD,
+          index: param.index,
         });
+      } catch (e) {
+        console.error(e);
+
+        return e;
+      }
     },
 
-    DELET_AUTO_TIRES_BY_API({ commit }, param) {
-      return axios
-        .post(
-          DOMAIN_API +
-            '/index.php?route=api/auto_tires/tires/delete/' +
-            param.autoTiresId,
+    async DELET_AUTO_TIRES_BY_API({ commit }, param) {
+      try {
+        await axios.post(
+          DOMAIN_API + ENDPOINTS.DELET_AUTO_TIRES_BY_API + param.autoTiresId,
           {
             key: KEYS,
           },
-        )
-        .then(() => {
-          commit('DELETE_THIS_AUTO_TIRES', param.autoTiresNumber);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+        );
+
+        commit('DELETE_THIS_AUTO_TIRES', param.autoTiresNumber);
+      } catch (e) {
+        console.error(e);
+
+        return e;
+      }
     },
 
     SET_SHOW_ALL_IMAGE({ commit }, id) {
       commit('SHOW_ALL_IMAGE_BY_ID', id);
     },
 
-    EDIT_AUTO_TIRES_FROM_API({ commit }, param) {
-      if (!param.redirect) {
-        this.dispatch('generalStore/LOCK_UI');
-      }
-      return axios
-        .post(
-          DOMAIN_API +
-            '/index.php?route=api/auto_tires/tires/' +
-            param.id +
-            '/edit',
-          param.autoTires,
-        )
-        .then(() => {
-          if (param.redirect) {
-            window.location.href = '/auto-tires';
-            return false;
-          }
-          this.dispatch('generalStore/UN_LOCK_UI');
-          commit('EDIT_AUTO_TIRES_ON_STATE');
-          return param.autoTires;
-        })
-        .catch(function (error) {
-          console.log(error);
-          return error;
-        });
-    },
+    async EDIT_AUTO_TIRES_FROM_API({ commit }, param) {
+      try {
+        if (!param.redirect) {
+          this.dispatch('generalStore/LOCK_UI');
+        }
 
+        await axios.post(
+          DOMAIN_API + ENDPOINTS.EDIT_AUTO_TIRES_FROM_API + param.id + '/edit',
+          param.autoTires,
+        );
+
+        if (param.redirect) {
+          window.location.href = '/auto-tires';
+          return false;
+        }
+
+        this.dispatch('generalStore/UN_LOCK_UI');
+        commit('EDIT_AUTO_TIRES_ON_STATE');
+
+        return param.autoTires;
+      } catch (e) {
+        console.error(e);
+
+        return e;
+      }
+    },
+    async SET_AUTO_TIRES_FROM_API({ commit }, param) {
+      try {
+        this.dispatch('generalStore/LOCK_UI');
+
+        const response = await axios.post(
+          DOMAIN_API + ENDPOINTS.SET_AUTO_TIRES_FROM_API,
+          param.fields,
+        );
+
+        if (typeof response.data.autoTiresCreate === 'string') {
+          alert(response.data.autoTiresCreate);
+
+          return false;
+        }
+
+        if (param.redirect) {
+          window.location.href = '/auto-tires';
+          return false;
+        }
+
+        this.dispatch('generalStore/UN_LOCK_UI');
+
+        commit('ADD_AUTO_TIRES_TO_STATE');
+        return param;
+      } catch (e) {
+        console.error(e);
+
+        return e;
+      }
+    },
     RESET_AUTO_TIRES_FOR_CREATE_PAGE({ commit }) {
       commit('RESET_AUTO_TIRES');
     },
-
     SET_AUTO_TIRES_IMAGE_FROM_USER({ commit }, param) {
       commit('ADD_AUTO_TIRES_IMAGE', param);
       return param;
-    },
-
-    SET_AUTO_TIRES_FROM_API({ commit }, param) {
-      this.dispatch('generalStore/LOCK_UI');
-      return axios
-        .post(
-          DOMAIN_API + '/index.php?route=api/auto_tires/tires/create',
-          param.fields,
-        )
-        .then((response) => {
-          if (typeof response.data.autoTiresCreate === 'string') {
-            alert(response.data.autoTiresCreate);
-            return false;
-          }
-          if (param.redirect) {
-            window.location.href = '/auto-tires';
-            return false;
-          }
-          this.dispatch('generalStore/UN_LOCK_UI');
-          commit('ADD_AUTO_TIRES_TO_STATE');
-          return param;
-        })
-        .catch(function (error) {
-          console.log(error);
-          return error;
-        });
     },
   },
   mutations: {
@@ -286,6 +281,7 @@ export default {
     DELETE_THIS_AUTO_TIRES: (state, id) => {
       state.autoTiresTotals = state.autoTiresTotals - 1;
       state.autoTires.splice(id, 1);
+
       alert('Объявление удалено!');
     },
   },
