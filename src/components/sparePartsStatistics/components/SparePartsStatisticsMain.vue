@@ -57,7 +57,7 @@ onMounted(() => {
 });
 
 const SPARE_PARTS_STATISTICS = computed(
-  () => store.getters['sparePartsStatistics/TOTALS_SPARE_PARTS_STATISTICS'],
+  () => store.getters['sparePartsStatistics/SPARE_PARTS_STATISTICS'],
 );
 const TOTALS_SPARE_PARTS_STATISTICS = computed(
   () => store.getters['sparePartsStatistics/TOTALS_SPARE_PARTS_STATISTICS'],

@@ -1,3 +1,5 @@
+import { DOMAIN_API_V2 } from '@/constants/constants';
+
 export const COLUMNS_DAY = [
   {
     title: 'Дата',
@@ -35,8 +37,7 @@ export const COLUMNS_MAIN = [
 ];
 
 export const ENDPOINTS = {
-  GET_SPARE_PARTS_STATISTICS:
-    '/index.php?route=api/spare_parts_statistics/index',
+  GET_SPARE_PARTS_STATISTICS: DOMAIN_API_V2 + 'product-statistics',
   GET_SPARE_PARTS_STATISTICS_TOTALS:
     '/index.php?route=api/spare_parts_statistics/index/totals',
   GET_SPARE_PARTS_STATISTICS_DAY:

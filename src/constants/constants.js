@@ -5,6 +5,8 @@ export const DOMAIN = 'https://d4.by';
 
 export const DOMAIN_API = 'https://admin.d4.by/v1';
 
+export const DOMAIN_API_V2 = 'https://service.d4.by/api/';
+
 export const DICTIONARY = {
   goBack: 'Выйти',
   logo: 'D4.by',

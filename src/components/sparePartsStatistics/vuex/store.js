@@ -19,21 +19,15 @@ export default {
       try {
         this.dispatch('generalStore/LOCK_UI');
 
-        const response = await axios.post(
-          DOMAIN_API + ENDPOINTS.GET_SPARE_PARTS_STATISTICS,
-          {
-            key: KEYS,
-            page: param,
-          },
-        );
+        const response = await axios.get(ENDPOINTS.GET_SPARE_PARTS_STATISTICS, {
+          key: KEYS,
+          page: param,
+        });
 
         this.dispatch('generalStore/UN_LOCK_UI');
-        commit(
-          'SET_SPARE_PARTS_STATISTICS_TO_STATE',
-          response.data.sparePartsStatistics,
-        );
+        commit('SET_SPARE_PARTS_STATISTICS_TO_STATE', response.data.data);
 
-        return response.data.sparePartsStatistics;
+        return response.data.data;
       } catch (e) {
         console.error(e);
         return e;
