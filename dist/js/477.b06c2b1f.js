@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkadmin_d4"]=self["webpackChunkadmin_d4"]||[]).push([[477],{477:function(e,t,r){r.r(t),r.d(t,{default:function(){return a}});var u=function(){var e=this,t=e._self._c;e._self._setupProxy;return t("div",{staticClass:"auto-parts-list-column-price"},[e._v(e._s(e.priceUSD)+" $")])},s=[],n={__name:"AutoTiresArchiveListColumnPrice",props:{priceUSD:{type:[Number,String],default:0}},setup(e){return{__sfc:!0}}},i=n,l=r(1656),c=(0,l.A)(i,u,s,!1,null,null,null),a=c.exports}}]);
+//# sourceMappingURL=477.b06c2b1f.js.map
