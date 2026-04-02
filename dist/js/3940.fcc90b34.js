@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkadmin_d4"]=self["webpackChunkadmin_d4"]||[]).push([[3940],{3940:function(n,t,e){e.r(t),e.d(t,{default:function(){return r}});var o=function(){var n=this,t=n._self._c;return void 0===n.contentExtension?t("div",[n._v(" "+n._s(n.content)+" ")]):t("div",[n._v(" "+n._s(n.content+" "+n.contentExtension)+" ")])},s=[],u={name:"AutoTiresListColumnDefault",props:["content","contentExtension"]},i=u,c=e(1656),l=(0,c.A)(i,o,s,!1,null,null,null),r=l.exports}}]);
-//# sourceMappingURL=3940.fcc90b34.js.map

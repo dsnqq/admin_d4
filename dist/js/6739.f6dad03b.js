@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkadmin_d4"]=self["webpackChunkadmin_d4"]||[]).push([[6739],{6739:function(t,s,l){l.r(s),l.d(s,{default:function(){return c}});var n=function(){var t=this,s=t._self._c;return s("span",{staticClass:"auto-parts-list-column-title d-flex align-items-center gap-2"},[s("span",{staticClass:"mb-0 product-title"},[t._v(" "+t._s(t.title)+" ")])])},e=[],a={name:"AutoPartsArchiveListColumnTitle",props:["title"]},i=a,u=l(1656),r=(0,u.A)(i,n,e,!1,null,null,null),c=r.exports}}]);
-//# sourceMappingURL=6739.f6dad03b.js.map

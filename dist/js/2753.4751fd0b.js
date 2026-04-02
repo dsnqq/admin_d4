@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkadmin_d4"]=self["webpackChunkadmin_d4"]||[]).push([[2753],{2753:function(n,t,r){r.r(t),r.d(t,{default:function(){return a}});var s=function(){var n=this,t=n._self._c;return t("div",{staticClass:"auto-parts-list-column-price"},[n._v(n._s(n.priceUSD)+" $")])},u=[],e={name:"AutoPartsArchiveListColumnPrice",props:["priceUSD"]},i=e,c=r(1656),l=(0,c.A)(i,s,u,!1,null,null,null),a=l.exports}}]);
-//# sourceMappingURL=2753.4751fd0b.js.map
