@@ -12,9 +12,12 @@ import { computed } from 'vue';
 
 const loginUserChecked = computed(() => {
   if (!localStorage.user) return false;
-  const user = JSON.parse(localStorage.user);
-
-  return user.user_id;
+  try {
+    const user = JSON.parse(localStorage.user);
+    return Boolean(user && user.user_id);
+  } catch (e) {
+    return false;
+  }
 });
 </script>
 
