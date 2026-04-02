@@ -7,3 +7,10 @@ node_modules
 .cache
 .config
 .yarn/*
+
+/public/v1/config.php
+/v1/config.php
+
+
+/public/v1/.htaccess
+/v1/.htaccess
