@@ -20,15 +20,6 @@ class ModelToolImage extends Model {
 			list($width_orig, $height_orig, $image_type) = getimagesize(DIR_IMAGE . $image_old);
 
 			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) {
-				// Как в основном проекте — путь на диске; в v1 в config заданы HTTP(S)_CATALOG → отдаём URL витрины (для API)
-				if (defined('HTTPS_CATALOG') && defined('HTTP_CATALOG')) {
-					$parts = explode('/', str_replace('\\', '/', $image_old));
-					$enc = implode('/', array_map('rawurlencode', $parts));
-					if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-						return rtrim(HTTPS_CATALOG, '/') . '/' . 'image/' . $enc;
-					}
-					return rtrim(HTTP_CATALOG, '/') . '/' . 'image/' . $enc;
-				}
 				return DIR_IMAGE . $image_old;
 			}
 
@@ -56,13 +47,10 @@ class ModelToolImage extends Model {
 		$imagepath_parts = explode('/', $image_new);
 		$new_image = implode('/', array_map('rawurlencode', $imagepath_parts));
 
-		$base_ssl = defined('HTTPS_CATALOG') ? rtrim(HTTPS_CATALOG, '/') . '/' : $this->config->get('config_ssl');
-		$base_url = defined('HTTP_CATALOG') ? rtrim(HTTP_CATALOG, '/') . '/' : $this->config->get('config_url');
-
 		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-			return $base_ssl . 'image/' . $new_image;
+			return $this->config->get('config_ssl') . 'image/' . $new_image;
 		} else {
-			return $base_url . 'image/' . $new_image;
+			return $this->config->get('config_url') . 'image/' . $new_image;
 		}
 	}
 }

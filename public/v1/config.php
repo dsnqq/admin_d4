@@ -5,10 +5,6 @@ define('HTTP_SERVER', 'https://admin.d4.by/v1/');
 // HTTPS
 define('HTTPS_SERVER', 'https://admin.d4.by/v1/');
 
-// Публичный URL витрины — ссылки на превью картинок в API (model/tool/image), файлы по-прежнему в DIR_IMAGE
-define('HTTP_CATALOG', 'https://d4.by/');
-define('HTTPS_CATALOG', 'https://d4.by/');
-
 // DIR
 define('DIR_APPLICATION', '/home/dby/sites/admin.d4.by/v1/catalog/');
 define('DIR_SYSTEM', '/home/dby/sites/d4.by/system/');
