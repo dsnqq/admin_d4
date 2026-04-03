@@ -13,8 +13,10 @@ Vue.use(VueClazyLoad);
 Vue.component('VPagination', Pagination);
 Vue.component('VMultiselect', Multiselect);
 
-new Vue({
+const adminPanel = new Vue({
   router,
   render: (h) => h(App),
   store,
-}).$mount('#admin-panel');
+});
+
+adminPanel.$mount('#admin-panel');
