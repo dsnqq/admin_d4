@@ -5,7 +5,10 @@ class ControllerApiAutoPartsArchive extends Controller
      * Main function to handle HTTP request
      * */
     public function auto() {
-        $postRead  = json_decode(file_get_contents('php://input'),true);
+        $postRead  = json_decode(file_get_contents('php://input'), true);
+        if (!is_array($postRead)) {
+            $postRead = [];
+        }
         $postWrite = $this->request->post;
 
         $route = $this->request->get['route'];
@@ -59,7 +62,7 @@ class ControllerApiAutoPartsArchive extends Controller
         if (!isset($_SESSION['api_id'])) {
             $this->load->model('account/api');
 
-            $api_info = $this->model_account_api->getApiByKey($post['key']);
+            $api_info = $this->model_account_api->getApiByKey(isset($post['key']) ? $post['key'] : '');
 
             if ($api_info) {
                 $ip_data = array();
@@ -91,6 +94,7 @@ class ControllerApiAutoPartsArchive extends Controller
      * */
     private function _getAutoPartsArchive($param){
         $json = [];
+        $autoPartsArchive = [];
         $i = 1;
 
         if(isset($param['page'])) {
@@ -330,7 +334,8 @@ class ControllerApiAutoPartsArchive extends Controller
 
         $this->load->model('catalog/auto_parts_archive');
 
-        $user_id = (int)$post['user_id'];
+        $user_id = isset($post['user_id']) ? (int)$post['user_id'] : 0;
+        $restore_product_id = null;
 
         if($user_id && $user_id != 0) {
             $restore_product_id = $this->model_catalog_auto_parts_archive->restoreProduct((int)$id);
@@ -398,11 +403,10 @@ class ControllerApiAutoPartsArchive extends Controller
 
         $this->load->model('catalog/auto_parts_archive');
 
-        $this->response->setOutput(json_encode($json));
-
         $history = $this->model_catalog_auto_parts_archive->getAutoParstHistory($id);
 
         foreach ($history as &$item) {
+            $data_change = '';
             if($item["data_change"]) {
                 $date2 = new DateTime($item["data_change"]);
                 $data_change = $date2->format("d.m.Y H:i:s");

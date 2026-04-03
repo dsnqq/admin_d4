@@ -4,7 +4,10 @@ class ControllerApiAutoParts extends Controller {
      * Main function to handle HTTP request
      * */
     public function auto() {
-        $postRead  = json_decode(file_get_contents('php://input'),true);
+        $postRead  = json_decode(file_get_contents('php://input'), true);
+        if (!is_array($postRead)) {
+            $postRead = [];
+        }
         $postWrite = $this->request->post;
 
         $route = $this->request->get['route'];
@@ -72,7 +75,7 @@ class ControllerApiAutoParts extends Controller {
         if (!isset($_SESSION['api_id'])) {
             $this->load->model('account/api');
 
-            $api_info = $this->model_account_api->getApiByKey($post['key']);
+            $api_info = $this->model_account_api->getApiByKey(isset($post['key']) ? $post['key'] : '');
 
             if ($api_info) {
                 $ip_data = array();
@@ -104,6 +107,7 @@ class ControllerApiAutoParts extends Controller {
      * */
     private function _getAutoParts($param){
         $json = [];
+        $autoParts = [];
         $i = 1;
 
         if(isset($param['page'])) {
@@ -164,6 +168,8 @@ class ControllerApiAutoParts extends Controller {
             $filter_status = 1;
         } elseif(isset($param['filter_status']) && $param['filter_status'] == 'Неактивно'){
             $filter_status = 0;
+        } else {
+            $filter_status = '';
         }
 
         $filter_data = array(
@@ -236,7 +242,7 @@ class ControllerApiAutoParts extends Controller {
             $date_added = new DateTime($result['date_added']);
             $date_added = $date_added->format("d.m.Y H:i:s");
 
-            $priceBYN = round($this->currency->convert($result['price'], "USD", 'BYN'), '0');
+            $priceBYN = round($this->currency->convert($result['price'], "USD", 'BYN'), 0);
 
             $qr_param = array(
                 'id' => $result['product_id'],
@@ -386,7 +392,8 @@ class ControllerApiAutoParts extends Controller {
 
         $this->load->model('catalog/auto_parts');
 
-        $user_id = (int)$post['user_id'];
+        $user_id = isset($post['user_id']) ? (int)$post['user_id'] : 0;
+        $old_product_id = null;
 
         if($user_id && $user_id != 0) {
             $old_product_id = $this->model_catalog_auto_parts->deleteProduct($id);
@@ -408,7 +415,13 @@ class ControllerApiAutoParts extends Controller {
 
         if ($model != "") {
             $model_product_info = $this->model_catalog_auto_parts->getModelProduct($model);
-            if (($model_product_info['model'] == $model) && ($model_product_info['product_id'] != $this->request->get['product_id'])) {
+            $current_product_id = isset($this->request->get['product_id']) ? $this->request->get['product_id'] : 0;
+            if (
+                is_array($model_product_info)
+                && !empty($model_product_info['model'])
+                && ($model_product_info['model'] == $model)
+                && ($model_product_info['product_id'] != $current_product_id)
+            ) {
                 $error = "Такой артикул ext_id уже существует!";
             }
             if (preg_match("/[А-Яа-я]/", $model)) {
@@ -584,7 +597,7 @@ class ControllerApiAutoParts extends Controller {
 
         $this->model_catalog_auto_parts->autoPartsPriceChange($id, $param['price']);
 
-        $priceBYN = round($this->currency->convert($param['price'], "USD", 'BYN'), '0');
+        $priceBYN = round($this->currency->convert($param['price'], "USD", 'BYN'), 0);
 
         $price_change = array(
             'priceUSD' => $param['price'],
@@ -635,6 +648,7 @@ class ControllerApiAutoParts extends Controller {
     private function _getAutoPartsIndex($id){
         $json = [];
         $images = array();
+        $imagesServer = array();
         $additional_fields = [];
         $image = null;
         $i = 1;
@@ -683,6 +697,7 @@ class ControllerApiAutoParts extends Controller {
             }
         }
 
+        $brand_parts = explode(' > ', (string)$auto_parts_model_brand['name']);
         $qr_param = array(
             'id' => $results['product_id'],
             'model' => $results['model'],
@@ -692,8 +707,8 @@ class ControllerApiAutoParts extends Controller {
             'mpn'      => $results['mpn'],
             'isbn'      => $results['isbn'],
             'upc'      => $results['upc'],
-            'markaX'     => explode(' > ', $auto_parts_model_brand['name'])[0],
-            'modelX'     => explode(' > ', $auto_parts_model_brand['name'])[1],
+            'markaX'     => isset($brand_parts[0]) ? $brand_parts[0] : '',
+            'modelX'     => isset($brand_parts[1]) ? $brand_parts[1] : '',
             'name'     => $autoPartsName['name']
 
         );
@@ -749,11 +764,10 @@ class ControllerApiAutoParts extends Controller {
 
         $this->load->model('catalog/auto_parts');
 
-        $this->response->setOutput(json_encode($json));
-
         $history = $this->model_catalog_auto_parts->getAutoParstHistory($id);
 
         foreach ($history as &$item) {
+            $data_change = '';
             if($item["data_change"]) {
                 $date2 = new DateTime($item["data_change"]);
                 $data_change = $date2->format("d.m.Y H:i:s");
@@ -785,6 +799,7 @@ class ControllerApiAutoParts extends Controller {
         if (!$typesOfAutoParts) {
             $this->load->model('catalog/auto_parts');
 
+            $typesOfAutoParts = [];
             $results = $this->model_catalog_auto_parts->getTypesOfAutoParst();
 
             foreach ($results as $result) {
@@ -813,8 +828,7 @@ class ControllerApiAutoParts extends Controller {
         if (!$brandAndModelCar) {
             $this->load->model('catalog/auto_parts');
 
-            $this->response->setOutput(json_encode($json));
-
+            $brandAndModelCar = [];
             $results_brand = $this->model_catalog_auto_parts->getBrandAndModelCarAutoParst();
 
             foreach ($results_brand as $result_brand) {
@@ -846,7 +860,8 @@ class ControllerApiAutoParts extends Controller {
      * */
     private function createAutoPartsQrCode($qr) {
         require_once '/home/dby/sites/d4.by/gd/phpqrcode/qrlib.php';
-        QRcode::png('https://d4.by/gd/?product_id='.$qr['product_id'], $_SERVER["DOCUMENT_ROOT"].'/gd/qr/'.$qr['model'].'_tmp.png', 'Q', 6, 1);
+        $product_id_qr = isset($qr['id']) ? (int)$qr['id'] : (isset($qr['product_id']) ? (int)$qr['product_id'] : 0);
+        QRcode::png('https://d4.by/gd/?product_id='.$product_id_qr, $_SERVER["DOCUMENT_ROOT"].'/gd/qr/'.$qr['model'].'_tmp.png', 'Q', 6, 1);
 
         $im = imagecreatefrompng($_SERVER["DOCUMENT_ROOT"].'/gd/qr/'.$qr['model'].'_tmp.png');
         $width = imagesx($im);

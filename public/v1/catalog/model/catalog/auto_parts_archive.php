@@ -39,12 +39,14 @@ class ModelCatalogAutoPartsArchive extends Model {
             $sql .= " AND p2c.category_id = '" . (int)$data['filter_category'] . "'";
         }
 
-        if (isset($data['filter_year_start']) && $data['filter_year_start'] !== '' && isset($data['filter_year_last']) && $data['filter_year_last'] !== '') {
-            $sql .= " AND p.length >= '" . (int)$data['filter_year_start'] . "' AND p.length <= '" . (int)$data['filter_year_last'] . "'";
-        } elseif ($data['filter_year_start'] == '' && $data['filter_year_last'] !== '') {
-            $sql .= " AND p.length <= '" . (int)$data['filter_year_last'] . "'";
-        } elseif ($data['filter_year_start'] !== '' && $data['filter_year_last'] == '') {
-            $sql .= " AND p.length >= '" . (int)$data['filter_year_start'] . "'";
+        $fy_start = isset($data['filter_year_start']) ? $data['filter_year_start'] : '';
+        $fy_last = isset($data['filter_year_last']) ? $data['filter_year_last'] : '';
+        if ($fy_start !== '' && $fy_last !== '') {
+            $sql .= " AND p.length >= '" . (int)$fy_start . "' AND p.length <= '" . (int)$fy_last . "'";
+        } elseif ($fy_start === '' && $fy_last !== '') {
+            $sql .= " AND p.length <= '" . (int)$fy_last . "'";
+        } elseif ($fy_start !== '' && $fy_last === '') {
+            $sql .= " AND p.length >= '" . (int)$fy_start . "'";
         }
 
         $sort_data = array(
@@ -125,12 +127,14 @@ class ModelCatalogAutoPartsArchive extends Model {
             $sql .= " AND p2c.category_id = '" . (int)$data['filter_category'] . "'";
         }
 
-        if (isset($data['filter_year_start']) && $data['filter_year_start'] !== '' && isset($data['filter_year_last']) && $data['filter_year_last'] !== '') {
-            $sql .= " AND p.length >= '" . (int)$data['filter_year_start'] . "' AND p.length <= '" . (int)$data['filter_year_last'] . "'";
-        } elseif ($data['filter_year_start'] == '' && $data['filter_year_last'] !== '') {
-            $sql .= " AND p.length <= '" . (int)$data['filter_year_last'] . "'";
-        } elseif ($data['filter_year_start'] !== '' && $data['filter_year_last'] == '') {
-            $sql .= " AND p.length >= '" . (int)$data['filter_year_start'] . "'";
+        $fy_start = isset($data['filter_year_start']) ? $data['filter_year_start'] : '';
+        $fy_last = isset($data['filter_year_last']) ? $data['filter_year_last'] : '';
+        if ($fy_start !== '' && $fy_last !== '') {
+            $sql .= " AND p.length >= '" . (int)$fy_start . "' AND p.length <= '" . (int)$fy_last . "'";
+        } elseif ($fy_start === '' && $fy_last !== '') {
+            $sql .= " AND p.length <= '" . (int)$fy_last . "'";
+        } elseif ($fy_start !== '' && $fy_last === '') {
+            $sql .= " AND p.length >= '" . (int)$fy_start . "'";
         }
 
         $query = $this->db->query($sql);
@@ -139,12 +143,23 @@ class ModelCatalogAutoPartsArchive extends Model {
     }
 
     public function getAutoName($id) {
-        $product_category_data = array();
+        $product_category_data = array('marka' => '', 'model' => '');
 
         $query_auto = $this->db->query('SELECT * FROM `oc_arhive_to_category` WHERE product_id = ' . (int)$id);
+        if (!$query_auto->num_rows || empty($query_auto->row)) {
+            return $product_category_data;
+        }
+
         $query_model = $this->db->query('SELECT * FROM `oc_category_description` WHERE category_id = ' . (int)$query_auto->row['category_id']);
         $query_parent_id = $this->db->query('SELECT * FROM `oc_category` WHERE category_id = ' . (int)$query_auto->row['category_id']);
+        if (!$query_parent_id->num_rows || empty($query_parent_id->row)) {
+            return $product_category_data;
+        }
+
         $query_marka = $this->db->query('SELECT * FROM `oc_category_description` WHERE category_id = ' . (int)$query_parent_id->row['parent_id']);
+        if (!$query_marka->num_rows || !$query_model->num_rows) {
+            return $product_category_data;
+        }
 
         $product_category_data['marka'] = $query_marka->row['name'];
         $product_category_data['model'] = $query_model->row['name'];
@@ -153,8 +168,11 @@ class ModelCatalogAutoPartsArchive extends Model {
     }
 
     public function getAutoPartsName($id) {
-        $auto_parts_name = array();
+        $auto_parts_name = array('id' => 0, 'name' => '');
         $query_auto_parts = $this->db->query('SELECT * FROM `oc_manufacturer` WHERE manufacturer_id = ' . (int)$id);
+        if (!$query_auto_parts->num_rows || empty($query_auto_parts->row)) {
+            return $auto_parts_name;
+        }
 
         $auto_parts_name['id'] = $query_auto_parts->row['manufacturer_id'];
         $auto_parts_name['name'] = $query_auto_parts->row['name'];
@@ -164,6 +182,9 @@ class ModelCatalogAutoPartsArchive extends Model {
 
     public function getAutoPartsDescription($id){
         $query_description = $this->db->query('SELECT * FROM `oc_arhive_description` WHERE product_id = ' . (int)$id);
+        if (!$query_description->num_rows || empty($query_description->row)) {
+            return '';
+        }
 
         $description = strip_tags($query_description->row['description']);
         $description = str_replace("\n", ' ', $description);
