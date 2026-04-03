@@ -10,8 +10,8 @@ class ControllerApiAutoParts extends Controller {
         }
         $postWrite = $this->request->post;
 
-        $route = $this->request->get['route'];
-        $path = explode('/', $route);
+        $route = isset($this->request->get['route']) ? $this->request->get['route'] : '';
+        $path = $route !== '' ? explode('/', $route) : [];
         $login = $this->_getAuth($postRead, $this->request->server);
 
         $login = true; // NO AUTH
@@ -239,8 +239,12 @@ class ControllerApiAutoParts extends Controller {
                 }
             }
 
-            $date_added = new DateTime($result['date_added']);
-            $date_added = $date_added->format("d.m.Y H:i:s");
+            try {
+                $date_added = new DateTime($result['date_added']);
+                $date_added = $date_added->format("d.m.Y H:i:s");
+            } catch (\Throwable $e) {
+                $date_added = isset($result['date_added']) ? (string)$result['date_added'] : '';
+            }
 
             $priceBYN = round($this->currency->convert($result['price'], "USD", 'BYN'), 0);
 
@@ -857,56 +861,119 @@ class ControllerApiAutoParts extends Controller {
 
     /*
      * Function to create QR code for auto parts
+     * Uses dirname(DIR_IMAGE) so files go to the main site (d4.by), not admin DOCUMENT_ROOT — otherwise GD fails on PHP 8+.
      * */
     private function createAutoPartsQrCode($qr) {
-        require_once '/home/dby/sites/d4.by/gd/phpqrcode/qrlib.php';
-        $product_id_qr = isset($qr['id']) ? (int)$qr['id'] : (isset($qr['product_id']) ? (int)$qr['product_id'] : 0);
-        QRcode::png('https://d4.by/gd/?product_id='.$product_id_qr, $_SERVER["DOCUMENT_ROOT"].'/gd/qr/'.$qr['model'].'_tmp.png', 'Q', 6, 1);
+        try {
+            if (!defined('DIR_IMAGE') || !function_exists('imagecreatefrompng')) {
+                return $this->createAutoPartsQrCodeFallback($qr);
+            }
 
-        $im = imagecreatefrompng($_SERVER["DOCUMENT_ROOT"].'/gd/qr/'.$qr['model'].'_tmp.png');
-        $width = imagesx($im);
-        $height = imagesy($im);
+            $base = rtrim(dirname(DIR_IMAGE), '/');
+            $gdBase = $base . '/gd';
+            $qrLib = $gdBase . '/phpqrcode/qrlib.php';
+            if (!is_file($qrLib)) {
+                return $this->createAutoPartsQrCodeFallback($qr);
+            }
+            require_once $qrLib;
 
-        $rgba_oux = explode(',', '255,255,255');
+            $safeModel = preg_replace('/[^a-zA-Z0-9_\-\.]/', '_', (string)(isset($qr['model']) ? $qr['model'] : 'item'));
+            $qrDir = $gdBase . '/qr';
+            if (!is_dir($qrDir) && !@mkdir($qrDir, 0755, true)) {
+                return $this->createAutoPartsQrCodeFallback($qr);
+            }
 
-        $bg_color = imageColorAllocate($im, (int)$rgba_oux[0], (int)$rgba_oux[1], (int)$rgba_oux[2]);
-        for ($x = 0; $x < $width; $x++) {
-            for ($y = 0; $y < $height; $y++) {
-                $color = imagecolorat($im, $x, $y);
-                if ($color == 0) {
-                    imageSetPixel($im, $x, $y, $bg_color);
+            $product_id_qr = isset($qr['id']) ? (int)$qr['id'] : (isset($qr['product_id']) ? (int)$qr['product_id'] : 0);
+            $tmpPng = $qrDir . '/' . $safeModel . '_tmp.png';
+            $mainPng = $qrDir . '/' . $safeModel . '_main.png';
+            $logoPng = $gdBase . '/logo.png';
+
+            QRcode::png('https://d4.by/gd/?product_id=' . $product_id_qr, $tmpPng, 'Q', 6, 1);
+
+            if (!is_file($tmpPng)) {
+                return $this->createAutoPartsQrCodeFallback($qr);
+            }
+
+            $im = @imagecreatefrompng($tmpPng);
+            if ($im === false) {
+                return $this->createAutoPartsQrCodeFallback($qr);
+            }
+            $width = imagesx($im);
+            $height = imagesy($im);
+
+            $rgba_oux = explode(',', '255,255,255');
+
+            $bg_color = imageColorAllocate($im, (int)$rgba_oux[0], (int)$rgba_oux[1], (int)$rgba_oux[2]);
+            for ($x = 0; $x < $width; $x++) {
+                for ($y = 0; $y < $height; $y++) {
+                    $color = imagecolorat($im, $x, $y);
+                    if ($color == 0) {
+                        imageSetPixel($im, $x, $y, $bg_color);
+                    }
                 }
             }
+
+            $dst = imagecreatetruecolor($width, $height);
+            imagecopy($dst, $im, 0, 0, 0, 0, $width, $height);
+            imagedestroy($im);
+
+            $logo = @imagecreatefrompng($logoPng);
+            if ($logo === false) {
+                imagedestroy($dst);
+                @unlink($tmpPng);
+                return $this->createAutoPartsQrCodeFallback($qr);
+            }
+            $logo_width = imagesx($logo);
+            $logo_height = imagesy($logo);
+
+            $new_width = $width / 3;
+            $new_height = $logo_height / ($logo_width / $new_width);
+
+            $x = ceil(($width - $new_width) / 2);
+            $y = ceil(($height - $new_height) / 2);
+
+            imagecopyresampled($dst, $logo, $x, $y, 0, 0, $new_width, $new_height, $logo_width, $logo_height);
+            imagedestroy($logo);
+            imagepng($dst, $mainPng, 3);
+            imagedestroy($dst);
+
+            if (is_file($tmpPng)) {
+                @unlink($tmpPng);
+            }
+
+            $img_sm_qr1 = '<img src="https://d4.by/gd/qr/' . $safeModel . '_main.png" style="width:110px;">';
+
+            return $this->wrapAutoPartsQrPrintableHtml($qr, $img_sm_qr1);
+        } catch (\Throwable $e) {
+            return $this->createAutoPartsQrCodeFallback($qr);
         }
+    }
 
-        $dst = imagecreatetruecolor($width, $height);
-        imagecopy($dst, $im, 0, 0, 0, 0, $width, $height);
-        imagedestroy($im);
+    /**
+     * Printable HTML without QR image (GD/qrlib path missing or generation failed).
+     */
+    private function createAutoPartsQrCodeFallback($qr) {
+        $img_sm_qr1 = '<span style="display:inline-block;width:110px;text-align:center;font-size:11px;color:#666;">QR</span>';
+        return $this->wrapAutoPartsQrPrintableHtml($qr, $img_sm_qr1);
+    }
 
-        $logo = imagecreatefrompng($_SERVER["DOCUMENT_ROOT"].'/gd/logo.png');
-        $logo_width = imagesx($logo);
-        $logo_height = imagesy($logo);
+    private function wrapAutoPartsQrPrintableHtml($qr, $imgHtml) {
+        $markaX = isset($qr['markaX']) ? $qr['markaX'] : '';
+        $modelX = isset($qr['modelX']) ? $qr['modelX'] : '';
+        $length = isset($qr['length']) ? $qr['length'] : '';
+        $ean = isset($qr['ean']) ? $qr['ean'] : '';
+        $jan = isset($qr['jan']) ? $qr['jan'] : '';
+        $isbn = isset($qr['isbn']) ? $qr['isbn'] : '';
+        $mpn = isset($qr['mpn']) ? $qr['mpn'] : '';
+        $upc = isset($qr['upc']) ? $qr['upc'] : '';
+        $name = isset($qr['name']) ? $qr['name'] : '';
+        $model = isset($qr['model']) ? $qr['model'] : '';
 
-        $new_width = $width / 3;
-        $new_height = $logo_height / ($logo_width / $new_width);
+        $qr_title = "<div>" . $markaX . " " . $modelX . ", " . $length . "г. " . $ean . "</div><div>" . $jan . " " . $isbn . " " . $mpn . " " . $upc . "</div><div>" . $name . "</div><div>" . '<span style="font-size:17px;">' . $model . '</span></div>';
 
-        $x = ceil(($width - $new_width) / 2);
-        $y = ceil(($height - $new_height) / 2);
+        $qr_code = '<div style="display:flex;align-items:center;width:275px;border:1px solid #000;"><div>' . $imgHtml . '</div><div style="text-align:center;font-size:12px;padding-left:10px;margin:0 auto;font-weight:bold;line-height:18px;">' . $qr_title . '</div></div>';
 
-        imagecopyresampled($dst, $logo, $x, $y, 0, 0, $new_width, $new_height, $logo_width, $logo_height);
-        imagepng($dst,$_SERVER["DOCUMENT_ROOT"].'/gd/qr/' . $qr['model'] . '_main.png',3);
-
-        unlink($_SERVER["DOCUMENT_ROOT"].'/gd/qr/' . $qr['model'] . '_tmp.png');
-
-        $img_sm_qr1 = '<img src="https://d4.by/gd/qr/' . $qr['model'] . '_main.png" style="width:110px;">';
-
-        $qr_title = "<div>" . $qr['markaX'] . " " . $qr['modelX'] . ", " . $qr['length'] . "г. " . $qr['ean'] . "</div><div>" . $qr['jan'] . " " .$qr['isbn'] . " " . $qr['mpn'] . " " . $qr['upc'] . "</div><div>" . $qr['name'] . "</div><div>" . '<span style="font-size:17px;">' . $qr['model'] . '</span></div>';
-
-        $qr_code = '<div style="display:flex;align-items:center;width:275px;border:1px solid #000;"><div>'.$img_sm_qr1.'</div><div style="text-align:center;font-size:12px;padding-left:10px;margin:0 auto;font-weight:bold;line-height:18px;">'.$qr_title.'</div></div>';
-
-        $qr_code_result = '<html><head><style>@print{@page :footer {color: #fff }@page :header {color: #fff}}</style></head><body style="font-family: Open Sans, sans-serif;" onload="window.print()"><div style="margin:0 auto;color:#000;display:flex;align-items:center;width:275px;"><div style="text-align:center;font-size:12px;margin:0 auto;padding-left:10px;font-weight:bold;line-height:18px;">' . $qr_code . '</div></div></body></html>';
-
-        return $qr_code_result;
+        return '<html><head><style>@print{@page :footer {color: #fff }@page :header {color: #fff}}</style></head><body style="font-family: Open Sans, sans-serif;" onload="window.print()"><div style="margin:0 auto;color:#000;display:flex;align-items:center;width:275px;"><div style="text-align:center;font-size:12px;margin:0 auto;padding-left:10px;font-weight:bold;line-height:18px;">' . $qr_code . '</div></div></body></html>';
     }
 
     /*
