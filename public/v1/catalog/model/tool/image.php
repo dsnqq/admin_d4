@@ -1,5 +1,46 @@
 <?php
 class ModelToolImage extends Model {
+	/**
+	 * Публичный базовый URL витрины для ссылок на /image/...
+	 * 1) HTTP(S)_CATALOG из config.php
+	 * 2) иначе из DIR_IMAGE: .../d4.by/image/ → https://d4.by/ (без констант, работает при любом config_ssl админки)
+	 * 3) иначе как OpenCart: config_ssl / config_url
+	 */
+	protected function getImagePublicBase($ssl) {
+		if (defined('HTTPS_CATALOG') && defined('HTTP_CATALOG')) {
+			return $ssl ? rtrim(HTTPS_CATALOG, '/') . '/' : rtrim(HTTP_CATALOG, '/') . '/';
+		}
+		if (defined('HTTPS_CATALOG')) {
+			return rtrim(HTTPS_CATALOG, '/') . '/';
+		}
+		if (defined('HTTP_CATALOG')) {
+			return rtrim(HTTP_CATALOG, '/') . '/';
+		}
+
+		$derived = $this->deriveCatalogBaseUrlFromDirImage();
+		if ($derived !== null) {
+			return $derived;
+		}
+
+		return $ssl ? $this->config->get('config_ssl') : $this->config->get('config_url');
+	}
+
+	/**
+	 * @return string|null https://домен/ или null
+	 */
+	protected function deriveCatalogBaseUrlFromDirImage() {
+		$dir = rtrim(DIR_IMAGE, '/\\');
+		$parent = dirname($dir);
+		$name = basename($parent);
+		if ($name === '' || $name === '.' || strpos($name, '.') === false) {
+			return null;
+		}
+		if (!preg_match('/^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$/i', $name)) {
+			return null;
+		}
+		return 'https://' . $name . '/';
+	}
+
 	public function resize($filename, $width, $height) {
 		if (!is_file(DIR_IMAGE . $filename)) {
 			if (is_file(DIR_IMAGE . 'no_image.jpg')) {
@@ -20,16 +61,10 @@ class ModelToolImage extends Model {
 			list($width_orig, $height_orig, $image_type) = getimagesize(DIR_IMAGE . $image_old);
 
 			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) {
-				// Как в основном проекте — путь на диске; в v1 в config заданы HTTP(S)_CATALOG → отдаём URL витрины (для API)
-				if (defined('HTTPS_CATALOG') && defined('HTTP_CATALOG')) {
-					$parts = explode('/', str_replace('\\', '/', $image_old));
-					$enc = implode('/', array_map('rawurlencode', $parts));
-					if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-						return rtrim(HTTPS_CATALOG, '/') . '/' . 'image/' . $enc;
-					}
-					return rtrim(HTTP_CATALOG, '/') . '/' . 'image/' . $enc;
-				}
-				return DIR_IMAGE . $image_old;
+				$parts = explode('/', str_replace('\\', '/', $image_old));
+				$enc = implode('/', array_map('rawurlencode', $parts));
+				$ssl = isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'));
+				return $this->getImagePublicBase($ssl) . 'image/' . $enc;
 			}
 
 			$path = '';
@@ -56,13 +91,8 @@ class ModelToolImage extends Model {
 		$imagepath_parts = explode('/', $image_new);
 		$new_image = implode('/', array_map('rawurlencode', $imagepath_parts));
 
-		$base_ssl = defined('HTTPS_CATALOG') ? rtrim(HTTPS_CATALOG, '/') . '/' : $this->config->get('config_ssl');
-		$base_url = defined('HTTP_CATALOG') ? rtrim(HTTP_CATALOG, '/') . '/' : $this->config->get('config_url');
+		$ssl = isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'));
 
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-			return $base_ssl . 'image/' . $new_image;
-		} else {
-			return $base_url . 'image/' . $new_image;
-		}
+		return $this->getImagePublicBase($ssl) . 'image/' . $new_image;
 	}
 }
