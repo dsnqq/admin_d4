@@ -22,27 +22,7 @@ class ModelToolImage extends Model {
 			return $derived;
 		}
 
-		// Не используем config_ssl/config_url из БД, так как они могут указывать на admin.d4.by
-		// Вместо этого используем HTTP(S)_SERVER как последний fallback
-		if ($ssl && defined('HTTPS_SERVER')) {
-			$url = rtrim(HTTPS_SERVER, '/') . '/';
-			// Если URL содержит admin.d4.by, принудительно используем d4.by
-			if (strpos($url, 'admin.d4.by') !== false) {
-				return 'https://d4.by/';
-			}
-			return $url;
-		}
-		if (defined('HTTP_SERVER')) {
-			$url = rtrim(HTTP_SERVER, '/') . '/';
-			// Если URL содержит admin.d4.by, принудительно используем d4.by
-			if (strpos($url, 'admin.d4.by') !== false) {
-				return 'http://d4.by/';
-			}
-			return $url;
-		}
-
-		// Последний fallback - принудительно d4.by
-		return 'https://d4.by/';
+		return $ssl ? $this->config->get('config_ssl') : $this->config->get('config_url');
 	}
 
 	/**
