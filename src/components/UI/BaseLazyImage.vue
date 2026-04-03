@@ -11,6 +11,7 @@
 
 <script>
 import { DOMAIN } from '@/constants/constants';
+import { useBaseLazyLoadImageService } from '@/components/UI/composables/useBaseLazyLoadImageService';
 
 export default {
   name: 'BaseLazyImage',
@@ -25,6 +26,14 @@ export default {
     },
   },
 
+  setup() {
+    const { fixImageUrl } = useBaseLazyLoadImageService();
+
+    return {
+      fixImageUrl,
+    };
+  },
+
   data() {
     return {
       DOMAIN,
@@ -37,9 +46,11 @@ export default {
     },
 
     imageRenderUrl() {
-      return this.$props.src == null
-        ? DOMAIN + '/image/no_image.png'
-        : this.$props.src;
+      if (this.$props.src == null) {
+        return DOMAIN + '/image/no_image.png';
+      }
+
+      return this.fixImageUrl(this.$props.src);
     },
   },
 };
