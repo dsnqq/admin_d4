@@ -8,7 +8,7 @@ export const useBaseLazyLoadImageService = () => {
    * @param {string} url - исходный URL изображения
    * @returns {string} - исправленный URL
    */
-  function fixImageUrl(url) {
+  const fixImageUrl = (url) => {
     if (!url || typeof url !== 'string') {
       return url;
     }
@@ -17,7 +17,7 @@ export const useBaseLazyLoadImageService = () => {
       /https?:\/\/admin\.d4\.by\/v1\/image\//g,
       'https://d4.by/image/',
     );
-  }
+  };
 
   return {
     fixImageUrl,
