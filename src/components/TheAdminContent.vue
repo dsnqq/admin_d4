@@ -45,10 +45,12 @@ const checkScrollPosition = () => {
 };
 
 const menuSideBarClosed = function () {
+  menu.value = false;
   emit('menuSideBarClosed');
 };
 
 const leftMenuMobileShow = function () {
+  menu.value = !menu.value;
   emit('leftMenuMobileShow');
 };
 
