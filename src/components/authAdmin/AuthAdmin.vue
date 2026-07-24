@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper auth-admin">
+  <div class="wrapper auth-admin" @keyup.enter="handleAuthOnSystem">
     <div
       v-if="!auth.status"
       class="alert border-0 bg-light-danger alert-dismissible fade show py-2"
@@ -121,7 +121,7 @@
                           <button
                             class="btn btn-primary radius-30"
                             title="Войти"
-                            @click.prevent="loginEnter"
+                            @click.prevent="handleAuthOnSystem"
                           >
                             Войти
                           </button>
@@ -144,94 +144,90 @@
   </div>
 </template>
 
-<script>
-import { mapActions, mapGetters } from 'vuex';
+<script setup>
+import { reactive, computed, watch } from 'vue';
+import { useRouter } from '@/composables/useRouter';
+import { useStore } from '@/composables/useStore';
 
-export default {
-  name: 'AuthAdmin',
+const router = useRouter();
+const store = useStore();
 
-  computed: {
-    ...mapGetters('authAdmin', ['USER']),
-  },
+const auth = reactive({
+  status: true,
+  message: 'Данные не верны! Попробуйте снова!',
+});
 
-  methods: {
-    ...mapActions('authAdmin', ['LOGIN_FROM_API']),
+const loginValidate = reactive({
+  message: '',
+  status: true,
+});
 
-    loginValidateChecked() {
-      let lg = this.param.login;
+const passwordValidate = reactive({
+  message: '',
+  status: true,
+});
 
-      if (lg === '' || lg.length < 3 || lg.length > 7) {
-        this.loginValidate.message = 'Проверьте правильность поля логин!';
-        this.loginValidate.status = false;
-      } else {
-        this.loginValidate.status = true;
-      }
-    },
+const param = reactive({
+  login: '',
+  password: '',
+});
 
-    passwordValidateChecked() {
-      let ps = this.param.password;
+const USER = computed(() => store.getters['authAdmin/USER']);
 
-      if (ps === '' || ps.length < 4 || ps.length > 12) {
-        this.passwordValidate.message = 'Проверьте правильность поля пароль!';
-        this.passwordValidate.status = false;
-      } else {
-        this.passwordValidate.status = true;
-      }
-    },
-
-    loginEnter() {
-      this.auth.status = true;
-      this.passwordValidate.status = true;
-      this.loginValidate.status = true;
-
-      this.passwordValidateChecked();
-      this.loginValidateChecked();
-
-      if (this.passwordValidate.status && this.loginValidate.status) {
-        this.LOGIN_FROM_API(this.param);
-      } else {
-        this.auth.status = false;
-      }
-    },
-
-    closeAlertMessage() {
-      this.auth.status = true;
-    },
-  },
-
-  watch: {
-    USER: function () {
-      if (this.USER.user_id != null) {
-        this.$router.push({ name: 'dashboardAdmin' }).catch(() => {});
-        location.reload();
-      } else {
-        this.auth.status = false;
-        this.auth.message = 'Неверные логин или пароль! Попробуйте снова!';
-      }
-    },
-  },
-
-  data() {
-    return {
-      auth: {
-        status: true,
-        message: 'Данные не верны! Попробуйте снова!',
-      },
-      loginValidate: {
-        message: '',
-        status: true,
-      },
-      passwordValidate: {
-        message: '',
-        status: true,
-      },
-      param: {
-        login: '',
-        password: '',
-      },
-    };
-  },
+const LOGIN_FROM_API = (data) => {
+  return store.dispatch('authAdmin/LOGIN_FROM_API', data);
 };
+
+const loginValidateChecked = () => {
+  const lg = param.login;
+
+  if (lg === '' || lg.length < 3 || lg.length > 7) {
+    loginValidate.message = 'Проверьте правильность поля логин!';
+    loginValidate.status = false;
+  } else {
+    loginValidate.status = true;
+  }
+};
+
+const passwordValidateChecked = () => {
+  const ps = param.password;
+
+  if (ps === '' || ps.length < 4 || ps.length > 12) {
+    passwordValidate.message = 'Проверьте правильность поля пароль!';
+    passwordValidate.status = false;
+  } else {
+    passwordValidate.status = true;
+  }
+};
+
+const handleAuthOnSystem = () => {
+  auth.status = true;
+  passwordValidate.status = true;
+  loginValidate.status = true;
+
+  passwordValidateChecked();
+  loginValidateChecked();
+
+  if (passwordValidate.status && loginValidate.status) {
+    LOGIN_FROM_API(param);
+  } else {
+    auth.status = false;
+  }
+};
+
+const closeAlertMessage = () => {
+  auth.status = true;
+};
+
+watch(USER, () => {
+  if (USER.value.user_id != null) {
+    router.push({ name: 'dashboardAdmin' }).catch(() => {});
+    location.reload();
+  } else {
+    auth.status = false;
+    auth.message = 'Неверные логин или пароль! Попробуйте снова!';
+  }
+});
 </script>
 
 <style lang="scss" scoped>
