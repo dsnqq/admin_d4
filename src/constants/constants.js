@@ -58,7 +58,7 @@ export const LEFT_MENU = [
     title: 'История пользователей',
     component: 'historyUsers',
     icon: 'bi-journal-text',
-    permissions: [],
+    permissions: [7, 8, 22, 2],
   },
   {
     title: 'Авто в разборе',
@@ -72,7 +72,7 @@ export const LEFT_MENU = [
     icon: 'bi-wrench',
     permissions: [],
   },
-  {
+  /*{
     title: 'Мои шины',
     component: 'autoTires',
     icon: 'bi-vinyl',
@@ -101,7 +101,7 @@ export const LEFT_MENU = [
     component: 'sparePartsStatistics',
     icon: 'bi-info-square-fill',
     permissions: [],
-  },
+  },*/
 ];
 
 export const STATUS = ['Активно', 'Неактивно'];

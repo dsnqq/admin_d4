@@ -125,40 +125,6 @@
           </div>
         </div>
       </div>
-      <div class="col">
-        <div class="card radius-10">
-          <div class="card-body text-center">
-            <div class="widget-icon mx-auto mb-3 bg-light-orange text-orange">
-              <i class="bi bi-currency-euro"></i>
-            </div>
-            <h3>
-              <h3>
-                <input
-                  v-if="columnEditEUR"
-                  v-model="dashboardInformation.currency.EUR"
-                  placeholder="Курс EUR"
-                  class="dashboard-admin__input--edits"
-                  type="text"
-                />
-                <span v-else>
-                  {{ dashboardInformation.currency.EUR }}
-                </span>
-                <i
-                  v-if="!columnEditEUR"
-                  class="bi bi-pencil text-warning"
-                  @click="editCurrencyEUR"
-                ></i>
-                <i
-                  v-else
-                  class="lni lni-save p-2 text-success"
-                  @click="saveCurrencyEUR"
-                ></i>
-              </h3>
-            </h3>
-            <p class="mb-0">Евро (EUR)</p>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -171,7 +137,6 @@ const store = useStore();
 
 const columnEditUSD = ref(false);
 const columnEditRUB = ref(false);
-const columnEditEUR = ref(false);
 
 onMounted(() => {
   store.dispatch('dashboardAdmin/GET_DASHBOARD_INFORMATION');
@@ -199,25 +164,12 @@ const saveCurrencyRUB = () => {
   editCurrencyRUB();
 };
 
-const saveCurrencyEUR = () => {
-  store.dispatch('dashboardAdmin/SET_CURRENCY_FROM_API', {
-    currency: 'EUR',
-    value: dashboardInformation.value.currency.EUR,
-  });
-
-  editCurrencyEUR();
-};
-
 const editCurrencyUSD = () => {
   columnEditUSD.value = !unref(columnEditUSD);
 };
 
 const editCurrencyRUB = () => {
   columnEditRUB.value = !unref(columnEditRUB);
-};
-
-const editCurrencyEUR = () => {
-  columnEditEUR.value = !unref(columnEditEUR);
 };
 </script>
 
